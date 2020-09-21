@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void requestLogin(String ID, String PW){
-        String url = "http://192.168.219.110:3000";
+        String url = "http://101.101.208.180:3000/";
 
         //JSON형식으로 데이터 통신을 진행합니다!
         JSONObject testjson = new JSONObject();
