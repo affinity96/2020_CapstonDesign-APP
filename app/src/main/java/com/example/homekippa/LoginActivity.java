@@ -2,6 +2,7 @@ package com.example.homekippa;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -79,6 +80,8 @@ public class LoginActivity extends AppCompatActivity {
                         if(resultId.equals("OK") & resultPassword.equals("OK")){
                             Toast.makeText(getApplicationContext(),"로그인 성공", Toast.LENGTH_SHORT).show();
                             tvData.setText("로그인 되었습니다");
+                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            startActivity(intent);
                         }else{
                             Toast.makeText(getApplicationContext(),"로그인 실패", Toast.LENGTH_SHORT).show();
                             tvData.setText("로그아웃 되었습니다");
