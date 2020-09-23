@@ -2,7 +2,6 @@ package com.example.homekippa;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -21,18 +20,7 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-
-public class MainActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
     TextView tvData;
     EditText editTextID;
@@ -45,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
 
         tvData = findViewById(R.id.textView);
         editTextID = findViewById(R.id.editText_ID);
@@ -72,10 +60,9 @@ public class MainActivity extends AppCompatActivity {
             //입력해둔 edittext의 id와 pw값을 받아와 put해줍니다 : 데이터를 json형식으로 바꿔 넣어주었습니다.
             testjson.put("id", ID);
             testjson.put("password", PW);
-            String jsonString = testjson.toString(); //완성된 json 포맷
 
             //이제 전송해볼까요?
-            final RequestQueue requestQueue = Volley.newRequestQueue(MainActivity.this);
+            final RequestQueue requestQueue = Volley.newRequestQueue(LoginActivity.this);
             final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url,testjson, new Response.Listener<JSONObject>() {
 
                 //데이터 전달을 끝내고 이제 그 응답을 받을 차례입니다.
