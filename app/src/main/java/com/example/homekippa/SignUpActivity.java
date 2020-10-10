@@ -50,6 +50,7 @@ public class SignUpActivity extends AppCompatActivity {
                                 Toast.makeText(getApplicationContext(), "회원가입 성공", Toast.LENGTH_SHORT).show();
                                 FirebaseUser user = mAuth.getCurrentUser();
                                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                intent.putExtra("user", user);
                                 startActivity(intent);
                             } else{
                                 Log.w(TAG, "회원가입 실패", task.getException());
