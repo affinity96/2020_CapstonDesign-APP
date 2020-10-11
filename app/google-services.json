@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "869413043053",
+    "firebase_url": "https://homekippa-c2f26.firebaseio.com",
+    "project_id": "homekippa-c2f26",
+    "storage_bucket": "homekippa-c2f26.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:869413043053:android:4c2ebf466eb0a63713b864",
+        "android_client_info": {
+          "package_name": "com.example.homekippa"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "869413043053-f4v92h9966b69uv0d92rf6r9ok82tcvp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.homekippa",
+            "certificate_hash": "3c5f03b7569c1c7774c0b22fa64d6f4a57b225d4"
+          }
+        },
+        {
+          "client_id": "869413043053-n6v2t5eck9d1p157h1pdjtmjjfe21tib.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAC8L4FcyiGiKGE3bGZePybBr-9TG_c3Lw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "869413043053-n6v2t5eck9d1p157h1pdjtmjjfe21tib.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
