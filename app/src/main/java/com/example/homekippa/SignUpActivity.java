@@ -11,13 +11,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-//import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -35,7 +28,6 @@ import retrofit2.Response;
 
 public class SignUpActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
-    private FirebaseUser mUser;
     private Button button_SignUp;
     private EditText id_login;
     private EditText pw_login;
@@ -43,9 +35,6 @@ public class SignUpActivity extends AppCompatActivity {
     private EditText name_login;
     private String TAG = "Sign In";
     private ServiceApi service;
-
-//    Response response = volleyRes; //This is volley Response object
-//    retrofit2.Response otherResponse = retroRes;  //This is Retrofit Response object
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,7 +82,6 @@ public class SignUpActivity extends AppCompatActivity {
                                         });
                                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                 startActivity(intent);
-
                             } else{
                                 Log.w(TAG, "회원가입 실패", task.getException());
                                 Toast.makeText(getApplicationContext(), "회원가입 오류", Toast.LENGTH_SHORT).show();
