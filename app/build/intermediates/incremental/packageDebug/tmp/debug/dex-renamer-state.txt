@@ -1,4 +1,4 @@
-#Thu Oct 15 00:44:25 KST 2020
+#Thu Oct 15 02:45:47 KST 2020
 base.0=/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/build/intermediates/dex/debug/mergeDexDebug/classes.dex
 path.0=classes.dex
 renamed.0=classes.dex

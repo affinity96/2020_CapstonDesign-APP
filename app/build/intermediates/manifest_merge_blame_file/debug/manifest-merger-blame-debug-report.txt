@@ -10,141 +10,141 @@
 9        android:targetSdkVersion="29" />
 9-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml
 10    <!-- 인터넷 퍼미션 -->
-11
-12    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-12-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:7:5-78
-12-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:7:22-76
-13
-14    <meta-data
-14-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:8:5-102
-15        android:name="com.kakao.sdk.AppKey"
-15-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:8:16-51
-16        android:value="27f0294947799473f5560e2568541333" />
-16-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:8:52-100
-17
-18    <uses-permission android:name="android.permission.INTERNET" />
-18-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:34:5-67
-18-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:34:22-64
-19
-20    <application
-20-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:10:5-33:19
-21        android:allowBackup="true"
-21-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:11:9-35
-22        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
-22-->[androidx.core:core:1.0.1] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/856428061fc4c0c0b2001aa3d1c9bbba/core-1.0.1/AndroidManifest.xml:22:18-86
-23        android:debuggable="true"
-24        android:icon="@mipmap/ic_launcher"
-24-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:12:9-43
-25        android:label="@string/app_name"
-25-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:13:9-41
-26        android:roundIcon="@mipmap/ic_launcher_round"
-26-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:14:9-54
-27        android:supportsRtl="true"
-27-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:15:9-35
-28        android:testOnly="true"
-29        android:theme="@style/AppTheme"
-29-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:16:9-40
-30        android:usesCleartextTraffic="true" >
-30-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:17:9-44
+11    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+11-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:5:5-79
+11-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:5:22-76
+12
+13    <meta-data
+13-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:7:5-9:60
+14        android:name="com.kakao.sdk.AppKey"
+14-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:8:9-44
+15        android:value="27f0294947799473f5560e2568541333" />
+15-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:9:9-57
+16
+17    <uses-permission android:name="android.permission.INTERNET" />
+17-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:11:5-67
+17-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:11:22-64
+18
+19    <application
+19-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:13:5-35:19
+20        android:allowBackup="true"
+20-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:14:9-35
+21        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+21-->[androidx.core:core:1.0.1] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/5449623f536e7ff8306a3ac6571fd63f/core-1.0.1/AndroidManifest.xml:22:18-86
+22        android:debuggable="true"
+23        android:icon="@mipmap/ic_launcher"
+23-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:15:9-43
+24        android:label="@string/app_name"
+24-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:16:9-41
+25        android:roundIcon="@mipmap/ic_launcher_round"
+25-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:17:9-54
+26        android:supportsRtl="true"
+26-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:18:9-35
+27        android:testOnly="true"
+28        android:theme="@style/AppTheme"
+28-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:19:9-40
+29        android:usesCleartextTraffic="true" >
+29-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:20:9-44
+30        <activity android:name="com.example.homekippa.createGroupActivity" />
+30-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:21:9-66
+30-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:21:19-54
 31        <activity android:name="com.example.homekippa.SignUpActivity" />
-31-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:18:9-61
-31-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:18:19-49
+31-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:22:9-52
+31-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:22:19-49
 32        <activity android:name="com.example.homekippa.StartActivity" >
-32-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:19:9-25:20
-32-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:19:19-48
+32-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:23:9-29:20
+32-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:23:19-48
 33            <intent-filter>
-33-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:20:9-24:25
+33-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:24:13-28:29
 34                <action android:name="android.intent.action.MAIN" />
-34-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:21:13-65
-34-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:21:21-62
+34-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:25:17-69
+34-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:25:25-66
 35
 36                <category android:name="android.intent.category.LAUNCHER" />
-36-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:23:13-73
-36-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:23:23-70
+36-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:27:17-77
+36-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:27:27-74
 37            </intent-filter>
 38        </activity>
 39        <activity
-39-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:26:9-28:59
+39-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:30:9-32:59
 40            android:name="com.example.homekippa.MainActivity"
-40-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:27:13-41
+40-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:31:13-41
 41            android:label="@string/title_activity_main" />
-41-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:28:13-56
-42        <activity android:name="com.example.homekippa.LoginActivity" >
-42-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:29:9-30:20
-42-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:29:19-48
-43        </activity>
-44        <activity android:name="com.example.homekippa.ui.searchAddress.searchAddress" >
-44-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:31:9-32:20
-44-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:31:19-65
-45        </activity>
-46        <activity
-46-->[com.google.firebase:firebase-auth:19.4.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/684a46a2e24b72e913270e44283a49eb/jetified-firebase-auth-19.4.0/AndroidManifest.xml:24:9-31:50
-47            android:name="com.google.firebase.auth.internal.FederatedSignInActivity"
-47-->[com.google.firebase:firebase-auth:19.4.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/684a46a2e24b72e913270e44283a49eb/jetified-firebase-auth-19.4.0/AndroidManifest.xml:25:13-85
-48            android:excludeFromRecents="true"
-48-->[com.google.firebase:firebase-auth:19.4.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/684a46a2e24b72e913270e44283a49eb/jetified-firebase-auth-19.4.0/AndroidManifest.xml:26:13-46
-49            android:exported="true"
-49-->[com.google.firebase:firebase-auth:19.4.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/684a46a2e24b72e913270e44283a49eb/jetified-firebase-auth-19.4.0/AndroidManifest.xml:27:13-36
-50            android:launchMode="singleTask"
-50-->[com.google.firebase:firebase-auth:19.4.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/684a46a2e24b72e913270e44283a49eb/jetified-firebase-auth-19.4.0/AndroidManifest.xml:28:13-44
-51            android:permission="com.google.firebase.auth.api.gms.permission.LAUNCH_FEDERATED_SIGN_IN"
-51-->[com.google.firebase:firebase-auth:19.4.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/684a46a2e24b72e913270e44283a49eb/jetified-firebase-auth-19.4.0/AndroidManifest.xml:29:13-102
-52            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-52-->[com.google.firebase:firebase-auth:19.4.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/684a46a2e24b72e913270e44283a49eb/jetified-firebase-auth-19.4.0/AndroidManifest.xml:30:13-72
-53
-54        <service
-54-->[com.google.firebase:firebase-auth:19.4.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/684a46a2e24b72e913270e44283a49eb/jetified-firebase-auth-19.4.0/AndroidManifest.xml:33:9-39:19
-55            android:name="com.google.firebase.components.ComponentDiscoveryService"
-55-->[com.google.firebase:firebase-auth:19.4.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/684a46a2e24b72e913270e44283a49eb/jetified-firebase-auth-19.4.0/AndroidManifest.xml:34:13-84
-56            android:directBootAware="true"
-56-->[com.google.firebase:firebase-common:19.3.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/d20d9a7435ecf810ddef0fcfb850cc4a/jetified-firebase-common-19.3.0/AndroidManifest.xml:34:13-43
-57            android:exported="false" >
-57-->[com.google.firebase:firebase-auth:19.4.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/684a46a2e24b72e913270e44283a49eb/jetified-firebase-auth-19.4.0/AndroidManifest.xml:35:13-37
-58            <meta-data
-58-->[com.google.firebase:firebase-auth:19.4.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/684a46a2e24b72e913270e44283a49eb/jetified-firebase-auth-19.4.0/AndroidManifest.xml:36:13-38:85
-59                android:name="com.google.firebase.components:com.google.firebase.auth.FirebaseAuthRegistrar"
-59-->[com.google.firebase:firebase-auth:19.4.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/684a46a2e24b72e913270e44283a49eb/jetified-firebase-auth-19.4.0/AndroidManifest.xml:37:17-109
-60                android:value="com.google.firebase.components.ComponentRegistrar" />
-60-->[com.google.firebase:firebase-auth:19.4.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/684a46a2e24b72e913270e44283a49eb/jetified-firebase-auth-19.4.0/AndroidManifest.xml:38:17-82
-61        </service>
-62
-63        <activity
-63-->[com.google.android.gms:play-services-base:17.1.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/9873dc5fe973cc292ec718d9bd24167b/jetified-play-services-base-17.1.0/AndroidManifest.xml:23:9-26:75
-64            android:name="com.google.android.gms.common.api.GoogleApiActivity"
-64-->[com.google.android.gms:play-services-base:17.1.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/9873dc5fe973cc292ec718d9bd24167b/jetified-play-services-base-17.1.0/AndroidManifest.xml:24:13-79
-65            android:exported="false"
-65-->[com.google.android.gms:play-services-base:17.1.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/9873dc5fe973cc292ec718d9bd24167b/jetified-play-services-base-17.1.0/AndroidManifest.xml:25:13-37
-66            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-66-->[com.google.android.gms:play-services-base:17.1.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/9873dc5fe973cc292ec718d9bd24167b/jetified-play-services-base-17.1.0/AndroidManifest.xml:26:13-72
-67
-68        <provider
-68-->[com.google.firebase:firebase-common:19.3.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/d20d9a7435ecf810ddef0fcfb850cc4a/jetified-firebase-common-19.3.0/AndroidManifest.xml:26:9-30:39
-69            android:name="com.google.firebase.provider.FirebaseInitProvider"
-69-->[com.google.firebase:firebase-common:19.3.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/d20d9a7435ecf810ddef0fcfb850cc4a/jetified-firebase-common-19.3.0/AndroidManifest.xml:27:13-77
-70            android:authorities="com.example.homekippa.firebaseinitprovider"
-70-->[com.google.firebase:firebase-common:19.3.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/d20d9a7435ecf810ddef0fcfb850cc4a/jetified-firebase-common-19.3.0/AndroidManifest.xml:28:13-72
-71            android:exported="false"
-71-->[com.google.firebase:firebase-common:19.3.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/d20d9a7435ecf810ddef0fcfb850cc4a/jetified-firebase-common-19.3.0/AndroidManifest.xml:29:13-37
-72            android:initOrder="100" />
-72-->[com.google.firebase:firebase-common:19.3.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/d20d9a7435ecf810ddef0fcfb850cc4a/jetified-firebase-common-19.3.0/AndroidManifest.xml:30:13-36
-73
-74        <meta-data
-74-->[com.google.android.gms:play-services-basement:17.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/ebb8342254a6545a8bdf251ec89aed35/jetified-play-services-basement-17.0.0/AndroidManifest.xml:23:9-25:69
-75            android:name="com.google.android.gms.version"
-75-->[com.google.android.gms:play-services-basement:17.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/ebb8342254a6545a8bdf251ec89aed35/jetified-play-services-basement-17.0.0/AndroidManifest.xml:24:13-58
-76            android:value="@integer/google_play_services_version" />
-76-->[com.google.android.gms:play-services-basement:17.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/ebb8342254a6545a8bdf251ec89aed35/jetified-play-services-basement-17.0.0/AndroidManifest.xml:25:13-66
-77
-78        <provider
-78-->[androidx.lifecycle:lifecycle-process:2.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/2e917fc04f77b83b2f09542204caf398/jetified-lifecycle-process-2.0.0/AndroidManifest.xml:23:9-27:43
-79            android:name="androidx.lifecycle.ProcessLifecycleOwnerInitializer"
-79-->[androidx.lifecycle:lifecycle-process:2.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/2e917fc04f77b83b2f09542204caf398/jetified-lifecycle-process-2.0.0/AndroidManifest.xml:24:13-79
-80            android:authorities="com.example.homekippa.lifecycle-process"
-80-->[androidx.lifecycle:lifecycle-process:2.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/2e917fc04f77b83b2f09542204caf398/jetified-lifecycle-process-2.0.0/AndroidManifest.xml:25:13-69
-81            android:exported="false"
-81-->[androidx.lifecycle:lifecycle-process:2.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/2e917fc04f77b83b2f09542204caf398/jetified-lifecycle-process-2.0.0/AndroidManifest.xml:26:13-37
-82            android:multiprocess="true" />
-82-->[androidx.lifecycle:lifecycle-process:2.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/2e917fc04f77b83b2f09542204caf398/jetified-lifecycle-process-2.0.0/AndroidManifest.xml:27:13-40
-83    </application>
-84
-85</manifest>
+41-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:32:13-56
+42        <activity android:name="com.example.homekippa.LoginActivity" />
+42-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:33:9-60
+42-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:33:19-48
+43        <activity android:name="com.example.homekippa.ui.searchAddress.searchAddress" />
+43-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:34:9-77
+43-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:34:19-65
+44        <activity
+44-->[com.google.firebase:firebase-auth:19.4.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/f9f8cd8af0bf6390790c4bede83daf15/jetified-firebase-auth-19.4.0/AndroidManifest.xml:24:9-31:50
+45            android:name="com.google.firebase.auth.internal.FederatedSignInActivity"
+45-->[com.google.firebase:firebase-auth:19.4.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/f9f8cd8af0bf6390790c4bede83daf15/jetified-firebase-auth-19.4.0/AndroidManifest.xml:25:13-85
+46            android:excludeFromRecents="true"
+46-->[com.google.firebase:firebase-auth:19.4.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/f9f8cd8af0bf6390790c4bede83daf15/jetified-firebase-auth-19.4.0/AndroidManifest.xml:26:13-46
+47            android:exported="true"
+47-->[com.google.firebase:firebase-auth:19.4.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/f9f8cd8af0bf6390790c4bede83daf15/jetified-firebase-auth-19.4.0/AndroidManifest.xml:27:13-36
+48            android:launchMode="singleTask"
+48-->[com.google.firebase:firebase-auth:19.4.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/f9f8cd8af0bf6390790c4bede83daf15/jetified-firebase-auth-19.4.0/AndroidManifest.xml:28:13-44
+49            android:permission="com.google.firebase.auth.api.gms.permission.LAUNCH_FEDERATED_SIGN_IN"
+49-->[com.google.firebase:firebase-auth:19.4.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/f9f8cd8af0bf6390790c4bede83daf15/jetified-firebase-auth-19.4.0/AndroidManifest.xml:29:13-102
+50            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+50-->[com.google.firebase:firebase-auth:19.4.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/f9f8cd8af0bf6390790c4bede83daf15/jetified-firebase-auth-19.4.0/AndroidManifest.xml:30:13-72
+51
+52        <service
+52-->[com.google.firebase:firebase-auth:19.4.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/f9f8cd8af0bf6390790c4bede83daf15/jetified-firebase-auth-19.4.0/AndroidManifest.xml:33:9-39:19
+53            android:name="com.google.firebase.components.ComponentDiscoveryService"
+53-->[com.google.firebase:firebase-auth:19.4.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/f9f8cd8af0bf6390790c4bede83daf15/jetified-firebase-auth-19.4.0/AndroidManifest.xml:34:13-84
+54            android:directBootAware="true"
+54-->[com.google.firebase:firebase-common:19.3.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/88d480a2661b8b801a2ec8beef6da17e/jetified-firebase-common-19.3.0/AndroidManifest.xml:34:13-43
+55            android:exported="false" >
+55-->[com.google.firebase:firebase-auth:19.4.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/f9f8cd8af0bf6390790c4bede83daf15/jetified-firebase-auth-19.4.0/AndroidManifest.xml:35:13-37
+56            <meta-data
+56-->[com.google.firebase:firebase-auth:19.4.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/f9f8cd8af0bf6390790c4bede83daf15/jetified-firebase-auth-19.4.0/AndroidManifest.xml:36:13-38:85
+57                android:name="com.google.firebase.components:com.google.firebase.auth.FirebaseAuthRegistrar"
+57-->[com.google.firebase:firebase-auth:19.4.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/f9f8cd8af0bf6390790c4bede83daf15/jetified-firebase-auth-19.4.0/AndroidManifest.xml:37:17-109
+58                android:value="com.google.firebase.components.ComponentRegistrar" />
+58-->[com.google.firebase:firebase-auth:19.4.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/f9f8cd8af0bf6390790c4bede83daf15/jetified-firebase-auth-19.4.0/AndroidManifest.xml:38:17-82
+59        </service>
+60
+61        <activity
+61-->[com.google.android.gms:play-services-base:17.1.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/d20eb937334f0e5a77eaf1cb5324f15e/jetified-play-services-base-17.1.0/AndroidManifest.xml:23:9-26:75
+62            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+62-->[com.google.android.gms:play-services-base:17.1.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/d20eb937334f0e5a77eaf1cb5324f15e/jetified-play-services-base-17.1.0/AndroidManifest.xml:24:13-79
+63            android:exported="false"
+63-->[com.google.android.gms:play-services-base:17.1.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/d20eb937334f0e5a77eaf1cb5324f15e/jetified-play-services-base-17.1.0/AndroidManifest.xml:25:13-37
+64            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+64-->[com.google.android.gms:play-services-base:17.1.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/d20eb937334f0e5a77eaf1cb5324f15e/jetified-play-services-base-17.1.0/AndroidManifest.xml:26:13-72
+65
+66        <provider
+66-->[com.google.firebase:firebase-common:19.3.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/88d480a2661b8b801a2ec8beef6da17e/jetified-firebase-common-19.3.0/AndroidManifest.xml:26:9-30:39
+67            android:name="com.google.firebase.provider.FirebaseInitProvider"
+67-->[com.google.firebase:firebase-common:19.3.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/88d480a2661b8b801a2ec8beef6da17e/jetified-firebase-common-19.3.0/AndroidManifest.xml:27:13-77
+68            android:authorities="com.example.homekippa.firebaseinitprovider"
+68-->[com.google.firebase:firebase-common:19.3.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/88d480a2661b8b801a2ec8beef6da17e/jetified-firebase-common-19.3.0/AndroidManifest.xml:28:13-72
+69            android:exported="false"
+69-->[com.google.firebase:firebase-common:19.3.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/88d480a2661b8b801a2ec8beef6da17e/jetified-firebase-common-19.3.0/AndroidManifest.xml:29:13-37
+70            android:initOrder="100" />
+70-->[com.google.firebase:firebase-common:19.3.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/88d480a2661b8b801a2ec8beef6da17e/jetified-firebase-common-19.3.0/AndroidManifest.xml:30:13-36
+71
+72        <meta-data
+72-->[com.google.android.gms:play-services-basement:17.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/4a9fd22afab7baea36f26c8db08be438/jetified-play-services-basement-17.0.0/AndroidManifest.xml:23:9-25:69
+73            android:name="com.google.android.gms.version"
+73-->[com.google.android.gms:play-services-basement:17.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/4a9fd22afab7baea36f26c8db08be438/jetified-play-services-basement-17.0.0/AndroidManifest.xml:24:13-58
+74            android:value="@integer/google_play_services_version" />
+74-->[com.google.android.gms:play-services-basement:17.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/4a9fd22afab7baea36f26c8db08be438/jetified-play-services-basement-17.0.0/AndroidManifest.xml:25:13-66
+75
+76        <provider
+76-->[androidx.lifecycle:lifecycle-process:2.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/5a370d8fab10c47a27f9b23edc4c6f48/jetified-lifecycle-process-2.0.0/AndroidManifest.xml:23:9-27:43
+77            android:name="androidx.lifecycle.ProcessLifecycleOwnerInitializer"
+77-->[androidx.lifecycle:lifecycle-process:2.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/5a370d8fab10c47a27f9b23edc4c6f48/jetified-lifecycle-process-2.0.0/AndroidManifest.xml:24:13-79
+78            android:authorities="com.example.homekippa.lifecycle-process"
+78-->[androidx.lifecycle:lifecycle-process:2.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/5a370d8fab10c47a27f9b23edc4c6f48/jetified-lifecycle-process-2.0.0/AndroidManifest.xml:25:13-69
+79            android:exported="false"
+79-->[androidx.lifecycle:lifecycle-process:2.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/5a370d8fab10c47a27f9b23edc4c6f48/jetified-lifecycle-process-2.0.0/AndroidManifest.xml:26:13-37
+80            android:multiprocess="true" />
+80-->[androidx.lifecycle:lifecycle-process:2.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/5a370d8fab10c47a27f9b23edc4c6f48/jetified-lifecycle-process-2.0.0/AndroidManifest.xml:27:13-40
+81    </application>
+82
+83</manifest>

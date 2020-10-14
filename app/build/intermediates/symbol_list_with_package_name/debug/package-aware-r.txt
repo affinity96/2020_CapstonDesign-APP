@@ -1130,6 +1130,7 @@ id buttonPanel
 id button_Login
 id button_Sign
 id button_SignUp
+id button_createGroup
 id button_searchAddress
 id center
 id center_horizontal
@@ -1163,6 +1164,7 @@ id editText_Age
 id editText_ID
 id editText_Name
 id editText_PW
+id editText_groupName
 id edit_query
 id end
 id enterAlways
@@ -1298,6 +1300,7 @@ id text_search
 id textinput_counter
 id textinput_error
 id textinput_helper_text
+id textview_groupname
 id time
 id title
 id titleDividerNoCustom
@@ -1368,6 +1371,7 @@ layout abc_search_dropdown_item_icons_2line
 layout abc_search_view
 layout abc_select_dialog_material
 layout abc_tooltip
+layout activity_create_group
 layout activity_login
 layout activity_main
 layout activity_sign_up

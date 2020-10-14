@@ -1,11 +1,11 @@
 [
     {
-        "merged": "/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/build/intermediates/res/merged/debug/layout_activity_main.xml.flat",
-        "source": "/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/res/layout/activity_main.xml"
-    },
-    {
         "merged": "/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/build/intermediates/res/merged/debug/layout_fragment_dashboard.xml.flat",
         "source": "/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/res/layout/fragment_dashboard.xml"
+    },
+    {
+        "merged": "/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/build/intermediates/res/merged/debug/layout_activity_main.xml.flat",
+        "source": "/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/res/layout/activity_main.xml"
     },
     {
         "merged": "/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/build/intermediates/res/merged/debug/layout_activity_sign_up.xml.flat",
@@ -106,6 +106,10 @@
     {
         "merged": "/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/build/intermediates/res/merged/debug/navigation_mobile_navigation.xml.flat",
         "source": "/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/res/navigation/mobile_navigation.xml"
+    },
+    {
+        "merged": "/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/build/intermediates/res/merged/debug/layout_activity_create_group.xml.flat",
+        "source": "/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/res/layout/activity_create_group.xml"
     },
     {
         "merged": "/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/build/intermediates/res/merged/debug/mipmap-xhdpi_ic_launcher_round.png.flat",

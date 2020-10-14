@@ -1,0 +1,60 @@
+com/example/homekippa/BuildConfig.java
+ com.example.homekippa.BuildConfig
+com/example/homekippa/data/SignUpResponse.java
+ com.example.homekippa.data.SignUpResponse
+com/example/homekippa/ui/manage/ManageFragment.java
+ com.example.homekippa.ui.manage.ManageFragment
+ com.example.homekippa.ui.manage.ManageFragment$1
+com/example/homekippa/StartActivity.java
+ com.example.homekippa.StartActivity
+ com.example.homekippa.StartActivity$1
+ com.example.homekippa.StartActivity$2
+ com.example.homekippa.StartActivity$3
+com/example/homekippa/createGroupActivity.java
+ com.example.homekippa.createGroupActivity
+ com.example.homekippa.createGroupActivity$1
+com/example/homekippa/network/RetrofitClient.java
+ com.example.homekippa.network.RetrofitClient
+com/example/homekippa/ui/dashboard/DashboardFragment.java
+ com.example.homekippa.ui.dashboard.DashboardFragment
+ com.example.homekippa.ui.dashboard.DashboardFragment$1
+com/example/homekippa/ui/manage/ManageViewModel.java
+ com.example.homekippa.ui.manage.ManageViewModel
+com/example/homekippa/ui/notifications/NotificationsViewModel.java
+ com.example.homekippa.ui.notifications.NotificationsViewModel
+com/example/homekippa/ui/home/HomeViewModel.java
+ com.example.homekippa.ui.home.HomeViewModel
+com/example/homekippa/network/ServiceApi.java
+ com.example.homekippa.network.ServiceApi
+com/example/homekippa/ui/home/HomeFragment.java
+ com.example.homekippa.ui.home.HomeFragment
+ com.example.homekippa.ui.home.HomeFragment$1
+com/example/homekippa/ui/search/SearchViewModel.java
+ com.example.homekippa.ui.search.SearchViewModel
+com/example/homekippa/data/SignUpData.java
+ com.example.homekippa.data.SignUpData
+com/example/homekippa/ui/notifications/NotificationsFragment.java
+ com.example.homekippa.ui.notifications.NotificationsFragment
+ com.example.homekippa.ui.notifications.NotificationsFragment$1
+com/example/homekippa/MainActivity.java
+ com.example.homekippa.MainActivity
+com/example/homekippa/LoginActivity.java
+ com.example.homekippa.LoginActivity
+ com.example.homekippa.LoginActivity$1
+ com.example.homekippa.LoginActivity$2
+com/example/homekippa/ui/searchAddress/searchAddress.java
+ com.example.homekippa.ui.searchAddress.searchAddress
+ com.example.homekippa.ui.searchAddress.searchAddress$1
+ com.example.homekippa.ui.searchAddress.searchAddress$AndroidBridge
+ com.example.homekippa.ui.searchAddress.searchAddress$AndroidBridge$1
+com/example/homekippa/ui/search/SearchFragment.java
+ com.example.homekippa.ui.search.SearchFragment
+ com.example.homekippa.ui.search.SearchFragment$1
+com/example/homekippa/SignUpActivity.java
+ com.example.homekippa.SignUpActivity
+ com.example.homekippa.SignUpActivity$1
+ com.example.homekippa.SignUpActivity$1$1
+ com.example.homekippa.SignUpActivity$1$1$1
+ com.example.homekippa.SignUpActivity$1$2
+com/example/homekippa/ui/dashboard/DashboardViewModel.java
+ com.example.homekippa.ui.dashboard.DashboardViewModel

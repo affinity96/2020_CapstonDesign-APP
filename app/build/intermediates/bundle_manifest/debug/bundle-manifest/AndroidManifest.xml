@@ -8,7 +8,6 @@
         android:minSdkVersion="16"
         android:targetSdkVersion="29" />
     <!-- 인터넷 퍼미션 -->
-
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <meta-data
@@ -28,6 +27,7 @@
         android:testOnly="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true" >
+        <activity android:name="com.example.homekippa.createGroupActivity" />
         <activity android:name="com.example.homekippa.SignUpActivity" />
         <activity android:name="com.example.homekippa.StartActivity" >
             <intent-filter>
@@ -39,10 +39,8 @@
         <activity
             android:name="com.example.homekippa.MainActivity"
             android:label="@string/title_activity_main" />
-        <activity android:name="com.example.homekippa.LoginActivity" >
-        </activity>
-        <activity android:name="com.example.homekippa.ui.searchAddress.searchAddress" >
-        </activity>
+        <activity android:name="com.example.homekippa.LoginActivity" />
+        <activity android:name="com.example.homekippa.ui.searchAddress.searchAddress" />
         <activity
             android:name="com.google.firebase.auth.internal.FederatedSignInActivity"
             android:excludeFromRecents="true"
