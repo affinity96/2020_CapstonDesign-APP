@@ -1,0 +1,333 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:2:1-35:12
+INJECTED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:2:1-35:12
+INJECTED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:2:1-35:12
+INJECTED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:2:1-35:12
+MERGED from [androidx.navigation:navigation-ui:2.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/42ff7e708463a0bd6aa0ec4c1b4ad8e1/navigation-ui-2.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [com.google.android.material:material:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/9d934b1392ce93f16f73cecf2f430129/material-1.0.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.appcompat:appcompat:1.0.2] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/d8d92fadf6676b1903e8540ad6ba4ec3/appcompat-1.0.2/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.constraintlayout:constraintlayout:1.1.3] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/2b06147c5ebb911e92869d7c53f04ee1/constraintlayout-1.1.3/AndroidManifest.xml:2:1-11:12
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/18457e71c179cb1abd106bd7f700b2fa/vectordrawable-animated-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.vectordrawable:vectordrawable:1.0.1] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/c6dc21add08ec39da191aaa66ba0c5af/vectordrawable-1.0.1/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.navigation:navigation-fragment:2.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/21c53576e147c6bd5130caec847b8549/navigation-fragment-2.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-extensions:2.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/5a5be6c0760807a7a4c037ac68f40444/lifecycle-extensions-2.0.0/AndroidManifest.xml:17:1-25:12
+MERGED from [com.android.volley:volley:1.1.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/cd026f0ca8dbe14eac9d48ac176b38b6/jetified-volley-1.1.0/AndroidManifest.xml:2:1-11:12
+MERGED from [com.google.firebase:firebase-auth:19.4.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/684a46a2e24b72e913270e44283a49eb/jetified-firebase-auth-19.4.0/AndroidManifest.xml:17:1-42:12
+MERGED from [com.google.firebase:firebase-auth-interop:19.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/aa2b30bfe8c0487cb8c4e2140d11b728/jetified-firebase-auth-interop-19.0.0/AndroidManifest.xml:2:1-10:12
+MERGED from [com.google.android.gms:play-services-base:17.1.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/9873dc5fe973cc292ec718d9bd24167b/jetified-play-services-base-17.1.0/AndroidManifest.xml:17:1-29:12
+MERGED from [com.google.firebase:firebase-common:19.3.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/d20d9a7435ecf810ddef0fcfb850cc4a/jetified-firebase-common-19.3.0/AndroidManifest.xml:15:1-39:12
+MERGED from [com.google.android.gms:play-services-tasks:17.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/c1a644fae69d9f58200f77774e134818/jetified-play-services-tasks-17.0.0/AndroidManifest.xml:2:1-9:12
+MERGED from [com.google.android.gms:play-services-basement:17.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/ebb8342254a6545a8bdf251ec89aed35/jetified-play-services-basement-17.0.0/AndroidManifest.xml:17:1-28:12
+MERGED from [androidx.fragment:fragment:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/ed132a79824ebd8f38bfddcdf5871c4a/fragment-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.recyclerview:recyclerview:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/77d18b2577a96d4bb14b48e2d14d3c40/recyclerview-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.legacy:legacy-support-core-ui:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/8a59b5c1b6f352f1aa6c966e35b40243/legacy-support-core-ui-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.navigation:navigation-runtime:2.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/b9c57714b77ae7cafa26cf6fbe2f7679/navigation-runtime-2.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/a5c3062eba227f5417b64884914b1abb/legacy-support-core-utils-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.transition:transition:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/0d6dd51fce64506b9cb6dfa867877fe0/transition-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.loader:loader:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/c8838b2ae48dff2791d6f02538a7c514/loader-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.viewpager:viewpager:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/c6ce183522545b6732e592864f20f79f/viewpager-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/93b17b8777b0ad6809cc1a968924c606/coordinatorlayout-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.drawerlayout:drawerlayout:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/159764190fc18b67bd5714ac8902e4d8/drawerlayout-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.slidingpanelayout:slidingpanelayout:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/df390b2e9af5c8b4a658aec4e06ecb3b/slidingpanelayout-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.customview:customview:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/17ea5904e1c740e9126f4b3b8dc831bc/customview-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.swiperefreshlayout:swiperefreshlayout:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/ba6a52fdaaf443e7de82fb4ec017d410/swiperefreshlayout-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.asynclayoutinflater:asynclayoutinflater:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/2fed8bd1ca81b4eb0b64b45034a109e8/asynclayoutinflater-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.navigation:navigation-common:2.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/94cdf29ed09fd41bd88498369f35b400/navigation-common-2.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.core:core:1.0.1] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/856428061fc4c0c0b2001aa3d1c9bbba/core-1.0.1/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/f630d2facb0cb798238a0a67497c7921/versionedparcelable-1.0.0/AndroidManifest.xml:17:1-25:12
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/0e5eeecdc25ccb19f76fc31afde34ab5/cursoradapter-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.cardview:cardview:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/ad8ada69fb7009df2ed886590df700c9/cardview-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-process:2.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/2e917fc04f77b83b2f09542204caf398/jetified-lifecycle-process-2.0.0/AndroidManifest.xml:17:1-30:12
+MERGED from [androidx.lifecycle:lifecycle-service:2.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/f229568577da6b3626b718ecb8bf0da4/jetified-lifecycle-service-2.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/775788d8aa987f5d60c3e36823f9fa24/lifecycle-runtime-2.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/ddcdad2735702e112acd5d5b1f6ff688/lifecycle-livedata-2.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/5fdc1c3b9eec85acd63d6e0a1f20cb20/lifecycle-livedata-core-2.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.arch.core:core-runtime:2.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/88173ca45634cdfc61824a9efa5247e7/core-runtime-2.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/26877f6438e349ea8bf832de8d6cb721/lifecycle-viewmodel-2.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/b2ea93cc506ef43b5057eba0a688965e/localbroadcastmanager-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [com.google.firebase:firebase-components:16.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/652728d4e32b272cb5962ee93b6123ab/jetified-firebase-components-16.0.0/AndroidManifest.xml:15:1-23:12
+MERGED from [androidx.documentfile:documentfile:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/520cb49162c5a20c27b77f13764e9b2d/documentfile-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.print:print:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/9d2a04633b2466e476e2d38a7cb1a082/print-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.interpolator:interpolator:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/cf90d0d13ad94b66888349eca933d608/interpolator-1.0.0/AndroidManifest.xml:17:1-22:12
+INJECTED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:2:1-35:12
+INJECTED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:2:1-35:12
+INJECTED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:2:1-35:12
+	package
+		ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:3:5-36
+		INJECTED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml
+	android:versionName
+		INJECTED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml
+		ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:2:1-35:12
+		INJECTED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml
+	android:versionCode
+		INJECTED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml
+		ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:2:1-35:12
+		INJECTED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:2:11-69
+uses-permission#android.permission.ACCESS_FINE_LOCATION
+ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:7:5-78
+	android:name
+		ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:7:22-76
+meta-data#com.kakao.sdk.AppKey
+ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:8:5-102
+	android:value
+		ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:8:52-100
+	android:name
+		ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:8:16-51
+application
+ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:10:5-33:19
+MERGED from [com.google.android.material:material:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/9d934b1392ce93f16f73cecf2f430129/material-1.0.0/AndroidManifest.xml:22:5-20
+MERGED from [com.google.android.material:material:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/9d934b1392ce93f16f73cecf2f430129/material-1.0.0/AndroidManifest.xml:22:5-20
+MERGED from [androidx.constraintlayout:constraintlayout:1.1.3] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/2b06147c5ebb911e92869d7c53f04ee1/constraintlayout-1.1.3/AndroidManifest.xml:9:5-20
+MERGED from [androidx.constraintlayout:constraintlayout:1.1.3] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/2b06147c5ebb911e92869d7c53f04ee1/constraintlayout-1.1.3/AndroidManifest.xml:9:5-20
+MERGED from [androidx.lifecycle:lifecycle-extensions:2.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/5a5be6c0760807a7a4c037ac68f40444/lifecycle-extensions-2.0.0/AndroidManifest.xml:22:5-23:19
+MERGED from [androidx.lifecycle:lifecycle-extensions:2.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/5a5be6c0760807a7a4c037ac68f40444/lifecycle-extensions-2.0.0/AndroidManifest.xml:22:5-23:19
+MERGED from [com.android.volley:volley:1.1.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/cd026f0ca8dbe14eac9d48ac176b38b6/jetified-volley-1.1.0/AndroidManifest.xml:9:5-20
+MERGED from [com.android.volley:volley:1.1.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/cd026f0ca8dbe14eac9d48ac176b38b6/jetified-volley-1.1.0/AndroidManifest.xml:9:5-20
+MERGED from [com.google.firebase:firebase-auth:19.4.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/684a46a2e24b72e913270e44283a49eb/jetified-firebase-auth-19.4.0/AndroidManifest.xml:23:5-40:19
+MERGED from [com.google.firebase:firebase-auth:19.4.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/684a46a2e24b72e913270e44283a49eb/jetified-firebase-auth-19.4.0/AndroidManifest.xml:23:5-40:19
+MERGED from [com.google.firebase:firebase-auth-interop:19.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/aa2b30bfe8c0487cb8c4e2140d11b728/jetified-firebase-auth-interop-19.0.0/AndroidManifest.xml:7:5-8:19
+MERGED from [com.google.firebase:firebase-auth-interop:19.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/aa2b30bfe8c0487cb8c4e2140d11b728/jetified-firebase-auth-interop-19.0.0/AndroidManifest.xml:7:5-8:19
+MERGED from [com.google.android.gms:play-services-base:17.1.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/9873dc5fe973cc292ec718d9bd24167b/jetified-play-services-base-17.1.0/AndroidManifest.xml:22:5-27:19
+MERGED from [com.google.android.gms:play-services-base:17.1.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/9873dc5fe973cc292ec718d9bd24167b/jetified-play-services-base-17.1.0/AndroidManifest.xml:22:5-27:19
+MERGED from [com.google.firebase:firebase-common:19.3.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/d20d9a7435ecf810ddef0fcfb850cc4a/jetified-firebase-common-19.3.0/AndroidManifest.xml:25:5-37:19
+MERGED from [com.google.firebase:firebase-common:19.3.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/d20d9a7435ecf810ddef0fcfb850cc4a/jetified-firebase-common-19.3.0/AndroidManifest.xml:25:5-37:19
+MERGED from [com.google.android.gms:play-services-tasks:17.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/c1a644fae69d9f58200f77774e134818/jetified-play-services-tasks-17.0.0/AndroidManifest.xml:7:5-20
+MERGED from [com.google.android.gms:play-services-tasks:17.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/c1a644fae69d9f58200f77774e134818/jetified-play-services-tasks-17.0.0/AndroidManifest.xml:7:5-20
+MERGED from [com.google.android.gms:play-services-basement:17.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/ebb8342254a6545a8bdf251ec89aed35/jetified-play-services-basement-17.0.0/AndroidManifest.xml:22:5-26:19
+MERGED from [com.google.android.gms:play-services-basement:17.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/ebb8342254a6545a8bdf251ec89aed35/jetified-play-services-basement-17.0.0/AndroidManifest.xml:22:5-26:19
+MERGED from [androidx.core:core:1.0.1] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/856428061fc4c0c0b2001aa3d1c9bbba/core-1.0.1/AndroidManifest.xml:22:5-89
+MERGED from [androidx.core:core:1.0.1] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/856428061fc4c0c0b2001aa3d1c9bbba/core-1.0.1/AndroidManifest.xml:22:5-89
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/f630d2facb0cb798238a0a67497c7921/versionedparcelable-1.0.0/AndroidManifest.xml:22:5-23:19
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/f630d2facb0cb798238a0a67497c7921/versionedparcelable-1.0.0/AndroidManifest.xml:22:5-23:19
+MERGED from [androidx.lifecycle:lifecycle-process:2.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/2e917fc04f77b83b2f09542204caf398/jetified-lifecycle-process-2.0.0/AndroidManifest.xml:22:5-28:19
+MERGED from [androidx.lifecycle:lifecycle-process:2.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/2e917fc04f77b83b2f09542204caf398/jetified-lifecycle-process-2.0.0/AndroidManifest.xml:22:5-28:19
+	android:appComponentFactory
+		ADDED from [androidx.core:core:1.0.1] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/856428061fc4c0c0b2001aa3d1c9bbba/core-1.0.1/AndroidManifest.xml:22:18-86
+	android:supportsRtl
+		ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:15:9-35
+	android:label
+		ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:13:9-41
+	android:roundIcon
+		ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:14:9-54
+	android:icon
+		ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:12:9-43
+	android:allowBackup
+		ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:11:9-35
+	android:theme
+		ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:16:9-40
+	android:usesCleartextTraffic
+		ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:17:9-44
+activity#com.example.homekippa.SignUpActivity
+ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:18:9-61
+	android:name
+		ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:18:19-49
+activity#com.example.homekippa.StartActivity
+ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:19:9-25:20
+	android:name
+		ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:19:19-48
+intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
+ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:20:9-24:25
+action#android.intent.action.MAIN
+ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:21:13-65
+	android:name
+		ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:21:21-62
+category#android.intent.category.LAUNCHER
+ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:23:13-73
+	android:name
+		ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:23:23-70
+activity#com.example.homekippa.MainActivity
+ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:26:9-28:59
+	android:label
+		ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:28:13-56
+	android:name
+		ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:27:13-41
+activity#com.example.homekippa.LoginActivity
+ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:29:9-30:20
+	android:name
+		ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:29:19-48
+activity#com.example.homekippa.ui.searchAddress.searchAddress
+ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:31:9-32:20
+	android:name
+		ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:31:19-65
+uses-permission#android.permission.INTERNET
+ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:34:5-67
+	android:name
+		ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:34:22-64
+uses-sdk
+INJECTED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml
+INJECTED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml
+MERGED from [androidx.navigation:navigation-ui:2.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/42ff7e708463a0bd6aa0ec4c1b4ad8e1/navigation-ui-2.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.navigation:navigation-ui:2.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/42ff7e708463a0bd6aa0ec4c1b4ad8e1/navigation-ui-2.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.material:material:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/9d934b1392ce93f16f73cecf2f430129/material-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.material:material:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/9d934b1392ce93f16f73cecf2f430129/material-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.appcompat:appcompat:1.0.2] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/d8d92fadf6676b1903e8540ad6ba4ec3/appcompat-1.0.2/AndroidManifest.xml:20:5-44
+MERGED from [androidx.appcompat:appcompat:1.0.2] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/d8d92fadf6676b1903e8540ad6ba4ec3/appcompat-1.0.2/AndroidManifest.xml:20:5-44
+MERGED from [androidx.constraintlayout:constraintlayout:1.1.3] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/2b06147c5ebb911e92869d7c53f04ee1/constraintlayout-1.1.3/AndroidManifest.xml:5:5-7:41
+MERGED from [androidx.constraintlayout:constraintlayout:1.1.3] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/2b06147c5ebb911e92869d7c53f04ee1/constraintlayout-1.1.3/AndroidManifest.xml:5:5-7:41
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/18457e71c179cb1abd106bd7f700b2fa/vectordrawable-animated-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/18457e71c179cb1abd106bd7f700b2fa/vectordrawable-animated-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.vectordrawable:vectordrawable:1.0.1] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/c6dc21add08ec39da191aaa66ba0c5af/vectordrawable-1.0.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.vectordrawable:vectordrawable:1.0.1] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/c6dc21add08ec39da191aaa66ba0c5af/vectordrawable-1.0.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.navigation:navigation-fragment:2.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/21c53576e147c6bd5130caec847b8549/navigation-fragment-2.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.navigation:navigation-fragment:2.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/21c53576e147c6bd5130caec847b8549/navigation-fragment-2.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-extensions:2.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/5a5be6c0760807a7a4c037ac68f40444/lifecycle-extensions-2.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-extensions:2.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/5a5be6c0760807a7a4c037ac68f40444/lifecycle-extensions-2.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.volley:volley:1.1.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/cd026f0ca8dbe14eac9d48ac176b38b6/jetified-volley-1.1.0/AndroidManifest.xml:7:5-43
+MERGED from [com.android.volley:volley:1.1.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/cd026f0ca8dbe14eac9d48ac176b38b6/jetified-volley-1.1.0/AndroidManifest.xml:7:5-43
+MERGED from [com.google.firebase:firebase-auth:19.4.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/684a46a2e24b72e913270e44283a49eb/jetified-firebase-auth-19.4.0/AndroidManifest.xml:21:5-44
+MERGED from [com.google.firebase:firebase-auth:19.4.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/684a46a2e24b72e913270e44283a49eb/jetified-firebase-auth-19.4.0/AndroidManifest.xml:21:5-44
+MERGED from [com.google.firebase:firebase-auth-interop:19.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/aa2b30bfe8c0487cb8c4e2140d11b728/jetified-firebase-auth-interop-19.0.0/AndroidManifest.xml:5:5-44
+MERGED from [com.google.firebase:firebase-auth-interop:19.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/aa2b30bfe8c0487cb8c4e2140d11b728/jetified-firebase-auth-interop-19.0.0/AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.gms:play-services-base:17.1.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/9873dc5fe973cc292ec718d9bd24167b/jetified-play-services-base-17.1.0/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-base:17.1.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/9873dc5fe973cc292ec718d9bd24167b/jetified-play-services-base-17.1.0/AndroidManifest.xml:20:5-44
+MERGED from [com.google.firebase:firebase-common:19.3.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/d20d9a7435ecf810ddef0fcfb850cc4a/jetified-firebase-common-19.3.0/AndroidManifest.xml:20:5-22:41
+MERGED from [com.google.firebase:firebase-common:19.3.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/d20d9a7435ecf810ddef0fcfb850cc4a/jetified-firebase-common-19.3.0/AndroidManifest.xml:20:5-22:41
+MERGED from [com.google.android.gms:play-services-tasks:17.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/c1a644fae69d9f58200f77774e134818/jetified-play-services-tasks-17.0.0/AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.gms:play-services-tasks:17.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/c1a644fae69d9f58200f77774e134818/jetified-play-services-tasks-17.0.0/AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.gms:play-services-basement:17.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/ebb8342254a6545a8bdf251ec89aed35/jetified-play-services-basement-17.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-basement:17.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/ebb8342254a6545a8bdf251ec89aed35/jetified-play-services-basement-17.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.fragment:fragment:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/ed132a79824ebd8f38bfddcdf5871c4a/fragment-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.fragment:fragment:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/ed132a79824ebd8f38bfddcdf5871c4a/fragment-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.recyclerview:recyclerview:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/77d18b2577a96d4bb14b48e2d14d3c40/recyclerview-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.recyclerview:recyclerview:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/77d18b2577a96d4bb14b48e2d14d3c40/recyclerview-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.legacy:legacy-support-core-ui:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/8a59b5c1b6f352f1aa6c966e35b40243/legacy-support-core-ui-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.legacy:legacy-support-core-ui:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/8a59b5c1b6f352f1aa6c966e35b40243/legacy-support-core-ui-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.navigation:navigation-runtime:2.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/b9c57714b77ae7cafa26cf6fbe2f7679/navigation-runtime-2.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.navigation:navigation-runtime:2.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/b9c57714b77ae7cafa26cf6fbe2f7679/navigation-runtime-2.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/a5c3062eba227f5417b64884914b1abb/legacy-support-core-utils-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/a5c3062eba227f5417b64884914b1abb/legacy-support-core-utils-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.transition:transition:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/0d6dd51fce64506b9cb6dfa867877fe0/transition-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.transition:transition:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/0d6dd51fce64506b9cb6dfa867877fe0/transition-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.loader:loader:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/c8838b2ae48dff2791d6f02538a7c514/loader-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.loader:loader:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/c8838b2ae48dff2791d6f02538a7c514/loader-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.viewpager:viewpager:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/c6ce183522545b6732e592864f20f79f/viewpager-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.viewpager:viewpager:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/c6ce183522545b6732e592864f20f79f/viewpager-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/93b17b8777b0ad6809cc1a968924c606/coordinatorlayout-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/93b17b8777b0ad6809cc1a968924c606/coordinatorlayout-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.drawerlayout:drawerlayout:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/159764190fc18b67bd5714ac8902e4d8/drawerlayout-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.drawerlayout:drawerlayout:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/159764190fc18b67bd5714ac8902e4d8/drawerlayout-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.slidingpanelayout:slidingpanelayout:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/df390b2e9af5c8b4a658aec4e06ecb3b/slidingpanelayout-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.slidingpanelayout:slidingpanelayout:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/df390b2e9af5c8b4a658aec4e06ecb3b/slidingpanelayout-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.customview:customview:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/17ea5904e1c740e9126f4b3b8dc831bc/customview-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.customview:customview:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/17ea5904e1c740e9126f4b3b8dc831bc/customview-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.swiperefreshlayout:swiperefreshlayout:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/ba6a52fdaaf443e7de82fb4ec017d410/swiperefreshlayout-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.swiperefreshlayout:swiperefreshlayout:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/ba6a52fdaaf443e7de82fb4ec017d410/swiperefreshlayout-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.asynclayoutinflater:asynclayoutinflater:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/2fed8bd1ca81b4eb0b64b45034a109e8/asynclayoutinflater-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.asynclayoutinflater:asynclayoutinflater:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/2fed8bd1ca81b4eb0b64b45034a109e8/asynclayoutinflater-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.navigation:navigation-common:2.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/94cdf29ed09fd41bd88498369f35b400/navigation-common-2.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.navigation:navigation-common:2.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/94cdf29ed09fd41bd88498369f35b400/navigation-common-2.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.core:core:1.0.1] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/856428061fc4c0c0b2001aa3d1c9bbba/core-1.0.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.core:core:1.0.1] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/856428061fc4c0c0b2001aa3d1c9bbba/core-1.0.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/f630d2facb0cb798238a0a67497c7921/versionedparcelable-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/f630d2facb0cb798238a0a67497c7921/versionedparcelable-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/0e5eeecdc25ccb19f76fc31afde34ab5/cursoradapter-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/0e5eeecdc25ccb19f76fc31afde34ab5/cursoradapter-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.cardview:cardview:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/ad8ada69fb7009df2ed886590df700c9/cardview-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.cardview:cardview:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/ad8ada69fb7009df2ed886590df700c9/cardview-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-process:2.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/2e917fc04f77b83b2f09542204caf398/jetified-lifecycle-process-2.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-process:2.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/2e917fc04f77b83b2f09542204caf398/jetified-lifecycle-process-2.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-service:2.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/f229568577da6b3626b718ecb8bf0da4/jetified-lifecycle-service-2.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-service:2.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/f229568577da6b3626b718ecb8bf0da4/jetified-lifecycle-service-2.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/775788d8aa987f5d60c3e36823f9fa24/lifecycle-runtime-2.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/775788d8aa987f5d60c3e36823f9fa24/lifecycle-runtime-2.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/ddcdad2735702e112acd5d5b1f6ff688/lifecycle-livedata-2.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/ddcdad2735702e112acd5d5b1f6ff688/lifecycle-livedata-2.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/5fdc1c3b9eec85acd63d6e0a1f20cb20/lifecycle-livedata-core-2.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/5fdc1c3b9eec85acd63d6e0a1f20cb20/lifecycle-livedata-core-2.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.arch.core:core-runtime:2.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/88173ca45634cdfc61824a9efa5247e7/core-runtime-2.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.arch.core:core-runtime:2.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/88173ca45634cdfc61824a9efa5247e7/core-runtime-2.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/26877f6438e349ea8bf832de8d6cb721/lifecycle-viewmodel-2.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/26877f6438e349ea8bf832de8d6cb721/lifecycle-viewmodel-2.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/b2ea93cc506ef43b5057eba0a688965e/localbroadcastmanager-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/b2ea93cc506ef43b5057eba0a688965e/localbroadcastmanager-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.google.firebase:firebase-components:16.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/652728d4e32b272cb5962ee93b6123ab/jetified-firebase-components-16.0.0/AndroidManifest.xml:19:5-21:41
+MERGED from [com.google.firebase:firebase-components:16.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/652728d4e32b272cb5962ee93b6123ab/jetified-firebase-components-16.0.0/AndroidManifest.xml:19:5-21:41
+MERGED from [androidx.documentfile:documentfile:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/520cb49162c5a20c27b77f13764e9b2d/documentfile-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.documentfile:documentfile:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/520cb49162c5a20c27b77f13764e9b2d/documentfile-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.print:print:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/9d2a04633b2466e476e2d38a7cb1a082/print-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.print:print:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/9d2a04633b2466e476e2d38a7cb1a082/print-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.interpolator:interpolator:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/cf90d0d13ad94b66888349eca933d608/interpolator-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.interpolator:interpolator:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/cf90d0d13ad94b66888349eca933d608/interpolator-1.0.0/AndroidManifest.xml:20:5-44
+INJECTED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml
+INJECTED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml
+		ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml
+		ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml
+activity#com.google.firebase.auth.internal.FederatedSignInActivity
+ADDED from [com.google.firebase:firebase-auth:19.4.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/684a46a2e24b72e913270e44283a49eb/jetified-firebase-auth-19.4.0/AndroidManifest.xml:24:9-31:50
+	android:excludeFromRecents
+		ADDED from [com.google.firebase:firebase-auth:19.4.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/684a46a2e24b72e913270e44283a49eb/jetified-firebase-auth-19.4.0/AndroidManifest.xml:26:13-46
+	android:launchMode
+		ADDED from [com.google.firebase:firebase-auth:19.4.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/684a46a2e24b72e913270e44283a49eb/jetified-firebase-auth-19.4.0/AndroidManifest.xml:28:13-44
+	android:exported
+		ADDED from [com.google.firebase:firebase-auth:19.4.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/684a46a2e24b72e913270e44283a49eb/jetified-firebase-auth-19.4.0/AndroidManifest.xml:27:13-36
+	android:permission
+		ADDED from [com.google.firebase:firebase-auth:19.4.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/684a46a2e24b72e913270e44283a49eb/jetified-firebase-auth-19.4.0/AndroidManifest.xml:29:13-102
+	android:theme
+		ADDED from [com.google.firebase:firebase-auth:19.4.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/684a46a2e24b72e913270e44283a49eb/jetified-firebase-auth-19.4.0/AndroidManifest.xml:30:13-72
+	tools:replace
+		ADDED from [com.google.firebase:firebase-auth:19.4.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/684a46a2e24b72e913270e44283a49eb/jetified-firebase-auth-19.4.0/AndroidManifest.xml:31:13-47
+	android:name
+		ADDED from [com.google.firebase:firebase-auth:19.4.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/684a46a2e24b72e913270e44283a49eb/jetified-firebase-auth-19.4.0/AndroidManifest.xml:25:13-85
+service#com.google.firebase.components.ComponentDiscoveryService
+ADDED from [com.google.firebase:firebase-auth:19.4.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/684a46a2e24b72e913270e44283a49eb/jetified-firebase-auth-19.4.0/AndroidManifest.xml:33:9-39:19
+MERGED from [com.google.firebase:firebase-common:19.3.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/d20d9a7435ecf810ddef0fcfb850cc4a/jetified-firebase-common-19.3.0/AndroidManifest.xml:32:9-36:35
+MERGED from [com.google.firebase:firebase-common:19.3.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/d20d9a7435ecf810ddef0fcfb850cc4a/jetified-firebase-common-19.3.0/AndroidManifest.xml:32:9-36:35
+	android:exported
+		ADDED from [com.google.firebase:firebase-auth:19.4.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/684a46a2e24b72e913270e44283a49eb/jetified-firebase-auth-19.4.0/AndroidManifest.xml:35:13-37
+	tools:targetApi
+		ADDED from [com.google.firebase:firebase-common:19.3.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/d20d9a7435ecf810ddef0fcfb850cc4a/jetified-firebase-common-19.3.0/AndroidManifest.xml:36:13-32
+	android:directBootAware
+		ADDED from [com.google.firebase:firebase-common:19.3.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/d20d9a7435ecf810ddef0fcfb850cc4a/jetified-firebase-common-19.3.0/AndroidManifest.xml:34:13-43
+	android:name
+		ADDED from [com.google.firebase:firebase-auth:19.4.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/684a46a2e24b72e913270e44283a49eb/jetified-firebase-auth-19.4.0/AndroidManifest.xml:34:13-84
+meta-data#com.google.firebase.components:com.google.firebase.auth.FirebaseAuthRegistrar
+ADDED from [com.google.firebase:firebase-auth:19.4.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/684a46a2e24b72e913270e44283a49eb/jetified-firebase-auth-19.4.0/AndroidManifest.xml:36:13-38:85
+	android:value
+		ADDED from [com.google.firebase:firebase-auth:19.4.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/684a46a2e24b72e913270e44283a49eb/jetified-firebase-auth-19.4.0/AndroidManifest.xml:38:17-82
+	android:name
+		ADDED from [com.google.firebase:firebase-auth:19.4.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/684a46a2e24b72e913270e44283a49eb/jetified-firebase-auth-19.4.0/AndroidManifest.xml:37:17-109
+activity#com.google.android.gms.common.api.GoogleApiActivity
+ADDED from [com.google.android.gms:play-services-base:17.1.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/9873dc5fe973cc292ec718d9bd24167b/jetified-play-services-base-17.1.0/AndroidManifest.xml:23:9-26:75
+	android:exported
+		ADDED from [com.google.android.gms:play-services-base:17.1.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/9873dc5fe973cc292ec718d9bd24167b/jetified-play-services-base-17.1.0/AndroidManifest.xml:25:13-37
+	android:theme
+		ADDED from [com.google.android.gms:play-services-base:17.1.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/9873dc5fe973cc292ec718d9bd24167b/jetified-play-services-base-17.1.0/AndroidManifest.xml:26:13-72
+	android:name
+		ADDED from [com.google.android.gms:play-services-base:17.1.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/9873dc5fe973cc292ec718d9bd24167b/jetified-play-services-base-17.1.0/AndroidManifest.xml:24:13-79
+provider#com.google.firebase.provider.FirebaseInitProvider
+ADDED from [com.google.firebase:firebase-common:19.3.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/d20d9a7435ecf810ddef0fcfb850cc4a/jetified-firebase-common-19.3.0/AndroidManifest.xml:26:9-30:39
+	android:authorities
+		ADDED from [com.google.firebase:firebase-common:19.3.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/d20d9a7435ecf810ddef0fcfb850cc4a/jetified-firebase-common-19.3.0/AndroidManifest.xml:28:13-72
+	android:exported
+		ADDED from [com.google.firebase:firebase-common:19.3.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/d20d9a7435ecf810ddef0fcfb850cc4a/jetified-firebase-common-19.3.0/AndroidManifest.xml:29:13-37
+	android:initOrder
+		ADDED from [com.google.firebase:firebase-common:19.3.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/d20d9a7435ecf810ddef0fcfb850cc4a/jetified-firebase-common-19.3.0/AndroidManifest.xml:30:13-36
+	android:name
+		ADDED from [com.google.firebase:firebase-common:19.3.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/d20d9a7435ecf810ddef0fcfb850cc4a/jetified-firebase-common-19.3.0/AndroidManifest.xml:27:13-77
+meta-data#com.google.android.gms.version
+ADDED from [com.google.android.gms:play-services-basement:17.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/ebb8342254a6545a8bdf251ec89aed35/jetified-play-services-basement-17.0.0/AndroidManifest.xml:23:9-25:69
+	android:value
+		ADDED from [com.google.android.gms:play-services-basement:17.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/ebb8342254a6545a8bdf251ec89aed35/jetified-play-services-basement-17.0.0/AndroidManifest.xml:25:13-66
+	android:name
+		ADDED from [com.google.android.gms:play-services-basement:17.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/ebb8342254a6545a8bdf251ec89aed35/jetified-play-services-basement-17.0.0/AndroidManifest.xml:24:13-58
+provider#androidx.lifecycle.ProcessLifecycleOwnerInitializer
+ADDED from [androidx.lifecycle:lifecycle-process:2.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/2e917fc04f77b83b2f09542204caf398/jetified-lifecycle-process-2.0.0/AndroidManifest.xml:23:9-27:43
+	android:authorities
+		ADDED from [androidx.lifecycle:lifecycle-process:2.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/2e917fc04f77b83b2f09542204caf398/jetified-lifecycle-process-2.0.0/AndroidManifest.xml:25:13-69
+	android:multiprocess
+		ADDED from [androidx.lifecycle:lifecycle-process:2.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/2e917fc04f77b83b2f09542204caf398/jetified-lifecycle-process-2.0.0/AndroidManifest.xml:27:13-40
+	android:exported
+		ADDED from [androidx.lifecycle:lifecycle-process:2.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/2e917fc04f77b83b2f09542204caf398/jetified-lifecycle-process-2.0.0/AndroidManifest.xml:26:13-37
+	android:name
+		ADDED from [androidx.lifecycle:lifecycle-process:2.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/2e917fc04f77b83b2f09542204caf398/jetified-lifecycle-process-2.0.0/AndroidManifest.xml:24:13-79
