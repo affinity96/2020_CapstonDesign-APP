@@ -1131,6 +1131,7 @@ id button_Login
 id button_Sign
 id button_SignUp
 id button_createGroup
+id button_createNewGroup
 id button_searchAddress
 id center
 id center_horizontal
@@ -1207,6 +1208,7 @@ id message
 id middle
 id mini
 id mobile_navigation
+id moveToSearchAddress
 id mtrl_child_content_container
 id mtrl_internal_children_alpha_tag
 id multiply
@@ -1374,9 +1376,9 @@ layout abc_tooltip
 layout activity_create_group
 layout activity_login
 layout activity_main
+layout activity_search_address
 layout activity_sign_up
 layout activity_start
-layout address_search_test
 layout design_bottom_navigation_item
 layout design_bottom_sheet_dialog
 layout design_layout_snackbar

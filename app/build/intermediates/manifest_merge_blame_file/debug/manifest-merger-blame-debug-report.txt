@@ -45,7 +45,7 @@
 28-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:19:9-40
 29        android:usesCleartextTraffic="true" >
 29-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:20:9-44
-30        <activity android:name="com.example.homekippa.createGroupActivity" />
+30        <activity android:name="com.example.homekippa.CreateGroupActivity" />
 30-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:21:9-66
 30-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:21:19-54
 31        <activity android:name="com.example.homekippa.SignUpActivity" />

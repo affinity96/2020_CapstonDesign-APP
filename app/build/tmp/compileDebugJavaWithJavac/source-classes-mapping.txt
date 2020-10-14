@@ -5,14 +5,8 @@ com/example/homekippa/data/SignUpResponse.java
 com/example/homekippa/ui/manage/ManageFragment.java
  com.example.homekippa.ui.manage.ManageFragment
  com.example.homekippa.ui.manage.ManageFragment$1
-com/example/homekippa/StartActivity.java
- com.example.homekippa.StartActivity
- com.example.homekippa.StartActivity$1
- com.example.homekippa.StartActivity$2
- com.example.homekippa.StartActivity$3
-com/example/homekippa/createGroupActivity.java
- com.example.homekippa.createGroupActivity
- com.example.homekippa.createGroupActivity$1
+com/example/homekippa/ui/dashboard/DashboardViewModel.java
+ com.example.homekippa.ui.dashboard.DashboardViewModel
 com/example/homekippa/network/RetrofitClient.java
  com.example.homekippa.network.RetrofitClient
 com/example/homekippa/ui/dashboard/DashboardFragment.java
@@ -38,6 +32,10 @@ com/example/homekippa/ui/notifications/NotificationsFragment.java
  com.example.homekippa.ui.notifications.NotificationsFragment$1
 com/example/homekippa/MainActivity.java
  com.example.homekippa.MainActivity
+com/example/homekippa/CreateGroupActivity.java
+ com.example.homekippa.CreateGroupActivity
+ com.example.homekippa.CreateGroupActivity$1
+ com.example.homekippa.CreateGroupActivity$2
 com/example/homekippa/LoginActivity.java
  com.example.homekippa.LoginActivity
  com.example.homekippa.LoginActivity$1
@@ -56,5 +54,9 @@ com/example/homekippa/SignUpActivity.java
  com.example.homekippa.SignUpActivity$1$1
  com.example.homekippa.SignUpActivity$1$1$1
  com.example.homekippa.SignUpActivity$1$2
-com/example/homekippa/ui/dashboard/DashboardViewModel.java
- com.example.homekippa.ui.dashboard.DashboardViewModel
+com/example/homekippa/StartActivity.java
+ com.example.homekippa.StartActivity
+ com.example.homekippa.StartActivity$1
+ com.example.homekippa.StartActivity$2
+ com.example.homekippa.StartActivity$3
+ com.example.homekippa.StartActivity$4

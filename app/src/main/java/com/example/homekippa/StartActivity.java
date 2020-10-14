@@ -23,7 +23,7 @@ public class StartActivity extends AppCompatActivity {
         button_Login = findViewById(R.id.button_Login);
         button_Sign = findViewById(R.id.button_Sign);
         button_searchAddress =findViewById(R.id.button_searchAddress);
-        button_createNewGroup=findViewById(R.id.button_createGroup);
+        button_createNewGroup=findViewById(R.id.button_createNewGroup);
 
 
         button_Login.setOnClickListener(new View.OnClickListener() {
@@ -52,7 +52,7 @@ public class StartActivity extends AppCompatActivity {
 
         button_createNewGroup.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), CreateGroupActivity.class);
                 startActivity(intent);
             }

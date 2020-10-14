@@ -27,7 +27,7 @@
         android:testOnly="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true" >
-        <activity android:name="com.example.homekippa.createGroupActivity" />
+        <activity android:name="com.example.homekippa.CreateGroupActivity" />
         <activity android:name="com.example.homekippa.SignUpActivity" />
         <activity android:name="com.example.homekippa.StartActivity" >
             <intent-filter>

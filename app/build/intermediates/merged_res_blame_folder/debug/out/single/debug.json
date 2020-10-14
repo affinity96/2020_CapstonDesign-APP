@@ -1,11 +1,11 @@
 [
     {
-        "merged": "/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/build/intermediates/res/merged/debug/layout_activity_main.xml.flat",
-        "source": "/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/res/layout/activity_main.xml"
-    },
-    {
         "merged": "/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/build/intermediates/res/merged/debug/layout_fragment_dashboard.xml.flat",
         "source": "/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/res/layout/fragment_dashboard.xml"
+    },
+    {
+        "merged": "/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/build/intermediates/res/merged/debug/layout_activity_main.xml.flat",
+        "source": "/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/res/layout/activity_main.xml"
     },
     {
         "merged": "/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/build/intermediates/res/merged/debug/layout_activity_sign_up.xml.flat",
@@ -42,10 +42,6 @@
     {
         "merged": "/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/build/intermediates/res/merged/debug/drawable_ic_search_black_24dp.xml.flat",
         "source": "/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/res/drawable/ic_search_black_24dp.xml"
-    },
-    {
-        "merged": "/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/build/intermediates/res/merged/debug/layout_address_search_test.xml.flat",
-        "source": "/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/res/layout/address_search_test.xml"
     },
     {
         "merged": "/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/build/intermediates/res/merged/debug/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
@@ -102,6 +98,10 @@
     {
         "merged": "/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/build/intermediates/res/merged/debug/mipmap-xhdpi_ic_launcher.png.flat",
         "source": "/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/res/mipmap-xhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/build/intermediates/res/merged/debug/layout_activity_search_address.xml.flat",
+        "source": "/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/res/layout/activity_search_address.xml"
     },
     {
         "merged": "/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/build/intermediates/res/merged/debug/layout_activity_create_group.xml.flat",

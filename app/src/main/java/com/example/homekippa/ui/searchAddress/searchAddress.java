@@ -4,7 +4,6 @@ import android.os.Handler;
 
 import android.os.Bundle;
 
-import android.util.Log;
 import android.webkit.JavascriptInterface;
 
 import android.webkit.WebChromeClient;
@@ -33,7 +32,7 @@ public class searchAddress extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.address_search_test);
+        setContentView(R.layout.activity_search_address);
 
         daum_result = (TextView) findViewById(R.id.daum_result);
 
