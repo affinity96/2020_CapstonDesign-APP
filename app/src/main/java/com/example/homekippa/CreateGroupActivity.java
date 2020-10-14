@@ -52,6 +52,8 @@ public class CreateGroupActivity extends AppCompatActivity {
                 //groupNameTag : 그룹 이름에 랜덤숫자를 합친 것을 의미합니다.
                 String groupNameTag = makeGroupName(groupName);
 
+                //TODO:그룹 이름하고 주소 두개를 backend에 보는 것까지만 하기
+
             }
         });
 
