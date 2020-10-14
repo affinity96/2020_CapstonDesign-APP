@@ -26,6 +26,22 @@
     </LinearLayout>
 
     <EditText
+        android:id="@+id/editText_Phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="phone"
+        android:hint="전화번호" />
+
+    <EditText
+        android:id="@+id/editText_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="이메일"
+        android:inputType="textEmailAddress" />
+
+    <EditText
         android:id="@+id/editText_PW"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -49,17 +65,18 @@
         android:hint="닉네임"
         android:inputType="text"/>
 
-    <EditText
-        android:id="@+id/editText_Birth"
+    <TextView
+        android:id="@+id/text_Birth"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="생년월일"
-        android:inputType="date" />
+        android:textSize="18sp"
+        android:hint="생년월일" />
 
     <Button
         android:id="@+id/button_SignUp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:text="회원 가입" />
 </LinearLayout>
