@@ -7,41 +7,76 @@
     android:orientation="vertical"
     tools:context=".SignUpActivity">
 
-    <EditText
-        android:id="@+id/editText_ID"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <EditText
+            android:id="@+id/editText_ID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="아이디"
+            android:inputType="text" />
+        <Button
+            android:id="@+id/button_ID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="중복 확인"/>
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/editText_Phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="아이디"
+        android:inputType="phone"
+        android:hint="전화번호" />
+
+    <EditText
+        android:id="@+id/editText_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="이메일"
         android:inputType="textEmailAddress" />
 
     <EditText
         android:id="@+id/editText_PW"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="비밀번호"
         android:inputType="textPassword" />
 
     <EditText
-        android:id="@+id/editText_Age"
-        android:layout_width="match_parent"
+        android:id="@+id/editText_PW_confirm"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="나이"
-        android:inputType="number" />
+        android:hint="비밀번호 확인"
+        android:inputType="textPassword" />
 
     <EditText
         android:id="@+id/editText_Name"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="이름"
-        android:inputType="textPersonName"/>
+        android:hint="닉네임"
+        android:inputType="text"/>
+
+    <TextView
+        android:id="@+id/text_Birth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:textSize="18sp"
+        android:hint="생년월일" />
 
     <Button
         android:id="@+id/button_SignUp"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:text="회원 가입" />
 </LinearLayout>
