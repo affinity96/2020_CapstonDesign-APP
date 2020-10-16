@@ -1,5 +1,6 @@
 package com.example.homekippa;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -17,25 +18,30 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class LoginActivity extends AppCompatActivity {
 
-    TextView tvData;
-    EditText editTextID;
-    EditText editTextPW;
-    Button buttonLogin;
-
-    String ID;
-    String PW;
+    private TextView tvData;
+    private EditText editTextID;
+    private EditText editTextPW;
+    private Button buttonLogin;
+    private FirebaseAuth mAuth;
+    private FirebaseUser curUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        mAuth = FirebaseAuth.getInstance();
         tvData = findViewById(R.id.textView);
         editTextID = findViewById(R.id.editText_ID);
         editTextPW = findViewById(R.id.editText_PW);
@@ -45,14 +51,39 @@ public class LoginActivity extends AppCompatActivity {
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ID = editTextID.getText().toString();
-                PW = editTextPW.getText().toString();
-                requestLogin(ID, PW);
+            String ID = editTextID.getText().toString();
+            String PW = editTextPW.getText().toString();
+            requestLogin(ID, PW);
+
             }
         });
     }
 
     public void requestLogin(String ID, String PW){
+        mAuth.signInWithEmailAndPassword(ID, PW)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if(task.isSuccessful()){
+                            curUser = mAuth.getCurrentUser();
+                            Toast.makeText(getApplicationContext(),"로그인 성공", Toast.LENGTH_SHORT).show();
+                            tvData.setText("로그인 되었습니다");
+
+                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            intent.putExtra("user", curUser);
+                            startActivity(intent);
+                        }else{
+                            Toast.makeText(getApplicationContext(),"로그인 실패", Toast.LENGTH_SHORT).show();
+                            tvData.setText("로그아웃 되었습니다");
+                        }
+
+                    }
+                });
+    }
+
+    /*  DB에 저장하는 코드 서버에 생기면 사용
+    public void requestLogin(String ID, String PW){
+
         String url = "http://101.101.208.180:3000/";
 
         //JSON형식으로 데이터 통신을 진행합니다!
@@ -104,5 +135,5 @@ public class LoginActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 }

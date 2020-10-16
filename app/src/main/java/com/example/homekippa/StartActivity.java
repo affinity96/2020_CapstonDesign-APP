@@ -7,9 +7,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.homekippa.ui.searchAddress.searchAddress;
+
 public class StartActivity extends AppCompatActivity {
     Button button_Login;
     Button button_Sign;
+    Button button_searchAddress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,6 +21,7 @@ public class StartActivity extends AppCompatActivity {
 
         button_Login = findViewById(R.id.button_Login);
         button_Sign = findViewById(R.id.button_Sign);
+        button_searchAddress =findViewById(R.id.button_searchAddress);
 
         button_Login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -34,5 +38,16 @@ public class StartActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        button_searchAddress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), searchAddress.class);
+                startActivity(intent);
+            }
+        });
+
+
+
     }
 }
