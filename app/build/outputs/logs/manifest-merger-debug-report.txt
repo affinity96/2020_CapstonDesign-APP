@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:2:1-37:12
-INJECTED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:2:1-37:12
-INJECTED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:2:1-37:12
-INJECTED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:2:1-37:12
+ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:2:1-41:12
+INJECTED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:2:1-41:12
+INJECTED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:2:1-41:12
+INJECTED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:2:1-41:12
 MERGED from [androidx.navigation:navigation-ui:2.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/e52fcc2f9698e1c3d20afba59363bb8c/navigation-ui-2.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [com.google.android.material:material:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/630a2c916f4ecfac25cffbcd8da4019b/material-1.0.0/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.appcompat:appcompat:1.0.2] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/7ef1e102b0f740256a3a4de594b55401/appcompat-1.0.2/AndroidManifest.xml:17:1-22:12
@@ -12,6 +12,7 @@ MERGED from [androidx.vectordrawable:vectordrawable-animated:1.0.0] /Users/mohye
 MERGED from [androidx.vectordrawable:vectordrawable:1.0.1] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/f707a0844a9774942085a125430b334d/vectordrawable-1.0.1/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.navigation:navigation-fragment:2.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/cf7fb6f55c33cc7acab29c9dcce595a0/navigation-fragment-2.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.lifecycle:lifecycle-extensions:2.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/04ee7b79e23bf3dfb44aca61404287f5/lifecycle-extensions-2.0.0/AndroidManifest.xml:17:1-25:12
+MERGED from [androidx.legacy:legacy-support-v4:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/eb8e110c4b9dfd18abbca0ebb12d6335/legacy-support-v4-1.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [com.android.volley:volley:1.1.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/d69536c49606c7c6bd2e9a33cb81430d/jetified-volley-1.1.0/AndroidManifest.xml:2:1-11:12
 MERGED from [com.google.firebase:firebase-auth:19.4.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/f9f8cd8af0bf6390790c4bede83daf15/jetified-firebase-auth-19.4.0/AndroidManifest.xml:17:1-42:12
 MERGED from [com.google.firebase:firebase-auth-interop:19.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/9f858ac28a26b50e0648a6c447e69881/jetified-firebase-auth-interop-19.0.0/AndroidManifest.xml:2:1-10:12
@@ -25,6 +26,7 @@ MERGED from [androidx.legacy:legacy-support-core-ui:1.0.0] /Users/mohyeonmin/.gr
 MERGED from [androidx.navigation:navigation-runtime:2.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/a4d77a1101118f220e0c681ec0555211/navigation-runtime-2.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/1ff6064d18f1c7c5d40f6dbee676c679/legacy-support-core-utils-1.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.transition:transition:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/13fb7166b616d5a2c045bbbb69a7d071/transition-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.media:media:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/16e6bae89b36251e0ed00c687a769e84/media-1.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.loader:loader:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/1f0144554aff59ff3f34ac06fd94d92a/loader-1.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.viewpager:viewpager:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/a3d91483b553ca40339f0907cfe91202/viewpager-1.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/c102c7489ad2eae339c0cf1cabb0b768/coordinatorlayout-1.0.0/AndroidManifest.xml:17:1-22:12
@@ -50,20 +52,20 @@ MERGED from [com.google.firebase:firebase-components:16.0.0] /Users/mohyeonmin/.
 MERGED from [androidx.documentfile:documentfile:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/616d299d84c9f4ab335884a9e8c14401/documentfile-1.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.print:print:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/1dc05cd4654f252a80ac3297108f1872/print-1.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.interpolator:interpolator:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/838b169de8495b31128c163141f1aaed/interpolator-1.0.0/AndroidManifest.xml:17:1-22:12
-INJECTED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:2:1-37:12
-INJECTED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:2:1-37:12
-INJECTED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:2:1-37:12
+INJECTED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:2:1-41:12
+INJECTED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:2:1-41:12
+INJECTED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:2:1-41:12
 	package
 		ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:3:5-36
 		INJECTED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml
 		INJECTED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml
 	android:versionName
 		INJECTED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml
-		ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:2:1-37:12
+		ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:2:1-41:12
 		INJECTED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml
 	android:versionCode
 		INJECTED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml
-		ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:2:1-37:12
+		ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:2:1-41:12
 		INJECTED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml
 	xmlns:android
 		ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:2:11-69
@@ -82,7 +84,7 @@ ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOME
 	android:name
 		ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:11:22-64
 application
-ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:13:5-35:19
+ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:13:5-39:19
 MERGED from [com.google.android.material:material:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/630a2c916f4ecfac25cffbcd8da4019b/material-1.0.0/AndroidManifest.xml:22:5-20
 MERGED from [com.google.android.material:material:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/630a2c916f4ecfac25cffbcd8da4019b/material-1.0.0/AndroidManifest.xml:22:5-20
 MERGED from [androidx.constraintlayout:constraintlayout:1.1.3] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/4de5b2d4f8c2937a1fcd01b836481626/constraintlayout-1.1.3/AndroidManifest.xml:9:5-20
@@ -126,41 +128,41 @@ MERGED from [androidx.lifecycle:lifecycle-process:2.0.0] /Users/mohyeonmin/.grad
 	android:usesCleartextTraffic
 		ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:20:9-44
 activity#com.example.homekippa.CreateGroupActivity
-ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:21:9-66
+ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:22:9-66
 	android:name
-		ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:21:19-54
+		ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:22:19-54
 activity#com.example.homekippa.SignUpActivity
-ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:22:9-52
+ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:24:9-52
 	android:name
-		ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:22:19-49
+		ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:24:19-49
 activity#com.example.homekippa.StartActivity
-ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:23:9-29:20
+ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:25:9-31:20
 	android:name
-		ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:23:19-48
+		ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:25:19-48
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
-ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:24:13-28:29
+ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:26:13-30:29
 action#android.intent.action.MAIN
-ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:25:17-69
+ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:27:17-69
 	android:name
-		ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:25:25-66
+		ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:27:25-66
 category#android.intent.category.LAUNCHER
-ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:27:17-77
+ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:29:17-77
 	android:name
-		ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:27:27-74
+		ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:29:27-74
 activity#com.example.homekippa.MainActivity
-ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:30:9-32:59
+ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:32:9-34:59
 	android:label
-		ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:32:13-56
+		ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:34:13-56
 	android:name
-		ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:31:13-41
+		ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:33:13-41
 activity#com.example.homekippa.LoginActivity
-ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:33:9-60
+ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:35:9-60
 	android:name
-		ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:33:19-48
+		ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:35:19-48
 activity#com.example.homekippa.ui.searchAddress.searchAddress
-ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:34:9-77
+ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:37:9-77
 	android:name
-		ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:34:19-65
+		ADDED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:37:19-65
 uses-sdk
 INJECTED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from /Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml
@@ -181,6 +183,8 @@ MERGED from [androidx.navigation:navigation-fragment:2.0.0] /Users/mohyeonmin/.g
 MERGED from [androidx.navigation:navigation-fragment:2.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/cf7fb6f55c33cc7acab29c9dcce595a0/navigation-fragment-2.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.lifecycle:lifecycle-extensions:2.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/04ee7b79e23bf3dfb44aca61404287f5/lifecycle-extensions-2.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.lifecycle:lifecycle-extensions:2.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/04ee7b79e23bf3dfb44aca61404287f5/lifecycle-extensions-2.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.legacy:legacy-support-v4:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/eb8e110c4b9dfd18abbca0ebb12d6335/legacy-support-v4-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.legacy:legacy-support-v4:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/eb8e110c4b9dfd18abbca0ebb12d6335/legacy-support-v4-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [com.android.volley:volley:1.1.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/d69536c49606c7c6bd2e9a33cb81430d/jetified-volley-1.1.0/AndroidManifest.xml:7:5-43
 MERGED from [com.android.volley:volley:1.1.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/d69536c49606c7c6bd2e9a33cb81430d/jetified-volley-1.1.0/AndroidManifest.xml:7:5-43
 MERGED from [com.google.firebase:firebase-auth:19.4.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/f9f8cd8af0bf6390790c4bede83daf15/jetified-firebase-auth-19.4.0/AndroidManifest.xml:21:5-44
@@ -207,6 +211,8 @@ MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0] /Users/mohyeonmin/
 MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/1ff6064d18f1c7c5d40f6dbee676c679/legacy-support-core-utils-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.transition:transition:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/13fb7166b616d5a2c045bbbb69a7d071/transition-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.transition:transition:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/13fb7166b616d5a2c045bbbb69a7d071/transition-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.media:media:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/16e6bae89b36251e0ed00c687a769e84/media-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.media:media:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/16e6bae89b36251e0ed00c687a769e84/media-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.loader:loader:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/1f0144554aff59ff3f34ac06fd94d92a/loader-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.loader:loader:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/1f0144554aff59ff3f34ac06fd94d92a/loader-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.viewpager:viewpager:1.0.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/a3d91483b553ca40339f0907cfe91202/viewpager-1.0.0/AndroidManifest.xml:20:5-44

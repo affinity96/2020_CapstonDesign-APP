@@ -1,5 +1,7 @@
 package com.example.homekippa.network;
 
+import com.example.homekippa.data.CreateGroupData;
+import com.example.homekippa.data.CreateGroupResponse;
 import com.example.homekippa.data.SignUpData;
 import com.example.homekippa.data.SignUpResponse;
 import com.example.homekippa.data.UidData;
@@ -18,4 +20,7 @@ public interface ServiceApi {
 
     @POST("/uid")
     Call<UidRespense> uidCheck(@Body UidData data);
+
+    @POST("/group/add")
+    Call<CreateGroupResponse> groupCreate(@Body CreateGroupData data);
 }

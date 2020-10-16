@@ -26,7 +26,7 @@
 17-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:11:22-64
 18
 19    <application
-19-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:13:5-35:19
+19-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:13:5-39:19
 20        android:allowBackup="true"
 20-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:14:9-35
 21        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
@@ -46,37 +46,37 @@
 29        android:usesCleartextTraffic="true" >
 29-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:20:9-44
 30        <activity android:name="com.example.homekippa.CreateGroupActivity" />
-30-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:21:9-66
-30-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:21:19-54
+30-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:22:9-66
+30-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:22:19-54
 31        <activity android:name="com.example.homekippa.SignUpActivity" />
-31-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:22:9-52
-31-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:22:19-49
+31-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:24:9-52
+31-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:24:19-49
 32        <activity android:name="com.example.homekippa.StartActivity" >
-32-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:23:9-29:20
-32-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:23:19-48
+32-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:25:9-31:20
+32-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:25:19-48
 33            <intent-filter>
-33-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:24:13-28:29
+33-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:26:13-30:29
 34                <action android:name="android.intent.action.MAIN" />
-34-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:25:17-69
-34-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:25:25-66
+34-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:27:17-69
+34-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:27:25-66
 35
 36                <category android:name="android.intent.category.LAUNCHER" />
-36-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:27:17-77
-36-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:27:27-74
+36-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:29:17-77
+36-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:29:27-74
 37            </intent-filter>
 38        </activity>
 39        <activity
-39-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:30:9-32:59
+39-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:32:9-34:59
 40            android:name="com.example.homekippa.MainActivity"
-40-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:31:13-41
+40-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:33:13-41
 41            android:label="@string/title_activity_main" />
-41-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:32:13-56
+41-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:34:13-56
 42        <activity android:name="com.example.homekippa.LoginActivity" />
-42-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:33:9-60
-42-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:33:19-48
+42-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:35:9-60
+42-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:35:19-48
 43        <activity android:name="com.example.homekippa.ui.searchAddress.searchAddress" />
-43-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:34:9-77
-43-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:34:19-65
+43-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:37:9-77
+43-->/Users/mohyeonmin/학기/2020-2/캡스톤디자인/팀플 코드/HOMEKIPPA_APP/app/src/main/AndroidManifest.xml:37:19-65
 44        <activity
 44-->[com.google.firebase:firebase-auth:19.4.0] /Users/mohyeonmin/.gradle/caches/transforms-2/files-2.1/f9f8cd8af0bf6390790c4bede83daf15/jetified-firebase-auth-19.4.0/AndroidManifest.xml:24:9-31:50
 45            android:name="com.google.firebase.auth.internal.FederatedSignInActivity"

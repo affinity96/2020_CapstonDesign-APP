@@ -18,10 +18,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-<<<<<<< HEAD
+
         <activity android:name=".CreateGroupActivity"></activity>
-=======
->>>>>>> 05ab2c210a82172d0898f45f6d283ceb061d0eac
+
         <activity android:name=".SignUpActivity" />
         <activity android:name=".StartActivity">
             <intent-filter>
@@ -34,12 +33,9 @@
             android:name=".MainActivity"
             android:label="@string/title_activity_main" />
         <activity android:name=".LoginActivity"></activity>
-<<<<<<< HEAD
+
         <activity android:name=".ui.searchAddress.searchAddress"></activity>
-=======
-        <activity android:name=".ui.searchAddress.searchAddress">
-        </activity>
->>>>>>> 05ab2c210a82172d0898f45f6d283ceb061d0eac
+
     </application>
 
 </manifest>
