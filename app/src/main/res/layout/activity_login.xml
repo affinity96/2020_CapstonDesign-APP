@@ -4,98 +4,122 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#ffe59f"
     tools:context=".LoginActivity">
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="@+id/imageView"
+        app:layout_constraintStart_toStartOf="@+id/linearLayoutforinputs"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="191dp"
-        android:layout_height="180dp"
+        android:layout_width="wrap_content"
+        android:layout_height="144dp"
         android:layout_marginTop="65dp"
         android:src="@drawable/simplelogo"
-        app:layout_constraintBottom_toTopOf="@+id/layout_ID"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayoutforinputs"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.6" />
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/layout_ID"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="0dp"
-        android:layout_height="40dp"
-        android:layout_marginLeft="65dp"
-        android:layout_marginRight="65dp"
-        android:hint="id"
-        app:layout_constraintBottom_toTopOf="@+id/layout_PW"
+    <LinearLayout
+        android:id="@+id/linearLayoutforinputs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:orientation="vertical"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/imageView">
 
-        >
-
-        <com.google.android.material.textfield.TextInputEditText
+        <EditText
             android:id="@+id/editText_ID"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_height="40dp"
+            android:background="@drawable/edit_round"
+            android:inputType="textNoSuggestions|textMultiLine"
+            android:hint="로그인"
+            android:padding="10dp" />
 
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/layout_PW"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="0dp"
-        android:layout_height="40dp"
-        android:layout_marginLeft="65dp"
-        android:layout_marginRight="65dp"
-        android:hint="pw"
-        app:layout_constraintTop_toBottomOf="@+id/layout_ID"
-        app:layout_constraintBottom_toTopOf="@+id/button_Login"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-
-
-        >
-
-        <com.google.android.material.textfield.TextInputEditText
+        <EditText
             android:id="@+id/editText_PW"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/edit_round"
 
+            android:hint="비밀번호"
+            android:inputType="textPassword|textNoSuggestions"
+            android:padding="10dp" />
+        <!--        <com.google.android.material.textfield.TextInputLayout-->
+        <!--            android:id="@+id/layout_ID"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginLeft="20dp"-->
+        <!--            android:layout_marginRight="20dp"-->
+        <!--            android:background="@drawable/edit_round"-->
+        <!--            app:layout_constraintLeft_toLeftOf="parent"-->
+        <!--            app:layout_constraintRight_toRightOf="parent"-->
+        <!--            app:layout_constraintTop_toBottomOf="@+id/imageView"-->
+        <!--            >-->
+        <!--            <com.google.android.material.textfield.TextInputEditText-->
+        <!--                android:id="@+id/editText_ID"-->
+        <!--                android:layout_width="332dp"-->
+        <!--                android:hint="아이디"-->
+        <!--                android:layout_height="wrap_content" />-->
+
+        <!--        </com.google.android.material.textfield.TextInputLayout>-->
+
+
+        <!--        <com.google.android.material.textfield.TextInputLayout-->
+        <!--            android:id="@+id/layout_PW"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginLeft="20dp"-->
+        <!--            android:layout_marginRight="20dp"-->
+        <!--            app:layout_constraintLeft_toLeftOf="parent"-->
+        <!--            app:layout_constraintRight_toRightOf="parent"-->
+        <!--            app:layout_constraintTop_toTopOf="@+id/layout_ID">-->
+
+        <!--&lt;!&ndash;            <com.google.android.material.textfield.TextInputEditText&ndash;&gt;-->
+        <!--&lt;!&ndash;                android:id="@+id/editText_PW"&ndash;&gt;-->
+        <!--&lt;!&ndash;                android:layout_width="332dp"&ndash;&gt;-->
+        <!--&lt;!&ndash;                android:layout_height="wrap_content" />&ndash;&gt;-->
+
+        <!--        </com.google.android.material.textfield.TextInputLayout>-->
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/button_Login"
-        android:layout_width="189dp"
+        android:layout_width="match_parent"
         android:layout_height="42dp"
-        android:layout_marginLeft="100dp"
-        android:layout_marginRight="100dp"
-        android:layout_marginBottom="100dp"
-        android:text="Login"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-        app:layout_constraintHorizontal_bias="0.454"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:background="@drawable/round_button"
+        android:text="로그인"
+        app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layout_PW" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutforinputs" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="wrap_content"
-        android:layout_height="20dp"
-        tools:layout_editor_absoluteY="519dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.454"
+        app:layout_constraintHorizontal_bias="0.49"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_Login"
-        android:orientation="horizontal"
-        >
+        app:layout_constraintVertical_bias="0.755">
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="아직 계정이 없으신가요?" />
 
         <TextView
             android:id="@+id/textView_gosignup"
@@ -103,8 +127,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:clickable="true"
-            android:text="회원가입 하기"
-            />
+            android:text="회원가입 하기" />
 
     </LinearLayout>
 
