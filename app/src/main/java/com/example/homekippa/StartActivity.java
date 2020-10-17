@@ -13,6 +13,7 @@ public class StartActivity extends AppCompatActivity {
     Button button_Login;
     Button button_Sign;
     Button button_searchAddress;
+    Button button_createNewGroup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +23,8 @@ public class StartActivity extends AppCompatActivity {
         button_Login = findViewById(R.id.button_Login);
         button_Sign = findViewById(R.id.button_Sign);
         button_searchAddress =findViewById(R.id.button_searchAddress);
+        button_createNewGroup=findViewById(R.id.button_createNewGroup);
+
 
         button_Login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,6 +46,14 @@ public class StartActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), searchAddress.class);
+                startActivity(intent);
+            }
+        });
+
+        button_createNewGroup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), CreateGroupActivity.class);
                 startActivity(intent);
             }
         });
