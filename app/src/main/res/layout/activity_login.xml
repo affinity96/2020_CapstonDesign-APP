@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffe59f"
+    android:background="@color/kippaYellow"
     tools:context=".LoginActivity">
 
     <TextView
@@ -19,7 +19,7 @@
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="144dp"
-        android:layout_marginTop="65dp"
+        android:layout_marginTop="100dp"
         android:src="@drawable/simplelogo"
         app:layout_constraintBottom_toTopOf="@+id/linearLayoutforinputs"
         app:layout_constraintEnd_toEndOf="parent"
@@ -41,7 +41,7 @@
             android:id="@+id/editText_ID"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:background="@drawable/edit_round"
+            android:background="@drawable/shape"
             android:inputType="textNoSuggestions|textMultiLine"
             android:hint="로그인"
             android:textSize="15dp"
@@ -52,7 +52,7 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginTop="10dp"
-            android:background="@drawable/edit_round"
+            android:background="@drawable/shape"
             android:hint="비밀번호"
             android:textSize="15dp"
             android:inputType="textPassword|textNoSuggestions"
