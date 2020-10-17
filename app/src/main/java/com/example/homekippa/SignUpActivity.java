@@ -37,7 +37,6 @@ import retrofit2.Response;
 
 public class SignUpActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
-    private EditText id_login;
     private EditText phone_login;
     private EditText email_login;
     private EditText pw_login;
@@ -52,7 +51,6 @@ public class SignUpActivity extends AppCompatActivity {
 
         Button button_SignUp = findViewById(R.id.button_SignUp);
         Button button_ID_confirm = findViewById(R.id.button_ID);
-        id_login = findViewById(R.id.editText_ID);
         phone_login = findViewById(R.id.editText_Phone);
         email_login = findViewById(R.id.editText_email);
         pw_login = findViewById(R.id.editText_PW);
@@ -61,7 +59,7 @@ public class SignUpActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         service = RetrofitClient.getClient().create(ServiceApi.class);
-
+/*
         button_ID_confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -73,7 +71,7 @@ public class SignUpActivity extends AppCompatActivity {
                     startCheckUid(new UidData(id));
                 }
             }
-        });
+        });*/
 
         birth_login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,22 +83,17 @@ public class SignUpActivity extends AppCompatActivity {
         button_SignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                final String id = id_login.getText().toString().trim();
                 final String phone = phone_login.getText().toString().trim();
                 final String email = email_login.getText().toString().trim();
                 final String pw = pw_login.getText().toString().trim();
                 final String birth = birth_login.getText().toString().trim();
                 final String name = name_login.getText().toString().trim();
 
-                if(id.isEmpty()){
-                    id_login.setError("ID를 입력하세요");
+                if(email.isEmpty()){
+                    email_login.setError("생년월일을 입력하세요");
                 }
                 else if(phone.isEmpty()) {
                     phone_login.setError("PW를 입력하세요");
-                }
-                else if(email.isEmpty()){
-                    email_login.setError("생년월일을 입력하세요");
                 }
                 else if(pw.isEmpty()) {
                     pw_login.setError("PW를 입력하세요");
@@ -112,13 +105,30 @@ public class SignUpActivity extends AppCompatActivity {
                     name_login.setError("닉네임을 입력하세요");
                 }
                 else {
-
-                    startSignUp(new SignUpData(id, phone, email, pw, name));
+                    mAuth.createUserWithEmailAndPassword(email, pw).addOnCompleteListener(SignUpActivity.this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                // Sign in success, update UI with the signed-in user's information
+                                Log.d("회원 가입", "createUserWithEmail:success");
+                                FirebaseUser user = mAuth.getCurrentUser();
+                                startSignUp(new SignUpData(user.getUid(), phone, email, pw, name));
+                            } else {
+                                // If sign in fails, display a message to the user.
+                                Exception e = task.getException();
+                                Log.w("회원 가입", "createUserWithEmail:failure", e);
+                                Toast.makeText(SignUpActivity.this, "Authentication failed.",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
                 }
+
             }
         });
     }
 
+    /*
     private void startCheckUid(UidData data) {
         service.uidCheck(data).enqueue(new Callback<UidRespense>() {
             @Override
@@ -143,7 +153,7 @@ public class SignUpActivity extends AppCompatActivity {
 //                        showProgress(false);
             }
         });
-    }
+    }*/
 
     public void showDatePicker(View view) {
         DialogFragment newFragment = new DatePickerFragment();
