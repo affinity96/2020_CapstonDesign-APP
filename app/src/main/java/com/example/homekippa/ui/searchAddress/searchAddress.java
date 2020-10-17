@@ -1,5 +1,7 @@
 package com.example.homekippa.ui.searchAddress;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Handler;
 
 import android.os.Bundle;
@@ -33,7 +35,7 @@ public class searchAddress extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.address_search_test);
+        setContentView(R.layout.activity_search_address);
 
         daum_result = (TextView) findViewById(R.id.daum_result);
 
@@ -49,6 +51,12 @@ public class searchAddress extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+
+        String address = daum_result.getText().toString().trim();
+    }
 
     public void init_webView() {
 
@@ -98,13 +106,22 @@ public class searchAddress extends AppCompatActivity {
 
                     daum_result.setText(String.format("(%s) %s %s", arg1, arg2, arg3));
 
-                    // WebView를 초기화 하지않으면 재사용할 수 없음
+//                    // WebView를 초기화 하지않으면 재사용할 수 없음
 
-                    init_webView();
+//                    init_webView();
+
+                    Intent intent = new Intent();
+                    intent.putExtra("address", daum_result.getText().toString());
+
+                    setResult(RESULT_OK, intent);
+
+                    finish();
 
                 }
 
             });
+
+
 
         }
 

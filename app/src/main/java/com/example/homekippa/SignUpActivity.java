@@ -4,11 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -50,7 +53,6 @@ public class SignUpActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sign_up);
 
         Button button_SignUp = findViewById(R.id.button_SignUp);
-        Button button_ID_confirm = findViewById(R.id.button_ID);
         phone_login = findViewById(R.id.editText_Phone);
         email_login = findViewById(R.id.editText_email);
         pw_login = findViewById(R.id.editText_PW);
@@ -123,9 +125,20 @@ public class SignUpActivity extends AppCompatActivity {
                         }
                     });
                 }
-
             }
         });
+
+        final CheckBox checkbox_Agree = (CheckBox)findViewById(R.id.checkbox_Agree);
+        checkbox_Agree.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(checkbox_Agree.isChecked()== true){
+                    Toast.makeText(getApplicationContext(),"이용 약관에 동의하셨습니다", Toast.LENGTH_SHORT).show(); // 토스트 : 팝업으로 송출
+
+                }
+            }
+        });
+
     }
 
     /*
