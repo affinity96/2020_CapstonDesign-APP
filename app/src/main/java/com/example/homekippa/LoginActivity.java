@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -35,6 +36,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button buttonLogin;
     private FirebaseAuth mAuth;
     private FirebaseUser curUser;
+    private TextView gotoSignTextview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +48,8 @@ public class LoginActivity extends AppCompatActivity {
         editTextID = findViewById(R.id.editText_ID);
         editTextPW = findViewById(R.id.editText_PW);
         buttonLogin = findViewById(R.id.button_Login);
+        gotoSignTextview=findViewById(R.id.textView_gosignup);
+
 
         //버튼이 클릭되면 여기 리스너로 옴
         buttonLogin.setOnClickListener(new View.OnClickListener() {
@@ -55,6 +59,13 @@ public class LoginActivity extends AppCompatActivity {
             String PW = editTextPW.getText().toString();
             requestLogin(ID, PW);
 
+            }
+        });
+        gotoSignTextview.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                Intent intent=new Intent(LoginActivity.this, SignUpActivity.class );
+                startActivity(intent);
             }
         });
     }
