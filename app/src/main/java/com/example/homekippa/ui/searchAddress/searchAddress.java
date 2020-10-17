@@ -1,5 +1,6 @@
 package com.example.homekippa.ui.searchAddress;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Handler;
@@ -11,8 +12,10 @@ import android.webkit.JavascriptInterface;
 
 import android.webkit.WebChromeClient;
 
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 
+import android.webkit.WebViewClient;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,7 +31,6 @@ public class searchAddress extends AppCompatActivity {
 
     private Handler handler;
 
-
     @Override
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +40,6 @@ public class searchAddress extends AppCompatActivity {
         setContentView(R.layout.activity_search_address);
 
         daum_result = (TextView) findViewById(R.id.daum_result);
-
 
         // WebView 초기화
 
@@ -77,12 +78,12 @@ public class searchAddress extends AppCompatActivity {
 
         // JavaScript이벤트에 대응할 함수를 정의 한 클래스를 붙여줌
 
-        daum_webView.addJavascriptInterface(new AndroidBridge(), "TestApp");
+        daum_webView.addJavascriptInterface(new AndroidBridge(), "Android");
 
 
         // web client 를 chrome 으로 설정
 
-        daum_webView.setWebChromeClient(new WebChromeClient());
+        daum_webView.setWebViewClient(new WebViewClient());
 
 
         // webview url load. php 파일 주소

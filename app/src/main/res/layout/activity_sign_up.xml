@@ -10,18 +10,6 @@
     tools:context=".SignUpActivity">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editText_Phone"
-            android:layout_width="match_parent"
-            android:layout_height="37.3dp"
-            android:layout_margin="5dp"
-            android:ems="10"
-            android:hint="전화번호"
-            android:textSize="6pt"
-            android:background="@drawable/shape"
-            android:layout_gravity="center"
-            android:inputType="phone" />
-
-        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editText_email"
             android:layout_width="match_parent"
             android:layout_height="37.3dp"
@@ -69,6 +57,18 @@
             android:layout_margin="5dp"
             android:inputType="text"/>
 
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editText_Phone"
+            android:layout_width="match_parent"
+            android:layout_height="37.3dp"
+            android:layout_margin="5dp"
+            android:ems="10"
+            android:hint="전화번호"
+            android:textSize="6pt"
+            android:background="@drawable/shape"
+            android:layout_gravity="center"
+            android:inputType="phone" />
+
         <TextView
             android:id="@+id/text_Birth"
             android:layout_width="match_parent"
@@ -95,6 +95,4 @@
             android:gravity="center"
             android:layout_gravity="center"
             android:text="회원 가입" />
-    </LinearLayout>
-
 </LinearLayout>

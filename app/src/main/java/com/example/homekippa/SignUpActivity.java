@@ -114,7 +114,7 @@ public class SignUpActivity extends AppCompatActivity {
                                 // Sign in success, update UI with the signed-in user's information
                                 Log.d("회원 가입", "createUserWithEmail:success");
                                 FirebaseUser user = mAuth.getCurrentUser();
-                                startSignUp(new SignUpData(user.getUid(), phone, email, pw, name));
+                                startSignUp(new SignUpData(user.getUid(), phone, email, name, birth));
                             } else {
                                 // If sign in fails, display a message to the user.
                                 Exception e = task.getException();
@@ -177,7 +177,7 @@ public class SignUpActivity extends AppCompatActivity {
         String month_string = Integer.toString(month+1);
         String day_string = Integer.toString(day);
         String year_string = Integer.toString(year);
-        String dateMessage = (year_string + "/" + month_string + "/" + day_string);
+        String dateMessage = (year_string + "-" + month_string + "-" + day_string);
 
         birth_login.setText(dateMessage);
     }
