@@ -4,11 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -60,6 +63,8 @@ public class SignUpActivity extends AppCompatActivity {
         name_login = findViewById(R.id.editText_Name);
         mAuth = FirebaseAuth.getInstance();
 
+
+
         service = RetrofitClient.getClient().create(ServiceApi.class);
 
         button_ID_confirm.setOnClickListener(new View.OnClickListener() {
@@ -67,7 +72,7 @@ public class SignUpActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String id = id_login.getText().toString().trim();
                 if(id.isEmpty()){
-                    id_login.setError("ID를 입력하세요");
+                    id_login.setError("ID를 입력하세요. 뒤지기 싫으면. 알겠지?");
                 }
                 else{
                     startCheckUid(new UidData(id));
@@ -117,7 +122,21 @@ public class SignUpActivity extends AppCompatActivity {
                 }
             }
         });
+
+        final CheckBox checkbox_Agree = (CheckBox)findViewById(R.id.checkbox_Agree);
+        checkbox_Agree.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(checkbox_Agree.isChecked()== true){
+                    Toast.makeText(getApplicationContext(),"이용 약관에 동의하셨습니다", Toast.LENGTH_SHORT).show(); // 토스트 : 팝업으로 송출
+
+                }
+            }
+        });
+
     }
+
+
 
     private void startCheckUid(UidData data) {
         service.uidCheck(data).enqueue(new Callback<UidRespense>() {
