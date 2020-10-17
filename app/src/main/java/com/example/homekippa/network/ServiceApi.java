@@ -18,9 +18,6 @@ public interface ServiceApi {
     @POST("/user/add")
     Call<SignUpResponse> userSignUp(@Body SignUpData data);
 
-    @POST("/uid")
-    Call<UidRespense> uidCheck(@Body UidData data);
-
     @POST("/group/add")
     Call<CreateGroupResponse> groupCreate(@Body CreateGroupData data);
 }

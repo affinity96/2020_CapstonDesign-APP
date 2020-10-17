@@ -141,33 +141,6 @@ public class SignUpActivity extends AppCompatActivity {
 
     }
 
-    /*
-    private void startCheckUid(UidData data) {
-        service.uidCheck(data).enqueue(new Callback<UidRespense>() {
-            @Override
-            public void onResponse(Call<UidRespense> call, Response<UidRespense> response) {
-                UidRespense result = response.body();
-                if(result.getResult()){
-                    Log.d("id 확인", "True");
-                    id_login.setError("이미 있음");
-                }
-                else{
-                    Log.d("id 확인", "False");
-                    Toast.makeText(SignUpActivity.this, "사용할 수 있는 아이디입니다", Toast.LENGTH_LONG).show();
-                }
-//                        showProgress(false);
-            }
-
-            @Override
-            public void onFailure(Call<UidRespense> call, Throwable t) {
-                Toast.makeText(SignUpActivity.this, "오류 발생", Toast.LENGTH_SHORT).show();
-                Log.e("회원가입 에러 발생", t.getMessage());
-                t.printStackTrace(); // 에러 발생시 에러 발생 원인 단계별로 출력해줌
-//                        showProgress(false);
-            }
-        });
-    }*/
-
     public void showDatePicker(View view) {
         DialogFragment newFragment = new DatePickerFragment();
         newFragment.show(getSupportFragmentManager(),"datePicker");
