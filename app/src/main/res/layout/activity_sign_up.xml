@@ -5,78 +5,130 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/kippaYellow"
+    android:gravity="center_vertical"
     tools:context=".SignUpActivity">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <EditText
-            android:id="@+id/editText_ID"
-            android:layout_width="wrap_content"
+        android:layout_width="321.7dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:gravity="center_vertical"
+        >
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/newid"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTestID"
+                android:layout_width="match_parent"
+                android:layout_height="37.3dp"
+                android:layout_margin="5dp"
+                android:ems="10"
+                android:layout_gravity="center"
+                android:padding="10dp"
+                android:hint="아이디"
+                android:textSize="6pt"
+                android:background="@drawable/shape"
+                android:inputType="text" />
+            <Button
+                android:id="@+id/button_ID"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="중복 확인"/>
+        </com.google.android.material.textfield.TextInputLayout
+            >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editText_Phone"
+            android:layout_width="match_parent"
+            android:layout_height="37.3dp"
+            android:layout_margin="5dp"
             android:ems="10"
-            android:hint="아이디"
-            android:inputType="text" />
+            android:hint="전화번호"
+            android:textSize="6pt"
+            android:background="@drawable/shape"
+            android:layout_gravity="center"
+            android:inputType="phone" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editText_email"
+            android:layout_width="match_parent"
+            android:layout_height="37.3dp"
+            android:ems="10"
+            android:layout_gravity="center"
+            android:hint="이메일"
+            android:textSize="6pt"
+            android:background="@drawable/shape"
+            android:layout_margin="5dp"
+            android:inputType="textEmailAddress" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editText_PW"
+            android:layout_width="match_parent"
+            android:layout_height="37.3dp"
+            android:ems="10"
+            android:layout_gravity="center"
+            android:hint="비밀번호"
+            android:textSize="6pt"
+            android:background="@drawable/shape"
+            android:layout_margin="5dp"
+            android:inputType="textPassword" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editText_PW_confirm"
+            android:layout_width="match_parent"
+            android:layout_height="37.3dp"
+            android:ems="10"
+            android:layout_gravity="center"
+            android:hint="비밀번호 확인"
+            android:textSize="6pt"
+            android:background="@drawable/shape"
+            android:layout_margin="5dp"
+            android:inputType="textPassword" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editText_Name"
+            android:layout_width="match_parent"
+            android:layout_height="37.3dp"
+            android:ems="10"
+            android:hint="닉네임"
+            android:textSize="6pt"
+            android:background="@drawable/shape"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            android:inputType="text"/>
+
+        <TextView
+            android:id="@+id/text_Birth"
+            android:layout_width="match_parent"
+            android:layout_height="37.3dp"
+            android:ems="10"
+            android:textSize="6pt"
+            android:background="@drawable/shape"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            android:hint="생년월일" />
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/checkbox_Agree"
+            android:layout_width="match_parent"
+            android:layout_height="37.3dp"
+            android:text="이용 약관 동의"/>
+
+
         <Button
-            android:id="@+id/button_ID"
-            android:layout_width="wrap_content"
+            android:id="@+id/button_SignUp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="중복 확인"/>
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:text="회원 가입" />
     </LinearLayout>
 
-    <EditText
-        android:id="@+id/editText_Phone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="phone"
-        android:hint="전화번호" />
-
-    <EditText
-        android:id="@+id/editText_email"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="이메일"
-        android:inputType="textEmailAddress" />
-
-    <EditText
-        android:id="@+id/editText_PW"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="비밀번호"
-        android:inputType="textPassword" />
-
-    <EditText
-        android:id="@+id/editText_PW_confirm"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="비밀번호 확인"
-        android:inputType="textPassword" />
-
-    <EditText
-        android:id="@+id/editText_Name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="닉네임"
-        android:inputType="text"/>
-
-    <TextView
-        android:id="@+id/text_Birth"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:textSize="18sp"
-        android:hint="생년월일" />
-
-    <Button
-        android:id="@+id/button_SignUp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="회원 가입" />
 </LinearLayout>
