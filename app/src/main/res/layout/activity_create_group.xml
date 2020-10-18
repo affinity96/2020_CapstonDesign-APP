@@ -7,92 +7,105 @@
     tools:context=".CreateGroupActivity">
 
 
-    <TextView
-        android:id="@+id/textview_groupname"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:text="그룹명"
-        android:textSize="40dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/editText_groupName"
-        app:layout_constraintHorizontal_bias="0.166"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <!--    <ImageView-->
+    <!--        android:id="@+id/imageView_groupImage"-->
+    <!--        android:layout_width="410dp"-->
+    <!--        android:layout_height="265dp"-->
+    <!--        android:scaleType="centerCrop"-->
+    <!--        app:layout_constraintBottom_toTopOf="@+id/linearlayout_groupinfo"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent"-->
+    <!--        app:layout_constraintVertical_bias="0.0"-->
+    <!--        app:srcCompat="@drawable/base_cover" />-->
 
+    <!--    <TextView-->
+    <!--        android:id="@+id/textView_addcover"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:background="@drawable/round_button2"-->
+    <!--        android:gravity="center"-->
+    <!--        app:layout_constraintHorizontal_bias="1"-->
+    <!--        android:text="Change Cover"-->
+    <!--        android:textSize="18dp"-->
+    <!--        tools:layout_editor_absoluteX="150dp"-->
+    <!--        tools:layout_editor_absoluteY="273dp" />-->
 
-    <EditText
-        android:id="@+id/editText_groupName"
-        android:layout_width="172dp"
-        android:layout_height="45dp"
-        android:layout_marginTop="48dp"
-        android:layout_marginEnd="84dp"
-        android:layout_marginRight="84dp"
-        android:ems="6"
+    <LinearLayout
+        android:id="@+id/linearlayout_groupinfo"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:gravity="center"
-        android:clickable="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
-    <TextView
-        android:id="@+id/textView_groupProfile"
-        android:layout_width="250dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="44dp"
-        android:layout_marginBottom="166dp"
-        android:gravity="center"
-        android:text="그룹 프로필 사진"
-        android:textSize="30dp"
-        app:layout_constraintBottom_toTopOf="@+id/moveToSearchAddress"
-        app:layout_constraintEnd_toStartOf="@+id/imageView_groupImage"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textview_groupname"
-
-        app:layout_constraintVertical_bias="0.446" />
-
-    <ImageView
-        android:id="@+id/imageView_groupImage"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:background="#000000"
-        app:srcCompat="@mipmap/ic_launcher"
-        app:layout_constraintBottom_toTopOf="@+id/moveToSearchAddress"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView_groupProfile"
-        app:layout_constraintTop_toBottomOf="@+id/editText_groupName"
-        app:layout_constraintVertical_bias="0.168" />
-
-    <TextView
-        android:id="@+id/moveToSearchAddress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:hint="주소검색"
-        android:autoSizeMaxTextSize="30dp"
-        android:autoSizeMinTextSize="10dp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView_groupProfile"
-        app:layout_constraintTop_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-
-        />
-
-    <Button
-        android:id="@+id/button_createGroup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="161dp"
-        android:layout_marginLeft="161dp"
-        android:layout_marginTop="444dp"
-        android:layout_marginEnd="162dp"
-        android:layout_marginRight="162dp"
-        android:layout_marginBottom="17dp"
-        android:text="createGroup"
+        android:orientation="vertical"
+        android:padding="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText_groupName" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <EditText
+            android:id="@+id/editText_groupName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_emoji_emotions_24px"
+            android:drawablePadding="10dp"
+            android:layout_margin="10dp"
+            android:hint="그룹명 "
+            android:textSize="15dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/editText_introduce"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_subject_24px"
+            android:drawablePadding="10dp"
+            android:layout_margin="10dp"
+            android:hint="소개글 "
+            android:textSize="15dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <EditText
+            android:id="@+id/moveToSearchAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_home_24px"
+            android:drawablePadding="10dp"
+            android:layout_margin="10dp"
+            android:hint="도로명주소 검색 "
+            android:focusable="false"
+            android:textSize="15dp" />
+
+        <EditText
+            android:id="@+id/detailAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:drawablePadding="10dp"
+            android:drawableLeft="@drawable/ic_more_24px"
+            android:hint="상세주소 "
+
+            android:textSize="15dp" />
+        <Button
+            android:id="@+id/button_createGroup"
+            android:layout_width="116dp"
+            android:layout_height="30dp"
+            android:autoSizeMinTextSize="8dp"
+            android:background="@drawable/round_button2"
+            android:text="그룹 만들기 "
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearlayout_groupinfo" />
+
+    </LinearLayout>
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
