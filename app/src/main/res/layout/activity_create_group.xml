@@ -35,7 +35,7 @@
         android:id="@+id/linearlayout_groupinfo"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:gravity="center"
+        android:gravity="top|center"
         android:orientation="vertical"
         android:padding="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -51,7 +51,7 @@
             android:drawableLeft="@drawable/ic_emoji_emotions_24px"
             android:drawablePadding="10dp"
             android:layout_margin="10dp"
-            android:hint="그룹명 "
+            android:hint="그룹의 이름이 무엇인가요? "
             android:textSize="15dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -64,7 +64,7 @@
             android:drawableLeft="@drawable/ic_subject_24px"
             android:drawablePadding="10dp"
             android:layout_margin="10dp"
-            android:hint="소개글 "
+            android:hint="우리 그룹에 대해서 설명해주세요 :) "
             android:textSize="15dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -89,23 +89,17 @@
             android:drawablePadding="10dp"
             android:drawableLeft="@drawable/ic_more_24px"
             android:hint="상세주소 "
-
             android:textSize="15dp" />
         <Button
             android:id="@+id/button_createGroup"
-            android:layout_width="116dp"
-            android:layout_height="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
             android:autoSizeMinTextSize="8dp"
             android:background="@drawable/round_button2"
             android:text="그룹 만들기 "
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearlayout_groupinfo" />
 
     </LinearLayout>
-
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
