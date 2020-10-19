@@ -20,6 +20,7 @@
         android:usesCleartextTraffic="true">
         <activity android:name=".TopBarActivity"></activity>
         <activity android:name=".CreateGroupActivity" />
+        <activity android:name=".VerifyActivity"></activity>
         <activity android:name=".SignUpActivity" />
         <activity android:name=".StartActivity">
             <intent-filter>
