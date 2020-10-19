@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffe59f"
+    android:orientation="vertical"
+    tools:context=".VerifyActivity">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="200dp"
+        android:textSize="20dp"
+        android:textColor="#000000"
+        android:text="입력하신 이메일로 인증 메일을 보냈습니다.\n 이메일 인증을 완료한 뒤 확인 버튼을 눌러주세요" />
+
+
+    <Button
+        android:id="@+id/button_Verify"
+        android:layout_width="wrap_content"
+        android:layout_height="42dp"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center"
+        android:background="@drawable/round_button"
+        android:hint="확인"/>
+</LinearLayout>
