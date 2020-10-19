@@ -15,14 +15,14 @@ public class SignUpData {
     @SerializedName("userEmail")
     private String userEmail;
 
-    @SerializedName("userPW")
-    private String userPW;
+    @SerializedName("userBirth")
+    private String userBirth;
 
-    public SignUpData(String userId, String phone, String email, String userPW, String name) {
+    public SignUpData(String userId, String phone, String email, String name, String birth) {
         this.userName = name;
         this.userId = userId;
-        this.userPW = userPW;
         this.userPhone = phone;
         this.userEmail = email;
+        this.userBirth = birth;
     }
 }

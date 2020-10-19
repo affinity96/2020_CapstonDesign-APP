@@ -6,54 +6,24 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/kippaYellow"
-    android:gravity="center_vertical"
+
     tools:context=".SignUpActivity">
 
-    <LinearLayout
-        android:layout_width="321.7dp"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_gravity="center"
-        android:gravity="center_vertical"
-        >
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/newid"
-            android:layout_width="match_parent"
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/kippaBlue"
+        tools:ignore="MissingConstraints">
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="center"
-            >
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editTestID"
-                android:layout_width="match_parent"
-                android:layout_height="37.3dp"
-                android:layout_margin="5dp"
-                android:ems="10"
-                android:layout_gravity="center"
-                android:padding="10dp"
-                android:hint="아이디"
-                android:textSize="6pt"
-                android:background="@drawable/shape"
-                android:inputType="text" />
-            <Button
-                android:id="@+id/button_ID"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="중복 확인"/>
-        </com.google.android.material.textfield.TextInputLayout
-            >
+            android:text="회원가입"
+            android:layout_gravity = "center"
+            android:id="@+id/toolbar_logIn"
+            android:textColor="#ffffff"
+            android:textSize="20dp"/>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editText_Phone"
-            android:layout_width="match_parent"
-            android:layout_height="37.3dp"
-            android:layout_margin="5dp"
-            android:ems="10"
-            android:hint="전화번호"
-            android:textSize="6pt"
-            android:background="@drawable/shape"
-            android:layout_gravity="center"
-            android:inputType="phone" />
+    </androidx.appcompat.widget.Toolbar>
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editText_email"
@@ -61,6 +31,7 @@
             android:layout_height="37.3dp"
             android:ems="10"
             android:layout_gravity="center"
+
             android:hint="이메일"
             android:textSize="6pt"
             android:background="@drawable/shape"
@@ -103,6 +74,18 @@
             android:layout_margin="5dp"
             android:inputType="text"/>
 
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editText_Phone"
+            android:layout_width="match_parent"
+            android:layout_height="37.3dp"
+            android:layout_margin="5dp"
+            android:ems="10"
+            android:hint="전화번호"
+            android:textSize="6pt"
+            android:background="@drawable/shape"
+            android:layout_gravity="center"
+            android:inputType="phone" />
+
         <TextView
             android:id="@+id/text_Birth"
             android:layout_width="match_parent"
@@ -129,6 +112,4 @@
             android:gravity="center"
             android:layout_gravity="center"
             android:text="회원 가입" />
-    </LinearLayout>
-
 </LinearLayout>

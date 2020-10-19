@@ -4,8 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffe59f"
+    android:background="@color/kippaYellow"
     tools:context=".LoginActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/kippaBlue"
+        tools:ignore="MissingConstraints">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="로그인"
+            android:layout_gravity = "center"
+            android:id="@+id/toolbar_logIn"
+            android:textColor="#ffffff"
+            android:textSize="20dp"/>
+
+    </androidx.appcompat.widget.Toolbar>
 
     <TextView
         android:id="@+id/textView"
@@ -19,7 +35,7 @@
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="144dp"
-        android:layout_marginTop="65dp"
+        android:layout_marginTop="100dp"
         android:src="@drawable/simplelogo"
         app:layout_constraintBottom_toTopOf="@+id/linearLayoutforinputs"
         app:layout_constraintEnd_toEndOf="parent"
@@ -41,7 +57,7 @@
             android:id="@+id/editText_ID"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:background="@drawable/edit_round"
+            android:background="@drawable/shape"
             android:inputType="textNoSuggestions|textMultiLine"
             android:hint="로그인"
             android:textSize="15dp"
@@ -52,11 +68,19 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginTop="10dp"
-            android:background="@drawable/edit_round"
+            android:background="@drawable/shape"
             android:hint="비밀번호"
             android:textSize="15dp"
             android:inputType="textPassword|textNoSuggestions"
             android:padding="10dp" />
+
+        <CheckBox
+            android:id="@+id/checkBox_Auto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:text="자동 로그인" />
         <!--        <com.google.android.material.textfield.TextInputLayout-->
         <!--            android:id="@+id/layout_ID"-->
         <!--            android:layout_width="wrap_content"-->
