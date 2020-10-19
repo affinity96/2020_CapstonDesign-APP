@@ -6,8 +6,24 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/kippaYellow"
-    android:gravity="center_vertical"
+
     tools:context=".SignUpActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/kippaBlue"
+        tools:ignore="MissingConstraints">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="회원가입"
+            android:layout_gravity = "center"
+            android:id="@+id/toolbar_logIn"
+            android:textColor="#ffffff"
+            android:textSize="20dp"/>
+
+    </androidx.appcompat.widget.Toolbar>
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editText_email"
@@ -15,6 +31,7 @@
             android:layout_height="37.3dp"
             android:ems="10"
             android:layout_gravity="center"
+
             android:hint="이메일"
             android:textSize="6pt"
             android:background="@drawable/shape"
