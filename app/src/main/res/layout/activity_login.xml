@@ -57,6 +57,14 @@
             android:textSize="15dp"
             android:inputType="textPassword|textNoSuggestions"
             android:padding="10dp" />
+
+        <CheckBox
+            android:id="@+id/checkBox_Auto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:text="자동 로그인" />
         <!--        <com.google.android.material.textfield.TextInputLayout-->
         <!--            android:id="@+id/layout_ID"-->
         <!--            android:layout_width="wrap_content"-->

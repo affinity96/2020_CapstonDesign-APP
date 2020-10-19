@@ -37,6 +37,7 @@ import java.util.Calendar;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import com.example.homekippa.function.Loading;
 
 public class SignUpActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
@@ -46,6 +47,7 @@ public class SignUpActivity extends AppCompatActivity {
     private TextView birth_login;
     private EditText name_login;
     private ServiceApi service;
+    private CheckBox checkbox_Agree;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,21 +61,8 @@ public class SignUpActivity extends AppCompatActivity {
         birth_login = findViewById(R.id.text_Birth);
         name_login = findViewById(R.id.editText_Name);
         mAuth = FirebaseAuth.getInstance();
-
+        checkbox_Agree = findViewById(R.id.checkbox_Agree);
         service = RetrofitClient.getClient().create(ServiceApi.class);
-/*
-        button_ID_confirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String id = id_login.getText().toString().trim();
-                if(id.isEmpty()){
-                    id_login.setError("ID를 입력하세요");
-                }
-                else{
-                    startCheckUid(new UidData(id));
-                }
-            }
-        });*/
 
         birth_login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,15 +95,32 @@ public class SignUpActivity extends AppCompatActivity {
                 else if(name.isEmpty()){
                     name_login.setError("닉네임을 입력하세요");
                 }
+                else if(!checkbox_Agree.isChecked()){
+                    checkbox_Agree.setError("이용약관에 동의해주세요");
+                }
                 else {
+                    final Loading loading = new Loading();
+                    loading.loading(SignUpActivity.this);
                     mAuth.createUserWithEmailAndPassword(email, pw).addOnCompleteListener(SignUpActivity.this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 // Sign in success, update UI with the signed-in user's information
                                 Log.d("회원 가입", "createUserWithEmail:success");
-                                FirebaseUser user = mAuth.getCurrentUser();
+                                final FirebaseUser user = mAuth.getCurrentUser();
                                 startSignUp(new SignUpData(user.getUid(), phone, email, name, birth));
+                                loading.loadingEnd();
+
+                                user.sendEmailVerification().addOnCompleteListener(SignUpActivity.this, new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> verify_task) {
+                                        if(verify_task.isSuccessful()){
+                                            Intent intent = new Intent(SignUpActivity.this, VerifyActivity.class);
+                                            intent.putExtra("user", user);
+                                            startActivity(intent);
+                                        }
+                                    }
+                                });
                             } else {
                                 // If sign in fails, display a message to the user.
                                 Exception e = task.getException();
@@ -128,13 +134,11 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
 
-        final CheckBox checkbox_Agree = (CheckBox)findViewById(R.id.checkbox_Agree);
         checkbox_Agree.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(checkbox_Agree.isChecked()== true){
+                if(checkbox_Agree.isChecked()){
                     Toast.makeText(getApplicationContext(),"이용 약관에 동의하셨습니다", Toast.LENGTH_SHORT).show(); // 토스트 : 팝업으로 송출
-
                 }
             }
         });
@@ -160,7 +164,7 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<SignUpResponse> call, Response<SignUpResponse> response) {
                 SignUpResponse result = response.body();
-                Toast.makeText(SignUpActivity.this, result.getMessage(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(SignUpActivity.this, result.getMessage(), Toast.LENGTH_LONG).show();
 //                        showProgress(false);
 
                 if (result.getCode() == 200) {
@@ -170,7 +174,7 @@ public class SignUpActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<SignUpResponse> call, Throwable t) {
-                Toast.makeText(SignUpActivity.this, "회원가입 에러 발생", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SignUpActivity.this, "회원가입 에러 발생", Toast.LENGTH_LONG).show();
                 Log.e("회원가입 에러 발생", t.getMessage());
                 t.printStackTrace(); // 에러 발생시 에러 발생 원인 단계별로 출력해줌
 //                        showProgress(false);
