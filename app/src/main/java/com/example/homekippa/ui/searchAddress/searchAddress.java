@@ -76,8 +76,6 @@ public class searchAddress extends AppCompatActivity {
         daum_webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
 
 
-
-
         // JavaScript이벤트에 대응할 함수를 정의 한 클래스를 붙여줌
 
         daum_webView.addJavascriptInterface(new AndroidBridge(), "Android");
@@ -85,7 +83,7 @@ public class searchAddress extends AppCompatActivity {
 
         // web client 를 chrome 으로 설정
 
-        daum_webView.setWebViewClient(new WebViewClient());
+        daum_webView.setWebChromeClient(new WebChromeClient());
 
 
         // webview url load. php 파일 주소
