@@ -78,7 +78,7 @@ public class searchAddress extends AppCompatActivity {
 
         // JavaScript이벤트에 대응할 함수를 정의 한 클래스를 붙여줌
 
-        daum_webView.addJavascriptInterface(new AndroidBridge(), "Android");
+        daum_webView.addJavascriptInterface(new AndroidBridge(), "TestApp");
 
 
         // web client 를 chrome 으로 설정
@@ -112,9 +112,9 @@ public class searchAddress extends AppCompatActivity {
 
                     Intent intent = new Intent();
                     intent.putExtra("address", daum_result.getText().toString());
+                    Log.d("address",daum_result.getText().toString());
 
                     setResult(RESULT_OK, intent);
-
                     finish();
 
                 }

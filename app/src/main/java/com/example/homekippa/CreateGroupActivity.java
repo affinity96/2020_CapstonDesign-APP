@@ -97,8 +97,9 @@ public class CreateGroupActivity extends AppCompatActivity {
                 }
                 else{
                     createGroup(new CreateGroupData(groupName, groupAddress,  imgUrl));
-
                 }
+
+
             }
         });
 
