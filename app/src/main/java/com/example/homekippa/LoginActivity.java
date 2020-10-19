@@ -56,10 +56,18 @@ public class LoginActivity extends AppCompatActivity {
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            String ID = editTextID.getText().toString();
-            String PW = editTextPW.getText().toString();
-            requestLogin(ID, PW);
+                String ID = editTextID.getText().toString();
+                String PW = editTextPW.getText().toString();
 
+                if(ID.isEmpty()){
+                    editTextID.setError("아이디를 입력하세요");
+                }
+                else if(PW.isEmpty()){
+                    editTextPW.setError("비밀번호를 입력하세요");
+                }
+                else {
+                    requestLogin(ID, PW);
+                }
             }
         });
         gotoSignTextview.setOnClickListener(new View.OnClickListener(){
@@ -78,12 +86,18 @@ public class LoginActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
                             curUser = mAuth.getCurrentUser();
-                            Toast.makeText(getApplicationContext(),"로그인 성공", Toast.LENGTH_SHORT).show();
-                            tvData.setText("로그인 되었습니다");
+                            if(curUser.isEmailVerified()) {
+                                Toast.makeText(getApplicationContext(), "로그인 성공", Toast.LENGTH_SHORT).show();
+                                tvData.setText("로그인 되었습니다");
 
-                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                            intent.putExtra("user", curUser);
-                            startActivity(intent);
+                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                intent.putExtra("user", curUser);
+                                startActivity(intent);
+                            }
+                            else{
+                                mAuth.signOut();
+                                Toast.makeText(getApplicationContext(), "이메일 인증을 완료해주세요", Toast.LENGTH_LONG).show();
+                            }
                         }else{
                             Exception e = task.getException();
                             Log.w("로그인", "createUserWithEmail:failure", e);
