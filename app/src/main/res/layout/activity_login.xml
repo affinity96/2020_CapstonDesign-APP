@@ -8,18 +8,25 @@
     tools:context=".LoginActivity">
 
     <androidx.appcompat.widget.Toolbar
-        android:layout_width="match_parent"
+        android:id="@+id/toolbar"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="386dp"
         android:background="@color/kippaBlue"
+        app:layout_constraintBottom_toTopOf="@+id/button_Login"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints">
+
         <TextView
+            android:id="@+id/toolbar_logIn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:text="로그인"
-            android:layout_gravity = "center"
-            android:id="@+id/toolbar_logIn"
             android:textColor="#ffffff"
-            android:textSize="20dp"/>
+            android:textSize="20dp" />
 
     </androidx.appcompat.widget.Toolbar>
 
@@ -45,10 +52,10 @@
 
     <LinearLayout
         android:id="@+id/linearLayoutforinputs"
-        android:layout_width="match_parent"
+        android:layout_width="320dp"
         android:layout_height="wrap_content"
-        android:padding="20dp"
         android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/button_Login"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView">
@@ -58,10 +65,10 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:background="@drawable/shape"
-            android:inputType="textNoSuggestions|textMultiLine"
             android:hint="로그인"
-            android:textSize="15dp"
-            android:padding="10dp" />
+            android:inputType="textNoSuggestions|textMultiLine"
+            android:padding="10dp"
+            android:textSize="15dp" />
 
         <EditText
             android:id="@+id/editText_PW"
@@ -70,9 +77,9 @@
             android:layout_marginTop="10dp"
             android:background="@drawable/shape"
             android:hint="비밀번호"
-            android:textSize="15dp"
             android:inputType="textPassword|textNoSuggestions"
-            android:padding="10dp" />
+            android:padding="10dp"
+            android:textSize="15dp" />
 
         <CheckBox
             android:id="@+id/checkBox_Auto"
@@ -122,16 +129,11 @@
 
     <Button
         android:id="@+id/button_Login"
-        android:layout_width="match_parent"
+        android:layout_width="326dp"
         android:layout_height="42dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
         android:background="@drawable/round_button"
         android:hint="로그인"
-        app:layout_constraintHorizontal_bias="0.491"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayoutforinputs" />
+        tools:layout_editor_absoluteY="442dp" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
