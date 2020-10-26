@@ -14,6 +14,7 @@ public class StartActivity extends AppCompatActivity {
     Button button_Sign;
     Button button_searchAddress;
     Button button_createNewGroup;
+    Button button_maingroup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +25,7 @@ public class StartActivity extends AppCompatActivity {
         button_Sign = findViewById(R.id.button_Sign);
         button_searchAddress =findViewById(R.id.button_searchAddress);
         button_createNewGroup=findViewById(R.id.button_createNewGroup);
+        button_maingroup=findViewById(R.id.button_mainGroup);
 
 
         button_Login.setOnClickListener(new View.OnClickListener() {
@@ -57,6 +59,15 @@ public class StartActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        button_maingroup.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                Intent intent = new Intent(getApplicationContext(), MainGroupActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
 
 
 

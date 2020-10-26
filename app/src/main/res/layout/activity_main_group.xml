@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/linearLayout_nogroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        >
+        <TextView
+            android:id="@+id/textView_creategroup_notice"
+            android:layout_width="139dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="우리 가족 커뮤니티로 한 곳에서 반려동물 관리해보세요! "
+            android:textSize="16dp" />
+        <Button
+            android:id="@+id/button_gotocreateGroup"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/round_button2"
+            android:layout_margin="10dp"
+            android:text="그룹 생성 하기 "
+            />
+    </LinearLayout>
+
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
