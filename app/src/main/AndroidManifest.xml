@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.homekippa">
+
     <!-- 인터넷 퍼미션 -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
@@ -18,9 +19,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".TopBarActivity"></activity>
         <activity android:name=".CreateGroupActivity" />
-        <activity android:name=".VerifyActivity"></activity>
+        <activity android:name=".VerifyActivity" />
         <activity android:name=".SignUpActivity" />
         <activity android:name=".StartActivity">
             <intent-filter>
