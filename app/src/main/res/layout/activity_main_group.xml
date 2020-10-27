@@ -6,34 +6,69 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:id="@+id/linearLayout_nogroup"
+        android:id="@+id/LinearLayout_nogroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:orientation="vertical"
         android:gravity="center"
-        >
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
         <TextView
             android:id="@+id/textView_creategroup_notice"
             android:layout_width="139dp"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="우리 가족 커뮤니티로 한 곳에서 반려동물 관리해보세요! "
+            android:text="우리 가족 커뮤니티로 한 곳에서 반려동물을 관리해보세요! "
             android:textSize="16dp" />
+
         <Button
             android:id="@+id/button_gotocreateGroup"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:background="@drawable/round_button2"
             android:layout_margin="10dp"
-            android:text="그룹 생성 하기 "
-            />
+            android:background="@drawable/round_button2"
+            android:text="그룹 생성 하기 " />
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/LinearLayout_yesgroup"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom">
 
+            <ImageView
+                android:id="@+id/ImageView_GroupCover"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_gravity="top"
+                android:background="@drawable/base_cover" />
 
+            <ImageView
+                android:id="@+id/ImageView_white"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="top"
+                android:layout_marginTop="150dp"
+                android:background="@drawable/ic_brightness_1_white_18dp" />
 
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="bottom"
+                android:layout_marginTop="150dp"
+                android:background="@drawable/ic_account_circle_24px_filled" />
+
+        </FrameLayout>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

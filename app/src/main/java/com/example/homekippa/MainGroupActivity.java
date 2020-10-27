@@ -3,6 +3,10 @@ package com.example.homekippa;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
+
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -38,20 +42,26 @@ public class MainGroupActivity extends AppCompatActivity {
     private LinearLayout Layout_YesGroup;
     private Button button_GoCreateGroup;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_group);
-        Layout_NoGroup=(LinearLayout)findViewById(R.id.linearLayout_nogroup);
+        Layout_NoGroup=(LinearLayout)findViewById(R.id.LinearLayout_nogroup);
+        Layout_YesGroup=(LinearLayout)findViewById(R.id.LinearLayout_yesgroup);
         button_GoCreateGroup=(Button)findViewById(R.id.button_gotocreateGroup);
 
 
+
+
         //create 상태 확인
-        boolean groupCreated=false;
+        boolean groupCreated=true;
         if(groupCreated){
             Layout_NoGroup.setVisibility(View.GONE);
+            Layout_YesGroup.setVisibility(View.VISIBLE);
         }else {
             Layout_NoGroup.setVisibility(View.VISIBLE);
+            Layout_YesGroup.setVisibility(View.GONE);
 
         }
 
