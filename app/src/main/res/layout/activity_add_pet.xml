@@ -5,7 +5,7 @@
     android:orientation="vertical">
 
     <include
-        layout="@layout/activity_top_bar"
+        layout="@layout/toolbar_top_bar"
         android:id="@+id/top_bar"/>
 
 
