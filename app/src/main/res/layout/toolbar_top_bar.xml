@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:src="@drawable/top_btn_menu"
         android:background="#ffffff"/>
-    >
+
     <ImageButton
         android:id="@+id/top_btn_chat"
         android:layout_width="wrap_content"
@@ -25,6 +25,5 @@
         android:layout_marginRight="15dp"
         android:src="@drawable/top_btn_chat"
         android:background="#ffffff"/>
-    >
 
 </androidx.appcompat.widget.Toolbar>
