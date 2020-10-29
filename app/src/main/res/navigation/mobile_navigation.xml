@@ -12,10 +12,10 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.example.homekippa.ui.dashboard.DashboardFragment"
+        android:id="@+id/navigation_group"
+        android:name="com.example.homekippa.ui.group.GroupFragment"
         android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_group" />
 
     <fragment
         android:id="@+id/navigation_notifications"

@@ -45,12 +45,10 @@ public class CreateGroupActivity extends AppCompatActivity {
     private File file;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_group);
-
         editText_groupName = findViewById(R.id.editText_groupName);
         editText_introduce = findViewById(R.id.editText_introduce);
         button_createGroup = findViewById(R.id.button_createGroup);

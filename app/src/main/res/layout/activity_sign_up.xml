@@ -25,13 +25,14 @@
 
     </androidx.appcompat.widget.Toolbar>
 
+
+
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editText_email"
             android:layout_width="match_parent"
             android:layout_height="37.3dp"
             android:ems="10"
             android:layout_gravity="center"
-
             android:hint="이메일"
             android:textSize="6pt"
             android:background="@drawable/shape"
@@ -102,7 +103,6 @@
             android:layout_width="match_parent"
             android:layout_height="37.3dp"
             android:text="이용 약관 동의"/>
-
 
         <Button
             android:id="@+id/button_SignUp"
