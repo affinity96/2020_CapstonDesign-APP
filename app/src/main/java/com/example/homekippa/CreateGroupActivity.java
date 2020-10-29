@@ -42,12 +42,10 @@ public class CreateGroupActivity extends AppCompatActivity {
     private File file;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_group);
-
         editText_groupName = findViewById(R.id.editText_groupName);
         button_createGroup = findViewById(R.id.button_createGroup);
         moveToSearchAddress = findViewById(R.id.moveToSearchAddress);

@@ -21,14 +21,8 @@ public class ManageFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         manageViewModel =
                 ViewModelProviders.of(this).get(ManageViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
-        final TextView textView = root.findViewById(R.id.text_dashboard);
-        manageViewModel.getText().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
+        View root = inflater.inflate(R.layout.fragment_group, container, false);
+
         return root;
     }
 }
