@@ -1,13 +1,14 @@
 package com.example.homekippa;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.homekippa.ui.group.GroupFragment;
+import com.example.homekippa.ui.group.SingleItemPet;
 import com.example.homekippa.ui.home.HomeFragment;
 import com.example.homekippa.ui.manage.ManageFragment;
 import com.example.homekippa.ui.notifications.NotificationsFragment;
@@ -18,20 +19,17 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import java.security.acl.Group;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     private FirebaseUser curUser;
@@ -47,12 +45,14 @@ public class MainActivity extends AppCompatActivity {
     private SearchFragment searchFragment;
     private FragmentManager fm;
     private FragmentTransaction ft;
-
+    private ArrayList<SingleItemPet> array_pets;
+    private ListView listView_pets;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         mAuth = FirebaseAuth.getInstance();
         curUser = mAuth.getCurrentUser();
         Toast.makeText(getApplicationContext(), curUser.getEmail() + "님 로그인", Toast.LENGTH_LONG).show();
@@ -98,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+        //하단 메뉴
         navView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -123,15 +124,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        setBottomNav();
+
+
+        //bottom navigation
+    }
+
+    private void setBottomNav() {
         groupFragment = new GroupFragment();
         homeFragment = new HomeFragment();
         manageFragment = new ManageFragment();
         notificationFragment = new NotificationsFragment();
         searchFragment = new SearchFragment();
         setFrag(0);
-
-
-        //bottom navigation
     }
 
     private void setFrag(int i) {

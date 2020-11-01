@@ -2,13 +2,21 @@ package com.example.homekippa.ui.group;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.homekippa.R;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -21,6 +29,7 @@ public class YesGroup extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private ArrayList<SingleItemPet> petList=new ArrayList<>();
 
     public static YesGroup newInstance() {
         return new YesGroup();
@@ -63,7 +72,60 @@ public class YesGroup extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        ViewGroup root = (ViewGroup)inflater.inflate(R.layout.fragment_yes_group, container, false);
+        RecyclerView listView_pets = root.findViewById(R.id.listview_pets);
+        getPetData();
+        ListPetAdapter adapter = new ListPetAdapter(petList);
+        LinearLayoutManager pLayoutManager = new LinearLayoutManager(getActivity());
+        pLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        listView_pets.setLayoutManager(pLayoutManager);
+        listView_pets.setItemAnimator(new DefaultItemAnimator());
+        listView_pets.setAdapter(adapter);
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_yes_group, container, false);
+        return root;
+    }
+
+    private void getPetData() {
+        SingleItemPet pet=new SingleItemPet("thang", R.drawable.top_btn_chat);
+        petList.add(pet);
+        pet=new SingleItemPet("yeaggggggh", R.drawable.simplelogo);
+        petList.add(pet);
+    }
+
+    class ListPetAdapter extends RecyclerView.Adapter<ListPetAdapter.MyViewHolder> {
+        private ArrayList<SingleItemPet> pet_Items;
+        public ListPetAdapter(ArrayList<SingleItemPet> petItems){
+            this.pet_Items=petItems;
+        }
+
+        @NonNull
+        @Override
+        public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View itemView=LayoutInflater.from(parent.getContext()).inflate(R.layout.listitem_pet, parent, false);
+            return new MyViewHolder(itemView);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+            SingleItemPet pet= pet_Items.get(position);
+            holder.petName.setText(pet.getName());
+            holder.petImage.setImageResource(pet.getImage());
+        }
+
+        @Override
+        public int getItemCount() {
+            return pet_Items.size();
+        }
+
+        class MyViewHolder extends RecyclerView.ViewHolder {
+            TextView petName; ImageView petImage;
+            MyViewHolder(View view){
+                super(view);
+                petName=(TextView)view.findViewById(R.id.listitem_PetName);
+                petImage=(ImageView)view.findViewById(R.id.listitem_PetIamge);
+            }
+        }
+
+
     }
 }
