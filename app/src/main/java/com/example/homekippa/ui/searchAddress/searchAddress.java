@@ -64,7 +64,7 @@ public class searchAddress extends AppCompatActivity {
         // WebView 설정
 
 
-        daum_webView = (WebView) findViewById(R.id.daum_webview);
+        daum_webView = (WebView)findViewById(R.id.daum_webview);
 
 
         // JavaScript 허용
@@ -83,7 +83,7 @@ public class searchAddress extends AppCompatActivity {
 
         // web client 를 chrome 으로 설정
 
-        daum_webView.setWebViewClient(new WebViewClient());
+        daum_webView.setWebChromeClient(new WebChromeClient());
 
 
         // webview url load. php 파일 주소
@@ -107,8 +107,7 @@ public class searchAddress extends AppCompatActivity {
                     daum_result.setText(String.format("(%s) %s %s", arg1, arg2, arg3));
 
 //                    // WebView를 초기화 하지않으면 재사용할 수 없음
-
-//                    init_webView();
+                    init_webView();
 
                     Intent intent = new Intent();
                     intent.putExtra("address", daum_result.getText().toString());
