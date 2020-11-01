@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,6 +46,13 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         mAuth = FirebaseAuth.getInstance();
+        curUser = mAuth.getCurrentUser();
+        if(curUser != null){
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            intent.putExtra("user", curUser);
+            startActivity(intent);
+        }
+
 //        tvData = findViewById(R.id.textView);
         editTextID = findViewById(R.id.editText_ID);
         editTextPW = findViewById(R.id.editText_PW);
@@ -88,7 +96,6 @@ public class LoginActivity extends AppCompatActivity {
                             curUser = mAuth.getCurrentUser();
                             if(curUser.isEmailVerified()) {
                                 Toast.makeText(getApplicationContext(), "로그인 성공", Toast.LENGTH_SHORT).show();
-//                                tvData.setText("로그인 되었습니다");
 
                                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                 intent.putExtra("user", curUser);
@@ -102,7 +109,6 @@ public class LoginActivity extends AppCompatActivity {
                             Exception e = task.getException();
                             Log.w("로그인", "createUserWithEmail:failure", e);
                             Toast.makeText(getApplicationContext(),"로그인 실패", Toast.LENGTH_SHORT).show();
-//                            tvData.setText("로그아웃 되었습니다");
                         }
 
                     }

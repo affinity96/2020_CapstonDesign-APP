@@ -31,8 +31,7 @@ public class VerifyActivity extends AppCompatActivity {
             public void onClick(View view) {
                 user.reload();
                 if(user.isEmailVerified()){
-                    Intent intent = new Intent(VerifyActivity.this, MainActivity.class);
-                    intent.putExtra("user", user);
+                    Intent intent = new Intent(VerifyActivity.this, LoginActivity.class);
                     startActivity(intent);
                 } else{
                     Toast.makeText(getApplicationContext(), "이메일 인증을 해주세요", Toast.LENGTH_SHORT).show();
