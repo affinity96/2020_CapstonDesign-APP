@@ -25,9 +25,6 @@ import java.util.ArrayList;
  * create an instance of this fragment.
  */
 public class YesGroup extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "object";
     private ArrayList<SingleItemPet> petList = new ArrayList<>();
     private ArrayList<SingleItemDailyWork> dailyWorkList = new ArrayList<>();
@@ -36,20 +33,17 @@ public class YesGroup extends Fragment {
         return new YesGroup();
     }
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
-    private String mParam2;
 
     public YesGroup() {
         // Required empty public constructor
     }
 
-
     // TODO: Rename and change types and number of parameters
     public static YesGroup newInstance(int position) {
         YesGroup fragment = new YesGroup();
         Bundle args = new Bundle();
-        args.putInt(ARG_PARAM1, position+1);
+        args.putInt(ARG_PARAM1, position + 1);
         fragment.setArguments(args);
         return fragment;
     }
@@ -63,38 +57,47 @@ public class YesGroup extends Fragment {
 
     }
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_yes_group, container, false);
+
+        RecyclerView listView_pets = root.findViewById(R.id.listview_pets);
+        RecyclerView listView_dailyWorks = root.findViewById(R.id.listview_dailywork);
+
+        setPetListView(listView_pets);
+        setDailyWorkListView(listView_dailyWorks);
+
+        setImages(inflater, container, savedInstanceState);
+
+        return root;
+    }
+
+    private void setDailyWorkListView(RecyclerView listView) {
+        getDailyWorkData();
+        ListDailyWorkAdapter workAdapter = new ListDailyWorkAdapter(dailyWorkList);
+        listView.setAdapter(workAdapter);
+        LinearLayoutManager dLayoutManager = new LinearLayoutManager(getActivity());
+        dLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        listView.setLayoutManager(dLayoutManager);
+        listView.setItemAnimator(new DefaultItemAnimator());
+    }
+
+    private void setPetListView(RecyclerView listView) {
+        getPetData();
+        ListPetAdapter petAdapter = new ListPetAdapter(petList);
+        listView.setAdapter(petAdapter);
+        LinearLayoutManager pLayoutManager = new LinearLayoutManager(getActivity());
+        pLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        listView.setLayoutManager(pLayoutManager);
+        listView.setItemAnimator(new DefaultItemAnimator());
+    }
+
     private void setImages(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_yes_group, container, false);
         ImageView imageView_groupProfile = (ImageView) root.findViewById(R.id.ImageView_groupProfile);
         Glide.with(this).load(R.drawable.ic_account_circle_24px).circleCrop().into(imageView_groupProfile);
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_yes_group, container, false);
-        RecyclerView listView_pets = root.findViewById(R.id.listview_pets);
-        RecyclerView listView_dailyWorks = root.findViewById(R.id.listview_dailywork);
-        getPetData();
-        ListPetAdapter petAdapter = new ListPetAdapter(petList);
-        LinearLayoutManager pLayoutManager = new LinearLayoutManager(getActivity());
-        pLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        listView_pets.setLayoutManager(pLayoutManager);
-        listView_pets.setItemAnimator(new DefaultItemAnimator());
-        listView_pets.setAdapter(petAdapter);
-
-        getDailyWorkData();
-        ListDailyWorkAdapter dailyWorkadapter = new ListDailyWorkAdapter(dailyWorkList);
-        LinearLayoutManager dLayoutManager = new LinearLayoutManager(getActivity());
-        dLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        listView_dailyWorks.setLayoutManager(dLayoutManager);
-        listView_dailyWorks.setItemAnimator(new DefaultItemAnimator());
-        listView_dailyWorks.setAdapter(dailyWorkadapter);
-        setImages(inflater, container, savedInstanceState);
-        // Inflate the layout for this fragment
-
-        return root;
     }
 
     private void getDailyWorkData() {
@@ -135,8 +138,13 @@ public class YesGroup extends Fragment {
 
         @Override
         public void onBindViewHolder(@NonNull MyViewHolder2 holder, int position) {
+            setDailyWorkData(holder, position);
+        }
+
+        private void setDailyWorkData(MyViewHolder2 holder, int position) {
             SingleItemDailyWork dailyWork = dailyWorks_Items.get(position);
             holder.workName.setText(dailyWork.getWorkName());
+            //make image circled
             Glide.with(getActivity()).load(R.drawable.base_cover).circleCrop().into(holder.workPersonImage);
             holder.workPersonImage.setImageResource(dailyWork.getWorkImage());
         }
@@ -174,6 +182,10 @@ public class YesGroup extends Fragment {
 
         @Override
         public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+            setPetData(holder, position);
+        }
+
+        private void setPetData(MyViewHolder holder, int position) {
             SingleItemPet pet = pet_Items.get(position);
             holder.petName.setText(pet.getName());
             Glide.with(getActivity()).load(R.drawable.simplelogo).circleCrop().into(holder.petImage);

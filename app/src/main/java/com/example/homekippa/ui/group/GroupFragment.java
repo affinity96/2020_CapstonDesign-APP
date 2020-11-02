@@ -20,11 +20,10 @@ import com.google.android.material.tabs.TabLayoutMediator;
 public class GroupFragment extends Fragment {
 
     private GroupViewModel groupViewModel;
-    Fragment fragment_yesGroup;
-    Fragment fragment_noGroup;
-    private String[] tabTitles = new String[]{"그룹명", "추억 저장소"};
+
     GroupCollectionAdapter groupCollectionAdapter;
     ViewPager2 viewpager;
+    private String[] tabTitles = new String[]{"그룹명", "추억 저장소"};
 
     public static GroupFragment newInstance() {
         return new GroupFragment();
@@ -40,6 +39,11 @@ public class GroupFragment extends Fragment {
 
     @Override
     public void onViewCreated(@Nullable View view, @Nullable Bundle savedInstanceState) {
+        connectViewPagerToTab(view);
+
+    }
+
+    private void connectViewPagerToTab(@Nullable View view) {
         groupCollectionAdapter = new GroupCollectionAdapter(this);
         viewpager = view.findViewById(R.id.group_pager);
         viewpager.setAdapter(groupCollectionAdapter);
