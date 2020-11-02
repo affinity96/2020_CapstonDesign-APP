@@ -113,6 +113,14 @@
                 android:layout_below="@+id/linearlayout_pets"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true" />
+
         </RelativeLayout>
+
+        <Button
+            android:id="@+id/button_Add_DW"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="일과 추가" />
     </LinearLayout>
 </FrameLayout>
