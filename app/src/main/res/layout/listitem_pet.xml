@@ -1,19 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="100dp"
-    android:layout_height="60dp"
-    android:layout_margin="10dp"
+    android:layout_width="80dp"
+    android:layout_margin="5dp"
+    android:layout_height="wrap_content"
     android:orientation="horizontal">
-    <ImageView
-        android:id="@+id/listitem_PetIamge"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_margin="5dp"
-        app:srcCompat="@drawable/shape"/>
-    <TextView
-        android:id="@+id/listitem_PetName"
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="name" />
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/round_button3">
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/listitem_PetIamge"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:padding="3dp"
+            android:src="@drawable/base_cover"/>
+
+        <TextView
+            android:id="@+id/listitem_PetName"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:lines="1"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:text="name" />
+    </LinearLayout>
+
 </LinearLayout>
