@@ -106,21 +106,18 @@ public class CreateGroupActivity extends AppCompatActivity {
 
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent intent)
-    {
-        if(resultCode != RESULT_OK)
-        {
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+        if (resultCode != RESULT_OK) {
             Log.d("주소", "error");
             return;
-        }
-        else{
-            if(requestCode == 0) {
+        } else {
+            if (requestCode == 0) {
                 //수신성공 출력
                 String result = intent.getStringExtra("address");
                 moveToSearchAddress.setText(result);
-            }
-            else{
-                try{
+            } else {
+                try {
 //                    InputStream in = getContentResolver().openInputStream(intent.getData());
 //                    Bitmap img = BitmapFactory.decodeStream(in);
 //                    imgUrl = intent.getData();
@@ -130,8 +127,7 @@ public class CreateGroupActivity extends AppCompatActivity {
 //                    groupCoverPhoto.setImageBitmap(img);
 //                    Uri selectedImageUri=intent.getData();
 //                    groupCoverPhoto.setImageURI(selectedImageUri);
-                }catch(Exception e)
-                {
+                } catch (Exception e) {
                     Log.d("exception", String.valueOf(e));
                 }
             }
@@ -147,10 +143,6 @@ public class CreateGroupActivity extends AppCompatActivity {
         return cursor.getString(column_index);
 
     }
-
-
-
-
 
     private void createGroup(CreateGroupData data){
         Log.i("create","create");
@@ -170,7 +162,6 @@ public class CreateGroupActivity extends AppCompatActivity {
                 Toast.makeText(CreateGroupActivity.this, "그룹생성 에러 발생", Toast.LENGTH_SHORT).show();
                 Log.e("createGroup error",t.getMessage());
                 t.printStackTrace();
-
             }
         });
     }
