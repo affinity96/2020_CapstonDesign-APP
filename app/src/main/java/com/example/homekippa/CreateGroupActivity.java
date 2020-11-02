@@ -56,7 +56,7 @@ public class CreateGroupActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         service = RetrofitClient.getClient().create(ServiceApi.class);
 //        groupCoverPhoto = findViewById(R.id.imageView_groupImage);
-        
+
         service = RetrofitClient.getClient().create(ServiceApi.class);
 
         editText_groupName.setOnClickListener(new View.OnClickListener() {
@@ -96,26 +96,21 @@ public class CreateGroupActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String groupName = editText_groupName.getText().toString();
-                Log.d("creategroup","here");
+                Log.d("creategroup", "here");
                 String userid = mAuth.getCurrentUser().getUid();
                 String groupIntroduction = editText_introduce.getText().toString();
 
                 final String groupAddress = moveToSearchAddress.getText().toString();
 
-                if(groupName.isEmpty()){
-                    editText_groupName.setText("GroupName을 입력하세요");
+                if (groupName.isEmpty()) {
+                    editText_groupName.setHint("GroupName을 입력하세요!");
+                } else if (groupAddress.isEmpty()) {
+                    moveToSearchAddress.setHint("주소를 입력하세요!");
+                } else if (groupIntroduction.isEmpty()) {
+                    editText_introduce.setHint("그룹 소개글을 써주세요!");
+                } else {
+                    createGroup(new CreateGroupData(userid, groupName, groupAddress, groupIntroduction));
                 }
-                else if(groupAddress.isEmpty()){
-                    moveToSearchAddress.setText("주소를 입력하세요");
-                }
-                else if(groupIntroduction.isEmpty()){
-                    editText_introduce.setText("그룹 소개글을 써주세요!");
-                }
-                else{
-                    createGroup(new CreateGroupData(userid, groupName, groupAddress,  groupIntroduction));
-                }
-
-
             }
         });
 
@@ -152,7 +147,7 @@ public class CreateGroupActivity extends AppCompatActivity {
         }
     }
 
-    private String getRealPathFromUrl(Uri imageUri){
+    private String getRealPathFromUrl(Uri imageUri) {
         String[] proj = {MediaStore.Images.Media.DATA};
         Cursor cursor = getContentResolver().query(imageUri, proj, null, null, null);
 
@@ -162,19 +157,14 @@ public class CreateGroupActivity extends AppCompatActivity {
 
     }
 
-
-
-
-
-    private void createGroup(CreateGroupData data){
-        Log.i("create","create");
+    private void createGroup(CreateGroupData data) {
+        Log.i("create", "create");
         service.groupCreate(data).enqueue(new Callback<CreateGroupResponse>() {
             @Override
             public void onResponse(Call<CreateGroupResponse> call, Response<CreateGroupResponse> response) {
                 CreateGroupResponse result = response.body();
 //                Toast.makeText(CreateGroupActivity.this, result.getMessage(),Toast.LENGTH_SHORT).show();
-
-                if(result.getCode() == 200){
+                if (result.getCode() == 200) {
                     finish();
                 }
             }
@@ -184,7 +174,6 @@ public class CreateGroupActivity extends AppCompatActivity {
                 Toast.makeText(CreateGroupActivity.this, "그룹생성 에러 발생", Toast.LENGTH_SHORT).show();
 //                Log.e("createGroup error",t.getMessage());
                 t.printStackTrace();
-
             }
         });
     }
