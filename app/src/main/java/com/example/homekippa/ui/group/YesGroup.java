@@ -28,8 +28,7 @@ public class YesGroup extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private static final String ARG_PARAM1 = "object";
     private ArrayList<SingleItemPet> petList = new ArrayList<>();
     private ArrayList<SingleItemDailyWork> dailyWorkList = new ArrayList<>();
 
@@ -45,20 +44,12 @@ public class YesGroup extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment YesGroup.
-     */
+
     // TODO: Rename and change types and number of parameters
-    public static YesGroup newInstance(String param1, String param2) {
+    public static YesGroup newInstance(int position) {
         YesGroup fragment = new YesGroup();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putInt(ARG_PARAM1, position+1);
         fragment.setArguments(args);
         return fragment;
     }
@@ -68,7 +59,6 @@ public class YesGroup extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
     }
@@ -76,7 +66,7 @@ public class YesGroup extends Fragment {
     private void setImages(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_yes_group, container, false);
-        ImageView imageView_groupProfile = (ImageView)root.findViewById(R.id.ImageView_groupProfile);
+        ImageView imageView_groupProfile = (ImageView) root.findViewById(R.id.ImageView_groupProfile);
         Glide.with(this).load(R.drawable.ic_account_circle_24px).circleCrop().into(imageView_groupProfile);
     }
 
@@ -103,9 +93,7 @@ public class YesGroup extends Fragment {
         listView_dailyWorks.setAdapter(dailyWorkadapter);
         setImages(inflater, container, savedInstanceState);
         // Inflate the layout for this fragment
-        ImageView imageView_groupProfile = (ImageView)root.findViewById(R.id.ImageView_groupProfile);
-//        CircleImageView circleImageView_workDonePerson=(CircleImageView)
-        Glide.with(this).load(R.drawable.ic_account_circle_24px).circleCrop().into(imageView_groupProfile);
+
         return root;
     }
 
@@ -124,11 +112,11 @@ public class YesGroup extends Fragment {
         SingleItemPet pet = new SingleItemPet("땡이 ", R.drawable.top_btn_chat);
         petList.add(pet);
         pet = new SingleItemPet("콩이 ", R.drawable.simplelogo);
-//        petList.add(pet);
-//        pet = new SingleItemPet("탄이 ", R.drawable.simplelogo);
-//        petList.add(pet);
-//        pet = new SingleItemPet("웅이 ", R.drawable.simplelogo);
-//        petList.add(pet);
+        petList.add(pet);
+        pet = new SingleItemPet("탄이 ", R.drawable.simplelogo);
+        petList.add(pet);
+        pet = new SingleItemPet("웅이 ", R.drawable.simplelogo);
+        petList.add(pet);
     }
 
     class ListDailyWorkAdapter extends RecyclerView.Adapter<ListDailyWorkAdapter.MyViewHolder2> {
