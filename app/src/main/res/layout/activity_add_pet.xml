@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
@@ -37,15 +39,20 @@
     </LinearLayout>
 
     <EditText
-        android:id="@+id/reg_num"
+        android:id="@+id/editText_petReg_num"
         android:layout_marginTop="50dp"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:text="등록 번호 조회"
         android:layout_gravity="center"/>
 
+    <Button
+        android:id="@+id/button_petReg"
+        android:layout_width="170dp"
+        android:layout_height="43dp"
+        android:text="반려동물 조회"
 
-
+        />
 
 
 </LinearLayout>
