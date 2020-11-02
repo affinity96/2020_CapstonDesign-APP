@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.homekippa.R;
 
 import java.util.ArrayList;
@@ -69,6 +70,14 @@ public class YesGroup extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+    }
+
+    private void setImages(LayoutInflater inflater, ViewGroup container,
+                           Bundle savedInstanceState) {
+        ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_yes_group, container, false);
+        ImageView imageView_groupProfile = (ImageView)root.findViewById(R.id.ImageView_groupProfile);
+        Glide.with(this).load(R.drawable.ic_account_circle_24px).circleCrop().into(imageView_groupProfile);
     }
 
     @Override
@@ -92,18 +101,22 @@ public class YesGroup extends Fragment {
         listView_dailyWorks.setLayoutManager(dLayoutManager);
         listView_dailyWorks.setItemAnimator(new DefaultItemAnimator());
         listView_dailyWorks.setAdapter(dailyWorkadapter);
+        setImages(inflater, container, savedInstanceState);
         // Inflate the layout for this fragment
+        ImageView imageView_groupProfile = (ImageView)root.findViewById(R.id.ImageView_groupProfile);
+//        CircleImageView circleImageView_workDonePerson=(CircleImageView)
+        Glide.with(this).load(R.drawable.ic_account_circle_24px).circleCrop().into(imageView_groupProfile);
         return root;
     }
 
     private void getDailyWorkData() {
         SingleItemDailyWork dailyWork = new SingleItemDailyWork("밥", "PM 10:23", "PM 11:23", "시은", R.drawable.base_cover);
         dailyWorkList.add(dailyWork);
-        dailyWork = new SingleItemDailyWork("간식", "PM 08:00", "PM 09:23", "시은",  R.drawable.base_cover);
+        dailyWork = new SingleItemDailyWork("간식", "PM 08:00", "PM 09:23", "시은", R.drawable.base_cover);
         dailyWorkList.add(dailyWork);
-        dailyWork = new SingleItemDailyWork("산책", "PM 04:20", "PM 04:40", "시은",  R.drawable.base_cover);
+        dailyWork = new SingleItemDailyWork("산책", "PM 04:20", "PM 04:40", "시은", R.drawable.base_cover);
         dailyWorkList.add(dailyWork);
-        dailyWork = new SingleItemDailyWork("안", "PM 12:20", "PM 12:40", "시은",  R.drawable.base_cover);
+        dailyWork = new SingleItemDailyWork("안", "PM 12:20", "PM 12:40", "시은", R.drawable.base_cover);
         dailyWorkList.add(dailyWork);
     }
 
@@ -136,6 +149,7 @@ public class YesGroup extends Fragment {
         public void onBindViewHolder(@NonNull MyViewHolder2 holder, int position) {
             SingleItemDailyWork dailyWork = dailyWorks_Items.get(position);
             holder.workName.setText(dailyWork.getWorkName());
+            Glide.with(getActivity()).load(R.drawable.base_cover).circleCrop().into(holder.workPersonImage);
             holder.workPersonImage.setImageResource(dailyWork.getWorkImage());
         }
 
@@ -174,6 +188,7 @@ public class YesGroup extends Fragment {
         public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
             SingleItemPet pet = pet_Items.get(position);
             holder.petName.setText(pet.getName());
+            Glide.with(getActivity()).load(R.drawable.simplelogo).circleCrop().into(holder.petImage);
             holder.petImage.setImageResource(pet.getImage());
         }
 
