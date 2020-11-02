@@ -41,8 +41,6 @@ public class GroupFragment extends Fragment {
         } else {
             ((MainActivity)getActivity()).replaceGroupFragment(NoGroup.newInstance());
         }
-
-
         return root;
     }
 }
