@@ -31,6 +31,8 @@ import androidx.navigation.ui.NavigationUI;
 
 import java.util.ArrayList;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class MainActivity extends AppCompatActivity {
     private FirebaseUser curUser;
     private FirebaseAuth mAuth;
@@ -47,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
     private FragmentTransaction ft;
     private ArrayList<SingleItemPet> array_pets;
     private ListView listView_pets;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,10 +130,9 @@ public class MainActivity extends AppCompatActivity {
         });
 
         setBottomNav();
-
-
         //bottom navigation
     }
+
 
     private void setBottomNav() {
         groupFragment = new GroupFragment();
@@ -167,6 +169,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
     }
+
 
     //replacing the fragment in nav_host_fragment- activity main
     public void replaceGroupFragment(Fragment fragment) {

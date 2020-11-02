@@ -35,7 +35,7 @@ public class GroupFragment extends Fragment {
 
 
 
-        boolean groupCreated = false;
+        boolean groupCreated = true;
         if (groupCreated) {
             ((MainActivity)getActivity()).replaceGroupFragment(YesGroup.newInstance());
         } else {

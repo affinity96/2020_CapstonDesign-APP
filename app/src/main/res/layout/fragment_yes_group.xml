@@ -62,7 +62,7 @@
                     android:id="@+id/ImageView_groupProfile"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
-                    android:background="@drawable/ic_account_circle_24px_filled" />
+                    android:background="@drawable/ic_brightness_1_white_18dp" />
 
             </FrameLayout>
             <TextView
@@ -103,7 +103,7 @@
                     android:id="@+id/listview_pets"
                     android:layout_width="match_parent"
                     android:layout_gravity="center"
-                    android:layout_height="30dp" />
+                    android:layout_height="wrap_content" />
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
