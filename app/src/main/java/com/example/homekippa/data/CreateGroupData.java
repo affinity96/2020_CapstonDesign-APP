@@ -7,8 +7,10 @@ import com.google.gson.annotations.SerializedName;
 import java.io.File;
 
 public class CreateGroupData {
+
     @SerializedName("userId")
     private String userId;
+
     @SerializedName("groupName")
     private String groupName;
 
