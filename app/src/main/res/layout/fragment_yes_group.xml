@@ -42,7 +42,6 @@
 
             </FrameLayout>
 
-
             <FrameLayout
                 android:id="@+id/frameLayout_profile"
                 android:layout_width="wrap_content"
@@ -57,14 +56,14 @@
                     android:layout_height="100dp"
                     android:background="@drawable/ic_brightness_1_white_18dp" />
 
-                <de.hdodenhof.circleimageview.CircleImageView
-                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/ImageView_groupProfile"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:background="@drawable/ic_brightness_1_white_18dp" />
 
             </FrameLayout>
+
             <TextView
                 android:id="@+id/textView_groupName"
                 android:layout_width="fill_parent"
@@ -88,10 +87,11 @@
             <LinearLayout
                 android:id="@+id/linearlayout_pets"
                 android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:orientation="horizontal"
+                android:layout_height="40dp"
+                android:layout_below="@+id/textView_groupIntro"
                 android:gravity="center"
-                android:layout_below="@+id/textView_groupIntro">
+                android:orientation="horizontal">
+
                 <Button
                     android:layout_width="30dp"
                     android:layout_height="30dp"
@@ -99,28 +99,39 @@
                     android:layout_margin="5dp"
                     android:background="@drawable/round_button2"
                     android:text="+" />
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/listview_pets"
                     android:layout_width="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center" />
             </LinearLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/listview_dailywork"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/linearlayout_pets"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true" />
+                android:orientation="vertical">
 
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/listview_dailywork"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="2"
+                    android:background="@drawable/border" />
+
+                <Button
+                    android:id="@+id/button_Add_DW"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_below="@+id/listview_dailywork"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:background="@drawable/round_button2"
+                    android:text="일과 추가" />
+            </LinearLayout>
         </RelativeLayout>
-
-        <Button
-            android:id="@+id/button_Add_DW"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="일과 추가" />
     </LinearLayout>
 </FrameLayout>

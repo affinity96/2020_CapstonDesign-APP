@@ -116,19 +116,19 @@ public class YesGroup extends Fragment {
         dailyWorkList.add(dailyWork);
         dailyWork = new SingleItemDailyWork("산책", "PM 04:20", "PM 04:40", "시은", R.drawable.base_cover);
         dailyWorkList.add(dailyWork);
-        dailyWork = new SingleItemDailyWork("안", "PM 12:20", "PM 12:40", "시은", R.drawable.base_cover);
-        dailyWorkList.add(dailyWork);
+//        dailyWork = new SingleItemDailyWork("안", "PM 12:20", "PM 12:40", "시은", R.drawable.base_cover);
+//        dailyWorkList.add(dailyWork);
     }
 
     private void getPetData() {
         SingleItemPet pet = new SingleItemPet("땡이 ", R.drawable.top_btn_chat);
         petList.add(pet);
         pet = new SingleItemPet("콩이 ", R.drawable.simplelogo);
-        petList.add(pet);
-        pet = new SingleItemPet("탄이 ", R.drawable.simplelogo);
-        petList.add(pet);
-        pet = new SingleItemPet("웅이 ", R.drawable.simplelogo);
-        petList.add(pet);
+//        petList.add(pet);
+//        pet = new SingleItemPet("탄이 ", R.drawable.simplelogo);
+//        petList.add(pet);
+//        pet = new SingleItemPet("웅이 ", R.drawable.simplelogo);
+//        petList.add(pet);
     }
 
     class ListDailyWorkAdapter extends RecyclerView.Adapter<ListDailyWorkAdapter.MyViewHolder2> {
