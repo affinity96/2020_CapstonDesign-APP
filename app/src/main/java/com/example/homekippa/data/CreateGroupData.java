@@ -7,8 +7,8 @@ import com.google.gson.annotations.SerializedName;
 import java.io.File;
 
 public class CreateGroupData {
-    @SerializedName("groupNameTag")
-    private String groupNameTag;
+    @SerializedName("groupName")
+    private String groupName;
 
     @SerializedName("groupAddress")
     private  String groupAddress;
@@ -19,8 +19,8 @@ public class CreateGroupData {
 //    @SerializedName("file")
 //    private File imgFile;
 
-    public  CreateGroupData(String groupNameTag, String groupAddress, Uri imgPath){
-        this.groupNameTag = groupNameTag;
+    public  CreateGroupData(String groupName, String groupAddress, Uri imgPath){
+        this.groupName = groupName;
         this.groupAddress = groupAddress;
         this.imgPath = imgPath;
 //        this.imgFile = imgFile;
