@@ -1,7 +1,5 @@
 package com.example.homekippa.ui.searchAddress;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Handler;
 
@@ -15,7 +13,6 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
-import android.webkit.WebViewClient;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -62,28 +59,23 @@ public class searchAddress extends AppCompatActivity {
     public void init_webView() {
 
         // WebView 설정
-
-
-        daum_webView = (WebView) findViewById(R.id.daum_webview);
-
+        daum_webView = (WebView)findViewById(R.id.daum_webview);
+        WebSettings daum_webSettings = daum_webView.getSettings();
 
         // JavaScript 허용
-        daum_webView.getSettings().setJavaScriptEnabled(true);
-
+        daum_webSettings.setJavaScriptEnabled(true);
 
         // JavaScript의 window.open 허용
-
-        daum_webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
+        daum_webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
 
 
         // JavaScript이벤트에 대응할 함수를 정의 한 클래스를 붙여줌
-
         daum_webView.addJavascriptInterface(new AndroidBridge(), "TestApp");
 
 
         // web client 를 chrome 으로 설정
 
-        daum_webView.setWebViewClient(new WebViewClient());
+        daum_webView.setWebChromeClient(new WebChromeClient());
 
 
         // webview url load. php 파일 주소
@@ -106,9 +98,8 @@ public class searchAddress extends AppCompatActivity {
 
                     daum_result.setText(String.format("(%s) %s %s", arg1, arg2, arg3));
 
-//                    // WebView를 초기화 하지않으면 재사용할 수 없음
-
-//                    init_webView();
+                    // WebView를 초기화 하지않으면 재사용할 수 없음
+                    init_webView();
 
                     Intent intent = new Intent();
                     intent.putExtra("address", daum_result.getText().toString());
@@ -126,5 +117,4 @@ public class searchAddress extends AppCompatActivity {
         }
 
     }
-
 }

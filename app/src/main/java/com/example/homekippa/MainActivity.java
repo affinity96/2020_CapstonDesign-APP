@@ -93,7 +93,9 @@ public class MainActivity extends AppCompatActivity {
                 } else if (id == R.id.menu_item2) {
                     Toast.makeText(getApplicationContext(), title + " 선택됨", Toast.LENGTH_SHORT).show();
                 } else if (id == R.id.menu_logout) {
-                    Toast.makeText(getApplicationContext(), title + " 선택됨", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "로그아웃", Toast.LENGTH_SHORT).show();
+                    mAuth.signOut();
+                    finish();
                 }
                 return true;
             }

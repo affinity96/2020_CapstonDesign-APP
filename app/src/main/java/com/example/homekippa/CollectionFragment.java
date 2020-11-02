@@ -1,4 +1,4 @@
-package com.example.homekippa;
+/*package com.example.homekippa;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -78,3 +78,4 @@ class ObjectFragment extends Fragment {
 
 
 
+*/
