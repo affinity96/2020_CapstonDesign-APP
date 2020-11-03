@@ -28,6 +28,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="140dp"
                     android:layout_gravity="top"
+                    android:scaleType="centerCrop"
                     android:background="@drawable/base_cover" />
 
                 <Button
@@ -36,10 +37,10 @@
                     android:layout_height="20dp"
                     android:layout_gravity="bottom|right"
                     android:layout_margin="10dp"
-                    android:textSize="11dp"
                     android:layout_toRightOf="@+id/frameLayout_profile"
                     android:background="@drawable/round_button2"
-                    android:text="커버 변경 " />
+                    android:text="커버 변경 "
+                    android:textSize="11dp" />
 
             </FrameLayout>
 
@@ -48,8 +49,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
-                android:layout_marginHorizontal="20dp"
+                android:layout_marginLeft="20dp"
                 android:layout_marginTop="100dp">
+
                 <ImageView
                     android:id="@+id/ImageView_white"
                     android:layout_width="70dp"
@@ -59,8 +61,7 @@
                 <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/ImageView_groupProfile"
                     android:layout_width="70dp"
-                    android:layout_height="70dp"
-                     />
+                    android:layout_height="70dp" />
 
             </FrameLayout>
 
@@ -71,7 +72,7 @@
                 android:layout_below="@+id/frameLayout_groupCover"
                 android:layout_toRightOf="@+id/frameLayout_profile"
                 android:singleLine="true"
-                android:text="우만동 땡이가족 "
+                android:text="우만동 땡이가족"
                 android:textSize="13dp"
                 android:textStyle="bold" />
 
@@ -82,8 +83,8 @@
                 android:layout_below="@+id/textView_groupName"
                 android:layout_toRightOf="@+id/frameLayout_profile"
                 android:lines="2"
-                android:textSize="11dp"
-                android:text="우만동 땡이가족에 대해서 설명해주세요!^^ " />
+                android:text="우만동 땡이가족에 대해서 설명해주세요!^^ "
+                android:textSize="11dp" />
 
             <LinearLayout
                 android:id="@+id/linearlayout_pets"
@@ -111,8 +112,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="3dp"
                 android:layout_below="@+id/linearlayout_pets"
+                android:layout_margin="3dp"
                 android:orientation="vertical">
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -121,7 +122,7 @@
                     android:layout_height="200dp"
                     android:layout_margin="5dp"
                     android:layout_weight="2"
-                    android:background="@drawable/border" />
+                    android:background="@drawable/border_gray" />
 
                 <Button
                     android:id="@+id/button_Add_DW"
@@ -130,8 +131,8 @@
                     android:layout_below="@+id/listview_dailywork"
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center"
-                    android:layout_weight="1"
                     android:layout_margin="2dp"
+                    android:layout_weight="1"
                     android:background="@drawable/round_button2"
                     android:hint="+" />
             </LinearLayout>

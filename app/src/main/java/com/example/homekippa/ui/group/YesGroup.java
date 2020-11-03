@@ -72,6 +72,7 @@ public class YesGroup extends Fragment {
 
         CircleImageView imageView_groupProfile = (CircleImageView) root.findViewById(R.id.ImageView_groupProfile);
         Glide.with(this).load(R.drawable.dog_woong).circleCrop().into(imageView_groupProfile);
+
         return root;
     }
 
@@ -94,8 +95,6 @@ public class YesGroup extends Fragment {
         listView.setLayoutManager(pLayoutManager);
         listView.setItemAnimator(new DefaultItemAnimator());
     }
-
-
 
     private void getDailyWorkData() {
         SingleItemDailyWork dailyWork = new SingleItemDailyWork("밥", "PM 10:23", "PM 11:23", "시은", R.drawable.base_cover);
@@ -201,7 +200,8 @@ public class YesGroup extends Fragment {
             MyViewHolder(View view) {
                 super(view);
                 petName = (TextView) view.findViewById(R.id.listitem_PetName);
-                petImage = (ImageView) view.findViewById(R.id.listitem_PetIamge);
+                petImage = (ImageView) view.findViewById(R.id.listitem_PetImage);
+
             }
         }
     }
