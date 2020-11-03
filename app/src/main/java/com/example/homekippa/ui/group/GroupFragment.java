@@ -70,7 +70,7 @@ class GroupCollectionAdapter extends FragmentStateAdapter {
                     return new NoGroup();
                 }
             case 1:
-                return new NoGroup();
+                return new GroupPost();
         }
         return new YesGroup();
     }

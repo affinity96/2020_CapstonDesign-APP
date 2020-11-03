@@ -19,6 +19,8 @@ import com.example.homekippa.R;
 
 import java.util.ArrayList;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link YesGroup#newInstance} factory method to
@@ -68,8 +70,8 @@ public class YesGroup extends Fragment {
         setPetListView(listView_pets);
         setDailyWorkListView(listView_dailyWorks);
 
-        setImages(inflater, container, savedInstanceState);
-
+        CircleImageView imageView_groupProfile = (CircleImageView) root.findViewById(R.id.ImageView_groupProfile);
+        Glide.with(this).load(R.drawable.dog_woong).circleCrop().into(imageView_groupProfile);
         return root;
     }
 
@@ -93,12 +95,7 @@ public class YesGroup extends Fragment {
         listView.setItemAnimator(new DefaultItemAnimator());
     }
 
-    private void setImages(LayoutInflater inflater, ViewGroup container,
-                           Bundle savedInstanceState) {
-        ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_yes_group, container, false);
-        ImageView imageView_groupProfile = (ImageView) root.findViewById(R.id.ImageView_groupProfile);
-        Glide.with(this).load(R.drawable.ic_account_circle_24px).circleCrop().into(imageView_groupProfile);
-    }
+
 
     private void getDailyWorkData() {
         SingleItemDailyWork dailyWork = new SingleItemDailyWork("밥", "PM 10:23", "PM 11:23", "시은", R.drawable.base_cover);
@@ -107,8 +104,8 @@ public class YesGroup extends Fragment {
         dailyWorkList.add(dailyWork);
         dailyWork = new SingleItemDailyWork("산책", "PM 04:20", "PM 04:40", "시은", R.drawable.base_cover);
         dailyWorkList.add(dailyWork);
-//        dailyWork = new SingleItemDailyWork("안", "PM 12:20", "PM 12:40", "시은", R.drawable.base_cover);
-//        dailyWorkList.add(dailyWork);
+        dailyWork = new SingleItemDailyWork("안", "PM 12:20", "PM 12:40", "시은", R.drawable.base_cover);
+        dailyWorkList.add(dailyWork);
     }
 
     private void getPetData() {
