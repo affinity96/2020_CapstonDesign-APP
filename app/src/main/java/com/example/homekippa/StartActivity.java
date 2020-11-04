@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.homekippa.ui.group.CreateGroupActivity;
+
 public class StartActivity extends AppCompatActivity {
     Button button_Login;
     Button button_Sign;
