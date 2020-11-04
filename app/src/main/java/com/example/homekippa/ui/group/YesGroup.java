@@ -79,21 +79,23 @@ public class YesGroup extends Fragment {
     private void setDailyWorkListView(RecyclerView listView) {
         getDailyWorkData();
         ListDailyWorkAdapter workAdapter = new ListDailyWorkAdapter(dailyWorkList);
-        listView.setAdapter(workAdapter);
+
         LinearLayoutManager dLayoutManager = new LinearLayoutManager(getActivity());
         dLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         listView.setLayoutManager(dLayoutManager);
         listView.setItemAnimator(new DefaultItemAnimator());
+        listView.setAdapter(workAdapter);
     }
 
     private void setPetListView(RecyclerView listView) {
         getPetData();
         ListPetAdapter petAdapter = new ListPetAdapter(petList);
-        listView.setAdapter(petAdapter);
+
         LinearLayoutManager pLayoutManager = new LinearLayoutManager(getActivity());
         pLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         listView.setLayoutManager(pLayoutManager);
         listView.setItemAnimator(new DefaultItemAnimator());
+        listView.setAdapter(petAdapter);
     }
 
     private void getDailyWorkData() {
