@@ -30,7 +30,6 @@ public interface ServiceApi {
     @POST("/group/add")
     Call<CreateGroupResponse> groupCreate(@Body CreateGroupData data);
 
-
     @POST("/pet/add")
     Call<AddPetResponse> addPetReg(@Body AddPetData data);
 
@@ -40,7 +39,7 @@ public interface ServiceApi {
     @GET("/group")
     Call<GroupData> getGroupData(@Query("groupId") int groupId);
 
-    @GET("/pets")
+    @GET("/pet")
     Call<List<SingleItemPet>> getPetsData(@Query("groupId") int groupId);
 
 //    @POST("/pet/reports/add")
