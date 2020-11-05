@@ -13,7 +13,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,7 +26,6 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -53,6 +51,8 @@ public class CreateGroupActivity extends AppCompatActivity {
     private EditText editText_groupName;
     private EditText editText_introduce;
     private Button button_createGroup;
+    private Button button_gallery;
+    private Button button_camera;
     private TextView moveToSearchAddress;
     private FirebaseAuth mAuth;
     private ServiceApi service;
@@ -94,13 +94,13 @@ public class CreateGroupActivity extends AppCompatActivity {
         service = RetrofitClient.getClient().create(ServiceApi.class);
 
         // 앨범에서 가져오는 버튼하나, 카메라로 가져오는 버튼하나 만들어주세요.
-        button_Gallery = findViewById(R.id.button_Gallery);
-        button_Camera = findViewById(R.id.button_Camera);
+        button_gallery = findViewById(R.id.button_gallery);
+        button_camera = findViewById(R.id.button_camera);
 
         // 권한 요청
         tedPermission();
 
-        button_Gallery.setOnClickListener(new View.OnClickListener() {
+        button_gallery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // 권한 허용에 동의하지 않았을 경우 토스트를 띄웁니다.
@@ -109,7 +109,7 @@ public class CreateGroupActivity extends AppCompatActivity {
             }
         });
 
-        button_Camera.setOnClickListener(new View.OnClickListener() {
+        button_camera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // 권한 허용에 동의하지 않았을 경우 토스트를 띄웁니다.
