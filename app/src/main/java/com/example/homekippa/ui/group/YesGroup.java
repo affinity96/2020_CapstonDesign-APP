@@ -1,5 +1,6 @@
 package com.example.homekippa.ui.group;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,10 +12,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.homekippa.CreateDailyWorkActivity;
 import com.example.homekippa.R;
 
 import java.util.ArrayList;
@@ -30,6 +33,8 @@ public class YesGroup extends Fragment {
     private static final String ARG_PARAM1 = "object";
     private ArrayList<SingleItemPet> petList = new ArrayList<>();
     private ArrayList<SingleItemDailyWork> dailyWorkList = new ArrayList<>();
+
+    private Button button_Add_DW;
 
     public static YesGroup newInstance() {
         return new YesGroup();
@@ -57,6 +62,7 @@ public class YesGroup extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
         }
 
+
     }
 
     @Override
@@ -64,6 +70,14 @@ public class YesGroup extends Fragment {
                              Bundle savedInstanceState) {
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_yes_group, container, false);
 
+        button_Add_DW= root.findViewById(R.id.button_Add_DW);
+        button_Add_DW.setOnClickListener(new View.OnClickListener() {
+                @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), CreateDailyWorkActivity.class);
+                startActivity(intent);
+            }
+        });
         RecyclerView listView_pets = root.findViewById(R.id.listview_pets);
         RecyclerView listView_dailyWorks = root.findViewById(R.id.listview_dailywork);
 
@@ -72,6 +86,8 @@ public class YesGroup extends Fragment {
 
         CircleImageView imageView_groupProfile = (CircleImageView) root.findViewById(R.id.ImageView_groupProfile);
         Glide.with(this).load(R.drawable.dog_woong).circleCrop().into(imageView_groupProfile);
+
+
 
         return root;
     }
