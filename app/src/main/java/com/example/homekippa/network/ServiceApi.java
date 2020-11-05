@@ -1,5 +1,7 @@
 package com.example.homekippa.network;
 
+import com.example.homekippa.data.AddPetData;
+import com.example.homekippa.data.AddPetResponse;
 import com.example.homekippa.data.CreateGroupData;
 import com.example.homekippa.data.CreateGroupResponse;
 import com.example.homekippa.data.GroupData;
@@ -28,6 +30,10 @@ public interface ServiceApi {
     @POST("/group/add")
     Call<CreateGroupResponse> groupCreate(@Body CreateGroupData data);
 
+
+    @POST("/pet/add")
+    Call<AddPetResponse> addPetReg(@Body AddPetData data);
+
     @GET("/user")
     Call<UserData> getUserData(@Query("userId") String userId);
 
@@ -39,4 +45,5 @@ public interface ServiceApi {
 
 //    @POST("/pet/reports/add")
 //    Call<CreateGroupResponse> createDailyWork(@Body CreateGroupData data);
+
 }
