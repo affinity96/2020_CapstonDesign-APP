@@ -35,12 +35,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import com.amazonaws.SdkClientException;
-import com.amazonaws.auth.AWSStaticCredentialsProvider;
+//import com.amazonaws.SdkClientException;
+//import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
-import com.amazonaws.client.builder.AwsClientBuilder;
+//import com.amazonaws.client.builder.AwsClientBuilder;
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+//import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.AmazonS3Exception;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
@@ -66,10 +66,10 @@ public class CreateGroupActivity extends AppCompatActivity {
     final String secretKey = "0ADD8A0782AF8A09A3F3E4718AB48B2E24C5FBFB";
 
     // S3 client
-    final AmazonS3 s3 = AmazonS3ClientBuilder.standard()
-            .withEndpointConfiguration(new AwsClientBuilder.EndpointConfiguration(endPoint, regionName))
-            .withCredentials(new AWSStaticCredentialsProvider(new BasicAWSCredentials(accessKey, secretKey)))
-            .build();
+//    final AmazonS3 s3 = AmazonS3ClientBuilder.standard()
+//            .withEndpointConfiguration(new AwsClientBuilder.EndpointConfiguration(endPoint, regionName))
+//            .withCredentials(new AWSStaticCredentialsProvider(new BasicAWSCredentials(accessKey, secretKey)))
+//            .build();
 
     String bucketName = "homekippa";
 
@@ -372,14 +372,14 @@ public class CreateGroupActivity extends AppCompatActivity {
         Log.i("create", "create");
 
         // 버킷에 파일 업로드
-        try {
-            s3.putObject(bucketName, objectName, tempFile);
-            System.out.format("Object %s has been created.\n", objectName);
-        } catch (AmazonS3Exception e) {
-            e.printStackTrace();
-        } catch(SdkClientException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            s3.putObject(bucketName, objectName, tempFile);
+//            System.out.format("Object %s has been created.\n", objectName);
+//        } catch (AmazonS3Exception e) {
+//            e.printStackTrace();
+//        } catch(SdkClientException e) {
+//            e.printStackTrace();
+//        }
 
         service.groupCreate(data).enqueue(new Callback<CreateGroupResponse>() {
             @Override
