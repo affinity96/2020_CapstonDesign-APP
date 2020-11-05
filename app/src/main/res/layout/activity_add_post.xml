@@ -48,7 +48,6 @@
         android:id="@+id/editText"
         android:layout_width="0dp"
         android:layout_height="300dp"
-        android:background = "null"
         android:gravity="top"
         android:hint="반려동물과의 추억을 다른 사람들과 함께 공유해 보세요"
         android:paddingTop="20dp"
