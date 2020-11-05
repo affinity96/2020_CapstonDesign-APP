@@ -44,7 +44,7 @@ public class CreateGroupActivity extends AppCompatActivity {
     private Uri imgUrl;
     private File file;
 
-
+//410100013080697
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,8 +56,8 @@ public class CreateGroupActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         service = RetrofitClient.getClient().create(ServiceApi.class);
 //        groupCoverPhoto = findViewById(R.id.imageView_groupImage);
-        
-        service = RetrofitClient.getClient().create(ServiceApi.class);
+
+
 
         editText_groupName.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,12 +114,8 @@ public class CreateGroupActivity extends AppCompatActivity {
                 else{
                     createGroup(new CreateGroupData(userid, groupName, groupAddress,  groupIntroduction));
                 }
-
-
             }
         });
-
-
     }
 
 
@@ -172,7 +168,7 @@ public class CreateGroupActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<CreateGroupResponse> call, Response<CreateGroupResponse> response) {
                 CreateGroupResponse result = response.body();
-//                Toast.makeText(CreateGroupActivity.this, result.getMessage(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(CreateGroupActivity.this, result.getMessage(),Toast.LENGTH_SHORT).show();
 
                 if(result.getCode() == 200){
                     finish();

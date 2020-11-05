@@ -1,5 +1,7 @@
 package com.example.homekippa.network;
 
+import com.example.homekippa.data.AddPetData;
+import com.example.homekippa.data.AddPetResponse;
 import com.example.homekippa.data.CreateGroupData;
 import com.example.homekippa.data.CreateGroupResponse;
 import com.example.homekippa.data.SignUpData;
@@ -20,4 +22,7 @@ public interface ServiceApi {
 
     @POST("/group/add")
     Call<CreateGroupResponse> groupCreate(@Body CreateGroupData data);
+
+    @POST("/pet/add")
+    Call<AddPetResponse> addPetReg(@Body AddPetData data);
 }
