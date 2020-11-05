@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+<!--    <item>-->
+<!--        <shape android:layout_width="match_parent" android:shape="rectangle">-->
+<!--            <corners android:radius="60dp" />-->
+<!--            <solid android:color="@color/kippaYellow" />-->
+<!--        </shape>-->
+<!--    </item>-->
+
+    <stroke
+        android:width="0.4sp"
+        android:color="@color/kippaGray">
+    </stroke>
+</shape>

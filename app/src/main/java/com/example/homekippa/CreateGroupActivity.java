@@ -102,7 +102,7 @@ public class CreateGroupActivity extends AppCompatActivity {
 
                 final String groupAddress = moveToSearchAddress.getText().toString();
 
-                if(groupName.isEmpty()){
+                 if(groupName.isEmpty()){
                     editText_groupName.setText("GroupName을 입력하세요");
                 }
                 else if(groupAddress.isEmpty()){
