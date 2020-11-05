@@ -1,5 +1,6 @@
 package com.example.homekippa.ui.group;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,10 +13,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.homekippa.AddPostActivity;
+import com.example.homekippa.CreateDailyWorkActivity;
 import com.example.homekippa.R;
 
 import java.util.ArrayList;
@@ -36,6 +40,8 @@ public class GroupPost extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private Button button_Add_Post;
 
     public GroupPost() {
         // Required empty public constructor
@@ -71,9 +77,19 @@ public class GroupPost extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_group_post, container, false);
+                Bundle savedInstanceState) {
+            ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_group_post, container, false);
         RecyclerView listView_posts = root.findViewById(R.id.listView_GroupPost);
+
+        button_Add_Post = root.findViewById(R.id.button_Add_Post);
+        button_Add_Post.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), AddPostActivity.class);
+                startActivity(intent);
+            }
+        });
+
         setPostListView(listView_posts);
 
         // Inflate the layout for this fragment

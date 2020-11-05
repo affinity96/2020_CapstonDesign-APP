@@ -8,20 +8,20 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.homekippa.MainActivity;
 import com.example.homekippa.R;
+import com.example.homekippa.data.UserData;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 public class GroupFragment extends Fragment {
 
     private GroupViewModel groupViewModel;
+    private UserData userData;
 
     GroupCollectionAdapter groupCollectionAdapter;
     ViewPager2 viewpager;
@@ -44,33 +44,35 @@ public class GroupFragment extends Fragment {
 
     @Override
     public void onViewCreated(@Nullable View view, @Nullable Bundle savedInstanceState) {
-//        connectViewPagerToTab(view);
-        groupCollectionAdapter = new GroupCollectionAdapter(this);
-        viewpager = view.findViewById(R.id.group_pager);
-        viewpager.setAdapter(groupCollectionAdapter);
-        TabLayout tabLayout = view.findViewById(R.id.group_tab_layout);
-        new TabLayoutMediator(tabLayout, viewpager, (tab, position) -> tab.setText(tabTitles[position])).attach();
+        userData = ((MainActivity)getActivity()).getUserData();
+        connectViewPagerToTab(view);
 
     }
 
     private void connectViewPagerToTab(@Nullable View view) {
-
+        groupCollectionAdapter = new GroupCollectionAdapter(this, userData);
+        viewpager = view.findViewById(R.id.group_pager);
+        viewpager.setAdapter(groupCollectionAdapter);
+        TabLayout tabLayout = view.findViewById(R.id.group_tab_layout);
+        new TabLayoutMediator(tabLayout, viewpager, (tab, position) -> tab.setText(tabTitles[position])).attach();
     }
 }
 
 class GroupCollectionAdapter extends FragmentStateAdapter {
-    public GroupCollectionAdapter(Fragment fragment) {
+    private UserData userData;
+    public GroupCollectionAdapter(Fragment fragment, UserData userData) {
         super(fragment);
+        this.userData = userData;
     }
 
     @NonNull
     @Override
     public Fragment createFragment(int position) {
+        int groupId = userData.getGroupId();
         Bundle args=new Bundle();
         switch (position) {
             case 0:
-                boolean groupCreated = true;
-                if (groupCreated) {
+                if (!String.valueOf(groupId).equals("")) {
                     Fragment fragment=new YesGroup();
                     fragment.setArguments(args);
                     return fragment;

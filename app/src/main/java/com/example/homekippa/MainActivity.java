@@ -1,17 +1,19 @@
 package com.example.homekippa;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.drawerlayout.widget.DrawerLayout;
-
+import com.example.homekippa.data.GroupData;
+import com.example.homekippa.data.UserData;
+import com.example.homekippa.network.RetrofitClient;
+import com.example.homekippa.network.ServiceApi;
 import com.example.homekippa.ui.group.GroupFragment;
 import com.example.homekippa.ui.group.SingleItemPet;
 import com.example.homekippa.ui.home.HomeFragment;
@@ -23,7 +25,25 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.NavigationUI;
+
+import java.security.acl.Group;
 import java.util.ArrayList;
+
+import de.hdodenhof.circleimageview.CircleImageView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
     private FirebaseUser curUser;
@@ -36,6 +56,10 @@ public class MainActivity extends AppCompatActivity {
 
     private ArrayList<SingleItemPet> array_pets;
     private ListView listView_pets;
+    private UserData userData;
+    private GroupData groupData;
+    private ServiceApi service;
+    private ConstraintLayout main_naviheader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,18 +67,23 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mAuth = FirebaseAuth.getInstance();
+        service = RetrofitClient.getClient().create(ServiceApi.class);
         curUser = mAuth.getCurrentUser();
-        Toast.makeText(getApplicationContext(), curUser.getEmail() + "님 로그인", Toast.LENGTH_LONG).show();
+        Intent intent = getIntent();
+        userData = (UserData)intent.getExtras().get("user");
+        Toast.makeText(getApplicationContext(), userData.getUserName() + "님 로그인", Toast.LENGTH_LONG).show();
 
         //tob navigation
         tb = findViewById(R.id.top_bar);
         setSupportActionBar(tb);
-
         //좌측메뉴 버튼
         menuButton = findViewById(R.id.top_btn_menu);
         leftDrawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.top_nav_view);
         navView = findViewById(R.id.nav_view);
+
+
+        getGroupData(userData.getGroupId());
 
         menuButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
         });
         //채팅 버튼 - To Do
         chatButton = findViewById(R.id.top_btn_chat);
+
         //좌측 메뉴
         getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new HomeFragment()).commitAllowingStateLoss();
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -114,5 +144,41 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+    }
+
+
+    public UserData getUserData(){
+        return this.userData;
+    }
+
+
+    public void getGroupData(int ID) {
+        Log.d("그룹 확인", "들어옴");
+        service.getGroupData(ID).enqueue(new Callback<GroupData>() {
+            @Override
+            public void onResponse(Call<GroupData> call, Response<GroupData> response) {
+                if (response.isSuccessful()) {
+                    Log.d("그룹 확인", "성공");
+                    groupData = response.body();
+
+                    main_naviheader = findViewById(R.id.naviheader_container);
+                    main_naviheader.setBackgroundResource(R.drawable.base_cover);
+                    TextView username = findViewById(R.id.user_name);
+                    username.setText(userData.getUserName() + "님");
+                    TextView usergroup = findViewById(R.id.user_group);
+                    usergroup.setText(groupData.getGroupName());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GroupData> call, Throwable t) {
+                Log.d("그룹 확인", "에러");
+                Log.e("그룹 확인", t.getMessage());
+            }
+        });
+    }
+
+    public GroupData getGroupData(){
+        return this.groupData;
     }
 }

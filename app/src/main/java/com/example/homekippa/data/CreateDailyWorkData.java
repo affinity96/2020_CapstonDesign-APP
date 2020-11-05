@@ -1,0 +1,37 @@
+package com.example.homekippa.data;
+
+import com.google.gson.annotations.SerializedName;
+
+public class CreateDailyWorkData {
+
+    @SerializedName("GroupId")
+    private String GroupId;
+
+    @SerializedName("PetId")
+    private String PetId;
+
+    @SerializedName("dailyWorkName")
+    private String dailyWorkName;
+
+    @SerializedName("dailyWorkDesc")
+    private String dailyWorkDesc;
+
+    @SerializedName("dailyWorkTime")
+    private  String dailyWorkTime;
+
+    @SerializedName("dailyWorkAlarm")
+    private String dailyWorkAlarm;
+
+    public  CreateDailyWorkData(String GroupId, String PetId, String dailyWorkName, String dailyWorkDesc, String dailyWorkTime, String dailyWorkAlarm){
+        this.GroupId = GroupId;
+        this.PetId = PetId;
+        this.dailyWorkName = dailyWorkName;
+        this.dailyWorkDesc = dailyWorkDesc;
+        this.dailyWorkTime = dailyWorkTime;
+        this.dailyWorkAlarm = dailyWorkAlarm;
+
+
+    }
+
+
+}
