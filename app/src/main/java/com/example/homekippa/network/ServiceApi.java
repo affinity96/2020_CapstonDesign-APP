@@ -36,4 +36,7 @@ public interface ServiceApi {
 
     @GET("/pets")
     Call<List<SingleItemPet>> getPetsData(@Query("groupId") int groupId);
+
+//    @POST("/pet/reports/add")
+//    Call<CreateGroupResponse> createDailyWork(@Body CreateGroupData data);
 }
