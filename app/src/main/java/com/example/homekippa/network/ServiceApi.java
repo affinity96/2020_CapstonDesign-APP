@@ -2,6 +2,8 @@ package com.example.homekippa.network;
 
 import com.example.homekippa.data.AddPetData;
 import com.example.homekippa.data.AddPetResponse;
+import com.example.homekippa.data.CreateDailyWorkData;
+import com.example.homekippa.data.CreateDailyWorkResponse;
 import com.example.homekippa.data.CreateGroupData;
 import com.example.homekippa.data.CreateGroupResponse;
 import com.example.homekippa.data.GroupData;

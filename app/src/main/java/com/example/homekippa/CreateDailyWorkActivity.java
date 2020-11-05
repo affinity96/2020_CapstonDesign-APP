@@ -3,6 +3,7 @@ package com.example.homekippa;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -15,7 +16,12 @@ import com.example.homekippa.data.CreateDailyWorkData;
 import com.example.homekippa.data.CreateDailyWorkResponse;
 import com.example.homekippa.data.SignUpData;
 import com.example.homekippa.data.SignUpResponse;
+
+import com.example.homekippa.MainActivity;
+import com.example.homekippa.data.GroupData;
+import com.example.homekippa.data.UserData;
 import com.example.homekippa.network.ServiceApi;
+
 
 import java.time.LocalTime;
 import java.util.Calendar;
@@ -31,6 +37,8 @@ public class CreateDailyWorkActivity extends AppCompatActivity {
     private EditText editText_dailyWorkTime;
     private EditText editText_dailyWorkAlarm;
     private Button button_gotocreateDailyWork;
+    private GroupData groupData;
+    private UserData userData;
     private ServiceApi service;
 
     @Override
@@ -44,9 +52,17 @@ public class CreateDailyWorkActivity extends AppCompatActivity {
         editText_dailyWorkAlarm = findViewById(R.id.editText_dailyWorkAlarm);
         button_gotocreateDailyWork = findViewById(R.id.button_gotocreateDailyWork);
 
+        Intent intent = getIntent();
+
+        UserData userData = (UserData) intent.getExtras().get("userData");
+        GroupData groupData = (GroupData) intent.getExtras().get("groupData");
+
+
         editText_dailyWorkTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                Log.d("유저", userData.getUserName());
+//                Log.d("으악", groupData.getGroupAddress());
                 TimePickerDialog timePicker=new TimePickerDialog(CreateDailyWorkActivity.this, android.R.style.Theme_Holo_Light_Dialog,new TimePickerDialog.OnTimeSetListener(){
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
