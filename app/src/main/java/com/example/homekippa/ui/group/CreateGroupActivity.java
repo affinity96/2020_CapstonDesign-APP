@@ -1,6 +1,7 @@
 package com.example.homekippa.ui.group;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
 
 import android.Manifest;
 import android.content.Intent;
@@ -203,10 +204,18 @@ public class CreateGroupActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         if (tempFile != null) {
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
 
-            Uri photoUri = Uri.fromFile(tempFile);
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
-            startActivityForResult(intent, PICK_FROM_CAMERA);
+                Uri photoUri = FileProvider.getUriForFile(this,
+                        "com.example.homekippa.provider", tempFile);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+                startActivityForResult(intent, PICK_FROM_CAMERA);
+
+            } else {
+                Uri photoUri = Uri.fromFile(tempFile);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+                startActivityForResult(intent, PICK_FROM_CAMERA);
+            }
         }
     }
 
