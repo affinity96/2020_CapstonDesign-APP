@@ -4,11 +4,11 @@ import com.google.gson.annotations.SerializedName;
 
 public class CreateDailyWorkData {
 
-    @SerializedName("userId")
-    private String userId;
+    @SerializedName("GroupId")
+    private String GroupId;
 
-    @SerializedName("groupName")
-    private String groupName;
+    @SerializedName("PetId")
+    private String PetId;
 
     @SerializedName("dailyWorkName")
     private String dailyWorkName;
@@ -22,9 +22,9 @@ public class CreateDailyWorkData {
     @SerializedName("dailyWorkAlarm")
     private String dailyWorkAlarm;
 
-    public  CreateDailyWorkData(String userId, String groupName, String dailyWorkName, String dailyWorkDesc, String dailyWorkTime, String dailyWorkAlarm){
-        this.userId = userId;
-        this.groupName = groupName;
+    public  CreateDailyWorkData(String GroupId, String PetId, String dailyWorkName, String dailyWorkDesc, String dailyWorkTime, String dailyWorkAlarm){
+        this.GroupId = GroupId;
+        this.PetId = PetId;
         this.dailyWorkName = dailyWorkName;
         this.dailyWorkDesc = dailyWorkDesc;
         this.dailyWorkTime = dailyWorkTime;
