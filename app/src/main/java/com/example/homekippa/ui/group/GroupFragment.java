@@ -14,12 +14,14 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.homekippa.MainActivity;
 import com.example.homekippa.R;
+import com.example.homekippa.data.UserData;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 public class GroupFragment extends Fragment {
 
     private GroupViewModel groupViewModel;
+    private UserData userData;
 
     GroupCollectionAdapter groupCollectionAdapter;
     ViewPager2 viewpager;
@@ -39,12 +41,13 @@ public class GroupFragment extends Fragment {
 
     @Override
     public void onViewCreated(@Nullable View view, @Nullable Bundle savedInstanceState) {
+        userData = ((MainActivity)getActivity()).getUserData();
         connectViewPagerToTab(view);
 
     }
 
     private void connectViewPagerToTab(@Nullable View view) {
-        groupCollectionAdapter = new GroupCollectionAdapter(this);
+        groupCollectionAdapter = new GroupCollectionAdapter(this, userData);
         viewpager = view.findViewById(R.id.group_pager);
         viewpager.setAdapter(groupCollectionAdapter);
         TabLayout tabLayout = view.findViewById(R.id.group_tab_layout);
@@ -53,18 +56,19 @@ public class GroupFragment extends Fragment {
 }
 
 class GroupCollectionAdapter extends FragmentStateAdapter {
-    public GroupCollectionAdapter(Fragment fragment) {
+    private UserData userData;
+    public GroupCollectionAdapter(Fragment fragment, UserData userData) {
         super(fragment);
+        this.userData = userData;
     }
 
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-
+        int groupId = userData.getGroupId();
         switch (position) {
             case 0:
-                boolean groupCreated = true;
-                if (groupCreated) {
+                if (!String.valueOf(groupId).equals("")) {
                     return new YesGroup();
                 } else {
                     return new NoGroup();
