@@ -1,4 +1,4 @@
-package com.example.homekippa.ui.manage;
+package com.example.homekippa.ui.walk;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,15 +14,14 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.homekippa.R;
 
-public class ManageFragment extends Fragment {
-    private ManageViewModel manageViewModel;
+public class WalkFragment extends Fragment {
+    private WalkViewModel walkViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        manageViewModel =
-                ViewModelProviders.of(this).get(ManageViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_group, container, false);
-
+        walkViewModel =
+                ViewModelProviders.of(this).get(WalkViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_walk, container, false);
         return root;
     }
 }

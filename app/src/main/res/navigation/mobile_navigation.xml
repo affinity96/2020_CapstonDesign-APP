@@ -3,25 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_dashboard">
+    app:startDestination="@+id/navigation_home">
 
     <fragment
-        android:id="@+id/navigation_dashboard"
+        android:id="@+id/navigation_home"
         android:name="com.example.homekippa.ui.home.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
-
-    <fragment
-        android:id="@+id/navigation_group"
-        android:name="com.example.homekippa.ui.group.GroupFragment"
-        android:label="@string/title_group"
-        tools:layout="@layout/fragment_group" />
-
-    <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.example.homekippa.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
 
     <fragment
         android:id="@+id/navigation_search"
@@ -30,8 +18,20 @@
         tools:layout="@layout/fragment_search" />
 
     <fragment
-        android:id="@+id/navigation_manage"
-        android:name="com.example.homekippa.ui.manage.ManageFragment"
-        android:label="@string/title_manage"
-        tools:layout="@layout/fragment_manage" />
+        android:id="@+id/navigation_walk"
+        android:name="com.example.homekippa.ui.walk.WalkFragment"
+        android:label="@string/title_walk"
+        tools:layout="@layout/fragment_walk" />
+
+    <fragment
+        android:id="@+id/navigation_notifications"
+        android:name="com.example.homekippa.ui.notifications.NotificationsFragment"
+        android:label="@string/title_notifications"
+        tools:layout="@layout/fragment_notifications" />
+
+    <fragment
+        android:id="@+id/navigation_group"
+        android:name="com.example.homekippa.ui.group.GroupFragment"
+        android:label="@string/title_group"
+        tools:layout="@layout/fragment_group" />
 </navigation>

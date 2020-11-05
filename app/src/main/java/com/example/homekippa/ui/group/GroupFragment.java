@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
@@ -23,14 +25,17 @@ public class GroupFragment extends Fragment {
 
     GroupCollectionAdapter groupCollectionAdapter;
     ViewPager2 viewpager;
+
     private String[] tabTitles = new String[]{"그룹명", "추억 저장소"};
 
     public static GroupFragment newInstance() {
         return new GroupFragment();
     }
 
+    @Nullable
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
+                             @Nullable ViewGroup container,@Nullable Bundle savedInstanceState) {
         groupViewModel =
                 ViewModelProviders.of(this).get(GroupViewModel.class);
         View root = inflater.inflate(R.layout.fragment_group, container, false);
@@ -39,16 +44,17 @@ public class GroupFragment extends Fragment {
 
     @Override
     public void onViewCreated(@Nullable View view, @Nullable Bundle savedInstanceState) {
-        connectViewPagerToTab(view);
-
-    }
-
-    private void connectViewPagerToTab(@Nullable View view) {
+//        connectViewPagerToTab(view);
         groupCollectionAdapter = new GroupCollectionAdapter(this);
         viewpager = view.findViewById(R.id.group_pager);
         viewpager.setAdapter(groupCollectionAdapter);
         TabLayout tabLayout = view.findViewById(R.id.group_tab_layout);
         new TabLayoutMediator(tabLayout, viewpager, (tab, position) -> tab.setText(tabTitles[position])).attach();
+
+    }
+
+    private void connectViewPagerToTab(@Nullable View view) {
+
     }
 }
 
@@ -60,19 +66,25 @@ class GroupCollectionAdapter extends FragmentStateAdapter {
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-
+        Bundle args=new Bundle();
         switch (position) {
             case 0:
                 boolean groupCreated = true;
                 if (groupCreated) {
-                    return new YesGroup();
+                    Fragment fragment=new YesGroup();
+                    fragment.setArguments(args);
+                    return fragment;
                 } else {
-                    return new NoGroup();
+                    Fragment fragment=new NoGroup();
+                    fragment.setArguments(args);
+                    return fragment;
                 }
             case 1:
-                return new GroupPost();
+                Fragment fragment=new GroupPost();
+                fragment.setArguments(args);
+                return fragment;
         }
-        return new YesGroup();
+        return null;
     }
 
     @Override

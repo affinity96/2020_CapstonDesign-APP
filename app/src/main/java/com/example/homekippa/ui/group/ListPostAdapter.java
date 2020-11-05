@@ -104,7 +104,6 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
             postTitle = (TextView) view.findViewById(R.id.textView_PostTitle);
             postContent = (TextView) view.findViewById(R.id.textView_PostContent);
             recyclerView_postImages = (RecyclerView) view.findViewById(R.id.listview_PostImages);
-
         }
     }
 }
