@@ -6,10 +6,13 @@ import com.example.homekippa.data.SignUpData;
 import com.example.homekippa.data.SignUpResponse;
 import com.example.homekippa.data.UidData;
 import com.example.homekippa.data.UidRespense;
+import com.example.homekippa.data.UserData;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 public interface ServiceApi {
 //    @POST("/user/login")
@@ -20,4 +23,7 @@ public interface ServiceApi {
 
     @POST("/group/add")
     Call<CreateGroupResponse> groupCreate(@Body CreateGroupData data);
+
+    @GET("/user")
+    Call<UserData> getUserData(@Query("userId") String userId);
 }

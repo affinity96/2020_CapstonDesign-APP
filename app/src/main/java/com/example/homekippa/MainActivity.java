@@ -1,5 +1,6 @@
 package com.example.homekippa;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -7,6 +8,7 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.homekippa.data.UserData;
 import com.example.homekippa.ui.group.GroupFragment;
 import com.example.homekippa.ui.group.SingleItemPet;
 import com.example.homekippa.ui.home.HomeFragment;
@@ -49,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
     private FragmentTransaction ft;
     private ArrayList<SingleItemPet> array_pets;
     private ListView listView_pets;
+    private UserData userData;
 
 
     @Override
@@ -58,7 +61,9 @@ public class MainActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         curUser = mAuth.getCurrentUser();
-        Toast.makeText(getApplicationContext(), curUser.getEmail() + "님 로그인", Toast.LENGTH_LONG).show();
+        Intent intent = getIntent();
+        userData = (UserData)intent.getExtras().get("user");
+        Toast.makeText(getApplicationContext(), userData.getUserName() + "님 로그인", Toast.LENGTH_LONG).show();
 
         //tob navigation
         tb = findViewById(R.id.top_bar);
