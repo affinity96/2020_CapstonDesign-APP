@@ -31,8 +31,6 @@ import androidx.navigation.ui.NavigationUI;
 
 import java.util.ArrayList;
 
-import de.hdodenhof.circleimageview.CircleImageView;
-
 public class MainActivity extends AppCompatActivity {
     private FirebaseUser curUser;
     private FirebaseAuth mAuth;
@@ -109,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
                 switch (item.getItemId()) {
-                    case R.id.navigation_home:
+                    case R.id.navigation_dashboard:
                         setFrag(0);
                         break;
                     case R.id.navigation_search:
