@@ -43,6 +43,18 @@
         <meta-data
             android:name="com.kakao.sdk.AppKey"
             android:value="27f0294947799473f5560e2568541333" />
+
+        <!-- 사진 촬영을 위한 provide -->
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.example.homekippa.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
     </application>
 
 </manifest>
