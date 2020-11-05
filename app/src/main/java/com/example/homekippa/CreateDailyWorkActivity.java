@@ -4,13 +4,25 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.TimePickerDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TimePicker;
+import android.widget.Toast;
+
+import com.example.homekippa.data.CreateDailyWorkData;
+import com.example.homekippa.data.CreateDailyWorkResponse;
+import com.example.homekippa.data.SignUpData;
+import com.example.homekippa.data.SignUpResponse;
+import com.example.homekippa.network.ServiceApi;
 
 import java.time.LocalTime;
 import java.util.Calendar;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class CreateDailyWorkActivity extends AppCompatActivity {
 
@@ -19,7 +31,7 @@ public class CreateDailyWorkActivity extends AppCompatActivity {
     private EditText editText_dailyWorkTime;
     private EditText editText_dailyWorkAlarm;
     private Button button_gotocreateDailyWork;
-
+    private ServiceApi service;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,5 +73,34 @@ public class CreateDailyWorkActivity extends AppCompatActivity {
             }
         });
 
+//        button_gotocreateDailyWork.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                createDailyWork(new createDailyWorkData());
+//            }
+//        });
+
+    }
+
+    private void createDailyWork(CreateDailyWorkData data) {
+        service.createDailyWork(data).enqueue(new Callback<CreateDailyWorkResponse>() {
+            @Override
+            public void onResponse(Call<CreateDailyWorkResponse> call, Response<CreateDailyWorkResponse> response) {
+                CreateDailyWorkResponse result = response.body();
+
+                if (result.getCode() == 200) {
+                    finish();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CreateDailyWorkResponse> call, Throwable t) {
+                Toast.makeText(CreateDailyWorkActivity.this, "일과추가 에러 발생", Toast.LENGTH_LONG).show();
+                Log.e("일과추가 에러 발생", t.getMessage());
+                t.printStackTrace(); // 에러 발생시 에러 발생 원인 단계별로 출력해줌
+            }
+
+
+        });
     }
 }

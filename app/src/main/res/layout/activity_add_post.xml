@@ -57,9 +57,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
-<!--    <ImageButton-->
-<!--        -->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"/>-->
+    <ImageButton
+        app:srcCompat="@drawable/ic_photo_24px"
+        android:id="@+id/button_Add_Post_Img"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="5dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:background="@drawable/border_gray"
+
+
+        app:layout_constraintStart_toStartOf="@+id/toolbar"
+        app:layout_constraintTop_toBottomOf="@+id/editText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
