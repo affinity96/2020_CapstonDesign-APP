@@ -21,10 +21,8 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
     private ArrayList<SingleItemPost> post_Items;
     private Context context;
 
-
     public ListPostAdapter(Context context, ArrayList<SingleItemPost> postItems) {
         this.context = context;
-
         this.post_Items = postItems;
     }
 
@@ -42,8 +40,14 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
          **********************/
         setPostData(holder, position);
 
+        /**
+         * 게시글 이미지 adapter 적용
+         */
         ArrayList<SingleItemPostImage> postImageList = getPostImageData(position);
         setPostImageAdapter(holder, postImageList);
+        /**
+         * 게시글 댓글 이미지 적용
+         */
     }
 
     private void setPostImageAdapter(MyViewHolder holder, ArrayList<SingleItemPostImage> postImageList) {
@@ -94,9 +98,9 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
 
         MyViewHolder(View view) {
             super(view);
-            postGroupProfile = (ImageView) view.findViewById(R.id.imageView_PostGroupProfile);
-            postGroupName = (TextView) view.findViewById(R.id.textView_PostGroupName);
-            postGroupLocation = (TextView) view.findViewById(R.id.textView_PostGroupLocation);
+            postGroupProfile = (ImageView) view.findViewById(R.id.imageView_DetailPostGroupProfile);
+            postGroupName = (TextView) view.findViewById(R.id.textView__DetailPostGroupName);
+            postGroupLocation = (TextView) view.findViewById(R.id.textView__DetailPostGroupLocation);
             postTitle = (TextView) view.findViewById(R.id.textView_PostTitle);
             postContent = (TextView) view.findViewById(R.id.textView_PostContent);
             recyclerView_postImages = (RecyclerView) view.findViewById(R.id.listview_PostImages);
