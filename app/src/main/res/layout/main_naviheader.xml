@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="230dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/kippaYellow">
+    android:background="@color/kippaYellow"
+    android:id = "@+id/naviheader_container">
 
     <ImageView
         android:layout_width="150dp"
@@ -18,7 +19,7 @@
         android:layout_height="0dp"
         android:id="@+id/user_name" app:layout_constraintStart_toStartOf="parent"
         android:layout_marginTop="12dp" app:layout_constraintTop_toBottomOf="@+id/user_image"
-        android:textColor="#000000" android:textSize="20sp"
+        android:textColor="#FFFFFF" android:textSize="20sp"
         android:layout_marginLeft="24dp"/>
     <TextView
         android:text="그룹을 생성해주세요!"
@@ -27,7 +28,7 @@
         android:id="@+id/user_group" android:textSize="12sp"
         android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/user_name"
         app:layout_constraintStart_toStartOf="parent"
-        android:textColor="#000000"
+        android:textColor="#FFFFFF"
         android:layout_marginLeft="24dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
