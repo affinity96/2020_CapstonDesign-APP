@@ -153,23 +153,23 @@ public class MainActivity extends AppCompatActivity {
         ft = fm.beginTransaction();
         switch (i) {
             case 0:
-                ft.replace(R.id.nav_host_fragment, homeFragment);
+                ft.replace(R.id.nav_host_fragment, new HomeFragment());
                 ft.commit();
-                break;
+               break;
             case 1:
-                ft.replace(R.id.nav_host_fragment, searchFragment);
+                ft.replace(R.id.nav_host_fragment, new SearchFragment());
                 ft.commit();
                 break;
             case 2:
-                ft.replace(R.id.nav_host_fragment, manageFragment);
+                ft.replace(R.id.nav_host_fragment, new ManageFragment());
                 ft.commit();
                 break;
             case 3:
-                ft.replace(R.id.nav_host_fragment, notificationFragment);
+                ft.replace(R.id.nav_host_fragment, new NotificationsFragment());
                 ft.commit();
                 break;
             case 4:
-                ft.replace(R.id.nav_host_fragment, groupFragment);
+                ft.replace(R.id.nav_host_fragment, new GroupFragment());
                 ft.commit();
                 break;
         }

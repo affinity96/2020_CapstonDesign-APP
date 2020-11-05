@@ -1,5 +1,6 @@
 package com.example.homekippa.ui.group;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,13 +12,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.homekippa.CreateDailyWorkActivity;
 import com.example.homekippa.R;
 
 import java.util.ArrayList;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,40 +30,27 @@ import java.util.ArrayList;
  * create an instance of this fragment.
  */
 public class YesGroup extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private static final String ARG_PARAM1 = "object";
     private ArrayList<SingleItemPet> petList = new ArrayList<>();
     private ArrayList<SingleItemDailyWork> dailyWorkList = new ArrayList<>();
+
+    private Button button_Add_DW;
 
     public static YesGroup newInstance() {
         return new YesGroup();
     }
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
-    private String mParam2;
 
     public YesGroup() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment YesGroup.
-     */
     // TODO: Rename and change types and number of parameters
-    public static YesGroup newInstance(String param1, String param2) {
+    public static YesGroup newInstance(int position) {
         YesGroup fragment = new YesGroup();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putInt(ARG_PARAM1, position + 1);
         fragment.setArguments(args);
         return fragment;
     }
@@ -68,45 +60,58 @@ public class YesGroup extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-    }
 
-    private void setImages(LayoutInflater inflater, ViewGroup container,
-                           Bundle savedInstanceState) {
-        ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_yes_group, container, false);
-        ImageView imageView_groupProfile = (ImageView)root.findViewById(R.id.ImageView_groupProfile);
-        Glide.with(this).load(R.drawable.ic_account_circle_24px).circleCrop().into(imageView_groupProfile);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_yes_group, container, false);
+
+        button_Add_DW= root.findViewById(R.id.button_Add_DW);
+        button_Add_DW.setOnClickListener(new View.OnClickListener() {
+                @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), CreateDailyWorkActivity.class);
+                startActivity(intent);
+            }
+        });
         RecyclerView listView_pets = root.findViewById(R.id.listview_pets);
         RecyclerView listView_dailyWorks = root.findViewById(R.id.listview_dailywork);
-        getPetData();
-        ListPetAdapter petAdapter = new ListPetAdapter(petList);
-        LinearLayoutManager pLayoutManager = new LinearLayoutManager(getActivity());
-        pLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        listView_pets.setLayoutManager(pLayoutManager);
-        listView_pets.setItemAnimator(new DefaultItemAnimator());
-        listView_pets.setAdapter(petAdapter);
 
+        setPetListView(listView_pets);
+        setDailyWorkListView(listView_dailyWorks);
+
+        CircleImageView imageView_groupProfile = (CircleImageView) root.findViewById(R.id.ImageView_groupProfile);
+        Glide.with(this).load(R.drawable.dog_woong).circleCrop().into(imageView_groupProfile);
+
+
+
+        return root;
+    }
+
+    private void setDailyWorkListView(RecyclerView listView) {
         getDailyWorkData();
-        ListDailyWorkAdapter dailyWorkadapter = new ListDailyWorkAdapter(dailyWorkList);
+        ListDailyWorkAdapter workAdapter = new ListDailyWorkAdapter(dailyWorkList);
+
         LinearLayoutManager dLayoutManager = new LinearLayoutManager(getActivity());
         dLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        listView_dailyWorks.setLayoutManager(dLayoutManager);
-        listView_dailyWorks.setItemAnimator(new DefaultItemAnimator());
-        listView_dailyWorks.setAdapter(dailyWorkadapter);
-        setImages(inflater, container, savedInstanceState);
-        // Inflate the layout for this fragment
-        ImageView imageView_groupProfile = (ImageView)root.findViewById(R.id.ImageView_groupProfile);
-//        CircleImageView circleImageView_workDonePerson=(CircleImageView)
-        Glide.with(this).load(R.drawable.ic_account_circle_24px).circleCrop().into(imageView_groupProfile);
-        return root;
+        listView.setLayoutManager(dLayoutManager);
+        listView.setItemAnimator(new DefaultItemAnimator());
+        listView.setAdapter(workAdapter);
+    }
+
+    private void setPetListView(RecyclerView listView) {
+        getPetData();
+        ListPetAdapter petAdapter = new ListPetAdapter(petList);
+
+        LinearLayoutManager pLayoutManager = new LinearLayoutManager(getActivity());
+        pLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        listView.setLayoutManager(pLayoutManager);
+        listView.setItemAnimator(new DefaultItemAnimator());
+        listView.setAdapter(petAdapter);
     }
 
     private void getDailyWorkData() {
@@ -147,8 +152,13 @@ public class YesGroup extends Fragment {
 
         @Override
         public void onBindViewHolder(@NonNull MyViewHolder2 holder, int position) {
+            setDailyWorkData(holder, position);
+        }
+
+        private void setDailyWorkData(MyViewHolder2 holder, int position) {
             SingleItemDailyWork dailyWork = dailyWorks_Items.get(position);
             holder.workName.setText(dailyWork.getWorkName());
+            //make image circled
             Glide.with(getActivity()).load(R.drawable.base_cover).circleCrop().into(holder.workPersonImage);
             holder.workPersonImage.setImageResource(dailyWork.getWorkImage());
         }
@@ -186,6 +196,10 @@ public class YesGroup extends Fragment {
 
         @Override
         public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+            setPetData(holder, position);
+        }
+
+        private void setPetData(MyViewHolder holder, int position) {
             SingleItemPet pet = pet_Items.get(position);
             holder.petName.setText(pet.getName());
             Glide.with(getActivity()).load(R.drawable.simplelogo).circleCrop().into(holder.petImage);
@@ -204,7 +218,8 @@ public class YesGroup extends Fragment {
             MyViewHolder(View view) {
                 super(view);
                 petName = (TextView) view.findViewById(R.id.listitem_PetName);
-                petImage = (ImageView) view.findViewById(R.id.listitem_PetIamge);
+                petImage = (ImageView) view.findViewById(R.id.listitem_PetImage);
+
             }
         }
     }

@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="5dp"
-    android:background="@drawable/border"
+    android:background="@drawable/border_gray"
     android:gravity="center"
     android:orientation="vertical"
     android:padding="5dp">
@@ -12,10 +11,12 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:layout_gravity="center">
 
         <LinearLayout
             android:id="@+id/linearLayout_image"
+            android:layout_margin="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center">
@@ -23,11 +24,11 @@
             <de.hdodenhof.circleimageview.CircleImageView
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/personImage"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:padding="10dp"
+                android:layout_margin="5dp"
                 android:src="@drawable/base_cover" />
 
         </LinearLayout>
@@ -42,14 +43,15 @@
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginLeft="20dp"
                 android:orientation="vertical">
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="top"
+                    android:textSize="11dp"
                     android:text="일과: " />
 
                 <TextView
@@ -58,6 +60,7 @@
                     android:gravity="center|bottom"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textSize="11dp"
                     android:text="밥" />
             </LinearLayout>
 
@@ -75,16 +78,17 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textSize="11dp"
                     android:text="일과 끝난 시간" />
 
                 <TextView
-                    android:textSize="13dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textSize="11dp"
                     android:text="PM: 01:49" />
 
                 <TextView
-                    android:textSize="13dp"
+                    android:textSize="11dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="PM: 01:49" />
@@ -103,16 +107,17 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textSize="11dp"
                     android:text="알람: " />
 
                 <TextView
-                    android:textSize="13dp"
+                    android:textSize="11dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="PM: 01:49" />
 
                 <TextView
-                    android:textSize="13dp"
+                    android:textSize="11dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="PM: 01:49" />
