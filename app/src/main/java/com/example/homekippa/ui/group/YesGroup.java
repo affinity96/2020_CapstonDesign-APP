@@ -99,6 +99,8 @@ public class YesGroup extends Fragment {
                 @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), CreateDailyWorkActivity.class);
+                intent.putExtra("userData", userData);
+                intent.putExtra("groupData", groupData);
                 startActivity(intent);
             }
         });
