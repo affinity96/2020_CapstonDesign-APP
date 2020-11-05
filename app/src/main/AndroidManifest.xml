@@ -13,7 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".CreateDailyWorkActivity"></activity>
+        <activity android:name=".AddPostActivity"></activity>
+        <activity android:name=".CreateDailyWorkActivity" />
         <activity android:name=".ui.group.CreateGroupActivity" />
         <activity android:name=".VerifyActivity" />
         <activity android:name=".SignUpActivity" />
