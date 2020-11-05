@@ -35,11 +35,12 @@ public class CreateDailyWorkActivity extends AppCompatActivity {
         editText_dailyWorkTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TimePickerDialog timePicker=new TimePickerDialog(CreateDailyWorkActivity.this, android.R.style.Theme_Holo_Dialog,new TimePickerDialog.OnTimeSetListener(){
+                TimePickerDialog timePicker=new TimePickerDialog(CreateDailyWorkActivity.this, android.R.style.Theme_Holo_Light_Dialog,new TimePickerDialog.OnTimeSetListener(){
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
 
                         editText_dailyWorkTime.setText(String.format("%02d:%02d", hourOfDay,minute));
+
                     }
                 }, Calendar.HOUR_OF_DAY,Calendar.MINUTE,false);
                 timePicker.show();
@@ -49,7 +50,7 @@ public class CreateDailyWorkActivity extends AppCompatActivity {
         editText_dailyWorkAlarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TimePickerDialog timePicker=new TimePickerDialog(CreateDailyWorkActivity.this, android.R.style.Theme_Holo_Dialog,new TimePickerDialog.OnTimeSetListener(){
+                TimePickerDialog timePicker=new TimePickerDialog(CreateDailyWorkActivity.this, android.R.style.Theme_Holo_Light_Dialog,new TimePickerDialog.OnTimeSetListener(){
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
 

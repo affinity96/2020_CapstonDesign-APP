@@ -22,6 +22,8 @@
             android:name="com.amazonaws.mobileconnectors.s3.transferutility.TransferService"
             android:enabled="true" />
         <activity android:name=".CreateDailyWorkActivity"></activity>
+        <activity android:name=".AddPostActivity"></activity>
+
         <activity android:name=".ui.group.CreateGroupActivity" />
         <activity android:name=".VerifyActivity" />
         <activity android:name=".SignUpActivity" />

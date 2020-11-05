@@ -20,4 +20,7 @@ public interface ServiceApi {
 
     @POST("/group/add")
     Call<CreateGroupResponse> groupCreate(@Body CreateGroupData data);
+
+//    @POST("/pet/reports/add")
+//    Call<CreateGroupResponse> createDailyWork(@Body CreateGroupData data);
 }

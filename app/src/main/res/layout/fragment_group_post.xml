@@ -43,6 +43,18 @@
                 android:hint="경기도 용인시 기흥구 영덕동"
                 android:textSize="9dp" />
         </LinearLayout>
+
+        <Button
+            android:id="@+id/button_Add_Post"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_alignParentRight="true"
+            android:textSize="15dp"
+            android:text="글쓰기"
+            android:background="@drawable/round_button2"
+            ></Button>
+
+
     </RelativeLayout>
     <LinearLayout
         android:layout_margin="10dp"
