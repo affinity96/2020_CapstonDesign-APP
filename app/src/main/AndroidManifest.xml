@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.homekippa">
-
     <!-- 인터넷 퍼미션 -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -22,7 +21,8 @@
         <service
             android:name="com.amazonaws.mobileconnectors.s3.transferutility.TransferService"
             android:enabled="true" />
-        <activity android:name=".CreateGroupActivity" />
+        <activity android:name=".CreateDailyWorkActivity"></activity>
+        <activity android:name=".ui.group.CreateGroupActivity" />
         <activity android:name=".VerifyActivity" />
         <activity android:name=".SignUpActivity" />
         <activity android:name=".StartActivity">
@@ -37,7 +37,6 @@
             android:label="@string/title_activity_main" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".ui.searchAddress.searchAddress" />
-
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"
