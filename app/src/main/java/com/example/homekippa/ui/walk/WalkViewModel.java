@@ -1,14 +1,14 @@
-package com.example.homekippa.ui.manage;
+package com.example.homekippa.ui.walk;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class ManageViewModel extends ViewModel {
+public class WalkViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public ManageViewModel() {
+    public WalkViewModel() {
         mText = new MutableLiveData<>();
         mText.setValue("This is manage fragment");
     }

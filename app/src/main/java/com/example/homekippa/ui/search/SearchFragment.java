@@ -21,7 +21,7 @@ public class SearchFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         searchViewModel =
                 ViewModelProviders.of(this).get(SearchViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_group, container, false);
+        View root = inflater.inflate(R.layout.fragment_search, container, false);
 
         return root;
     }
