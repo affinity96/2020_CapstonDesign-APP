@@ -25,14 +25,17 @@ public class GroupFragment extends Fragment {
 
     GroupCollectionAdapter groupCollectionAdapter;
     ViewPager2 viewpager;
+
     private String[] tabTitles = new String[]{"그룹명", "추억 저장소"};
 
     public static GroupFragment newInstance() {
         return new GroupFragment();
     }
 
+    @Nullable
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
+                             @Nullable ViewGroup container,@Nullable Bundle savedInstanceState) {
         groupViewModel =
                 ViewModelProviders.of(this).get(GroupViewModel.class);
         View root = inflater.inflate(R.layout.fragment_group, container, false);
@@ -66,17 +69,24 @@ class GroupCollectionAdapter extends FragmentStateAdapter {
     @Override
     public Fragment createFragment(int position) {
         int groupId = userData.getGroupId();
+        Bundle args=new Bundle();
         switch (position) {
             case 0:
                 if (!String.valueOf(groupId).equals("")) {
-                    return new YesGroup();
+                    Fragment fragment=new YesGroup();
+                    fragment.setArguments(args);
+                    return fragment;
                 } else {
-                    return new NoGroup();
+                    Fragment fragment=new NoGroup();
+                    fragment.setArguments(args);
+                    return fragment;
                 }
             case 1:
-                return new GroupPost();
+                Fragment fragment=new GroupPost();
+                fragment.setArguments(args);
+                return fragment;
         }
-        return new YesGroup();
+        return null;
     }
 
     @Override
