@@ -1,26 +1,18 @@
 package com.example.homekippa;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
-import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
+import com.example.homekippa.data.GroupData;
 import com.example.homekippa.data.UserData;
 import com.example.homekippa.function.Loading;
 import com.example.homekippa.network.RetrofitClient;
@@ -30,9 +22,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -49,8 +38,14 @@ public class LoginActivity extends AppCompatActivity {
     private ServiceApi service;
     final Loading loading = new Loading();
 
+    Intent intent;
+
+
+    private GroupData groupData;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        intent = new Intent(getApplicationContext(), MainActivity.class);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
@@ -58,7 +53,7 @@ public class LoginActivity extends AppCompatActivity {
         curUser = mAuth.getCurrentUser();
         service = RetrofitClient.getClient().create(ServiceApi.class);
 
-        if(curUser != null && curUser.isEmailVerified()){
+        if (curUser != null && curUser.isEmailVerified()) {
             loading.loading(LoginActivity.this);
             requestUserData(curUser.getUid());
         }
@@ -66,7 +61,7 @@ public class LoginActivity extends AppCompatActivity {
         editTextID = findViewById(R.id.editText_ID);
         editTextPW = findViewById(R.id.editText_PW);
         buttonLogin = findViewById(R.id.button_Login);
-        gotoSignTextview=findViewById(R.id.textView_gosignup);
+        gotoSignTextview = findViewById(R.id.textView_gosignup);
 
 
         //버튼이 클릭되면 여기 리스너로 옴
@@ -76,47 +71,44 @@ public class LoginActivity extends AppCompatActivity {
                 String ID = editTextID.getText().toString();
                 String PW = editTextPW.getText().toString();
 
-                if(ID.isEmpty()){
+                if (ID.isEmpty()) {
                     editTextID.setError("아이디를 입력하세요");
-                }
-                else if(PW.isEmpty()){
+                } else if (PW.isEmpty()) {
                     editTextPW.setError("비밀번호를 입력하세요");
-                }
-                else {
+                } else {
                     loading.loading(LoginActivity.this);
                     requestLogin(ID, PW);
                 }
             }
         });
-        gotoSignTextview.setOnClickListener(new View.OnClickListener(){
+        gotoSignTextview.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view){
-                Intent intent=new Intent(LoginActivity.this, SignUpActivity.class);
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
                 startActivity(intent);
             }
         });
     }
 
-    public void requestLogin(String ID, String PW){
+    public void requestLogin(String ID, String PW) {
         mAuth.signInWithEmailAndPassword(ID, PW)
                 .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()){
+                        if (task.isSuccessful()) {
                             curUser = mAuth.getCurrentUser();
-                            if(curUser.isEmailVerified()) {
+                            if (curUser.isEmailVerified()) {
                                 Toast.makeText(getApplicationContext(), "로그인 성공", Toast.LENGTH_SHORT).show();
 
                                 requestUserData(curUser.getUid());
-                            }
-                            else{
+                            } else {
                                 mAuth.signOut();
                                 Toast.makeText(getApplicationContext(), "이메일 인증을 완료해주세요", Toast.LENGTH_LONG).show();
                             }
-                        }else{
+                        } else {
                             Exception e = task.getException();
                             Log.w("로그인", "createUserWithEmail:failure", e);
-                            Toast.makeText(getApplicationContext(),"로그인 실패", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "로그인 실패", Toast.LENGTH_SHORT).show();
                         }
 
                     }
@@ -130,10 +122,8 @@ public class LoginActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     Log.d("로그인", "성공");
                     UserData userData = response.body();
-                    loading.loadingEnd();
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    getGroupData(userData.getGroupId());
                     intent.putExtra("user", userData);
-                    startActivity(intent);
                 }
             }
 
@@ -141,6 +131,28 @@ public class LoginActivity extends AppCompatActivity {
             public void onFailure(Call<UserData> call, Throwable t) {
                 Log.d("로그인", "에러");
                 Log.e("로그인", t.getMessage());
+            }
+        });
+    }
+
+    public void getGroupData(int ID) {
+
+        service.getGroupData(ID).enqueue(new Callback<GroupData>() {
+            @Override
+            public void onResponse(Call<GroupData> call, Response<GroupData> response) {
+                if (response.isSuccessful()) {
+                    Log.d("그룹 확인", "성공");
+                    groupData = response.body();
+                    intent.putExtra("group", groupData);
+                    loading.loadingEnd();
+                    startActivity(intent);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GroupData> call, Throwable t) {
+                Log.d("그룹 확인", "에러");
+                Log.e("그룹 확인", t.getMessage());
             }
         });
     }

@@ -2,7 +2,6 @@ package com.example.homekippa;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
@@ -34,10 +33,6 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
 public class MainActivity extends AppCompatActivity {
     private FirebaseUser curUser;
     private FirebaseAuth mAuth;
@@ -62,8 +57,11 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         service = RetrofitClient.getClient().create(ServiceApi.class);
         curUser = mAuth.getCurrentUser();
+
         Intent intent = getIntent();
         userData = (UserData) intent.getExtras().get("user");
+        groupData = (GroupData) intent.getExtras().get("group");
+
         Toast.makeText(getApplicationContext(), userData.getUserName() + "님 로그인", Toast.LENGTH_LONG).show();
 
         //tob navigation
@@ -80,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //좌측메뉴 열기
-                getGroupData(userData.getGroupId());
+                setNavGroupData();
                 leftDrawerLayout.openDrawer(navigationView);
             }
         });
@@ -88,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
         chatButton = findViewById(R.id.top_btn_chat);
 
         //좌측 메뉴
-        getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new HomeFragment()).commitAllowingStateLoss();
+
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
@@ -111,7 +109,10 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+
         //하단 메뉴
+        getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new HomeFragment()).commitAllowingStateLoss();
+
         navView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -139,47 +140,55 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void setNavGroupData() {
+        TextView username = (TextView) findViewById(R.id.nav_user_name);
+        ImageView userProfile = (ImageView) findViewById(R.id.nav_user_image);
+        TextView usergroup = (TextView) findViewById(R.id.nav_user_group);
+
+        username.setText(userData.getUserName() + "님");
+        usergroup.setText(groupData.getGroupName());
+    }
 
     public UserData getUserData() {
         return this.userData;
     }
 
-
-    public void getGroupData(int ID) {
-        Log.d("그룹 확인", "성공");
-        service.getGroupData(ID).enqueue(new Callback<GroupData>() {
-            @Override
-            public void onResponse(Call<GroupData> call, Response<GroupData> response) {
-                if (response.isSuccessful()) {
-
-                    groupData = response.body();
-//
-//                    main_naviheader = (ConstraintLayout) findViewById(R.id.naviheader_container);
-//                    main_naviheader.setBackgroundResource(R.drawable.base_cover);
-//                    main_naviheader.setBackground(getResources().getDrawable(R.drawable.base_cover));
-                    TextView username = (TextView) findViewById(R.id.nav_user_name);
-                    ImageView userProfile = (ImageView) findViewById(R.id.nav_user_image);
-
-//                    username.setBackgroundResource(R.drawable.base_cover);
-                    username.setText(userData.getUserName() + "님");
-
-                    TextView usergroup = (TextView) findViewById(R.id.nav_user_group);
-
-                    usergroup.setText(groupData.getGroupName());
-
-
-                }
-            }
-
-            @Override
-            public void onFailure(Call<GroupData> call, Throwable t) {
-                Log.d("그룹 확인", "에러");
-                Log.e("그룹 확인", t.getMessage());
-            }
-        });
-    }
-
     public GroupData getGroupData() {
         return this.groupData;
     }
+//    public void getGroupData(int ID) {
+//        Log.d("그룹 확인", "성공");
+//        service.getGroupData(ID).enqueue(new Callback<GroupData>() {
+//            @Override
+//            public void onResponse(Call<GroupData> call, Response<GroupData> response) {
+//                if (response.isSuccessful()) {
+//
+//                    groupData = response.body();
+////
+////                    main_naviheader = (ConstraintLayout) findViewById(R.id.naviheader_container);
+////                    main_naviheader.setBackgroundResource(R.drawable.base_cover);
+////                    main_naviheader.setBackground(getResources().getDrawable(R.drawable.base_cover));
+//                    TextView username = (TextView) findViewById(R.id.nav_user_name);
+//                    ImageView userProfile = (ImageView) findViewById(R.id.nav_user_image);
+//
+////                    username.setBackgroundResource(R.drawable.base_cover);
+//                    username.setText(userData.getUserName() + "님");
+//
+//                    TextView usergroup = (TextView) findViewById(R.id.nav_user_group);
+//
+//                    usergroup.setText(groupData.getGroupName());
+//
+//
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<GroupData> call, Throwable t) {
+//                Log.d("그룹 확인", "에러");
+//                Log.e("그룹 확인", t.getMessage());
+//            }
+//        });
+//    }
+
+
 }
