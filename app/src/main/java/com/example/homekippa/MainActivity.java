@@ -6,9 +6,16 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.homekippa.data.GroupData;
 import com.example.homekippa.data.UserData;
@@ -25,22 +32,8 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.NavigationUI;
-
-import java.security.acl.Group;
 import java.util.ArrayList;
 
-import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -70,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         service = RetrofitClient.getClient().create(ServiceApi.class);
         curUser = mAuth.getCurrentUser();
         Intent intent = getIntent();
-        userData = (UserData)intent.getExtras().get("user");
+        userData = (UserData) intent.getExtras().get("user");
         Toast.makeText(getApplicationContext(), userData.getUserName() + "님 로그인", Toast.LENGTH_LONG).show();
 
         //tob navigation
@@ -83,12 +76,11 @@ public class MainActivity extends AppCompatActivity {
         navView = findViewById(R.id.nav_view);
 
 
-        getGroupData(userData.getGroupId());
-
         menuButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //좌측메뉴 열기
+                getGroupData(userData.getGroupId());
                 leftDrawerLayout.openDrawer(navigationView);
             }
         });
@@ -144,29 +136,38 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+
     }
 
 
-    public UserData getUserData(){
+    public UserData getUserData() {
         return this.userData;
     }
 
 
     public void getGroupData(int ID) {
-        Log.d("그룹 확인", "들어옴");
+        Log.d("그룹 확인", "성공");
         service.getGroupData(ID).enqueue(new Callback<GroupData>() {
             @Override
             public void onResponse(Call<GroupData> call, Response<GroupData> response) {
                 if (response.isSuccessful()) {
-                    Log.d("그룹 확인", "성공");
-                    groupData = response.body();
 
-                    main_naviheader = findViewById(R.id.naviheader_container);
-                    main_naviheader.setBackgroundResource(R.drawable.base_cover);
-                    TextView username = findViewById(R.id.user_name);
+                    groupData = response.body();
+//
+//                    main_naviheader = (ConstraintLayout) findViewById(R.id.naviheader_container);
+//                    main_naviheader.setBackgroundResource(R.drawable.base_cover);
+//                    main_naviheader.setBackground(getResources().getDrawable(R.drawable.base_cover));
+                    TextView username = (TextView) findViewById(R.id.nav_user_name);
+                    ImageView userProfile = (ImageView) findViewById(R.id.nav_user_image);
+
+//                    username.setBackgroundResource(R.drawable.base_cover);
                     username.setText(userData.getUserName() + "님");
-                    TextView usergroup = findViewById(R.id.user_group);
+
+                    TextView usergroup = (TextView) findViewById(R.id.nav_user_group);
+
                     usergroup.setText(groupData.getGroupName());
+
+
                 }
             }
 
@@ -178,7 +179,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public GroupData getGroupData(){
+    public GroupData getGroupData() {
         return this.groupData;
     }
 }
