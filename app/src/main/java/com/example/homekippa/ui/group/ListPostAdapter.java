@@ -2,6 +2,7 @@ package com.example.homekippa.ui.group;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.homekippa.AddPostActivity;
+import com.example.homekippa.PostDetailActivity;
 import com.example.homekippa.R;
 
 import java.util.ArrayList;
@@ -104,6 +107,15 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
             postTitle = (TextView) view.findViewById(R.id.textView_PostTitle);
             postContent = (TextView) view.findViewById(R.id.textView_PostContent);
             recyclerView_postImages = (RecyclerView) view.findViewById(R.id.listview_PostImages);
+
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, PostDetailActivity.class);
+                    context.startActivity(intent);
+                }
+            });
+
         }
     }
 }
