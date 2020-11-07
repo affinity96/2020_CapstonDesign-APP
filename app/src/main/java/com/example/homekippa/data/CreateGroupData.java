@@ -20,16 +20,11 @@ public class CreateGroupData {
     @SerializedName("groupIntroduction")
     private String groupIntroduction;
 
-    @SerializedName("groupProfileImage")
-    private String groupProfileImage;
-
-    public  CreateGroupData(String userId, String groupName, String groupAddress, String groupIntroduction, String groupProfileImage){
+    public  CreateGroupData(String userId, String groupName, String groupAddress, String groupIntroduction){
         this.userId = userId;
         this.groupName = groupName;
         this.groupAddress = groupAddress;
         this.groupIntroduction = groupIntroduction;
-        this.groupProfileImage = groupProfileImage;
-
     }
 
 }

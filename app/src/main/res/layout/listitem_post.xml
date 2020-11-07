@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:clickable="true"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="9dp"
@@ -15,7 +16,7 @@
         android:layout_alignParentTop="true">
 
         <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/imageView_PostGroupProfile"
+            android:id="@+id/imageView_DetailPostGroupProfile"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:src="@drawable/dog_woong" />
@@ -24,12 +25,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/imageView_PostGroupProfile"
+            android:layout_toRightOf="@+id/imageView_DetailPostGroupProfile"
             android:orientation="vertical"
             android:padding="5dp">
 
             <TextView
-                android:id="@+id/textView_PostGroupName"
+                android:id="@+id/textView__NotiGroupName"
                 style="@style/BlackText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -38,7 +39,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textView_PostGroupLocation"
+                android:id="@+id/textView__NotiGroupLocation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/ic_location_on_24px"
@@ -84,7 +85,7 @@
             android:layout_below="@+id/textView_PostContent" />
 
         <ImageView
-            android:id="@+id/imageView_liked"
+            android:id="@+id/imageView_commentLiked"
             android:layout_width="15dp"
             android:layout_height="15dp"
             android:layout_below="@+id/listview_PostImages"
@@ -93,12 +94,12 @@
             app:srcCompat="@drawable/ic_bone_svgrepo_com" />
 
         <TextView
-            android:id="@+id/textView_likedNum"
+            android:id="@+id/textView_commentLikedNum"
             style="@style/BlackText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/listview_PostImages"
-            android:layout_toRightOf="@+id/imageView_liked"
+            android:layout_toRightOf="@+id/imageView_commentLiked"
             android:text="12"
             android:textSize="12dp" />
 
@@ -108,7 +109,7 @@
             android:layout_height="17dp"
             android:layout_below="@+id/listview_PostImages"
             android:layout_margin="3dp"
-            android:layout_toRightOf="@+id/textView_likedNum"
+            android:layout_toRightOf="@+id/textView_commentLikedNum"
             android:clickable="true"
             app:srcCompat="@drawable/ic_insert_comment_24px" />
 

@@ -3,26 +3,21 @@ package com.example.homekippa.ui.group;
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.example.homekippa.AddPostActivity;
-import com.example.homekippa.CreateDailyWorkActivity;
 import com.example.homekippa.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -77,8 +72,8 @@ public class GroupPost extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
-            ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_group_post, container, false);
+                             Bundle savedInstanceState) {
+        ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_group_post, container, false);
         RecyclerView listView_posts = root.findViewById(R.id.listView_GroupPost);
 
         button_Add_Post = root.findViewById(R.id.button_Add_Post);
@@ -98,12 +93,13 @@ public class GroupPost extends Fragment {
 
     private void setPostListView(RecyclerView listView) {
         getPostData();
-       ListPostAdapter postAdapter = new ListPostAdapter(getActivity(),postList);
+        ListPostAdapter postAdapter = new ListPostAdapter(getActivity(), postList);
+        listView.setAdapter(postAdapter);
         LinearLayoutManager pLayoutManager = new LinearLayoutManager(getActivity());
         pLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         listView.setLayoutManager(pLayoutManager);
         listView.setItemAnimator(new DefaultItemAnimator());
-        listView.setAdapter(postAdapter);
+
     }
 
     private void getPostData() {
@@ -113,7 +109,6 @@ public class GroupPost extends Fragment {
         postList.add(post);
         post = new SingleItemPost(R.drawable.dog_tan, "웅콩탄멍! ", "경기도 용인시 기흥구 영덕동", "햇살 더 좋은날!", "뀨? !");
         postList.add(post);
-
     }
 
 

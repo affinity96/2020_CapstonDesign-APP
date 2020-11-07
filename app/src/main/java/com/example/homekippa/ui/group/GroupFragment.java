@@ -25,14 +25,17 @@ public class GroupFragment extends Fragment {
 
     GroupCollectionAdapter groupCollectionAdapter;
     ViewPager2 viewpager;
+
     private String[] tabTitles = new String[]{"그룹명", "추억 저장소"};
 
     public static GroupFragment newInstance() {
         return new GroupFragment();
     }
 
+    @Nullable
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
+                             @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         groupViewModel =
                 ViewModelProviders.of(this).get(GroupViewModel.class);
         View root = inflater.inflate(R.layout.fragment_group, container, false);
@@ -41,7 +44,7 @@ public class GroupFragment extends Fragment {
 
     @Override
     public void onViewCreated(@Nullable View view, @Nullable Bundle savedInstanceState) {
-        userData = ((MainActivity)getActivity()).getUserData();
+        userData = ((MainActivity) getActivity()).getUserData();
         connectViewPagerToTab(view);
 
     }
@@ -57,6 +60,7 @@ public class GroupFragment extends Fragment {
 
 class GroupCollectionAdapter extends FragmentStateAdapter {
     private UserData userData;
+
     public GroupCollectionAdapter(Fragment fragment, UserData userData) {
         super(fragment);
         this.userData = userData;
@@ -66,17 +70,19 @@ class GroupCollectionAdapter extends FragmentStateAdapter {
     @Override
     public Fragment createFragment(int position) {
         int groupId = userData.getGroupId();
+        Bundle args = new Bundle();
         switch (position) {
             case 0:
-                if (!String.valueOf(groupId).equals("")) {
-                    return new YesGroup();
-                } else {
-                    return new NoGroup();
-                }
+                Fragment fragment = new YesGroup();
+                fragment.setArguments(args);
+                return fragment;
             case 1:
-                return new GroupPost();
+                Fragment fragment1 = new GroupPost();
+                fragment1.setArguments(args);
+                return fragment1;
+
         }
-        return new YesGroup();
+        return null;
     }
 
     @Override

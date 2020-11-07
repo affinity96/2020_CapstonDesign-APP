@@ -18,12 +18,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.homekippa.AddPetActivity;
 import com.example.homekippa.CreateDailyWorkActivity;
 import com.example.homekippa.MainActivity;
 import com.example.homekippa.R;
 import com.example.homekippa.data.GroupData;
 import com.example.homekippa.data.UserData;
-import com.example.homekippa.function.Loading;
 import com.example.homekippa.network.RetrofitClient;
 import com.example.homekippa.network.ServiceApi;
 
@@ -59,6 +59,7 @@ public class YesGroup extends Fragment {
     private RecyclerView listView_pets;
     private RecyclerView listView_dailyWorks;
     private CircleImageView imageView_groupProfile;
+    private Button button_addPet;
 
     public static YesGroup newInstance() {
         return new YesGroup();
@@ -82,8 +83,13 @@ public class YesGroup extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        userData = ((MainActivity)getActivity()).getUserData();
+
         service = RetrofitClient.getClient().create(ServiceApi.class);
+        userData = ((MainActivity) getActivity()).getUserData();
+        Log.d("user", userData.getUserName());
+
+        groupData = ((MainActivity) getActivity()).getGroupData();
+        Log.d("group", groupData.getGroupName());
 
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
@@ -97,22 +103,13 @@ public class YesGroup extends Fragment {
                              Bundle savedInstanceState) {
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_yes_group, container, false);
 
-        groupData = ((MainActivity)getActivity()).getGroupData();
         tv_groupName = root.findViewById(R.id.textView_groupName);
         tv_groupIntro = root.findViewById(R.id.textView_groupIntro);
-        button_Add_DW= root.findViewById(R.id.button_Add_DW);
-
-        listView_pets = root.findViewById(R.id.listview_pets);
-        listView_dailyWorks = root.findViewById(R.id.listview_dailywork);
-        imageView_groupProfile = root.findViewById(R.id.ImageView_groupProfile);
-
-        tv_groupName.setText(groupData.getGroupName());
-        tv_groupIntro.setText(groupData.getGroupIntro());
-
-        setPetListView(listView_pets);
+        button_Add_DW = root.findViewById(R.id.button_Add_DW);
+        button_addPet = root.findViewById(R.id.button_AddPet);
 
         button_Add_DW.setOnClickListener(new View.OnClickListener() {
-            @Override
+                @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), CreateDailyWorkActivity.class);
                 intent.putExtra("userData", userData);
@@ -122,6 +119,21 @@ public class YesGroup extends Fragment {
             }
         });
 
+        button_addPet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), AddPetActivity.class);
+                startActivity(intent);
+            }
+        });
+        listView_pets = root.findViewById(R.id.listview_pets);
+        listView_dailyWorks = root.findViewById(R.id.listview_dailywork);
+        imageView_groupProfile = root.findViewById(R.id.ImageView_groupProfile);
+
+        tv_groupName.setText(groupData.getGroupName());
+        tv_groupIntro.setText(groupData.getGroupIntro());
+
+        setPetListView(listView_pets);
         setDailyWorkListView(listView_dailyWorks);
 
         Glide.with(YesGroup.this).load(R.drawable.dog_woong).circleCrop().into(imageView_groupProfile);
@@ -182,17 +194,6 @@ public class YesGroup extends Fragment {
         dailyWorkList.add(dailyWork);
     }
 
-    private void getPetData(RecyclerView listView) {
-
-///*        SingleItemPet pet = new SingleItemPet("땡이 ", R.drawable.top_btn_chat);
-//        petList.add(pet);
-//        pet = new SingleItemPet("콩이 ", R.drawable.simplelogo);
-//        petList.add(pet);
-//        pet = new SingleItemPet("탄이 ", R.drawable.simplelogo);
-//        petList.add(pet);
-//        pet = new SingleItemPet("웅이 ", R.drawable.simplelogo);
-//        petList.add(pet);*/
-    }
 
     class ListDailyWorkAdapter extends RecyclerView.Adapter<ListDailyWorkAdapter.MyViewHolder2> {
         private ArrayList<SingleItemDailyWork> dailyWorks_Items;

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:background="@drawable/color_comment_background"
+    android:padding="5dp">
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout_profile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="2dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/imageView_DetailPostGroupProfile"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:clickable="true"
+            android:src="@drawable/dog_woong" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/imageView_DetailPostGroupProfile"
+            android:orientation="vertical"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/textView__NotiGroupName"
+                style="@style/BlackText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="우만동 땡이가족 - 시으닝인뎅 "
+                android:textSize="9dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView__NotiGroupLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_location_on_24px"
+                android:gravity="center"
+                android:hint="경기도 용인시 기흥구 영덕동"
+                android:textSize="7dp" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/relativeLayout_profile">
+
+        <TextView
+            android:id="@+id/textView_commentContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="엉멍넘뭉귕영웡용 "
+            android:textSize="9dp" />
+
+        <ImageView
+            android:id="@+id/imageView_commentLiked"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_below="@+id/textView_commentContent"
+            android:layout_margin="3dp"
+            android:clickable="true"
+            app:srcCompat="@drawable/ic_bone_svgrepo_com" />
+
+        <TextView
+            android:id="@+id/textView_commentLikedNum"
+            style="@style/BlackText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView_commentContent"
+            android:layout_toRightOf="@+id/imageView_commentLiked"
+            android:text="12"
+            android:textSize="9dp" />
+
+        <ImageView
+            android:id="@+id/imageView_comment"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:layout_below="@+id/textView_commentContent"
+            android:layout_margin="3dp"
+            android:layout_toRightOf="@+id/textView_commentLikedNum"
+            android:clickable="true"
+            app:srcCompat="@drawable/ic_insert_comment_24px" />
+
+        <TextView
+            android:id="@+id/textView_commentNum"
+            style="@style/BlackText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView_commentContent"
+            android:layout_toRightOf="@+id/imageView_comment"
+            android:text="3"
+            android:textSize="9dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView_commentContent"
+            android:layout_alignEnd="@+id/textView_commentContent"
+            android:layout_alignRight="@+id/textView_commentContent"
+            android:text="2020년 11월 12일 "
+            android:textSize="7dp" />
+
+
+    </RelativeLayout>
+</RelativeLayout>
