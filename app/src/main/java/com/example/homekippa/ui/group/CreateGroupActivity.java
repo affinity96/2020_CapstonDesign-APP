@@ -6,6 +6,7 @@ import androidx.core.content.FileProvider;
 import android.Manifest;
 import android.content.Intent;
 import android.database.Cursor;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -23,6 +24,7 @@ import com.example.homekippa.data.CreateGroupResponse;
 import com.example.homekippa.network.RetrofitClient;
 import com.example.homekippa.network.ServiceApi;
 import com.example.homekippa.ui.searchAddress.searchAddress;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.File;
@@ -30,18 +32,14 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import com.amazonaws.SdkClientException;
-import com.amazonaws.auth.AWSStaticCredentialsProvider;
-import com.amazonaws.auth.BasicAWSCredentials;
-import com.amazonaws.client.builder.AwsClientBuilder;
-import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.AmazonS3ClientBuilder;
-import com.amazonaws.services.s3.model.AmazonS3Exception;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 
@@ -57,31 +55,12 @@ public class CreateGroupActivity extends AppCompatActivity {
     private TextView moveToSearchAddress;
     private FirebaseAuth mAuth;
     private ServiceApi service;
-    private String imgPath;
-    private Uri imgUrl;
-
-    final String endPoint = "https://kr.object.ncloudstorage.com";
-    final String regionName = "kr-standard";
-    final String accessKey = "C924392C47B5599B416E";
-    final String secretKey = "0ADD8A0782AF8A09A3F3E4718AB48B2E24C5FBFB";
-
-    // S3 client
-    final AmazonS3 s3 = AmazonS3ClientBuilder.standard()
-            .withEndpointConfiguration(new AwsClientBuilder.EndpointConfiguration(endPoint, regionName))
-            .withCredentials(new AWSStaticCredentialsProvider(new BasicAWSCredentials(accessKey, secretKey)))
-            .build();
-
-    String bucketName = "homekippa";
-
-    // 버킷 file 경로 (초기값)
-    String objectName = "group/profile.png";
+    private File tempFile;
 
     private Boolean isPermission = true;
 
     private static final int PICK_FROM_ALBUM = 1;
     private static final int PICK_FROM_CAMERA = 2;
-
-    private File tempFile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,7 +73,6 @@ public class CreateGroupActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         service = RetrofitClient.getClient().create(ServiceApi.class);
 
-        // 앨범에서 가져오는 버튼하나, 카메라로 가져오는 버튼하나 만들어주세요.
         button_gallery = findViewById(R.id.button_gallery);
         button_camera = findViewById(R.id.button_camera);
 
@@ -153,7 +131,6 @@ public class CreateGroupActivity extends AppCompatActivity {
 //            }
 //        });
 
-
         button_createGroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -161,8 +138,20 @@ public class CreateGroupActivity extends AppCompatActivity {
                 Log.d("creategroup", "here");
                 String userid = mAuth.getCurrentUser().getUid();
                 String groupIntroduction = editText_introduce.getText().toString();
+                HashMap<String, RequestBody> map = new HashMap<String, RequestBody>();
 
                 final String groupAddress = moveToSearchAddress.getText().toString();
+
+                RequestBody group_name = RequestBody.create(MediaType.parse("text/plain"), groupName);
+                map.put("group_name", group_name);
+                RequestBody user_id = RequestBody.create(MediaType.parse("text/plain"), userid);
+                map.put("user_id", user_id);
+                RequestBody group_introduction = RequestBody.create(MediaType.parse("text/plain"), groupIntroduction);
+                map.put("group_introduction", group_introduction);
+                RequestBody group_address = RequestBody.create(MediaType.parse("text/plain"), groupAddress);
+                map.put("group_address", group_address);
+                RequestBody group_image = RequestBody.create(MediaType.parse("image/*"), tempFile);
+                map.put("profile_img\";filename=\"photo.jpg", group_image);
 
                 if (groupName.isEmpty()) {
                     editText_groupName.setHint("GroupName을 입력하세요!");
@@ -171,11 +160,11 @@ public class CreateGroupActivity extends AppCompatActivity {
                 } else if (groupIntroduction.isEmpty()) {
                     editText_introduce.setHint("그룹 소개글을 써주세요!");
                 } else {
-                    createGroup(new CreateGroupData(userid, groupName, groupAddress, groupIntroduction, objectName));
+
+                    createGroup(new CreateGroupData(userid, groupName, groupAddress, groupIntroduction));
                 }
             }
         });
-
 
     }
 
@@ -371,23 +360,15 @@ public class CreateGroupActivity extends AppCompatActivity {
     private void createGroup(CreateGroupData data) {
         Log.i("create", "create");
 
-        // 버킷에 파일 업로드
-        try {
-            s3.putObject(bucketName, objectName, tempFile);
-            System.out.format("Object %s has been created.\n", objectName);
-        } catch (AmazonS3Exception e) {
-            e.printStackTrace();
-        } catch(SdkClientException e) {
-            e.printStackTrace();
-        }
+        service.groupCreate(, data).enqueue(new Callback<CreateGroupResponse>() {
 
-        service.groupCreate(data).enqueue(new Callback<CreateGroupResponse>() {
             @Override
             public void onResponse(Call<CreateGroupResponse> call, Response<CreateGroupResponse> response) {
                 CreateGroupResponse result = response.body();
 //                Toast.makeText(CreateGroupActivity.this, result.getMessage(),Toast.LENGTH_SHORT).show();
                 if (result.getCode() == 200) {
-                    finish();
+
+//                    finish();
                 }
             }
 
