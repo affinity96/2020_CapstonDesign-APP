@@ -1,6 +1,5 @@
 package com.example.homekippa.ui.group;
 
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,8 +55,8 @@ public class ListCommentAdapter extends RecyclerView.Adapter<ListCommentAdapter.
         MyViewHolder(View view) {
             super(view);
             profile = (ImageView) view.findViewById(R.id.imageView_DetailPostGroupProfile);
-            groupName = (TextView) view.findViewById(R.id.textView__DetailPostGroupName);
-            groupLocation = (TextView) view.findViewById(R.id.textView__DetailPostGroupLocation);
+            groupName = (TextView) view.findViewById(R.id.textView__NotiGroupName);
+            groupLocation = (TextView) view.findViewById(R.id.textView__NotiGroupLocation);
             commentContent = (TextView) view.findViewById(R.id.textView_commentContent);
         }
     }

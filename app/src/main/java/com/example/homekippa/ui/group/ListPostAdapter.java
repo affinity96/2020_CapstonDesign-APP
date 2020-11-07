@@ -103,8 +103,8 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
         MyViewHolder(View view) {
             super(view);
             postGroupProfile = (ImageView) view.findViewById(R.id.imageView_DetailPostGroupProfile);
-            postGroupName = (TextView) view.findViewById(R.id.textView__DetailPostGroupName);
-            postGroupLocation = (TextView) view.findViewById(R.id.textView__DetailPostGroupLocation);
+            postGroupName = (TextView) view.findViewById(R.id.textView__NotiGroupName);
+            postGroupLocation = (TextView) view.findViewById(R.id.textView__NotiGroupLocation);
             postTitle = (TextView) view.findViewById(R.id.textView_PostTitle);
             postContent = (TextView) view.findViewById(R.id.textView_PostContent);
             recyclerView_postImages = (RecyclerView) view.findViewById(R.id.listview_PostImages);

@@ -30,7 +30,7 @@
             android:padding="5dp">
 
             <TextView
-                android:id="@+id/textView__DetailPostGroupName"
+                android:id="@+id/textView__NotiGroupName"
                 style="@style/BlackText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -39,7 +39,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textView__DetailPostGroupLocation"
+                android:id="@+id/textView__NotiGroupLocation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/ic_location_on_24px"
