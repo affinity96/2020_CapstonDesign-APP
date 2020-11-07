@@ -55,6 +55,7 @@ public class CreateGroupActivity extends AppCompatActivity {
     private TextView moveToSearchAddress;
     private FirebaseAuth mAuth;
     private ServiceApi service;
+
     private File tempFile;
 
     private Boolean isPermission = true;
@@ -334,14 +335,12 @@ public class CreateGroupActivity extends AppCompatActivity {
 //                setImage();
                 // 버킷 경로 설정
                 String timeStamp = new SimpleDateFormat("HHmmss").format(new Date());
-                objectName = "group/" + "happytogedog_"+ timeStamp + ".jpg";
 
             } else if (requestCode == PICK_FROM_CAMERA) {
 
 //                setImage();
                 // 버킷 경로 설정
                 String timeStamp = new SimpleDateFormat("HHmmss").format(new Date());
-                objectName = "group/" + "happytogedog_"+ timeStamp + ".jpg";
 
             }
         }

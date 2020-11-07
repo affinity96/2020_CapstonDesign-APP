@@ -1,5 +1,9 @@
 package com.example.homekippa.network;
 
+import com.example.homekippa.data.AddPetData;
+import com.example.homekippa.data.AddPetResponse;
+import com.example.homekippa.data.CreateDailyWorkData;
+import com.example.homekippa.data.CreateDailyWorkResponse;
 import com.example.homekippa.data.CreateGroupData;
 import com.example.homekippa.data.CreateGroupResponse;
 import com.example.homekippa.data.GroupData;
@@ -34,15 +38,22 @@ public interface ServiceApi {
     @POST("/group/add")
     Call<CreateGroupResponse> groupCreate(@PartMap Map<String, RequestBody> Files, @Part("json") CreateGroupData data);
 
+    @POST("/pet/reports/add")
+    Call<CreateDailyWorkResponse> createDailyWork(@Body CreateDailyWorkData data);
+
+    @POST("/pet/add")
+    Call<AddPetResponse> addPetReg(@Body AddPetData data);
+
     @GET("/user")
     Call<UserData> getUserData(@Query("userId") String userId);
 
     @GET("/group")
     Call<GroupData> getGroupData(@Query("groupId") int groupId);
 
-    @GET("/pets")
+    @GET("/pet")
     Call<List<SingleItemPet>> getPetsData(@Query("groupId") int groupId);
 
 //    @POST("/pet/reports/add")
 //    Call<CreateGroupResponse> createDailyWork(@Body CreateGroupData data);
+
 }

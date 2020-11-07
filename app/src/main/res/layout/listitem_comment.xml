@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:clickable="true"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="9dp"
-    android:background="@drawable/border_gray"
-    android:orientation="horizontal"
-    android:padding="10dp">
+    android:layout_margin="10dp"
+    android:background="@drawable/color_comment_background"
+    android:padding="5dp">
 
     <RelativeLayout
         android:id="@+id/relativeLayout_profile"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true">
+        android:padding="2dp">
 
         <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/imageView_DetailPostGroupProfile"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:clickable="true"
             android:src="@drawable/dog_woong" />
 
         <LinearLayout
@@ -34,8 +34,8 @@
                 style="@style/BlackText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="우만동 땡이가족"
-                android:textSize="11dp"
+                android:text="우만동 땡이가족 - 시으닝인뎅 "
+                android:textSize="9dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -45,50 +45,29 @@
                 android:drawableLeft="@drawable/ic_location_on_24px"
                 android:gravity="center"
                 android:hint="경기도 용인시 기흥구 영덕동"
-                android:textSize="9dp" />
+                android:textSize="7dp" />
         </LinearLayout>
     </RelativeLayout>
 
-
     <RelativeLayout
         android:layout_width="match_parent"
+
         android:layout_height="wrap_content"
-        android:layout_below="@+id/relativeLayout_profile"
-        android:layout_margin="10dp"
-        android:orientation="vertical">
+        android:layout_below="@+id/relativeLayout_profile">
 
         <TextView
-            android:id="@+id/textView_PostTitle"
+            android:id="@+id/textView_commentContent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="3dp"
-            android:lines="1"
-            android:text="햇살 좋은 날~🌻"
-            android:textColor="#000000"
-            android:textSize="12dp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/textView_PostContent"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/textView_PostTitle"
-            android:layout_margin="3dp"
-            android:lines="1"
-            android:text="기분 좋은 강아지들 행복:) "
-            android:textSize="10dp" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/listview_PostImages"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_below="@+id/textView_PostContent" />
+            android:layout_margin="5dp"
+            android:text="엉멍넘뭉귕영웡용 "
+            android:textSize="9dp" />
 
         <ImageView
             android:id="@+id/imageView_commentLiked"
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:layout_below="@+id/listview_PostImages"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_below="@+id/textView_commentContent"
             android:layout_margin="3dp"
             android:clickable="true"
             app:srcCompat="@drawable/ic_bone_svgrepo_com" />
@@ -98,16 +77,16 @@
             style="@style/BlackText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/listview_PostImages"
+            android:layout_below="@+id/textView_commentContent"
             android:layout_toRightOf="@+id/imageView_commentLiked"
             android:text="12"
-            android:textSize="12dp" />
+            android:textSize="9dp" />
 
         <ImageView
             android:id="@+id/imageView_comment"
-            android:layout_width="17dp"
-            android:layout_height="17dp"
-            android:layout_below="@+id/listview_PostImages"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:layout_below="@+id/textView_commentContent"
             android:layout_margin="3dp"
             android:layout_toRightOf="@+id/textView_commentLikedNum"
             android:clickable="true"
@@ -118,21 +97,20 @@
             style="@style/BlackText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/listview_PostImages"
+            android:layout_below="@+id/textView_commentContent"
             android:layout_toRightOf="@+id/imageView_comment"
-            android:text="3" />
+            android:text="3"
+            android:textSize="9dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/listview_PostImages"
-            android:layout_alignEnd="@+id/listview_PostImages"
-            android:layout_alignRight="@+id/listview_PostImages"
+            android:layout_below="@+id/textView_commentContent"
+            android:layout_alignEnd="@+id/textView_commentContent"
+            android:layout_alignRight="@+id/textView_commentContent"
             android:text="2020년 11월 12일 "
-            android:textSize="12dp" />
+            android:textSize="7dp" />
 
 
     </RelativeLayout>
-
-
 </RelativeLayout>

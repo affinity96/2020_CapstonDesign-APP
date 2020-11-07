@@ -2,7 +2,8 @@ package com.example.homekippa.data;
 
 import com.google.gson.annotations.SerializedName;
 
-public class CreateGroupResponse {
+public class AddPetResponse {
+
     @SerializedName("code")
     private int code;
 
@@ -17,5 +18,3 @@ public class CreateGroupResponse {
         return message;
     }
 }
-
-//TODO: 이부분을 잘 모르겠네요

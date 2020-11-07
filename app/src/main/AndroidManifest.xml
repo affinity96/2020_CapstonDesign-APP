@@ -10,6 +10,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -21,24 +22,40 @@
         <service
             android:name="com.amazonaws.mobileconnectors.s3.transferutility.TransferService"
             android:enabled="true" />
-        <activity android:name=".CreateDailyWorkActivity"></activity>
-        <activity android:name=".AddPostActivity"></activity>
-
-        <activity android:name=".ui.group.CreateGroupActivity" />
-        <activity android:name=".VerifyActivity" />
-        <activity android:name=".SignUpActivity" />
-        <activity android:name=".StartActivity">
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/title_activity_main" />
+        <activity
+            android:name=".SplashScreen"
+            android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".MainActivity"
-            android:label="@string/title_activity_main" />
+
+
+        <activity android:name=".CreateDailyWorkActivity"></activity>
+        <activity android:name=".AddPostActivity"></activity>
+
+        <activity android:name=".ui.group.CreateGroupActivity" />
+        <activity android:name=".VerifyActivity" />
+        <activity android:name=".SignUpActivity" />
+        <activity android:name=".AddPetActivity"/>
+
+        <activity android:name=".StartActivity">
+
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+        </activity>
+
         <activity android:name=".LoginActivity" />
         <activity android:name=".ui.searchAddress.searchAddress" />
+        <activity android:name=".mapActivity"/>
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"
@@ -46,7 +63,7 @@
 
         <!-- 사진 촬영을 위한 provide -->
         <provider
-            android:name="android.support.v4.content.FileProvider"
+            android:name="androidx.core.content.FileProvider"
             android:authorities="com.example.homekippa.provider"
             android:exported="false"
             android:grantUriPermissions="true">
