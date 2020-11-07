@@ -25,6 +25,7 @@ public class AddPetActivity extends AppCompatActivity {
 
     private EditText editText_petReg_num;
     private Button button_petReg;
+    private Button button_petDes;
     private ServiceApi service;
 
 
@@ -35,6 +36,7 @@ public class AddPetActivity extends AppCompatActivity {
 
         editText_petReg_num = findViewById(R.id.editText_petReg_num);
         button_petReg = findViewById(R.id.button_petReg);
+        button_petDes = findViewById(R.id.button_petDes);
         service = RetrofitClient.getClient().create(ServiceApi.class);
 
         editText_petReg_num.setOnClickListener(new View.OnClickListener() {
@@ -60,6 +62,14 @@ public class AddPetActivity extends AppCompatActivity {
                 }
             }
         });
+        button_petDes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), AddPetDesActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
     private void addPet(AddPetData data) {
@@ -68,8 +78,6 @@ public class AddPetActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<AddPetResponse> call, Response<AddPetResponse> response) {
                 AddPetResponse result = response.body();
-//                Log.d("haha", "1");
-//                Log.d("happy", result.getMessage());
                 Toast.makeText(AddPetActivity.this, result.getMessage(),Toast.LENGTH_SHORT).show();
 
                 if(result.getCode() == 200){
@@ -80,7 +88,6 @@ public class AddPetActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<AddPetResponse> call, Throwable t) {
                 Toast.makeText(AddPetActivity.this, "그룹생성 에러 발생", Toast.LENGTH_SHORT).show();
-//                Log.e("createGroup error",t.getMessage());
                 t.printStackTrace();
 
             }

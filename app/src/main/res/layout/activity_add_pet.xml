@@ -52,7 +52,13 @@
         android:layout_width="170dp"
         android:layout_height="43dp"
         android:text="반려동물 조회"
+        />
 
+    <Button
+        android:id="@+id/button_petDes"
+        android:layout_width="170dp"
+        android:layout_height="50dp"
+        android:text="직접입력"
         />
 
 
