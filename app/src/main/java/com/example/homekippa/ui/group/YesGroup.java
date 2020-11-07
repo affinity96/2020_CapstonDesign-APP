@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.homekippa.AddPetActivity;
 import com.example.homekippa.CreateDailyWorkActivity;
 import com.example.homekippa.MainActivity;
 import com.example.homekippa.R;
@@ -53,6 +54,7 @@ public class YesGroup extends Fragment {
     private RecyclerView listView_pets;
     private RecyclerView listView_dailyWorks;
     private CircleImageView imageView_groupProfile;
+    private Button button_addPet;
 
     public static YesGroup newInstance() {
         return new YesGroup();
@@ -100,12 +102,22 @@ public class YesGroup extends Fragment {
         tv_groupName = root.findViewById(R.id.textView_groupName);
         tv_groupIntro = root.findViewById(R.id.textView_groupIntro);
         button_Add_DW = root.findViewById(R.id.button_Add_DW);
+        button_addPet = root.findViewById(R.id.button_AddPet);
+
         button_Add_DW.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), CreateDailyWorkActivity.class);
                 intent.putExtra("userData", userData);
                 intent.putExtra("groupData", groupData);
+                startActivity(intent);
+            }
+        });
+
+        button_addPet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), AddPetActivity.class);
                 startActivity(intent);
             }
         });
