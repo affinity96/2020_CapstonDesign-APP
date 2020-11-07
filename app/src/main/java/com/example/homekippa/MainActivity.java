@@ -21,7 +21,9 @@ import com.example.homekippa.data.UserData;
 import com.example.homekippa.network.RetrofitClient;
 import com.example.homekippa.network.ServiceApi;
 import com.example.homekippa.ui.group.GroupFragment;
+import com.example.homekippa.ui.group.NoGroup;
 import com.example.homekippa.ui.group.SingleItemPet;
+import com.example.homekippa.ui.group.YesGroup;
 import com.example.homekippa.ui.home.HomeFragment;
 import com.example.homekippa.ui.notifications.NotificationsFragment;
 import com.example.homekippa.ui.search.SearchFragment;
@@ -131,7 +133,13 @@ public class MainActivity extends AppCompatActivity {
                         getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new NotificationsFragment()).commitAllowingStateLoss();
                         return true;
                     case R.id.navigation_group:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new GroupFragment()).commitAllowingStateLoss();
+                        if(userData.getGroupId()!=0){
+                            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new GroupFragment()).commitAllowingStateLoss();
+                        }else {
+                            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new NoGroup()).commitAllowingStateLoss();
+                        }
+
+
                         return true;
                 }
                 return false;

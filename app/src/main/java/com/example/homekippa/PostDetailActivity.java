@@ -8,6 +8,7 @@ public class PostDetailActivity extends AppCompatActivity {
 
     private static final String TAG = "postDetail";
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.homekippa.AddPostActivity;
 import com.example.homekippa.PostDetailActivity;
 import com.example.homekippa.R;
 
@@ -22,6 +21,7 @@ import java.util.ArrayList;
 
 public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyViewHolder> {
     private ArrayList<SingleItemPost> post_Items;
+    ArrayList<SingleItemPostImage> post_ImageList;
     private Context context;
 
     public ListPostAdapter(Context context, ArrayList<SingleItemPost> postItems) {
@@ -51,6 +51,7 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
         /**
          * 게시글 댓글 이미지 적용
          */
+
     }
 
     private void setPostImageAdapter(MyViewHolder holder, ArrayList<SingleItemPostImage> postImageList) {
@@ -64,14 +65,14 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
     //TODO: 각 게시글에 맞는 이미지 DATA 설정
     private ArrayList<SingleItemPostImage> getPostImageData(int position) {
 
-        ArrayList<SingleItemPostImage> postImageList = new ArrayList<>();
+        post_ImageList = new ArrayList<>();
 
         SingleItemPostImage postImage = new SingleItemPostImage(R.drawable.dog_tan);
-        postImageList.add(postImage);
+        post_ImageList.add(postImage);
         postImage = new SingleItemPostImage(R.drawable.dog_woong);
-        postImageList.add(postImage);
+        post_ImageList.add(postImage);
 
-        return postImageList;
+        return post_ImageList;
     }
 
     private void setPostData(MyViewHolder holder, int position) {
@@ -108,10 +109,13 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
             postContent = (TextView) view.findViewById(R.id.textView_PostContent);
             recyclerView_postImages = (RecyclerView) view.findViewById(R.id.listview_PostImages);
 
+            //각 게시글 클릭 시
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(context, PostDetailActivity.class);
+//                    intent.putExtra("postInfo", post_Items);
+//                    intent.putExtra("postImages", post_ImageList);
                     context.startActivity(intent);
                 }
             });
