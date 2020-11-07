@@ -6,7 +6,6 @@ import androidx.core.content.FileProvider;
 import android.Manifest;
 import android.content.Intent;
 import android.database.Cursor;
-import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -24,7 +23,6 @@ import com.example.homekippa.data.CreateGroupResponse;
 import com.example.homekippa.network.RetrofitClient;
 import com.example.homekippa.network.ServiceApi;
 import com.example.homekippa.ui.searchAddress.searchAddress;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.File;
@@ -32,9 +30,9 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -139,20 +137,8 @@ public class CreateGroupActivity extends AppCompatActivity {
                 Log.d("creategroup", "here");
                 String userid = mAuth.getCurrentUser().getUid();
                 String groupIntroduction = editText_introduce.getText().toString();
-                HashMap<String, RequestBody> map = new HashMap<String, RequestBody>();
 
                 final String groupAddress = moveToSearchAddress.getText().toString();
-
-                RequestBody group_name = RequestBody.create(MediaType.parse("text/plain"), groupName);
-                map.put("group_name", group_name);
-                RequestBody user_id = RequestBody.create(MediaType.parse("text/plain"), userid);
-                map.put("user_id", user_id);
-                RequestBody group_introduction = RequestBody.create(MediaType.parse("text/plain"), groupIntroduction);
-                map.put("group_introduction", group_introduction);
-                RequestBody group_address = RequestBody.create(MediaType.parse("text/plain"), groupAddress);
-                map.put("group_address", group_address);
-                RequestBody group_image = RequestBody.create(MediaType.parse("image/*"), tempFile);
-                map.put("profile_img\";filename=\"photo.jpg", group_image);
 
                 if (groupName.isEmpty()) {
                     editText_groupName.setHint("GroupName을 입력하세요!");
@@ -162,7 +148,7 @@ public class CreateGroupActivity extends AppCompatActivity {
                     editText_introduce.setHint("그룹 소개글을 써주세요!");
                 } else {
 
-                    createGroup(new CreateGroupData(userid, groupName, groupAddress, groupIntroduction));
+                    createGroup(new CreateGroupData(userid, groupName, groupAddress, groupIntroduction), tempFile);
                 }
             }
         });
@@ -356,10 +342,14 @@ public class CreateGroupActivity extends AppCompatActivity {
 //
 //    }
 
-    private void createGroup(CreateGroupData data) {
+    private void createGroup(CreateGroupData data, File tempFile) {
         Log.i("create", "create");
 
-        service.groupCreate(, data).enqueue(new Callback<CreateGroupResponse>() {
+
+        RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), tempFile);
+        MultipartBody.Part uploadFile = MultipartBody.Part.createFormData("file", tempFile.getName(), requestFile);
+
+        service.groupCreate(data, uploadFile).enqueue(new Callback<CreateGroupResponse>() {
 
             @Override
             public void onResponse(Call<CreateGroupResponse> call, Response<CreateGroupResponse> response) {

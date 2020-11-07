@@ -17,6 +17,7 @@ import com.example.homekippa.ui.group.SingleItemPet;
 import java.util.List;
 import java.util.Map;
 
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -36,7 +37,7 @@ public interface ServiceApi {
 
     @Multipart
     @POST("/group/add")
-    Call<CreateGroupResponse> groupCreate(@PartMap Map<String, RequestBody> Files, @Part("json") CreateGroupData data);
+    Call<CreateGroupResponse> groupCreate(@Body CreateGroupData data, @Part MultipartBody.Part file);
 
     @POST("/pet/reports/add")
     Call<CreateDailyWorkResponse> createDailyWork(@Body CreateDailyWorkData data);
