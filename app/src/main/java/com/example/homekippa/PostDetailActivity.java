@@ -2,8 +2,6 @@ package com.example.homekippa;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,29 +15,28 @@ import com.example.homekippa.ui.group.ListPostImageAdapter;
 import com.example.homekippa.ui.group.SingleItemComment;
 import com.example.homekippa.ui.group.SingleItemPost;
 import com.example.homekippa.ui.group.SingleItemPostImage;
-import com.example.homekippa.ui.notifications.SingleItemNoti;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
 public class PostDetailActivity extends AppCompatActivity {
 
     private static final String TAG = "postDetail";
+
     private SingleItemPost post;
     ImageView postGroupProfile;
     TextView postGroupName;
     TextView postGroupLocation;
     TextView postTitle;
     TextView postContent;
-    ArrayList<SingleItemPostImage> post_ImageList;
     RecyclerView recyclerView_postImages;
     RecyclerView recyclerView_postComments;
+    ArrayList<SingleItemPostImage> post_ImageList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_detail);
+
         Intent intent = getIntent();
 
         postGroupProfile = (ImageView) findViewById(R.id.imageView_DetailPostGroupProfile);
@@ -56,9 +53,10 @@ public class PostDetailActivity extends AppCompatActivity {
         postGroupLocation.setText(post.getGroupPostLocation());
         postTitle.setText(post.getGroupPostTitle());
         postContent.setText(post.getGroupPostContent());
+        post_ImageList = post.getGroupPostImage();
 
-        setPostImage(post.getGroupPostImage());
-        setPostContent(recyclerView_postComments);
+        setPostImage(post_ImageList);
+        setPostComment(recyclerView_postComments);
     }
 
     private void setPostImage(ArrayList<SingleItemPostImage> post_ImageList) {
@@ -70,12 +68,16 @@ public class PostDetailActivity extends AppCompatActivity {
 
     }
 
-    private void setPostContent(RecyclerView listView) {
+    //TODO: Set Post Comment
+    private void setPostComment(RecyclerView listView) {
+
         ArrayList<SingleItemComment> comment_List = new ArrayList<>();
         SingleItemComment comment = new SingleItemComment(R.drawable.dog_thang, "땡이네 콩 ", "경기도 용인시 기흥구 흥덕중앙로", "어머나!!!!!넘모 귕영웡용 ");
         comment_List.add(comment);
+
         ListCommentAdapter commentAdapter = new ListCommentAdapter(comment_List);
         listView.setAdapter(commentAdapter);
+
         LinearLayoutManager pLayoutManager = new LinearLayoutManager(this);
         pLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         listView.setLayoutManager(pLayoutManager);
