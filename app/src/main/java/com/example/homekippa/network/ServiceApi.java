@@ -15,11 +15,17 @@ import com.example.homekippa.data.UserData;
 import com.example.homekippa.ui.group.SingleItemPet;
 
 import java.util.List;
+import java.util.Map;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
+import retrofit2.http.PartMap;
 import retrofit2.http.Query;
 
 public interface ServiceApi {
@@ -29,8 +35,9 @@ public interface ServiceApi {
     @POST("/user/add")
     Call<SignUpResponse> userSignUp(@Body SignUpData data);
 
+    @Multipart
     @POST("/group/add")
-    Call<CreateGroupResponse> groupCreate(@Body CreateGroupData data);
+    Call<CreateGroupResponse> groupCreate(@Body CreateGroupData data, @Part MultipartBody.Part file);
 
     @POST("/pet/reports/add")
     Call<CreateDailyWorkResponse> createDailyWork(@Body CreateDailyWorkData data);
