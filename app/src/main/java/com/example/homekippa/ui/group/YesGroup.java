@@ -96,7 +96,6 @@ public class YesGroup extends Fragment {
                              Bundle savedInstanceState) {
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_yes_group, container, false);
 
-//        groupData = ((MainActivity)getActivity()).getGroupData();
         tv_groupName = root.findViewById(R.id.textView_groupName);
         tv_groupIntro = root.findViewById(R.id.textView_groupIntro);
         button_Add_DW = root.findViewById(R.id.button_Add_DW);
