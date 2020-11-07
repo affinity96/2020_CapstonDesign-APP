@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.homekippa.R;
 
+import java.util.ArrayList;
+
 
 public class SingleItemPost extends Fragment {
 
@@ -18,14 +20,16 @@ public class SingleItemPost extends Fragment {
     private String groupPostLocation;
     private String groupPostTitle;
     private String groupPostContent;
+    private ArrayList<SingleItemPostImage> groupPostImage;
 
 
-    public SingleItemPost(int groupProfile, String groupName, String groupLocation, String postTitle, String postContent) {
+    public SingleItemPost(int groupProfile, String groupName, String groupLocation, String postTitle, String postContent, ArrayList<SingleItemPostImage> groupPostImage) {
         this.groupPostProfile = groupProfile;
         this.groupPostName = groupName;
         this.groupPostLocation = groupLocation;
         this.groupPostTitle = postTitle;
         this.groupPostContent = postContent;
+        this.groupPostImage = groupPostImage;
     }
 
     @Override
@@ -38,12 +42,12 @@ public class SingleItemPost extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.listitem_post, container, false);
-        RecyclerView listView_Images = root.findViewById(R.id.listview_PostImages);
+//        RecyclerView listView_Images = root.findViewById(R.id.listview_PostImages);
 //        setPostImageListView(listView_Images);
-
+//
 //        getPostImageData();
 //        SingleItemPostImage.ListPostImageAdapter postImageAdapter = new SingleItemPostImage.ListPostImageAdapter(postImageList);
-
+//
 //        LinearLayoutManager iLayoutManager = new LinearLayoutManager(getActivity());
 //        iLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
 //        listView_Images.setLayoutManager(iLayoutManager);
@@ -99,4 +103,13 @@ public class SingleItemPost extends Fragment {
     public void setGroupPostProfile(int groupPostProfile) {
         this.groupPostProfile = groupPostProfile;
     }
+
+    public ArrayList<SingleItemPostImage> getGroupPostImage() {
+        return groupPostImage;
+    }
+
+    public void setGroupPostImage(ArrayList<SingleItemPostImage> groupPostImage) {
+        this.groupPostImage = groupPostImage;
+    }
+
 }

@@ -3,6 +3,7 @@ package com.example.homekippa.ui.group;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +22,7 @@ import java.util.ArrayList;
 
 public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyViewHolder> {
     private ArrayList<SingleItemPost> post_Items;
-    ArrayList<SingleItemPostImage> post_ImageList;
+
     private Context context;
 
     public ListPostAdapter(Context context, ArrayList<SingleItemPost> postItems) {
@@ -43,11 +44,13 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
          **********************/
         setPostData(holder, position);
 
+        ArrayList<SingleItemPostImage> post_ImageList = getPostImageData(position);
+        post_Items.get(position).setGroupPostImage(post_ImageList);
+
         /**
          * 게시글 이미지 adapter 적용
          */
-        ArrayList<SingleItemPostImage> postImageList = getPostImageData(position);
-        setPostImageAdapter(holder, postImageList);
+        setPostImageAdapter(holder, post_ImageList);
         /**
          * 게시글 댓글 이미지 적용
          */
@@ -65,8 +68,7 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
     //TODO: 각 게시글에 맞는 이미지 DATA 설정
     private ArrayList<SingleItemPostImage> getPostImageData(int position) {
 
-        post_ImageList = new ArrayList<>();
-
+        ArrayList<SingleItemPostImage> post_ImageList = new ArrayList<>();
         SingleItemPostImage postImage = new SingleItemPostImage(R.drawable.dog_tan);
         post_ImageList.add(postImage);
         postImage = new SingleItemPostImage(R.drawable.dog_woong);
@@ -114,8 +116,10 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(context, PostDetailActivity.class);
-//                    intent.putExtra("postInfo", post_Items);
-//                    intent.putExtra("postImages", post_ImageList);
+
+                    intent.putExtra("position", getAdapterPosition());
+                    intent.putExtra("postItems", post_Items);
+
                     context.startActivity(intent);
                 }
             });

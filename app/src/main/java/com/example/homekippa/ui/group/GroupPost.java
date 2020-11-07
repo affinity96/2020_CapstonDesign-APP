@@ -103,11 +103,17 @@ public class GroupPost extends Fragment {
     }
 
     private void getPostData() {
-        SingleItemPost post = new SingleItemPost(R.drawable.dog_woong, "웅이네 집", "경기도 용인시 기흥구 영덕동", "햇살 좋은날!\uD83C\uDF3B", "미야옹!");
+
+        ArrayList<SingleItemPostImage> post_ImageList = new ArrayList<>();
+        SingleItemPostImage postImage = new SingleItemPostImage(R.drawable.dog_tan);
+        post_ImageList.add(postImage);
+        postImage = new SingleItemPostImage(R.drawable.dog_woong);
+        post_ImageList.add(postImage);
+        SingleItemPost post = new SingleItemPost(R.drawable.dog_woong, "웅이네 집", "경기도 용인시 기흥구 영덕동", "햇살 좋은날!\uD83C\uDF3B", "미야옹!", post_ImageList);
         postList.add(post);
-        post = new SingleItemPost(R.drawable.dog_thang, "땡이네 콩 ", "경기도 용인시 기흥구 신갈동 ", "햇살 안좋은날!!", "멍!!");
+        post = new SingleItemPost(R.drawable.dog_thang, "땡이네 콩 ", "경기도 용인시 기흥구 신갈동 ", "햇살 안좋은날!!", "멍!!", post_ImageList);
         postList.add(post);
-        post = new SingleItemPost(R.drawable.dog_tan, "웅콩탄멍! ", "경기도 용인시 기흥구 영덕동", "햇살 더 좋은날!", "뀨? !");
+        post = new SingleItemPost(R.drawable.dog_tan, "웅콩탄멍! ", "경기도 용인시 기흥구 영덕동", "햇살 더 좋은날!", "뀨? !", post_ImageList);
         postList.add(post);
     }
 
