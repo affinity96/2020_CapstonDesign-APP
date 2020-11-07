@@ -2,6 +2,7 @@ package com.example.homekippa;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
@@ -26,6 +27,8 @@ import com.example.homekippa.ui.home.HomeFragment;
 import com.example.homekippa.ui.notifications.NotificationsFragment;
 import com.example.homekippa.ui.search.SearchFragment;
 import com.example.homekippa.ui.walk.WalkFragment;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -138,9 +141,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        setBottomNav();
-        //bottom navigation
-
         FirebaseMessaging.getInstance().getToken()
                 .addOnCompleteListener(new OnCompleteListener<String>() {
                     @Override
@@ -174,5 +174,10 @@ public class MainActivity extends AppCompatActivity {
 
     public GroupData getGroupData() {
         return this.groupData;
+    }
+
+    @Override
+    public void onBackPressed(){
+        this.finishAffinity();
     }
 }
