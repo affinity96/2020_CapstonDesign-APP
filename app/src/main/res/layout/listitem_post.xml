@@ -85,7 +85,7 @@
             android:layout_below="@+id/textView_PostContent" />
 
         <ImageView
-            android:id="@+id/imageView_commentLiked"
+            android:id="@+id/imageView_PostCommentLiked"
             android:layout_width="15dp"
             android:layout_height="15dp"
             android:layout_below="@+id/listview_PostImages"
@@ -94,32 +94,32 @@
             app:srcCompat="@drawable/ic_bone_svgrepo_com" />
 
         <TextView
-            android:id="@+id/textView_commentLikedNum"
+            android:id="@+id/textView_PostCommentLikedNum"
             style="@style/BlackText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/listview_PostImages"
-            android:layout_toRightOf="@+id/imageView_commentLiked"
+            android:layout_toRightOf="@+id/imageView_PostCommentLiked"
             android:text="12"
             android:textSize="12dp" />
 
         <ImageView
-            android:id="@+id/imageView_comment"
+            android:id="@+id/imageView_PostComment"
             android:layout_width="17dp"
             android:layout_height="17dp"
             android:layout_below="@+id/listview_PostImages"
             android:layout_margin="3dp"
-            android:layout_toRightOf="@+id/textView_commentLikedNum"
+            android:layout_toRightOf="@+id/textView_PostCommentLikedNum"
             android:clickable="true"
             app:srcCompat="@drawable/ic_insert_comment_24px" />
 
         <TextView
-            android:id="@+id/textView_commentNum"
+            android:id="@+id/textView_PostCommentNum"
             style="@style/BlackText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/listview_PostImages"
-            android:layout_toRightOf="@+id/imageView_comment"
+            android:layout_toRightOf="@+id/imageView_PostComment"
             android:text="3" />
 
         <TextView

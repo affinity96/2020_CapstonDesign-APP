@@ -19,11 +19,6 @@ import com.example.homekippa.ui.group.SingleItemPostImage;
 
 import java.util.ArrayList;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link HomePost#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class HomePost extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
@@ -33,7 +28,6 @@ public class HomePost extends Fragment {
 
     private ArrayList<SingleItemPost> postList = new ArrayList<>();
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
@@ -42,15 +36,6 @@ public class HomePost extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment HomePost.
-     */
-    // TODO: Rename and change types and number of parameters
     public static HomePost newInstance(String param1, String param2) {
         HomePost fragment = new HomePost();
         Bundle args = new Bundle();
@@ -72,31 +57,35 @@ public class HomePost extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_home_post, container, false);
         RecyclerView listView_posts = root.findViewById(R.id.listView_HomePost);
+
         setPostListView(listView_posts);
-        // Inflate the layout for this fragment
+
         return root;
     }
 
     private void setPostListView(RecyclerView listView) {
         getPostData();
-//        Log.d("yeah", postList.toString());
+
         ListPostAdapter postAdapter = new ListPostAdapter(getActivity(), postList);
         listView.setAdapter(postAdapter);
         LinearLayoutManager pLayoutManager = new LinearLayoutManager(getActivity());
         pLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         listView.setLayoutManager(pLayoutManager);
         listView.setItemAnimator(new DefaultItemAnimator());
-
     }
 
+    //TODO: set HomePostData and ImageData
     private void getPostData() {
+
         ArrayList<SingleItemPostImage> post_ImageList = new ArrayList<>();
         SingleItemPostImage postImage = new SingleItemPostImage(R.drawable.dog_tan);
         post_ImageList.add(postImage);
         postImage = new SingleItemPostImage(R.drawable.dog_woong);
         post_ImageList.add(postImage);
+
         SingleItemPost post = new SingleItemPost(R.drawable.dog_woong, "웅이네 집", "경기도 용인시 기흥구 영덕동", "햇살 좋은날!", "미야옹!", post_ImageList);
         postList.add(post);
         post = new SingleItemPost(R.drawable.dog_thang, "땡이네 콩 ", "경기도 용인시 기흥구 신갈동 ", "햇살 안좋은날!!", "멍!!", post_ImageList);

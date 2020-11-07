@@ -54,7 +54,7 @@ public class ListCommentAdapter extends RecyclerView.Adapter<ListCommentAdapter.
 
         MyViewHolder(View view) {
             super(view);
-            profile = (ImageView) view.findViewById(R.id.imageView_PostCommentGroupProfile);
+            profile = (ImageView) view.findViewById(R.id.imageView_CommentGroupProfile);
             groupName = (TextView) view.findViewById(R.id.textView__CommentGroupName);
             groupLocation = (TextView) view.findViewById(R.id.textView__CommentGroupLocation);
             commentContent = (TextView) view.findViewById(R.id.textView_commentContent);

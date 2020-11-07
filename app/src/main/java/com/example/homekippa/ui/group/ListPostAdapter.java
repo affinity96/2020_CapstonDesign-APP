@@ -39,41 +39,7 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        /**********************
-         * 게시글 데이터 적용
-         **********************/
         setPostData(holder, position);
-
-        ArrayList<SingleItemPostImage> post_ImageList = post_Items.get(position).getGroupPostImage();
-
-        /**
-         * 게시글 이미지 adapter 적용
-         */
-        setPostImageAdapter(holder, post_ImageList);
-        /**
-         * 게시글 댓글 이미지 적용
-         */
-
-    }
-
-    private void setPostImageAdapter(MyViewHolder holder, ArrayList<SingleItemPostImage> postImageList) {
-        ListPostImageAdapter adapter = new ListPostImageAdapter(postImageList);
-        holder.recyclerView_postImages.setLayoutManager(new LinearLayoutManager(context
-                , LinearLayoutManager.HORIZONTAL
-                , false));
-        holder.recyclerView_postImages.setAdapter(adapter);
-    }
-
-    //TODO: 각 게시글에 맞는 이미지 DATA 설정
-    private ArrayList<SingleItemPostImage> getPostImageData(int position) {
-
-        ArrayList<SingleItemPostImage> post_ImageList = new ArrayList<>();
-        SingleItemPostImage postImage = new SingleItemPostImage(R.drawable.dog_tan);
-        post_ImageList.add(postImage);
-        postImage = new SingleItemPostImage(R.drawable.dog_woong);
-        post_ImageList.add(postImage);
-
-        return post_ImageList;
     }
 
     private void setPostData(MyViewHolder holder, int position) {
@@ -86,7 +52,17 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
         holder.postGroupLocation.setText(post.getGroupPostLocation());
         holder.postTitle.setText(post.getGroupPostTitle());
         holder.postContent.setText(post.getGroupPostContent());
+        setPostImageAdapter(holder, post_Items.get(position).getGroupPostImage());
     }
+
+    private void setPostImageAdapter(MyViewHolder holder, ArrayList<SingleItemPostImage> postImageList) {
+        ListPostImageAdapter adapter = new ListPostImageAdapter(postImageList);
+        holder.recyclerView_postImages.setLayoutManager(new LinearLayoutManager(context
+                , LinearLayoutManager.HORIZONTAL
+                , false));
+        holder.recyclerView_postImages.setAdapter(adapter);
+    }
+
 
     @Override
     public int getItemCount() {
@@ -110,13 +86,13 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
             postContent = (TextView) view.findViewById(R.id.textView_PostContent);
             recyclerView_postImages = (RecyclerView) view.findViewById(R.id.listview_PostImages);
 
-            //각 게시글 클릭 시
+            //각 게시글(PostListItem) 클릭
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(context, PostDetailActivity.class);
-                    SingleItemPost sip = post_Items.get(getAdapterPosition());
-                    intent.putExtra("post", sip);
+                    SingleItemPost post = post_Items.get(getAdapterPosition());
+                    intent.putExtra("post", post);
                     context.startActivity(intent);
                 }
             });

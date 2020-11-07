@@ -14,7 +14,7 @@
         android:padding="2dp">
 
         <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/imageView_PostCommentGroupProfile"
+            android:id="@+id/imageView_CommentGroupProfile"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_centerVertical="true"
@@ -25,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/imageView_PostCommentGroupProfile"
+            android:layout_toRightOf="@+id/imageView_CommentGroupProfile"
             android:orientation="vertical"
             android:padding="5dp">
 
