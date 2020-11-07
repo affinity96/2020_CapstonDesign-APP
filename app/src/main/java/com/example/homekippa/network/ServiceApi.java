@@ -29,6 +29,7 @@ import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.PartMap;
 import retrofit2.http.Query;
+import retrofit2.http.QueryMap;
 
 public interface ServiceApi {
 //    @POST("/user/login")
@@ -39,7 +40,7 @@ public interface ServiceApi {
 
     @Multipart
     @POST("/group/add")
-    Call<CreateGroupResponse> groupCreate(@Body CreateGroupData data, @Part MultipartBody.Part file);
+    Call<CreateGroupResponse> groupCreate(@QueryMap Map<String, String> data, @Part MultipartBody.Part file);
 
     @POST("/pet/reports/add")
     Call<CreateDailyWorkResponse> createDailyWork(@Body CreateDailyWorkData data);
