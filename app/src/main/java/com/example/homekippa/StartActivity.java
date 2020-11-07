@@ -45,7 +45,7 @@ public class StartActivity extends AppCompatActivity {
         button_searchAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), AddPetActivity.class);
+                Intent intent = new Intent(getApplicationContext(), mapActivity.class);
                 startActivity(intent);
             }
         });
