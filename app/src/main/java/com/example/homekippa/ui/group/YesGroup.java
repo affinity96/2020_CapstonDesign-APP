@@ -24,7 +24,6 @@ import com.example.homekippa.MainActivity;
 import com.example.homekippa.R;
 import com.example.homekippa.data.GroupData;
 import com.example.homekippa.data.UserData;
-import com.example.homekippa.function.Loading;
 import com.example.homekippa.network.RetrofitClient;
 import com.example.homekippa.network.ServiceApi;
 
@@ -46,7 +45,6 @@ public class YesGroup extends Fragment {
     private UserData userData;
     private GroupData groupData;
     private ServiceApi service;
-    final Loading loading = new Loading();
     private ArrayList<SingleItemPet> petList = new ArrayList<>();
     private ArrayList<SingleItemDailyWork> dailyWorkList = new ArrayList<>();
 

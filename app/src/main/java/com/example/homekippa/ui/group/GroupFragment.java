@@ -35,7 +35,7 @@ public class GroupFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
-                             @Nullable ViewGroup container,@Nullable Bundle savedInstanceState) {
+                             @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         groupViewModel =
                 ViewModelProviders.of(this).get(GroupViewModel.class);
         View root = inflater.inflate(R.layout.fragment_group, container, false);
@@ -44,7 +44,7 @@ public class GroupFragment extends Fragment {
 
     @Override
     public void onViewCreated(@Nullable View view, @Nullable Bundle savedInstanceState) {
-        userData = ((MainActivity)getActivity()).getUserData();
+        userData = ((MainActivity) getActivity()).getUserData();
         connectViewPagerToTab(view);
 
     }
@@ -60,6 +60,7 @@ public class GroupFragment extends Fragment {
 
 class GroupCollectionAdapter extends FragmentStateAdapter {
     private UserData userData;
+
     public GroupCollectionAdapter(Fragment fragment, UserData userData) {
         super(fragment);
         this.userData = userData;
@@ -69,22 +70,17 @@ class GroupCollectionAdapter extends FragmentStateAdapter {
     @Override
     public Fragment createFragment(int position) {
         int groupId = userData.getGroupId();
-        Bundle args=new Bundle();
+        Bundle args = new Bundle();
         switch (position) {
             case 0:
-                if (!String.valueOf(groupId).equals("")) {
-                    Fragment fragment=new YesGroup();
-                    fragment.setArguments(args);
-                    return fragment;
-                } else {
-                    Fragment fragment=new NoGroup();
-                    fragment.setArguments(args);
-                    return fragment;
-                }
-            case 1:
-                Fragment fragment=new GroupPost();
+                Fragment fragment = new YesGroup();
                 fragment.setArguments(args);
                 return fragment;
+            case 1:
+                Fragment fragment1 = new GroupPost();
+                fragment1.setArguments(args);
+                return fragment1;
+
         }
         return null;
     }

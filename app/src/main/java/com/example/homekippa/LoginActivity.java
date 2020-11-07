@@ -122,8 +122,14 @@ public class LoginActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     Log.d("로그인", "성공");
                     UserData userData = response.body();
-                    getGroupData(userData.getGroupId());
                     intent.putExtra("user", userData);
+
+                    if (userData.getGroupId() != 0) {
+                        getGroupData(userData.getGroupId());
+                    } else {
+                        loading.loadingEnd();
+                        startActivity(intent);
+                    }
                 }
             }
 
@@ -131,6 +137,8 @@ public class LoginActivity extends AppCompatActivity {
             public void onFailure(Call<UserData> call, Throwable t) {
                 Log.d("로그인", "에러");
                 Log.e("로그인", t.getMessage());
+                loading.loadingEnd();
+                Toast.makeText(getApplicationContext(), "로그인 실패", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -155,5 +163,10 @@ public class LoginActivity extends AppCompatActivity {
                 Log.e("그룹 확인", t.getMessage());
             }
         });
+    }
+
+    @Override
+    public void onBackPressed(){
+        this.finishAffinity();
     }
 }

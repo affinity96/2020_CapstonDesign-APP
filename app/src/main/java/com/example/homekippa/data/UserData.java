@@ -32,7 +32,7 @@ public class UserData implements Parcelable {
     public String getUserBirth() {
         return userBirth;
     }
-    
+
     public String getUserPhone() {
         return userPhone;
     }
@@ -72,6 +72,7 @@ public class UserData implements Parcelable {
         public UserData createFromParcel(Parcel parcel) {
             return new UserData(parcel);
         }
+
         @Override
         public UserData[] newArray(int size) {
             return new UserData[size];

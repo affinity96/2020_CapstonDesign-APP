@@ -2,6 +2,7 @@ package com.example.homekippa;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
@@ -21,15 +22,20 @@ import com.example.homekippa.data.UserData;
 import com.example.homekippa.network.RetrofitClient;
 import com.example.homekippa.network.ServiceApi;
 import com.example.homekippa.ui.group.GroupFragment;
+import com.example.homekippa.ui.group.NoGroup;
 import com.example.homekippa.ui.group.SingleItemPet;
+import com.example.homekippa.ui.group.YesGroup;
 import com.example.homekippa.ui.home.HomeFragment;
 import com.example.homekippa.ui.notifications.NotificationsFragment;
 import com.example.homekippa.ui.search.SearchFragment;
 import com.example.homekippa.ui.walk.WalkFragment;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.ArrayList;
 
@@ -86,7 +92,6 @@ public class MainActivity extends AppCompatActivity {
         chatButton = findViewById(R.id.top_btn_chat);
 
         //좌측 메뉴
-
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
@@ -131,13 +136,35 @@ public class MainActivity extends AppCompatActivity {
                         getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new NotificationsFragment()).commitAllowingStateLoss();
                         return true;
                     case R.id.navigation_group:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new GroupFragment()).commitAllowingStateLoss();
+                        if(userData.getGroupId()!=0){
+                            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new GroupFragment()).commitAllowingStateLoss();
+                        }else {
+                            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new NoGroup()).commitAllowingStateLoss();
+                        }
+
+
                         return true;
                 }
                 return false;
             }
         });
 
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w("푸시 알림", "Fetching FCM registration token failed", task.getException());
+                            return;
+                        }
+
+                        // Get new FCM registration token
+                        String token = task.getResult();
+
+                        // Log and toast
+                        Log.d("푸시 알림", "토큰 수신: " + token);
+                    }
+                });
     }
 
     public void setNavGroupData() {
@@ -156,39 +183,9 @@ public class MainActivity extends AppCompatActivity {
     public GroupData getGroupData() {
         return this.groupData;
     }
-//    public void getGroupData(int ID) {
-//        Log.d("그룹 확인", "성공");
-//        service.getGroupData(ID).enqueue(new Callback<GroupData>() {
-//            @Override
-//            public void onResponse(Call<GroupData> call, Response<GroupData> response) {
-//                if (response.isSuccessful()) {
-//
-//                    groupData = response.body();
-////
-////                    main_naviheader = (ConstraintLayout) findViewById(R.id.naviheader_container);
-////                    main_naviheader.setBackgroundResource(R.drawable.base_cover);
-////                    main_naviheader.setBackground(getResources().getDrawable(R.drawable.base_cover));
-//                    TextView username = (TextView) findViewById(R.id.nav_user_name);
-//                    ImageView userProfile = (ImageView) findViewById(R.id.nav_user_image);
-//
-////                    username.setBackgroundResource(R.drawable.base_cover);
-//                    username.setText(userData.getUserName() + "님");
-//
-//                    TextView usergroup = (TextView) findViewById(R.id.nav_user_group);
-//
-//                    usergroup.setText(groupData.getGroupName());
-//
-//
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<GroupData> call, Throwable t) {
-//                Log.d("그룹 확인", "에러");
-//                Log.e("그룹 확인", t.getMessage());
-//            }
-//        });
-//    }
 
-
+    @Override
+    public void onBackPressed(){
+        this.finishAffinity();
+    }
 }
