@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:id="@+id/layout_splashscreen"
     android:layout_height="match_parent"
-    android:background="@color/kippaYellow"
+    android:background="@drawable/splash_screen_bg"
     android:layout_gravity="center">
 
     <ImageView

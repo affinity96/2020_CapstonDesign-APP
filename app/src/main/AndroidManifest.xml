@@ -4,7 +4,8 @@
 
     <!-- 인터넷 퍼미션 -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.INTERNET" /> <!-- 업로드 관련 퍼미션 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- 업로드 관련 퍼미션 -->
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -54,6 +55,7 @@
         <activity android:name=".VerifyActivity" />
         <activity android:name=".SignUpActivity" />
         <activity android:name=".AddPetActivity" />
+        <activity android:name=".PostDetailActivity" />
         <activity android:name=".StartActivity">
         </activity>
 
@@ -74,7 +76,9 @@
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"
-            android:value="27f0294947799473f5560e2568541333" /> <!-- 사진 촬영을 위한 provide -->
+            android:value="27f0294947799473f5560e2568541333" />
+
+        <!-- 사진 촬영을 위한 provide -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.example.homekippa.provider"

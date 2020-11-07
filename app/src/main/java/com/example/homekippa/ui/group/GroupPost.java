@@ -77,8 +77,8 @@ public class GroupPost extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
-            ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_group_post, container, false);
+                             Bundle savedInstanceState) {
+        ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_group_post, container, false);
         RecyclerView listView_posts = root.findViewById(R.id.listView_GroupPost);
 
         button_Add_Post = root.findViewById(R.id.button_Add_Post);
@@ -114,7 +114,6 @@ public class GroupPost extends Fragment {
         postList.add(post);
         post = new SingleItemPost(R.drawable.dog_tan, "웅콩탄멍! ", "경기도 용인시 기흥구 영덕동", "햇살 더 좋은날!", "뀨? !");
         postList.add(post);
-
     }
 
 
