@@ -41,11 +41,11 @@
         <activity
             android:name=".SplashScreen"
             android:theme="@style/Theme.AppCompat.NoActionBar">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
 
@@ -58,17 +58,18 @@
         <activity android:name=".AddPetActivity" />
         <activity android:name=".PostDetailActivity" />
         <activity android:name=".StartActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
 
         </activity>
 
         <activity android:name=".LoginActivity" />
         <activity android:name=".ui.searchAddress.searchAddress" />
         <activity android:name=".mapActivity" />
+        <activity android:name=".AddPetDesActivity"/>
 
 <!--    Firebase 푸시 알림
         <meta-data

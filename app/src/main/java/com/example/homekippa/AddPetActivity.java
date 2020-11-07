@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.homekippa.data.AddPetData;
 import com.example.homekippa.data.AddPetResponse;
+import com.example.homekippa.data.GroupData;
 import com.example.homekippa.network.RetrofitClient;
 import com.example.homekippa.network.ServiceApi;
 
@@ -27,6 +28,12 @@ public class AddPetActivity extends AppCompatActivity {
     private Button button_petReg;
     private Button button_petDes;
     private ServiceApi service;
+    private String petName;
+    private String petGender;
+    private String petSpecies;
+    private String petNeutralization;
+    private String petReg;
+    private GroupData groupData;
 
 
     @Override
@@ -39,6 +46,18 @@ public class AddPetActivity extends AppCompatActivity {
         button_petDes = findViewById(R.id.button_petDes);
         service = RetrofitClient.getClient().create(ServiceApi.class);
 
+        petName = "";
+        petGender = "";
+        petNeutralization = "";
+        petReg = "";
+        petSpecies = "";
+
+        groupData =(GroupData) getIntent().getExtras().get("groupData");
+
+
+
+
+
         editText_petReg_num.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -50,7 +69,7 @@ public class AddPetActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                String petReg = editText_petReg_num.getText().toString().trim();
+                petReg = editText_petReg_num.getText().toString().trim();
 
                 if(petReg.isEmpty()){
                     editText_petReg_num.setText("숫자를 입력하세요.");
@@ -58,7 +77,7 @@ public class AddPetActivity extends AppCompatActivity {
                 }
                 else{
                     addPet(new AddPetData(petReg));
-//                    Intent intent =
+
                 }
             }
         });
@@ -66,6 +85,12 @@ public class AddPetActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), AddPetDesActivity.class);
+                intent.putExtra("petRegNum", petReg);
+                intent.putExtra("petName", petName);
+                intent.putExtra("petGender", petGender);
+                intent.putExtra("petSpecies", petSpecies);
+                intent.putExtra("petNeutralization", petNeutralization);
+                intent.putExtra("groupData",groupData);
                 startActivity(intent);
             }
         });
@@ -78,21 +103,40 @@ public class AddPetActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<AddPetResponse> call, Response<AddPetResponse> response) {
                 AddPetResponse result = response.body();
+                petName = result.getPetName();
+                petGender = result.getPetGender();
+                petSpecies = result.getPetSpecies();
+                petNeutralization = result.getPetNeutralization();
+
                 Toast.makeText(AddPetActivity.this, result.getMessage(),Toast.LENGTH_SHORT).show();
 
+                Intent intent = new Intent(getApplicationContext(), AddPetDesActivity.class);
+                intent.putExtra("petRegNum", petReg);
+                intent.putExtra("petName", petName);
+                intent.putExtra("petGender", petGender);
+                intent.putExtra("petSpecies", petSpecies);
+                intent.putExtra("petNeutralization", petNeutralization);
+                intent.putExtra("groupData",groupData);
+                startActivity(intent);
+
+
+
+
+
                 if(result.getCode() == 200){
+
                     finish();
                 }
             }
 
             @Override
             public void onFailure(Call<AddPetResponse> call, Throwable t) {
-                Toast.makeText(AddPetActivity.this, "그룹생성 에러 발생", Toast.LENGTH_SHORT).show();
+                editText_petReg_num.setText("");
+                Toast.makeText(AddPetActivity.this, "반려회동물 등록번호 조회 에러 발생", Toast.LENGTH_SHORT).show();
                 t.printStackTrace();
+
 
             }
         });
     }
-
-
 }

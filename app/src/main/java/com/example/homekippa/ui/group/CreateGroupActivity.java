@@ -147,7 +147,6 @@ public class CreateGroupActivity extends AppCompatActivity {
                 } else if (groupIntroduction.isEmpty()) {
                     editText_introduce.setHint("그룹 소개글을 써주세요!");
                 } else {
-
                     createGroup(new CreateGroupData(userid, groupName, groupAddress, groupIntroduction), tempFile);
                 }
             }
