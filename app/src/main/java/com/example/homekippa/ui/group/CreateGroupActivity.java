@@ -30,6 +30,8 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -133,9 +135,10 @@ public class CreateGroupActivity extends AppCompatActivity {
         button_createGroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Map<String, String> data = new HashMap<>();
                 String groupName = editText_groupName.getText().toString();
                 Log.d("creategroup", "here");
-                String userid = mAuth.getCurrentUser().getUid();
+                String userId = mAuth.getCurrentUser().getUid();
                 String groupIntroduction = editText_introduce.getText().toString();
 
                 final String groupAddress = moveToSearchAddress.getText().toString();
@@ -147,8 +150,11 @@ public class CreateGroupActivity extends AppCompatActivity {
                 } else if (groupIntroduction.isEmpty()) {
                     editText_introduce.setHint("그룹 소개글을 써주세요!");
                 } else {
-
-                    createGroup(new CreateGroupData(userid, groupName, groupAddress, groupIntroduction), tempFile);
+                    data.put("userId", userId);
+                    data.put("groupName", groupName);
+                    data.put("groupAddress", groupAddress);
+                    data.put("groupIntroduction", groupIntroduction);
+                    createGroup(data, tempFile);
                 }
             }
         });
@@ -328,7 +334,7 @@ public class CreateGroupActivity extends AppCompatActivity {
         }
     }
 
-    private void createGroup(CreateGroupData data, File seletedFile) {
+    private void createGroup(Map data, File seletedFile) {
         Log.i("create", "create");
 
         RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), seletedFile);
