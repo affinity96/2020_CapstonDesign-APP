@@ -1,6 +1,8 @@
 package com.example.homekippa.ui.group;
 
 import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +15,7 @@ import com.example.homekippa.R;
 import java.util.ArrayList;
 
 
-public class SingleItemPost extends Fragment {
+public class SingleItemPost extends Fragment implements Parcelable {
 
     private int groupPostProfile;
     private String groupPostName;
@@ -31,6 +33,27 @@ public class SingleItemPost extends Fragment {
         this.groupPostContent = postContent;
         this.groupPostImage = groupPostImage;
     }
+
+    protected SingleItemPost(Parcel in) {
+        groupPostProfile = in.readInt();
+        groupPostName = in.readString();
+        groupPostLocation = in.readString();
+        groupPostTitle = in.readString();
+        groupPostContent = in.readString();
+        groupPostImage = in.createTypedArrayList(SingleItemPostImage.CREATOR);
+    }
+
+    public static final Creator<SingleItemPost> CREATOR = new Creator<SingleItemPost>() {
+        @Override
+        public SingleItemPost createFromParcel(Parcel in) {
+            return new SingleItemPost(in);
+        }
+
+        @Override
+        public SingleItemPost[] newArray(int size) {
+            return new SingleItemPost[size];
+        }
+    };
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -112,4 +135,18 @@ public class SingleItemPost extends Fragment {
         this.groupPostImage = groupPostImage;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(groupPostProfile);
+        dest.writeString(groupPostName);
+        dest.writeString(groupPostLocation);
+        dest.writeString(groupPostTitle);
+        dest.writeString(groupPostContent);
+        dest.writeTypedList(groupPostImage);
+    }
 }

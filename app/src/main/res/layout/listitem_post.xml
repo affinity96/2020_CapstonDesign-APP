@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:clickable="true"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="9dp"
     android:background="@drawable/border_gray"
+    android:clickable="true"
     android:orientation="horizontal"
     android:padding="10dp">
 
@@ -16,7 +16,7 @@
         android:layout_alignParentTop="true">
 
         <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/imageView_DetailPostGroupProfile"
+            android:id="@+id/imageView_PostGroupProfile"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:src="@drawable/dog_woong" />
@@ -25,12 +25,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/imageView_DetailPostGroupProfile"
+            android:layout_toRightOf="@+id/imageView_PostGroupProfile"
             android:orientation="vertical"
             android:padding="5dp">
 
             <TextView
-                android:id="@+id/textView__NotiGroupName"
+                android:id="@+id/textView__PostGroupName"
                 style="@style/BlackText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -39,7 +39,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textView__NotiGroupLocation"
+                android:id="@+id/textView__PostGroupLocation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/ic_location_on_24px"

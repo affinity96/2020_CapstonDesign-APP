@@ -3,7 +3,7 @@ package com.example.homekippa.ui.group;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,8 +44,7 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
          **********************/
         setPostData(holder, position);
 
-        ArrayList<SingleItemPostImage> post_ImageList = getPostImageData(position);
-        post_Items.get(position).setGroupPostImage(post_ImageList);
+        ArrayList<SingleItemPostImage> post_ImageList = post_Items.get(position).getGroupPostImage();
 
         /**
          * 게시글 이미지 adapter 적용
@@ -104,9 +103,9 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
 
         MyViewHolder(View view) {
             super(view);
-            postGroupProfile = (ImageView) view.findViewById(R.id.imageView_DetailPostGroupProfile);
-            postGroupName = (TextView) view.findViewById(R.id.textView__NotiGroupName);
-            postGroupLocation = (TextView) view.findViewById(R.id.textView__NotiGroupLocation);
+            postGroupProfile = (ImageView) view.findViewById(R.id.imageView_PostGroupProfile);
+            postGroupName = (TextView) view.findViewById(R.id.textView__PostGroupName);
+            postGroupLocation = (TextView) view.findViewById(R.id.textView__PostGroupLocation);
             postTitle = (TextView) view.findViewById(R.id.textView_PostTitle);
             postContent = (TextView) view.findViewById(R.id.textView_PostContent);
             recyclerView_postImages = (RecyclerView) view.findViewById(R.id.listview_PostImages);
@@ -116,10 +115,8 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(context, PostDetailActivity.class);
-
-                    intent.putExtra("position", getAdapterPosition());
-                    intent.putExtra("postItems", post_Items);
-
+                    SingleItemPost sip = post_Items.get(getAdapterPosition());
+                    intent.putExtra("post", sip);
                     context.startActivity(intent);
                 }
             });

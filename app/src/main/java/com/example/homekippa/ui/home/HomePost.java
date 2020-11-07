@@ -81,7 +81,7 @@ public class HomePost extends Fragment {
 
     private void setPostListView(RecyclerView listView) {
         getPostData();
-        Log.d("yeah", postList.toString());
+//        Log.d("yeah", postList.toString());
         ListPostAdapter postAdapter = new ListPostAdapter(getActivity(), postList);
         listView.setAdapter(postAdapter);
         LinearLayoutManager pLayoutManager = new LinearLayoutManager(getActivity());
