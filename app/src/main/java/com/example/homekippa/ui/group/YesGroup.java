@@ -44,8 +44,12 @@ public class YesGroup extends Fragment {
     private static final String ARG_PARAM1 = "object";
     private UserData userData;
     private GroupData groupData;
+    private int petId; // 나중에 버튼 누르면 현재의 펫 아이디가 바뀌어져 일과를 추가할때 함께 인텐트에 실어보냄
+
     private ServiceApi service;
     final Loading loading = new Loading();
+
+
     private ArrayList<SingleItemPet> petList = new ArrayList<>();
     private ArrayList<SingleItemDailyWork> dailyWorkList = new ArrayList<>();
 
@@ -97,15 +101,7 @@ public class YesGroup extends Fragment {
         tv_groupName = root.findViewById(R.id.textView_groupName);
         tv_groupIntro = root.findViewById(R.id.textView_groupIntro);
         button_Add_DW= root.findViewById(R.id.button_Add_DW);
-        button_Add_DW.setOnClickListener(new View.OnClickListener() {
-                @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), CreateDailyWorkActivity.class);
-                intent.putExtra("userData", userData);
-                intent.putExtra("groupData", groupData);
-                startActivity(intent);
-            }
-        });
+
         listView_pets = root.findViewById(R.id.listview_pets);
         listView_dailyWorks = root.findViewById(R.id.listview_dailywork);
         imageView_groupProfile = root.findViewById(R.id.ImageView_groupProfile);
@@ -114,6 +110,18 @@ public class YesGroup extends Fragment {
         tv_groupIntro.setText(groupData.getGroupIntro());
 
         setPetListView(listView_pets);
+
+        button_Add_DW.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), CreateDailyWorkActivity.class);
+                intent.putExtra("userData", userData);
+                intent.putExtra("groupData", groupData);
+                intent.putExtra("petId", petId);
+                startActivity(intent);
+            }
+        });
+
         setDailyWorkListView(listView_dailyWorks);
 
         Glide.with(YesGroup.this).load(R.drawable.dog_woong).circleCrop().into(imageView_groupProfile);
@@ -140,8 +148,10 @@ public class YesGroup extends Fragment {
                 if (response.isSuccessful()) {
                     Log.d("반려동물 확인", "성공");
                     List<SingleItemPet> pets = response.body();
-
+                    Log.d("반려동물 아이디 확인", pets.get(0).getName());
                     petList.addAll(pets);
+
+                    petId = pets.get(0).getId();//나중에 바꿔야 할 부분. 일단 가장 처음 강아지의 아이디만을 petId라 해놓음!
 
                     ListPetAdapter petAdapter = new ListPetAdapter(petList);
 
@@ -174,14 +184,14 @@ public class YesGroup extends Fragment {
 
     private void getPetData(RecyclerView listView) {
 
-/*        SingleItemPet pet = new SingleItemPet("땡이 ", R.drawable.top_btn_chat);
-        petList.add(pet);
-        pet = new SingleItemPet("콩이 ", R.drawable.simplelogo);
-        petList.add(pet);
-        pet = new SingleItemPet("탄이 ", R.drawable.simplelogo);
-        petList.add(pet);
-        pet = new SingleItemPet("웅이 ", R.drawable.simplelogo);
-        petList.add(pet);*/
+///*        SingleItemPet pet = new SingleItemPet("땡이 ", R.drawable.top_btn_chat);
+//        petList.add(pet);
+//        pet = new SingleItemPet("콩이 ", R.drawable.simplelogo);
+//        petList.add(pet);
+//        pet = new SingleItemPet("탄이 ", R.drawable.simplelogo);
+//        petList.add(pet);
+//        pet = new SingleItemPet("웅이 ", R.drawable.simplelogo);
+//        petList.add(pet);*/
     }
 
     class ListDailyWorkAdapter extends RecyclerView.Adapter<ListDailyWorkAdapter.MyViewHolder2> {

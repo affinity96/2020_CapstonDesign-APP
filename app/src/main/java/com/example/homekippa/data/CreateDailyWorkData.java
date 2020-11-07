@@ -5,10 +5,10 @@ import com.google.gson.annotations.SerializedName;
 public class CreateDailyWorkData {
 
     @SerializedName("GroupId")
-    private String GroupId;
+    private int GroupId;
 
     @SerializedName("PetId")
-    private String PetId;
+    private int PetId;
 
     @SerializedName("dailyWorkName")
     private String dailyWorkName;
@@ -22,7 +22,7 @@ public class CreateDailyWorkData {
     @SerializedName("dailyWorkAlarm")
     private String dailyWorkAlarm;
 
-    public  CreateDailyWorkData(String GroupId, String PetId, String dailyWorkName, String dailyWorkDesc, String dailyWorkTime, String dailyWorkAlarm){
+    public  CreateDailyWorkData(int GroupId, int PetId, String dailyWorkName, String dailyWorkDesc, String dailyWorkTime, String dailyWorkAlarm){
         this.GroupId = GroupId;
         this.PetId = PetId;
         this.dailyWorkName = dailyWorkName;

@@ -214,7 +214,7 @@ public class MainActivity extends AppCompatActivity {
                     Log.d("그룹 확인", "성공");
                     groupData = response.body();
 
-                    main_naviheader = findViewById(R.id.naviheader_container);
+                    main_naviheader = (ConstraintLayout) findViewById(R.id.naviheader_container);
                     main_naviheader.setBackgroundResource(R.drawable.base_cover);
                     TextView username = findViewById(R.id.user_name);
                     username.setText(userData.getUserName() + "님");
