@@ -21,6 +21,7 @@ import com.example.homekippa.data.SignUpResponse;
 import com.example.homekippa.MainActivity;
 import com.example.homekippa.data.GroupData;
 import com.example.homekippa.data.UserData;
+import com.example.homekippa.network.RetrofitClient;
 import com.example.homekippa.network.ServiceApi;
 
 
@@ -53,7 +54,7 @@ public class CreateDailyWorkActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_daily_work);
-
+        service = RetrofitClient.getClient().create(ServiceApi.class);
         editText_dailyWorkName = (EditText)this.findViewById(R.id.editText_dailyWorkName);
         editText_dailyWorkDesc = (EditText)this.findViewById(R.id.editText_dailyWorkDesc);
         editText_dailyWorkTime = (EditText)this.findViewById(R.id.editText_dailyWorkTime);

@@ -76,4 +76,6 @@ dependencies {
 
     //ted permission
     implementation "gun0912.ted:tedpermission:2.1.0"
+
+    implementation "gun0912.ted:tedbottompicker:1.2.6"
 }
