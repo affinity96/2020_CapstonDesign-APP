@@ -31,17 +31,13 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-//import com.amazonaws.SdkClientException;
-//import com.amazonaws.auth.AWSStaticCredentialsProvider;
-import com.amazonaws.auth.BasicAWSCredentials;
-//import com.amazonaws.client.builder.AwsClientBuilder;
-import com.amazonaws.services.s3.AmazonS3;
-//import com.amazonaws.services.s3.AmazonS3ClientBuilder;
-import com.amazonaws.services.s3.model.AmazonS3Exception;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 
@@ -57,31 +53,13 @@ public class CreateGroupActivity extends AppCompatActivity {
     private TextView moveToSearchAddress;
     private FirebaseAuth mAuth;
     private ServiceApi service;
-    private String imgPath;
-    private Uri imgUrl;
 
-    final String endPoint = "https://kr.object.ncloudstorage.com";
-    final String regionName = "kr-standard";
-    final String accessKey = "C924392C47B5599B416E";
-    final String secretKey = "0ADD8A0782AF8A09A3F3E4718AB48B2E24C5FBFB";
-
-    // S3 client
-//    final AmazonS3 s3 = AmazonS3ClientBuilder.standard()
-//            .withEndpointConfiguration(new AwsClientBuilder.EndpointConfiguration(endPoint, regionName))
-//            .withCredentials(new AWSStaticCredentialsProvider(new BasicAWSCredentials(accessKey, secretKey)))
-//            .build();
-
-    String bucketName = "homekippa";
-
-    // 버킷 file 경로 (초기값)
-    String objectName = "group/profile.png";
+    private File tempFile;
 
     private Boolean isPermission = true;
 
     private static final int PICK_FROM_ALBUM = 1;
     private static final int PICK_FROM_CAMERA = 2;
-
-    private File tempFile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,7 +72,6 @@ public class CreateGroupActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         service = RetrofitClient.getClient().create(ServiceApi.class);
 
-        // 앨범에서 가져오는 버튼하나, 카메라로 가져오는 버튼하나 만들어주세요.
         button_gallery = findViewById(R.id.button_gallery);
         button_camera = findViewById(R.id.button_camera);
 
@@ -153,7 +130,6 @@ public class CreateGroupActivity extends AppCompatActivity {
 //            }
 //        });
 
-
         button_createGroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -171,11 +147,11 @@ public class CreateGroupActivity extends AppCompatActivity {
                 } else if (groupIntroduction.isEmpty()) {
                     editText_introduce.setHint("그룹 소개글을 써주세요!");
                 } else {
-                    createGroup(new CreateGroupData(userid, groupName, groupAddress, groupIntroduction, objectName));
+
+                    createGroup(new CreateGroupData(userid, groupName, groupAddress, groupIntroduction), tempFile);
                 }
             }
         });
-
 
     }
 
@@ -345,14 +321,12 @@ public class CreateGroupActivity extends AppCompatActivity {
 //                setImage();
                 // 버킷 경로 설정
                 String timeStamp = new SimpleDateFormat("HHmmss").format(new Date());
-                objectName = "group/" + "happytogedog_"+ timeStamp + ".jpg";
 
             } else if (requestCode == PICK_FROM_CAMERA) {
 
 //                setImage();
                 // 버킷 경로 설정
                 String timeStamp = new SimpleDateFormat("HHmmss").format(new Date());
-                objectName = "group/" + "happytogedog_"+ timeStamp + ".jpg";
 
             }
         }
@@ -368,26 +342,22 @@ public class CreateGroupActivity extends AppCompatActivity {
 //
 //    }
 
-    private void createGroup(CreateGroupData data) {
+    private void createGroup(CreateGroupData data, File tempFile) {
         Log.i("create", "create");
 
-        // 버킷에 파일 업로드
-//        try {
-//            s3.putObject(bucketName, objectName, tempFile);
-//            System.out.format("Object %s has been created.\n", objectName);
-//        } catch (AmazonS3Exception e) {
-//            e.printStackTrace();
-//        } catch(SdkClientException e) {
-//            e.printStackTrace();
-//        }
 
-        service.groupCreate(data).enqueue(new Callback<CreateGroupResponse>() {
+        RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), tempFile);
+        MultipartBody.Part uploadFile = MultipartBody.Part.createFormData("file", tempFile.getName(), requestFile);
+
+        service.groupCreate(data, uploadFile).enqueue(new Callback<CreateGroupResponse>() {
+
             @Override
             public void onResponse(Call<CreateGroupResponse> call, Response<CreateGroupResponse> response) {
                 CreateGroupResponse result = response.body();
 //                Toast.makeText(CreateGroupActivity.this, result.getMessage(),Toast.LENGTH_SHORT).show();
                 if (result.getCode() == 200) {
-                    finish();
+
+//                    finish();
                 }
             }
 
