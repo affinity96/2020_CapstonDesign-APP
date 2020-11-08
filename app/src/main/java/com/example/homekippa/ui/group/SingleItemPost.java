@@ -65,17 +65,6 @@ public class SingleItemPost extends Fragment implements Parcelable {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.listitem_post, container, false);
-//        RecyclerView listView_Images = root.findViewById(R.id.listview_PostImages);
-//        setPostImageListView(listView_Images);
-//
-//        getPostImageData();
-//        SingleItemPostImage.ListPostImageAdapter postImageAdapter = new SingleItemPostImage.ListPostImageAdapter(postImageList);
-//
-//        LinearLayoutManager iLayoutManager = new LinearLayoutManager(getActivity());
-//        iLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-//        listView_Images.setLayoutManager(iLayoutManager);
-//        listView_Images.setItemAnimator(new DefaultItemAnimator());
-//        listView_Images.setAdapter(postImageAdapter);
 
         // Inflate the layout for this fragment
         return root;

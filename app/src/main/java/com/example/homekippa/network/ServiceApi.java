@@ -6,13 +6,10 @@ import com.example.homekippa.data.AddPetResponse;
 import com.example.homekippa.data.AddpetDesResponse;
 import com.example.homekippa.data.CreateDailyWorkData;
 import com.example.homekippa.data.CreateDailyWorkResponse;
-import com.example.homekippa.data.CreateGroupData;
 import com.example.homekippa.data.CreateGroupResponse;
 import com.example.homekippa.data.GroupData;
 import com.example.homekippa.data.SignUpData;
 import com.example.homekippa.data.SignUpResponse;
-import com.example.homekippa.data.UidData;
-import com.example.homekippa.data.UidRespense;
 import com.example.homekippa.data.UserData;
 import com.example.homekippa.ui.group.SingleItemPet;
 
@@ -20,14 +17,12 @@ import java.util.List;
 import java.util.Map;
 
 import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
-import retrofit2.http.PartMap;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 
