@@ -14,7 +14,7 @@
         android:padding="2dp">
 
         <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/imageView_DetailPostGroupProfile"
+            android:id="@+id/imageView_CommentGroupProfile"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_centerVertical="true"
@@ -25,12 +25,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/imageView_DetailPostGroupProfile"
+            android:layout_toRightOf="@+id/imageView_CommentGroupProfile"
             android:orientation="vertical"
             android:padding="5dp">
 
             <TextView
-                android:id="@+id/textView__NotiGroupName"
+                android:id="@+id/textView__CommentGroupName"
                 style="@style/BlackText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -39,7 +39,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textView__NotiGroupLocation"
+                android:id="@+id/textView__CommentGroupLocation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/ic_location_on_24px"

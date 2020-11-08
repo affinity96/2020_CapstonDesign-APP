@@ -15,6 +15,7 @@ public class mapActivity extends AppCompatActivity {
     protected  void onCreate(Bundle savedInstanceState) {
         Log.d("here", "123456789");
 
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
 
@@ -24,5 +25,4 @@ public class mapActivity extends AppCompatActivity {
         mapViewContainer.addView(mapView);
 
     }
-
 }

@@ -28,7 +28,7 @@
             android:padding="5dp">
 
             <TextView
-                android:id="@+id/textView__NotiGroupName"
+                android:id="@+id/textView__DetailPostGroupName"
                 style="@style/BlackText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -37,7 +37,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textView__NotiGroupLocation"
+                android:id="@+id/textView__DetailPostGroupLocation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/ic_location_on_24px"
@@ -58,7 +58,7 @@
         android:padding="10dp">
 
         <TextView
-            android:id="@+id/textView_PostTitle"
+            android:id="@+id/textView_DetailPostTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="3dp"
@@ -69,26 +69,26 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/textView_PostContent"
+            android:id="@+id/textView_DetailPostContent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textView_PostTitle"
+            android:layout_below="@+id/textView_DetailPostTitle"
             android:layout_margin="3dp"
             android:lines="1"
             android:text="기분 좋은 강아지들 행복:) "
             android:textSize="10dp" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/listview_PostImages"
+            android:id="@+id/listview_DetailPostImages"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:layout_below="@+id/textView_PostContent" />
+            android:layout_below="@+id/textView_DetailPostContent" />
 
         <ImageView
             android:id="@+id/imageView_commentLiked"
             android:layout_width="15dp"
             android:layout_height="15dp"
-            android:layout_below="@+id/listview_PostImages"
+            android:layout_below="@+id/listview_DetailPostImages"
             android:layout_margin="3dp"
             android:clickable="true"
             app:srcCompat="@drawable/ic_bone_svgrepo_com" />
@@ -98,7 +98,7 @@
             style="@style/BlackText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/listview_PostImages"
+            android:layout_below="@+id/listview_DetailPostImages"
             android:layout_toRightOf="@+id/imageView_commentLiked"
             android:text="12"
             android:textSize="12dp" />
@@ -107,7 +107,7 @@
             android:id="@+id/imageView_comment"
             android:layout_width="17dp"
             android:layout_height="17dp"
-            android:layout_below="@+id/listview_PostImages"
+            android:layout_below="@+id/listview_DetailPostImages"
             android:layout_margin="3dp"
             android:layout_toRightOf="@+id/textView_commentLikedNum"
             android:clickable="true"
@@ -118,16 +118,16 @@
             style="@style/BlackText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/listview_PostImages"
+            android:layout_below="@+id/listview_DetailPostImages"
             android:layout_toRightOf="@+id/imageView_comment"
             android:text="3" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/listview_PostImages"
-            android:layout_alignEnd="@+id/listview_PostImages"
-            android:layout_alignRight="@+id/listview_PostImages"
+            android:layout_below="@+id/listview_DetailPostImages"
+            android:layout_alignEnd="@+id/listview_DetailPostImages"
+            android:layout_alignRight="@+id/listview_DetailPostImages"
             android:text="2020년 11월 12일 "
             android:textSize="12dp" />
     </RelativeLayout>
