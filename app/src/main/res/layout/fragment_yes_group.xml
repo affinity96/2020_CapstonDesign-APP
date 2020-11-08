@@ -20,7 +20,7 @@
 
             <FrameLayout
                 android:id="@+id/frameLayout_groupCover"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <ImageView
@@ -28,8 +28,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="140dp"
                     android:layout_gravity="top"
-                    android:scaleType="centerCrop"
-                    android:background="@drawable/base_cover" />
+                    android:background="@drawable/base_cover"
+                    android:scaleType="centerCrop" />
 
                 <Button
                     android:id="@+id/button_changeGroupCover"
