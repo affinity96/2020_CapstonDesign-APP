@@ -172,7 +172,10 @@ public class MainActivity extends AppCompatActivity {
         TextView usergroup = (TextView) findViewById(R.id.nav_user_group);
 
         username.setText(userData.getUserName() + "님");
-        usergroup.setText(groupData.getGroupName());
+        if (userData.getGroupId()!=0){
+            usergroup.setText(groupData.getGroupName());
+
+        }
     }
 
     public UserData getUserData() {
