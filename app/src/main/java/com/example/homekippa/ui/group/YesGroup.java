@@ -121,6 +121,7 @@ public class YesGroup extends Fragment {
                 startActivity(intent);
             }
         });
+
         listView_pets = root.findViewById(R.id.listview_pets);
         listView_dailyWorks = root.findViewById(R.id.listview_dailywork);
         imageView_groupProfile = root.findViewById(R.id.ImageView_groupProfile);
