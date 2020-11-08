@@ -133,6 +133,7 @@ public class CreateDailyWorkActivity extends AppCompatActivity {
                 CreateDailyWorkResponse result = response.body();
 
                 if (result.getCode() == 200) {
+                    Log.d("해치웠나?", "웅?");
                     finish();
                 }
             }
