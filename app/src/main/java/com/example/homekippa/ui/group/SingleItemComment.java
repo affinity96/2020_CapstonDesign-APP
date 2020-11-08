@@ -7,7 +7,7 @@ public class SingleItemComment {
     private String groupCommentLocation;
     private String groupCommentContent;
 
-    public void SingleItemPost(int profile, String groupName, String groupLocation, String commentContent) {
+    public SingleItemComment(int profile, String groupName, String groupLocation, String commentContent) {
         groupCommentProfile = profile;
         groupCommentName = groupName;
         groupCommentLocation = groupLocation;
