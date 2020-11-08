@@ -24,6 +24,7 @@ import com.example.homekippa.MainActivity;
 import com.example.homekippa.R;
 import com.example.homekippa.data.GroupData;
 import com.example.homekippa.data.UserData;
+import com.example.homekippa.function.Loading;
 import com.example.homekippa.network.RetrofitClient;
 import com.example.homekippa.network.ServiceApi;
 
@@ -44,7 +45,12 @@ public class YesGroup extends Fragment {
     private static final String ARG_PARAM1 = "object";
     private UserData userData;
     private GroupData groupData;
+    private int petId; // 나중에 버튼 누르면 현재의 펫 아이디가 바뀌어져 일과를 추가할때 함께 인텐트에 실어보냄
+
     private ServiceApi service;
+    final Loading loading = new Loading();
+
+
     private ArrayList<SingleItemPet> petList = new ArrayList<>();
     private ArrayList<SingleItemDailyWork> dailyWorkList = new ArrayList<>();
 
@@ -104,11 +110,12 @@ public class YesGroup extends Fragment {
         button_addPet = root.findViewById(R.id.button_AddPet);
 
         button_Add_DW.setOnClickListener(new View.OnClickListener() {
-            @Override
+                @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), CreateDailyWorkActivity.class);
                 intent.putExtra("userData", userData);
                 intent.putExtra("groupData", groupData);
+                intent.putExtra("petId", petId);
                 startActivity(intent);
             }
         });
@@ -156,8 +163,10 @@ public class YesGroup extends Fragment {
                 if (response.isSuccessful()) {
                     Log.d("반려동물 확인", "성공");
                     List<SingleItemPet> pets = response.body();
-
+                    Log.d("반려동물 아이디 확인", pets.get(0).getName());
                     petList.addAll(pets);
+
+                    petId = pets.get(0).getId();//나중에 바꿔야 할 부분. 일단 가장 처음 강아지의 아이디만을 petId라 해놓음!
 
                     ListPetAdapter petAdapter = new ListPetAdapter(petList);
 
