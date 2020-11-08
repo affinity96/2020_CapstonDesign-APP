@@ -2,14 +2,19 @@ package com.example.homekippa;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.ViewGroup;
+
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import net.daum.mf.map.api.MapReverseGeoCoder;
 import net.daum.mf.map.api.MapView;
 
 
-public class mapActivity extends AppCompatActivity {
+public class mapActivity extends AppCompatActivity{
+
+    private MapView mmapView;
+
+
 
     @Override
     protected  void onCreate(Bundle savedInstanceState) {
@@ -19,10 +24,7 @@ public class mapActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
 
-        MapView mapView = new MapView(this);
-
-        ViewGroup mapViewContainer = (ViewGroup) findViewById(R.id.map_view);
-        mapViewContainer.addView(mapView);
+        mmapView = (MapView) findViewById(R.id.map_view);
 
     }
 }
