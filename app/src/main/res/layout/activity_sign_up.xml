@@ -26,14 +26,21 @@
     </androidx.appcompat.widget.Toolbar>
 
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center_vertical">
+
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editText_email"
-            android:layout_width="match_parent"
+            android:layout_width="370dp"
             android:layout_height="37.3dp"
             android:ems="10"
             android:layout_gravity="center"
             android:hint="이메일"
+            android:paddingLeft="20dp"
             android:textSize="6pt"
             android:background="@drawable/shape"
             android:layout_margin="5dp"
@@ -41,11 +48,12 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editText_PW"
-            android:layout_width="match_parent"
+            android:layout_width="370dp"
             android:layout_height="37.3dp"
             android:ems="10"
             android:layout_gravity="center"
             android:hint="비밀번호"
+            android:paddingLeft="20dp"
             android:textSize="6pt"
             android:background="@drawable/shape"
             android:layout_margin="5dp"
@@ -53,11 +61,12 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editText_PW_confirm"
-            android:layout_width="match_parent"
+            android:layout_width="370dp"
             android:layout_height="37.3dp"
             android:ems="10"
             android:layout_gravity="center"
             android:hint="비밀번호 확인"
+            android:paddingLeft="20dp"
             android:textSize="6pt"
             android:background="@drawable/shape"
             android:layout_margin="5dp"
@@ -65,10 +74,11 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editText_Name"
-            android:layout_width="match_parent"
+            android:layout_width="370dp"
             android:layout_height="37.3dp"
             android:ems="10"
             android:hint="닉네임"
+            android:paddingLeft="20dp"
             android:textSize="6pt"
             android:background="@drawable/shape"
             android:layout_gravity="center"
@@ -77,11 +87,12 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editText_Phone"
-            android:layout_width="match_parent"
+            android:layout_width="370dp"
             android:layout_height="37.3dp"
             android:layout_margin="5dp"
             android:ems="10"
             android:hint="전화번호"
+            android:paddingLeft="20dp"
             android:textSize="6pt"
             android:background="@drawable/shape"
             android:layout_gravity="center"
@@ -89,27 +100,32 @@
 
         <TextView
             android:id="@+id/text_Birth"
-            android:layout_width="match_parent"
+            android:layout_width="370dp"
             android:layout_height="37.3dp"
             android:ems="10"
             android:textSize="6pt"
             android:background="@drawable/shape"
             android:layout_gravity="center"
             android:layout_margin="5dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="20dp"
             android:hint="생년월일" />
 
         <androidx.appcompat.widget.AppCompatCheckBox
             android:id="@+id/checkbox_Agree"
             android:layout_width="match_parent"
             android:layout_height="37.3dp"
+            android:layout_marginLeft="13dp"
             android:text="이용 약관 동의"/>
 
         <Button
             android:id="@+id/button_SignUp"
-            android:layout_width="match_parent"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:gravity="center"
             android:layout_gravity="center"
             android:text="회원 가입" />
+
+    </LinearLayout>
 </LinearLayout>
