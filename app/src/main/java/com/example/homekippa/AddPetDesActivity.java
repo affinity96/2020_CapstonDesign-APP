@@ -17,6 +17,7 @@ import com.example.homekippa.data.GroupData;
 import com.example.homekippa.network.RetrofitClient;
 import com.example.homekippa.network.ServiceApi;
 import com.example.homekippa.ui.datepicker.DatePetPickerFragment;
+import com.example.homekippa.ui.group.YesGroup;
 
 
 import retrofit2.Call;
@@ -134,6 +135,8 @@ public class AddPetDesActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<AddpetDesResponse> call, Response<AddpetDesResponse> response) {
                 AddpetDesResponse result = response.body();
+                Intent intent = new Intent(getApplicationContext(), StartActivity.class);
+                startActivity(intent);
 
                 Toast.makeText(AddPetDesActivity.this, result.getMessage(),Toast.LENGTH_SHORT).show();
                 if(result.getCode() == 200){
