@@ -19,38 +19,24 @@ import com.example.homekippa.R;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link GroupPost#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class GroupPost extends Fragment {
 
 
-    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM1 = "GroupPost";
     private static final String ARG_PARAM2 = "param2";
 
-    private ArrayList<SingleItemPost> postList = new ArrayList<>();
-
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
     private Button button_Add_Post;
+    private ArrayList<SingleItemPost> postList = new ArrayList<>();
 
     public GroupPost() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment GroupPost.
-     */
-    // TODO: Rename and change types and number of parameters
+
     public static GroupPost newInstance(String param1, String param2) {
         GroupPost fragment = new GroupPost();
         Bundle args = new Bundle();
@@ -73,8 +59,11 @@ public class GroupPost extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_group_post, container, false);
         RecyclerView listView_posts = root.findViewById(R.id.listView_GroupPost);
+
+        setPostListView(listView_posts);
 
         button_Add_Post = root.findViewById(R.id.button_Add_Post);
         button_Add_Post.setOnClickListener(new View.OnClickListener() {
@@ -85,14 +74,12 @@ public class GroupPost extends Fragment {
             }
         });
 
-        setPostListView(listView_posts);
-
-        // Inflate the layout for this fragment
         return root;
     }
 
     private void setPostListView(RecyclerView listView) {
         getPostData();
+
         ListPostAdapter postAdapter = new ListPostAdapter(getActivity(), postList);
         listView.setAdapter(postAdapter);
         LinearLayoutManager pLayoutManager = new LinearLayoutManager(getActivity());
@@ -102,12 +89,20 @@ public class GroupPost extends Fragment {
 
     }
 
+    //TODO: set GroupPostData and ImageData
     private void getPostData() {
-        SingleItemPost post = new SingleItemPost(R.drawable.dog_woong, "웅이네 집", "경기도 용인시 기흥구 영덕동", "햇살 좋은날!\uD83C\uDF3B", "미야옹!");
+
+        ArrayList<SingleItemPostImage> post_ImageList = new ArrayList<>();
+        SingleItemPostImage postImage = new SingleItemPostImage(R.drawable.dog_woong);
+        post_ImageList.add(postImage);
+        postImage = new SingleItemPostImage(R.drawable.base_cover);
+        post_ImageList.add(postImage);
+
+        SingleItemPost post = new SingleItemPost(R.drawable.dog_woong, "웅이네 집", "경기도 용인시 기흥구 영덕동", "햇살 좋은날!\uD83C\uDF3B", "미야옹!", post_ImageList);
         postList.add(post);
-        post = new SingleItemPost(R.drawable.dog_thang, "땡이네 콩 ", "경기도 용인시 기흥구 신갈동 ", "햇살 안좋은날!!", "멍!!");
+        post = new SingleItemPost(R.drawable.dog_woong, "웅이네 집", "경기도 용인시 기흥구 영덕동", "아잉!\uD83C\uDF3B", "미야옹!", post_ImageList);
         postList.add(post);
-        post = new SingleItemPost(R.drawable.dog_tan, "웅콩탄멍! ", "경기도 용인시 기흥구 영덕동", "햇살 더 좋은날!", "뀨? !");
+        post = new SingleItemPost(R.drawable.dog_woong, "웅이네 집", "경기도 용인시 기흥구 영덕동", "바봉양!!\uD83C\uDF3B", "미야옹!", post_ImageList);
         postList.add(post);
     }
 

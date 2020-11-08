@@ -11,7 +11,7 @@ import net.daum.mf.map.api.MapView;
 public class mapActivity extends AppCompatActivity {
 
     @Override
-    protected  void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
@@ -20,12 +20,5 @@ public class mapActivity extends AppCompatActivity {
         ViewGroup mapViewContainer = (ViewGroup) findViewById(R.id.map_view);
         mapViewContainer.addView(mapView);
 
-
-
-
-
-
-
     }
-
 }
