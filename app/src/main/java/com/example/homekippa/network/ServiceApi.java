@@ -1,7 +1,9 @@
 package com.example.homekippa.network;
 
 import com.example.homekippa.data.AddPetData;
+import com.example.homekippa.data.AddPetDesData;
 import com.example.homekippa.data.AddPetResponse;
+import com.example.homekippa.data.AddpetDesResponse;
 import com.example.homekippa.data.CreateDailyWorkData;
 import com.example.homekippa.data.CreateDailyWorkResponse;
 import com.example.homekippa.data.CreateGroupData;
@@ -27,6 +29,7 @@ import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.PartMap;
 import retrofit2.http.Query;
+import retrofit2.http.QueryMap;
 
 public interface ServiceApi {
 //    @POST("/user/login")
@@ -37,7 +40,7 @@ public interface ServiceApi {
 
     @Multipart
     @POST("/group/add")
-    Call<CreateGroupResponse> groupCreate(@Body CreateGroupData data, @Part MultipartBody.Part file);
+    Call<CreateGroupResponse> groupCreate(@QueryMap Map<String, String> data, @Part MultipartBody.Part file);
 
     @POST("/pet/reports/add")
     Call<CreateDailyWorkResponse> createDailyWork(@Body CreateDailyWorkData data);
@@ -53,6 +56,9 @@ public interface ServiceApi {
 
     @GET("/pet")
     Call<List<SingleItemPet>> getPetsData(@Query("groupId") int groupId);
+
+    @POST("/pet/add/des")
+    Call<AddpetDesResponse> addPetDes(@Body AddPetDesData data);
 
 //    @POST("/pet/reports/add")
 //    Call<CreateGroupResponse> createDailyWork(@Body CreateGroupData data);

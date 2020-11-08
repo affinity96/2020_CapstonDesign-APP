@@ -30,6 +30,8 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -133,9 +135,10 @@ public class CreateGroupActivity extends AppCompatActivity {
         button_createGroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Map<String, String> data = new HashMap<>();
                 String groupName = editText_groupName.getText().toString();
                 Log.d("creategroup", "here");
-                String userid = mAuth.getCurrentUser().getUid();
+                String userId = mAuth.getCurrentUser().getUid();
                 String groupIntroduction = editText_introduce.getText().toString();
 
                 final String groupAddress = moveToSearchAddress.getText().toString();
@@ -148,7 +151,12 @@ public class CreateGroupActivity extends AppCompatActivity {
                     editText_introduce.setHint("그룹 소개글을 써주세요!");
                 } else {
 
-                    createGroup(new CreateGroupData(userid, groupName, groupAddress, groupIntroduction), tempFile);
+                    data.put("userId", userId);
+                    data.put("groupName", groupName);
+                    data.put("groupAddress", groupAddress);
+                    data.put("groupIntroduction", groupIntroduction);
+                    createGroup(data, tempFile);
+
                 }
             }
         });
@@ -220,13 +228,13 @@ public class CreateGroupActivity extends AppCompatActivity {
      */
 //    private void setImage() {
 //
-//        ImageView imageView = findViewById(R.id.imageView);
+////        ImageView imageView = findViewById(R.id.imageView);
 //
 //        BitmapFactory.Options options = new BitmapFactory.Options();
 //        Bitmap originalBm = BitmapFactory.decodeFile(tempFile.getAbsolutePath(), options);
 //        Log.d(TAG, "setImage : " + tempFile.getAbsolutePath());
 //
-//        imageView.setImageBitmap(originalBm);
+////        imageView.setImageBitmap(originalBm);
 //
 //        /**
 //         *  tempFile 사용 후 null 처리를 해줘야 합니다.
@@ -319,52 +327,37 @@ public class CreateGroupActivity extends AppCompatActivity {
                 }
 
 //                setImage();
-                // 버킷 경로 설정
-                String timeStamp = new SimpleDateFormat("HHmmss").format(new Date());
 
             } else if (requestCode == PICK_FROM_CAMERA) {
 
 //                setImage();
-                // 버킷 경로 설정
-                String timeStamp = new SimpleDateFormat("HHmmss").format(new Date());
 
             }
         }
     }
 
-//    private String getRealPathFromUrl(Uri imageUri) {
-//        String[] proj = {MediaStore.Images.Media.DATA};
-//        Cursor cursor = getContentResolver().query(imageUri, proj, null, null, null);
-//
-//        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-//        cursor.moveToFirst();
-//        return cursor.getString(column_index);
-//
-//    }
-
-    private void createGroup(CreateGroupData data, File tempFile) {
+    private void createGroup(Map data, File seletedFile) {
         Log.i("create", "create");
 
-
-        RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), tempFile);
-        MultipartBody.Part uploadFile = MultipartBody.Part.createFormData("file", tempFile.getName(), requestFile);
+        RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), seletedFile);
+        MultipartBody.Part uploadFile = MultipartBody.Part.createFormData("file", seletedFile.getName(), reqFile);
 
         service.groupCreate(data, uploadFile).enqueue(new Callback<CreateGroupResponse>() {
 
             @Override
             public void onResponse(Call<CreateGroupResponse> call, Response<CreateGroupResponse> response) {
                 CreateGroupResponse result = response.body();
-//                Toast.makeText(CreateGroupActivity.this, result.getMessage(),Toast.LENGTH_SHORT).show();
+//              Toast.makeText(CreateGroupActivity.this, result.getMessage(),Toast.LENGTH_SHORT).show();
                 if (result.getCode() == 200) {
 
-//                    finish();
+                    finish();
                 }
             }
 
             @Override
             public void onFailure(Call<CreateGroupResponse> call, Throwable t) {
                 Toast.makeText(CreateGroupActivity.this, "그룹생성 에러 발생", Toast.LENGTH_SHORT).show();
-//                Log.e("createGroup error",t.getMessage());
+//              Log.e("createGroup error",t.getMessage());
                 t.printStackTrace();
             }
         });
