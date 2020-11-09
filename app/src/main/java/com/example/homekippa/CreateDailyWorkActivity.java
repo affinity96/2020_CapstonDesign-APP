@@ -55,11 +55,11 @@ public class CreateDailyWorkActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_daily_work);
         service = RetrofitClient.getClient().create(ServiceApi.class);
-        editText_dailyWorkName = (EditText)this.findViewById(R.id.editText_dailyWorkName);
-        editText_dailyWorkDesc = (EditText)this.findViewById(R.id.editText_dailyWorkDesc);
-        editText_dailyWorkTime = (EditText)this.findViewById(R.id.editText_dailyWorkTime);
-        editText_dailyWorkAlarm = (EditText)this.findViewById(R.id.editText_dailyWorkAlarm);
-        button_gotocreateDailyWork = (Button)this.findViewById(R.id.button_gotocreateDailyWork);
+        editText_dailyWorkName = (EditText) this.findViewById(R.id.editText_dailyWorkName);
+        editText_dailyWorkDesc = (EditText) this.findViewById(R.id.editText_dailyWorkDesc);
+        editText_dailyWorkTime = (EditText) this.findViewById(R.id.editText_dailyWorkTime);
+        editText_dailyWorkAlarm = (EditText) this.findViewById(R.id.editText_dailyWorkAlarm);
+        button_gotocreateDailyWork = (Button) this.findViewById(R.id.button_gotocreateDailyWork);
 
         Intent intent = getIntent();
 
@@ -78,14 +78,14 @@ public class CreateDailyWorkActivity extends AppCompatActivity {
                 Log.d("유저", userData.getUserName());
                 Log.d("으악", groupData.getGroupAddress());
 
-                TimePickerDialog timePicker=new TimePickerDialog(CreateDailyWorkActivity.this, android.R.style.Theme_Holo_Light_Dialog,new TimePickerDialog.OnTimeSetListener(){
+                TimePickerDialog timePicker = new TimePickerDialog(CreateDailyWorkActivity.this, android.R.style.Theme_Holo_Light_Dialog, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
 
-                        editText_dailyWorkTime.setText(String.format("%02d:%02d", hourOfDay,minute));
+                        editText_dailyWorkTime.setText(String.format("%02d:%02d", hourOfDay, minute));
 
                     }
-                }, Calendar.HOUR_OF_DAY,Calendar.MINUTE,false);
+                }, Calendar.HOUR_OF_DAY, Calendar.MINUTE, false);
                 timePicker.show();
             }
         });
@@ -93,13 +93,13 @@ public class CreateDailyWorkActivity extends AppCompatActivity {
         editText_dailyWorkAlarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TimePickerDialog timePicker=new TimePickerDialog(CreateDailyWorkActivity.this, android.R.style.Theme_Holo_Light_Dialog,new TimePickerDialog.OnTimeSetListener(){
+                TimePickerDialog timePicker = new TimePickerDialog(CreateDailyWorkActivity.this, android.R.style.Theme_Holo_Light_Dialog, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
 
-                        editText_dailyWorkAlarm.setText(String.format("%02d:%02d", hourOfDay,minute));
+                        editText_dailyWorkAlarm.setText(String.format("%02d:%02d", hourOfDay, minute));
                     }
-                }, Calendar.HOUR_OF_DAY,Calendar.MINUTE,false);
+                }, Calendar.HOUR_OF_DAY, Calendar.MINUTE, false);
                 timePicker.show();
             }
         });
@@ -107,18 +107,18 @@ public class CreateDailyWorkActivity extends AppCompatActivity {
         button_gotocreateDailyWork.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("아","머냐ㅐ");
+                Log.d("아", "머냐ㅐ");
                 dailyWorkTime = editText_dailyWorkTime.getText();
                 dailyWorkAlarm = editText_dailyWorkAlarm.getText();
-                Log.d("타임",dailyWorkTime.toString());
-                Log.d("알람",dailyWorkAlarm.toString());
-                Log.d("유저ㅗ이앎","흠"+userData.getGroupId());
+                Log.d("타임", dailyWorkTime.toString());
+                Log.d("알람", dailyWorkAlarm.toString());
+                Log.d("유저ㅗ이앎", "흠" + userData.getGroupId());
 
-                Log.d("펫","응"+petId);
-                Log.d("디이엣",dailyWorkDesc.toString());
-                Log.d("네임",dailyWorkName.toString());
+                Log.d("펫", "응" + petId);
+                Log.d("디이엣", dailyWorkDesc.toString());
+                Log.d("네임", dailyWorkName.toString());
 
-                createDailyWork(new CreateDailyWorkData(userData.getGroupId(),petId ,dailyWorkName.toString(), dailyWorkDesc.toString(), dailyWorkTime.toString(),  dailyWorkAlarm.toString()));
+                createDailyWork(new CreateDailyWorkData(userData.getGroupId(), petId, dailyWorkName.toString(), dailyWorkDesc.toString(), dailyWorkTime.toString(), dailyWorkAlarm.toString()));
 
             }
         });

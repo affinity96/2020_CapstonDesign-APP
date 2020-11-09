@@ -7,17 +7,19 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.homekippa.R;
+import com.example.homekippa.data.GroupData;
 import com.example.homekippa.ui.group.ListPostAdapter;
 import com.example.homekippa.ui.group.SingleItemPost;
 import com.example.homekippa.ui.group.SingleItemPostImage;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 
 public class HomePost extends Fragment {
 
@@ -68,8 +70,9 @@ public class HomePost extends Fragment {
 
     private void setPostListView(RecyclerView listView) {
         getPostData();
+        ArrayList<GroupData> groupData =new ArrayList<>();
 
-        ListPostAdapter postAdapter = new ListPostAdapter(getActivity(), postList);
+        ListPostAdapter postAdapter = new ListPostAdapter(getActivity(), postList, groupData, false);
         listView.setAdapter(postAdapter);
         LinearLayoutManager pLayoutManager = new LinearLayoutManager(getActivity());
         pLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -86,11 +89,11 @@ public class HomePost extends Fragment {
         postImage = new SingleItemPostImage(R.drawable.dog_woong);
         post_ImageList.add(postImage);
 
-        SingleItemPost post = new SingleItemPost(R.drawable.dog_woong, "웅이네 집", "경기도 용인시 기흥구 영덕동", "햇살 좋은날!", "미야옹!", post_ImageList);
-        postList.add(post);
-        post = new SingleItemPost(R.drawable.dog_thang, "땡이네 콩 ", "경기도 용인시 기흥구 신갈동 ", "햇살 안좋은날!!", "멍!!", post_ImageList);
-        postList.add(post);
-        post = new SingleItemPost(R.drawable.dog_tan, "웅콩탄멍! ", "경기도 용인시 기흥구 영덕동", "햇살 더 좋은날!", "뀨? !", post_ImageList);
-        postList.add(post);
+//        SingleItemPost post = new SingleItemPost(R.drawable.dog_woong, "웅이네 집", "경기도 용인시 기흥구 영덕동", "햇살 좋은날!", "미야옹!", post_ImageList);
+//        postList.add(post);
+//        post = new SingleItemPost(R.drawable.dog_thang, "땡이네 콩 ", "경기도 용인시 기흥구 신갈동 ", "햇살 안좋은날!!", "멍!!", post_ImageList);
+//        postList.add(post);
+//        post = new SingleItemPost(R.drawable.dog_tan, "웅콩탄멍! ", "경기도 용인시 기흥구 영덕동", "햇살 더 좋은날!", "뀨? !", post_ImageList);
+//        postList.add(post);
     }
 }

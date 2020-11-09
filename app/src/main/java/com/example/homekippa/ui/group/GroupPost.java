@@ -8,16 +8,26 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.homekippa.AddPostActivity;
+import com.example.homekippa.MainActivity;
 import com.example.homekippa.R;
+import com.example.homekippa.data.GroupData;
+import com.example.homekippa.data.UserData;
+import com.example.homekippa.network.RetrofitClient;
+import com.example.homekippa.network.ServiceApi;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class GroupPost extends Fragment {
@@ -26,11 +36,16 @@ public class GroupPost extends Fragment {
     private static final String ARG_PARAM1 = "GroupPost";
     private static final String ARG_PARAM2 = "param2";
 
+    private UserData userData;
+    private GroupData groupData;
+
     private String mParam1;
     private String mParam2;
 
     private Button button_Add_Post;
     private ArrayList<SingleItemPost> postList = new ArrayList<>();
+
+    private ServiceApi service;
 
     public GroupPost() {
         // Required empty public constructor
@@ -49,6 +64,11 @@ public class GroupPost extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        userData = ((MainActivity) getActivity()).getUserData();
+        groupData = ((MainActivity) getActivity()).getGroupData();
+
+        service = RetrofitClient.getClient().create(ServiceApi.class);
 
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
@@ -78,15 +98,35 @@ public class GroupPost extends Fragment {
     }
 
     private void setPostListView(RecyclerView listView) {
-        getPostData();
+//        Log.d("post", "post function start");
+//        Log.d("post group id", String.valueOf(groupData.getGroupId()));
 
-        ListPostAdapter postAdapter = new ListPostAdapter(getActivity(), postList);
-        listView.setAdapter(postAdapter);
-        LinearLayoutManager pLayoutManager = new LinearLayoutManager(getActivity());
-        pLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        listView.setLayoutManager(pLayoutManager);
-        listView.setItemAnimator(new DefaultItemAnimator());
+        service.getPost(groupData.getGroupId()).enqueue(new Callback<List<SingleItemPost>>() {
 
+            @Override
+            public void onResponse(Call<List<SingleItemPost>> call, Response<List<SingleItemPost>> response) {
+                if (response.isSuccessful()) {
+                    Log.d("post", "success");
+                    List<SingleItemPost> groupPosts = response.body();
+                    Log.d("post id", groupPosts.get(0).getTitle());
+                    Log.d("post id", groupData.getGroupName());
+                    postList.addAll(groupPosts);
+
+                    ListPostAdapter postAdapter = new ListPostAdapter(getActivity(), postList, groupData, true);
+                    LinearLayoutManager pLayoutManager = new LinearLayoutManager(getActivity());
+                    pLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+                    listView.setLayoutManager(pLayoutManager);
+                    listView.setItemAnimator(new DefaultItemAnimator());
+                    listView.setAdapter(postAdapter);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<SingleItemPost>> call, Throwable t) {
+                Log.d("post", "에러");
+                Log.e("post", t.getMessage());
+            }
+        });
     }
 
     //TODO: set GroupPostData and ImageData
@@ -98,12 +138,13 @@ public class GroupPost extends Fragment {
         postImage = new SingleItemPostImage(R.drawable.base_cover);
         post_ImageList.add(postImage);
 
-        SingleItemPost post = new SingleItemPost(R.drawable.dog_woong, "웅이네 집", "경기도 용인시 기흥구 영덕동", "햇살 좋은날!\uD83C\uDF3B", "미야옹!", post_ImageList);
-        postList.add(post);
-        post = new SingleItemPost(R.drawable.dog_woong, "웅이네 집", "경기도 용인시 기흥구 영덕동", "아잉!\uD83C\uDF3B", "미야옹!", post_ImageList);
-        postList.add(post);
-        post = new SingleItemPost(R.drawable.dog_woong, "웅이네 집", "경기도 용인시 기흥구 영덕동", "바봉양!!\uD83C\uDF3B", "미야옹!", post_ImageList);
-        postList.add(post);
+
+//        SingleItemPost post = new SingleItemPost(12, R.drawable.dog_woong, "웅이네 집", "경기도 용인시 기흥구 영덕동", "햇살 좋은날!\uD83C\uDF3B", "미야옹!", post_ImageList);
+//        postList.add(post);
+//        post = new SingleItemPost(13, R.drawable.dog_woong, "웅이네 집", "경기도 용인시 기흥구 영덕동", "아잉!\uD83C\uDF3B", "미야옹!", post_ImageList);
+//        postList.add(post);
+//        post = new SingleItemPost(14, R.drawable.dog_woong, "웅이네 집", "경기도 용인시 기흥구 영덕동", "바봉양!!\uD83C\uDF3B", "미야옹!", post_ImageList);
+//        postList.add(post);
     }
 
 
