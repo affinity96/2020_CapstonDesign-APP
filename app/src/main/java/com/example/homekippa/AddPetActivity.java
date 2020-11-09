@@ -109,7 +109,6 @@ public class AddPetActivity extends AppCompatActivity {
                 petNeutralization = result.getPetNeutralization();
 
                 Toast.makeText(AddPetActivity.this, result.getMessage(),Toast.LENGTH_SHORT).show();
-
                 Intent intent = new Intent(getApplicationContext(), AddPetDesActivity.class);
                 intent.putExtra("petRegNum", petReg);
                 intent.putExtra("petName", petName);

@@ -97,7 +97,7 @@
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"
-            android:value="27f0294947799473f5560e2568541333" />
+            android:value="cfb17236472ae5916b52d76de8fb4354" />
 
         <!-- 사진 촬영을 위한 provide -->
         <provider
