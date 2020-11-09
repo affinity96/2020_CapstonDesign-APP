@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.homekippa.AddPetDesActivity;
 import com.example.homekippa.R;
 import com.example.homekippa.data.CreateGroupData;
 import com.example.homekippa.data.CreateGroupResponse;
@@ -73,30 +74,29 @@ public class CreateGroupActivity extends AppCompatActivity {
         moveToSearchAddress = findViewById(R.id.moveToSearchAddress);
         mAuth = FirebaseAuth.getInstance();
         service = RetrofitClient.getClient().create(ServiceApi.class);
-
-        button_gallery = findViewById(R.id.button_gallery);
-        button_camera = findViewById(R.id.button_camera);
+//        button_gallery = findViewById(R.id.button_gallery);
+//        button_camera = findViewById(R.id.button_camera);
 
         // 권한 요청
         tedPermission();
 
-        button_gallery.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // 권한 허용에 동의하지 않았을 경우 토스트를 띄웁니다.
-                if(isPermission) goToAlbum();
-                else Toast.makeText(view.getContext(), getResources().getString(R.string.permission_2), Toast.LENGTH_LONG).show();
-            }
-        });
+//        button_gallery.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                // 권한 허용에 동의하지 않았을 경우 토스트를 띄웁니다.
+//                if(isPermission) goToAlbum();
+//                else Toast.makeText(view.getContext(), getResources().getString(R.string.permission_2), Toast.LENGTH_LONG).show();
+//            }
+//        });
 
-        button_camera.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // 권한 허용에 동의하지 않았을 경우 토스트를 띄웁니다.
-                if(isPermission)  takePhoto();
-                else Toast.makeText(view.getContext(), getResources().getString(R.string.permission_2), Toast.LENGTH_LONG).show();
-            }
-        });
+//        button_camera.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                // 권한 허용에 동의하지 않았을 경우 토스트를 띄웁니다.
+//                if(isPermission)  takePhoto();
+//                else Toast.makeText(view.getContext(), getResources().getString(R.string.permission_2), Toast.LENGTH_LONG).show();
+//            }
+//        });
 
         service = RetrofitClient.getClient().create(ServiceApi.class);
 
@@ -122,22 +122,12 @@ public class CreateGroupActivity extends AppCompatActivity {
             }
         });
 
-//        groupCoverPhoto.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(Intent.ACTION_PICK);
-//                intent.setType("image/*");
-//                intent.setDataAndType(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
-//                startActivityForResult(intent, 1);
-//            }
-//        });
-
         button_createGroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Map<String, String> data = new HashMap<>();
                 String groupName = editText_groupName.getText().toString();
-                Log.d("creategroup", "here");
+//                Log.d("creategroup", "here");
                 String userId = mAuth.getCurrentUser().getUid();
                 String groupIntroduction = editText_introduce.getText().toString();
 
@@ -151,11 +141,7 @@ public class CreateGroupActivity extends AppCompatActivity {
                     editText_introduce.setHint("그룹 소개글을 써주세요!");
                 } else {
 
-                    data.put("userId", userId);
-                    data.put("groupName", groupName);
-                    data.put("groupAddress", groupAddress);
-                    data.put("groupIntroduction", groupIntroduction);
-                    createGroup(data, tempFile);
+                    createGroup(new CreateGroupData(userId, groupName, groupAddress, groupIntroduction));
 
                 }
             }
@@ -336,18 +322,20 @@ public class CreateGroupActivity extends AppCompatActivity {
         }
     }
 
-    private void createGroup(Map data, File seletedFile) {
+    private void createGroup(CreateGroupData data) {
         Log.i("create", "create");
 
-        RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), seletedFile);
-        MultipartBody.Part uploadFile = MultipartBody.Part.createFormData("file", seletedFile.getName(), reqFile);
+//        RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), tempFile);
+//        MultipartBody.Part uploadFile = MultipartBody.Part.createFormData("file", tempFile.getName(), reqFile);
 
-        service.groupCreate(data, uploadFile).enqueue(new Callback<CreateGroupResponse>() {
+        service.groupCreate(data).enqueue(new Callback<CreateGroupResponse>() {
 
             @Override
             public void onResponse(Call<CreateGroupResponse> call, Response<CreateGroupResponse> response) {
                 CreateGroupResponse result = response.body();
 //              Toast.makeText(CreateGroupActivity.this, result.getMessage(),Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getApplicationContext(), CreateGroupUploadActivity.class);
+                startActivity(intent);
                 if (result.getCode() == 200) {
 
                     finish();

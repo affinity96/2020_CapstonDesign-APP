@@ -8,6 +8,7 @@ import com.example.homekippa.data.CreateDailyWorkData;
 import com.example.homekippa.data.CreateDailyWorkResponse;
 import com.example.homekippa.data.CreateGroupData;
 import com.example.homekippa.data.CreateGroupResponse;
+import com.example.homekippa.data.CreateGroupUploadResponse;
 import com.example.homekippa.data.GroupData;
 import com.example.homekippa.data.SignUpData;
 import com.example.homekippa.data.SignUpResponse;
@@ -38,9 +39,12 @@ public interface ServiceApi {
     @POST("/user/add")
     Call<SignUpResponse> userSignUp(@Body SignUpData data);
 
-    @Multipart
     @POST("/group/add")
-    Call<CreateGroupResponse> groupCreate(@QueryMap Map<String, String> data, @Part MultipartBody.Part file);
+    Call<CreateGroupResponse> groupCreate(@Body CreateGroupData data);
+
+    @Multipart
+    @POST("/group/add/images")
+    Call<CreateGroupUploadResponse> groupCreateUpload(@Part MultipartBody.Part image, @Part("upload") RequestBody name);
 
     @POST("/pet/reports/add")
     Call<CreateDailyWorkResponse> createDailyWork(@Body CreateDailyWorkData data);
