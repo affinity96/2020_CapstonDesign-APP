@@ -65,10 +65,10 @@ public class GroupPost extends Fragment {
 
         service = RetrofitClient.getClient().create(ServiceApi.class);
         userData = ((MainActivity) getActivity()).getUserData();
-        Log.d("user", userData.getUserName());
+
 
         groupData = ((MainActivity) getActivity()).getGroupData();
-        Log.d("group", groupData.getGroupName());
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
