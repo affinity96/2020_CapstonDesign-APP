@@ -23,11 +23,11 @@ public class SingleItemPost implements Parcelable {
     private String date;
     private int like_num;
     private int comment_num;
-    private int scope;
+    private String scope;
 //    private String groupPostLocation;
 //    private ArrayList<SingleItemPostImage> groupPostImage;
 
-    public SingleItemPost(int id, int group_id, String user_id, String title, String content, String image, String date, int like_num, int comment_num, int scope) {
+    public SingleItemPost(int id, int group_id, String user_id, String title, String content, String image, String date, int like_num, int comment_num, String scope) {
         this.id = id;
         this.group_id = group_id;
         this.user_id = user_id;
@@ -76,7 +76,7 @@ public class SingleItemPost implements Parcelable {
         return comment_num;
     }
 
-    public int getScope() {
+    public String getScope() {
         return scope;
     }
 
@@ -90,7 +90,7 @@ public class SingleItemPost implements Parcelable {
         date = in.readString();
         like_num = in.readInt();
         comment_num = in.readInt();
-        scope = in.readInt();
+        scope = in.readString();
     }
 
     public static final Creator<SingleItemPost> CREATOR = new Creator<SingleItemPost>() {
@@ -121,6 +121,7 @@ public class SingleItemPost implements Parcelable {
         dest.writeString(date);
         dest.writeInt(like_num);
         dest.writeInt(comment_num);
+        dest.writeString(scope);
     }
 
     //getters and setters
