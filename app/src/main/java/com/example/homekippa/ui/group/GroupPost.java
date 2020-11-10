@@ -35,7 +35,7 @@ public class GroupPost extends Fragment {
 
     private static final String ARG_PARAM1 = "GroupPost";
     private static final String ARG_PARAM2 = "param2";
-
+    private ServiceApi service;
     private UserData userData;
     private GroupData groupData;
 
@@ -44,8 +44,6 @@ public class GroupPost extends Fragment {
 
     private Button button_Add_Post;
     private ArrayList<SingleItemPost> postList = new ArrayList<>();
-
-    private ServiceApi service;
 
     public GroupPost() {
         // Required empty public constructor
@@ -65,11 +63,12 @@ public class GroupPost extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        userData = ((MainActivity) getActivity()).getUserData();
-        groupData = ((MainActivity) getActivity()).getGroupData();
-
         service = RetrofitClient.getClient().create(ServiceApi.class);
+        userData = ((MainActivity) getActivity()).getUserData();
+        Log.d("user", userData.getUserName());
 
+        groupData = ((MainActivity) getActivity()).getGroupData();
+        Log.d("group", groupData.getGroupName());
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -90,6 +89,8 @@ public class GroupPost extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), AddPostActivity.class);
+                intent.putExtra("userData", userData);
+                intent.putExtra("groupData", groupData);
                 startActivity(intent);
             }
         });
