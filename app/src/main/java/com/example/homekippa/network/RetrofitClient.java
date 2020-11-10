@@ -9,6 +9,7 @@ public class RetrofitClient {
    // private final static String BASE_URL = "http://192.168.219.113:3000";
 //    private final static String BASE_URL = "http://101.101.208.180:3000";
     private final static String BASE_URL = "http://172.30.1.14:3000";
+
     private static Retrofit retrofit = null;
     private static OkHttpClient client = new OkHttpClient.Builder().build();
 

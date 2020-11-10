@@ -10,6 +10,7 @@ import com.example.homekippa.data.CreateGroupData;
 import com.example.homekippa.data.CreateGroupResponse;
 import com.example.homekippa.data.CreateGroupUploadResponse;
 import com.example.homekippa.data.GroupData;
+import com.example.homekippa.data.PostResponse;
 import com.example.homekippa.data.SignUpData;
 import com.example.homekippa.data.SignUpResponse;
 import com.example.homekippa.data.UidData;
@@ -58,11 +59,29 @@ public interface ServiceApi {
     @GET("/group")
     Call<GroupData> getGroupData(@Query("groupId") int groupId);
 
+//    @Multipart
+//    @POST("/group/add")
+//    Call<CreateGroupResponse> groupCreate(@QueryMap Map<String, String> data, @Part MultipartBody.Part file);
+
+
     @GET("/pet")
     Call<List<SingleItemPet>> getPetsData(@Query("groupId") int groupId);
 
+//    @POST("/pet/add")
+//    Call<AddPetResponse> addPetReg(@Body AddPetData data);
+
     @POST("/pet/add/des")
     Call<AddpetDesResponse> addPetDes(@Body AddPetDesData data);
+
+//    @POST("/pet/reports/add")
+//    Call<CreateDailyWorkResponse> createDailyWork(@Body CreateDailyWorkData data);
+
+
+    @GET("/post/group")
+    Call<List<SingleItemPost>> getGroupPost(@Query("groupId") int groupId);
+
+    @GET("/post/location")
+    Call<PostResponse> getLocationPost(@Query("groupId") int groupId);
 
 //    @POST("/pet/reports/add")
 //    Call<CreateGroupResponse> createDailyWork(@Body CreateGroupData data);

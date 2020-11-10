@@ -24,7 +24,6 @@ import com.example.homekippa.network.ServiceApi;
 import com.example.homekippa.ui.group.GroupFragment;
 import com.example.homekippa.ui.group.NoGroup;
 import com.example.homekippa.ui.group.SingleItemPet;
-import com.example.homekippa.ui.group.YesGroup;
 import com.example.homekippa.ui.home.HomeFragment;
 import com.example.homekippa.ui.notifications.NotificationsFragment;
 import com.example.homekippa.ui.search.SearchFragment;

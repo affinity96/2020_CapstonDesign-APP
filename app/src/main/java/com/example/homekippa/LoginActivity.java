@@ -98,8 +98,6 @@ public class LoginActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             curUser = mAuth.getCurrentUser();
                             if (curUser.isEmailVerified()) {
-                                Toast.makeText(getApplicationContext(), "로그인 성공", Toast.LENGTH_SHORT).show();
-
                                 requestUserData(curUser.getUid());
                             } else {
                                 mAuth.signOut();
@@ -128,6 +126,7 @@ public class LoginActivity extends AppCompatActivity {
                         getGroupData(userData.getGroupId());
                     } else {
                         loading.loadingEnd();
+                        Toast.makeText(getApplicationContext(), "로그인 성공", Toast.LENGTH_SHORT).show();
                         startActivity(intent);
                     }
                 }
@@ -153,6 +152,7 @@ public class LoginActivity extends AppCompatActivity {
                     groupData = response.body();
                     intent.putExtra("group", groupData);
                     loading.loadingEnd();
+                    Toast.makeText(getApplicationContext(), "로그인 성공", Toast.LENGTH_SHORT).show();
                     startActivity(intent);
                 }
             }
@@ -166,7 +166,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed(){
+    public void onBackPressed() {
         this.finishAffinity();
     }
 }
