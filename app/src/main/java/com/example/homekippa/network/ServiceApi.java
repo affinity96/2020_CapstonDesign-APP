@@ -17,6 +17,7 @@ import com.example.homekippa.data.UidData;
 import com.example.homekippa.data.UidRespense;
 import com.example.homekippa.data.UserData;
 import com.example.homekippa.ui.group.SingleItemPet;
+import com.example.homekippa.ui.group.SingleItemPost;
 
 import java.util.List;
 import java.util.Map;
@@ -40,18 +41,21 @@ public interface ServiceApi {
     @POST("/user/add")
     Call<SignUpResponse> userSignUp(@Body SignUpData data);
 
-    @POST("/group/add")
-    Call<CreateGroupResponse> groupCreate(@Body CreateGroupData data);
+    @GET("/pet")
+    Call<List<SingleItemPet>> getPetsData(@Query("groupId") int groupId);
 
-    @Multipart
-    @POST("/group/add/images")
-    Call<CreateGroupUploadResponse> groupCreateUpload(@Part MultipartBody.Part image, @Part("upload") RequestBody name);
+    @POST("/pet/add")
+    Call<AddPetResponse> addPetReg(@Body AddPetData data);
+
+    @POST("/pet/add/des")
+    Call<AddpetDesResponse> addPetDes(@Body AddPetDesData data);
 
     @POST("/pet/reports/add")
     Call<CreateDailyWorkResponse> createDailyWork(@Body CreateDailyWorkData data);
 
-    @POST("/pet/add")
-    Call<AddPetResponse> addPetReg(@Body AddPetData data);
+//    @POST("/pet/reports/add")
+//    Call<CreateGroupResponse> createDailyWork(@Body CreateGroupData data);
+
 
     @GET("/user")
     Call<UserData> getUserData(@Query("userId") String userId);
@@ -59,22 +63,17 @@ public interface ServiceApi {
     @GET("/group")
     Call<GroupData> getGroupData(@Query("groupId") int groupId);
 
-//    @Multipart
+    @POST("/group/add")
+    Call<CreateGroupResponse> groupCreate(@Body CreateGroupData data);
+
+    @Multipart
+    @POST("/group/add/images")
+    Call<CreateGroupUploadResponse> groupCreateUpload(@Part MultipartBody.Part image, @Part("upload") RequestBody name);
+
+
+    //    @Multipart
 //    @POST("/group/add")
 //    Call<CreateGroupResponse> groupCreate(@QueryMap Map<String, String> data, @Part MultipartBody.Part file);
-
-
-    @GET("/pet")
-    Call<List<SingleItemPet>> getPetsData(@Query("groupId") int groupId);
-
-//    @POST("/pet/add")
-//    Call<AddPetResponse> addPetReg(@Body AddPetData data);
-
-    @POST("/pet/add/des")
-    Call<AddpetDesResponse> addPetDes(@Body AddPetDesData data);
-
-//    @POST("/pet/reports/add")
-//    Call<CreateDailyWorkResponse> createDailyWork(@Body CreateDailyWorkData data);
 
 
     @GET("/post/group")
@@ -83,7 +82,5 @@ public interface ServiceApi {
     @GET("/post/location")
     Call<PostResponse> getLocationPost(@Query("groupId") int groupId);
 
-//    @POST("/pet/reports/add")
-//    Call<CreateGroupResponse> createDailyWork(@Body CreateGroupData data);
 
 }
