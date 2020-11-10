@@ -135,13 +135,17 @@ public class AddPetDesActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<AddpetDesResponse> call, Response<AddpetDesResponse> response) {
                 AddpetDesResponse result = response.body();
-                Intent intent = new Intent(getApplicationContext(), StartActivity.class);
-                startActivity(intent);
+
 
                 Toast.makeText(AddPetDesActivity.this, result.getMessage(),Toast.LENGTH_SHORT).show();
                 if(result.getCode() == 200){
-
+                    setResult(RESULT_OK);
                     finish();
+
+                }else{
+                    setResult(RESULT_OK);
+                    finish();
+
                 }
             }
             @Override
