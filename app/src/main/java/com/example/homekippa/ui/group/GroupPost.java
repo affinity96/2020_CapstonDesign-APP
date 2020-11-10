@@ -101,7 +101,7 @@ public class GroupPost extends Fragment {
 //        Log.d("post", "post function start");
 //        Log.d("post group id", String.valueOf(groupData.getGroupId()));
 
-        service.getPost(groupData.getGroupId()).enqueue(new Callback<List<SingleItemPost>>() {
+        service.getGroupPost(groupData.getGroupId()).enqueue(new Callback<List<SingleItemPost>>() {
 
             @Override
             public void onResponse(Call<List<SingleItemPost>> call, Response<List<SingleItemPost>> response) {

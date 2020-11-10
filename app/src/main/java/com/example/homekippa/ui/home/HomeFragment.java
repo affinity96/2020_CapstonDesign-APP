@@ -62,13 +62,16 @@ class HomeCollectionAdapter extends FragmentStateAdapter {
     //TODO: change the parameter to distinct "팔로워" tab and "우리동네"
     public Fragment createFragment(int position) {
         Bundle args = new Bundle();
+        String tab_;
         switch (position) {
             case 0:
-                Fragment fragment = new HomePost();
+                tab_ = "F";
+                Fragment fragment = new HomePost(tab_);
                 fragment.setArguments(args);
                 return fragment;
             case 1:
-                Fragment fragment1 = new HomePost();
+                tab_ = "L";
+                Fragment fragment1 = new HomePost(tab_);
                 fragment1.setArguments(args);
                 return fragment1;
         }

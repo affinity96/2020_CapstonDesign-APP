@@ -1,5 +1,6 @@
 package com.example.homekippa.ui.home;
 
+import android.location.Location;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,19 +8,28 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.homekippa.MainActivity;
 import com.example.homekippa.R;
 import com.example.homekippa.data.GroupData;
+import com.example.homekippa.data.PostResponse;
+import com.example.homekippa.data.UserData;
+import com.example.homekippa.network.RetrofitClient;
+import com.example.homekippa.network.ServiceApi;
 import com.example.homekippa.ui.group.ListPostAdapter;
 import com.example.homekippa.ui.group.SingleItemPost;
 import com.example.homekippa.ui.group.SingleItemPostImage;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class HomePost extends Fragment {
 
@@ -28,14 +38,28 @@ public class HomePost extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+    private UserData userData;
+    private GroupData groupData;
+
+    /***
+     * tab_=F : as Follwer TAb
+     * tab_=L : as Location TAb
+     */
+    private String tab_;
     private ArrayList<SingleItemPost> postList = new ArrayList<>();
+    private ArrayList<GroupData> groupList = new ArrayList<>();
+
+    private ServiceApi service;
 
     private String mParam1;
     private String mParam2;
 
     //TODO: get parameters deciding the fragment type: eg) post of followers or post of groups nearby
+    public HomePost(String tab_) {
+        this.tab_ = tab_;
+    }
+
     public HomePost() {
-        // Required empty public constructor
     }
 
     public static HomePost newInstance(String param1, String param2) {
@@ -50,6 +74,12 @@ public class HomePost extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        userData = ((MainActivity) getActivity()).getUserData();
+        groupData = ((MainActivity) getActivity()).getGroupData();
+
+        service = RetrofitClient.getClient().create(ServiceApi.class);
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -70,14 +100,43 @@ public class HomePost extends Fragment {
 
     private void setPostListView(RecyclerView listView) {
         getPostData();
-        ArrayList<GroupData> groupData =new ArrayList<>();
 
-        ListPostAdapter postAdapter = new ListPostAdapter(getActivity(), postList, groupData, false);
-        listView.setAdapter(postAdapter);
-        LinearLayoutManager pLayoutManager = new LinearLayoutManager(getActivity());
-        pLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        listView.setLayoutManager(pLayoutManager);
-        listView.setItemAnimator(new DefaultItemAnimator());
+        switch (tab_) {
+            case "F":
+            case "L":
+                service.getLocationPost(groupData.getGroupId()).enqueue(new Callback<PostResponse>() {
+
+                    @Override
+                    public void onResponse(Call<PostResponse> call, Response<PostResponse> response) {
+                        if (response.isSuccessful()) {
+                            Log.d("location", "success");
+                            PostResponse LocationPosts = response.body();
+                            Log.d("location body", LocationPosts.toString());
+
+                            postList = LocationPosts.getPostData();
+                            groupList = LocationPosts.getGroupData();
+
+//                            Log.d("location postlist", postList.toString());
+                            Log.d("location grouplist", groupList.toString());
+                            Log.d("location id", groupList.get(0).toString());
+
+                            ListPostAdapter postAdapter = new ListPostAdapter(getActivity(), postList, groupList, false);
+                            listView.setAdapter(postAdapter);
+                            LinearLayoutManager pLayoutManager = new LinearLayoutManager(getActivity());
+                            pLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+                            listView.setLayoutManager(pLayoutManager);
+                            listView.setItemAnimator(new DefaultItemAnimator());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<PostResponse> call, Throwable t) {
+                        Log.d("location", "에러");
+                        Log.e("location", t.getMessage());
+                    }
+                });
+                break;
+        }
     }
 
     //TODO: set HomePostData and ImageData
