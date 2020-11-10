@@ -116,10 +116,6 @@ public class HomePost extends Fragment {
                             postList = LocationPosts.getPostData();
                             groupList = LocationPosts.getGroupData();
 
-//                            Log.d("location postlist", postList.toString());
-                            Log.d("location grouplist", groupList.toString());
-                            Log.d("location id", groupList.get(0).toString());
-
                             ListPostAdapter postAdapter = new ListPostAdapter(getActivity(), postList, groupList, false);
                             listView.setAdapter(postAdapter);
                             LinearLayoutManager pLayoutManager = new LinearLayoutManager(getActivity());
