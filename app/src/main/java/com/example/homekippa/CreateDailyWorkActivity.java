@@ -75,8 +75,6 @@ public class CreateDailyWorkActivity extends AppCompatActivity {
         editText_dailyWorkTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("유저", userData.getUserName());
-                Log.d("으악", groupData.getGroupAddress());
 
                 TimePickerDialog timePicker=new TimePickerDialog(CreateDailyWorkActivity.this, android.R.style.Theme_Holo_Light_Dialog,new TimePickerDialog.OnTimeSetListener(){
                     @Override
@@ -131,7 +129,7 @@ public class CreateDailyWorkActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<CreateDailyWorkResponse> call, Response<CreateDailyWorkResponse> response) {
                 CreateDailyWorkResponse result = response.body();
-
+                Log.d("제발좀 되게 해주세요 제발좀", String.format("%d", result.getCode()));
                 if (result.getCode() == 200) {
                     Log.d("해치웠나?", "웅?");
                     finish();

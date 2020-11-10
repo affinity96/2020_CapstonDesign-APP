@@ -8,13 +8,19 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.homekippa.AddPostActivity;
+import com.example.homekippa.MainActivity;
 import com.example.homekippa.R;
+import com.example.homekippa.data.GroupData;
+import com.example.homekippa.data.UserData;
+import com.example.homekippa.network.RetrofitClient;
+import com.example.homekippa.network.ServiceApi;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +31,9 @@ public class GroupPost extends Fragment {
 
     private static final String ARG_PARAM1 = "GroupPost";
     private static final String ARG_PARAM2 = "param2";
+    private ServiceApi service;
+    private UserData userData;
+    private GroupData groupData;
 
     private String mParam1;
     private String mParam2;
@@ -50,10 +59,18 @@ public class GroupPost extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        service = RetrofitClient.getClient().create(ServiceApi.class);
+        userData = ((MainActivity) getActivity()).getUserData();
+        Log.d("user", userData.getUserName());
+
+        groupData = ((MainActivity) getActivity()).getGroupData();
+        Log.d("group", groupData.getGroupName());
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+
     }
 
     @Override
@@ -70,6 +87,8 @@ public class GroupPost extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), AddPostActivity.class);
+                intent.putExtra("userData", userData);
+                intent.putExtra("groupData", groupData);
                 startActivity(intent);
             }
         });
