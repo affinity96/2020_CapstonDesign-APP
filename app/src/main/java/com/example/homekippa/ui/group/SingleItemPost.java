@@ -8,39 +8,89 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.homekippa.R;
 
-import java.util.ArrayList;
 
+public class SingleItemPost implements Parcelable {
 
-public class SingleItemPost extends Fragment implements Parcelable {
+    private int id;
+    private int group_id;
+    private String user_id;
+    private String title;
+    private String content;
+    private String image;
+    private String date;
+    private int like_num;
+    private int comment_num;
+    private int scope;
+//    private String groupPostLocation;
+//    private ArrayList<SingleItemPostImage> groupPostImage;
 
-    private int groupPostProfile;
-    private String groupPostName;
-    private String groupPostLocation;
-    private String groupPostTitle;
-    private String groupPostContent;
-    private ArrayList<SingleItemPostImage> groupPostImage;
+    public SingleItemPost(int id, int group_id, String user_id, String title, String content, String image, String date, int like_num, int comment_num, int scope) {
+        this.id = id;
+        this.group_id = group_id;
+        this.user_id = user_id;
+        this.title = title;
+        this.content = content;
+        this.image = image;
+        this.date = date;
+        this.like_num = like_num;
+        this.comment_num = comment_num;
+        this.scope = scope;
+    }
 
+    public int getPostId() {
+        return id;
+    }
 
-    public SingleItemPost(int groupProfile, String groupName, String groupLocation, String postTitle, String postContent, ArrayList<SingleItemPostImage> groupPostImage) {
-        this.groupPostProfile = groupProfile;
-        this.groupPostName = groupName;
-        this.groupPostLocation = groupLocation;
-        this.groupPostTitle = postTitle;
-        this.groupPostContent = postContent;
-        this.groupPostImage = groupPostImage;
+    public int getGroupId() {
+        return group_id;
+    }
+
+    public String getUserId() {
+        return user_id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public String getDate() {
+        return getDate();
+    }
+
+    public int getLikeNum() {
+        return like_num;
+    }
+
+    public int getCommentNum() {
+        return comment_num;
+    }
+
+    public int getScope() {
+        return scope;
     }
 
     protected SingleItemPost(Parcel in) {
-        groupPostProfile = in.readInt();
-        groupPostName = in.readString();
-        groupPostLocation = in.readString();
-        groupPostTitle = in.readString();
-        groupPostContent = in.readString();
-        groupPostImage = in.createTypedArrayList(SingleItemPostImage.CREATOR);
+        id = in.readInt();
+        group_id = in.readInt();
+        user_id = in.readString();
+        title = in.readString();
+        content = in.readString();
+        image = in.readString();
+        date = in.readString();
+        like_num = in.readInt();
+        comment_num = in.readInt();
+        scope = in.readInt();
     }
 
     public static final Creator<SingleItemPost> CREATOR = new Creator<SingleItemPost>() {
@@ -56,97 +106,23 @@ public class SingleItemPost extends Fragment implements Parcelable {
     };
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        ViewGroup root = (ViewGroup) inflater.inflate(R.layout.listitem_post, container, false);
-//        RecyclerView listView_Images = root.findViewById(R.id.listview_PostImages);
-//        setPostImageListView(listView_Images);
-//
-//        getPostImageData();
-//        SingleItemPostImage.ListPostImageAdapter postImageAdapter = new SingleItemPostImage.ListPostImageAdapter(postImageList);
-//
-//        LinearLayoutManager iLayoutManager = new LinearLayoutManager(getActivity());
-//        iLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-//        listView_Images.setLayoutManager(iLayoutManager);
-//        listView_Images.setItemAnimator(new DefaultItemAnimator());
-//        listView_Images.setAdapter(postImageAdapter);
-
-        // Inflate the layout for this fragment
-        return root;
-    }
-
-    private void setPostImageListView(RecyclerView listView) {
-
-    }
-
-
-    //getters and setters
-    public String getGroupPostName() {
-        return groupPostName;
-    }
-
-    public void setGroupPostName(String groupPostName) {
-        this.groupPostName = groupPostName;
-    }
-
-    public String getGroupPostLocation() {
-        return groupPostLocation;
-    }
-
-    public void setGroupPostLocation(String groupPostLocation) {
-        this.groupPostLocation = groupPostLocation;
-    }
-
-    public String getGroupPostTitle() {
-        return groupPostTitle;
-    }
-
-    public void setGroupPostTitle(String groupPostTitle) {
-        this.groupPostTitle = groupPostTitle;
-    }
-
-    public String getGroupPostContent() {
-        return groupPostContent;
-    }
-
-    public void setGroupPostContent(String groupPostContent) {
-        this.groupPostContent = groupPostContent;
-    }
-
-    public int getGroupPostProfile() {
-        return groupPostProfile;
-    }
-
-    public void setGroupPostProfile(int groupPostProfile) {
-        this.groupPostProfile = groupPostProfile;
-    }
-
-    public ArrayList<SingleItemPostImage> getGroupPostImage() {
-        return groupPostImage;
-    }
-
-    public void setGroupPostImage(ArrayList<SingleItemPostImage> groupPostImage) {
-        this.groupPostImage = groupPostImage;
-    }
-
-    @Override
     public int describeContents() {
         return 0;
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(groupPostProfile);
-        dest.writeString(groupPostName);
-        dest.writeString(groupPostLocation);
-        dest.writeString(groupPostTitle);
-        dest.writeString(groupPostContent);
-        dest.writeTypedList(groupPostImage);
+        dest.writeInt(id);
+        dest.writeInt(group_id);
+        dest.writeString(user_id);
+        dest.writeString(title);
+        dest.writeString(content);
+        dest.writeString(image);
+        dest.writeString(date);
+        dest.writeInt(like_num);
+        dest.writeInt(comment_num);
     }
+
+    //getters and setters
+
 }

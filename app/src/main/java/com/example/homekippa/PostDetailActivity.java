@@ -48,12 +48,12 @@ public class PostDetailActivity extends AppCompatActivity {
         recyclerView_postComments = (RecyclerView) findViewById(R.id.listview_PostComments);
         post = (SingleItemPost) intent.getExtras().get("post");
 
-        postGroupProfile.setImageResource(post.getGroupPostProfile());
-        postGroupName.setText(post.getGroupPostName());
-        postGroupLocation.setText(post.getGroupPostLocation());
-        postTitle.setText(post.getGroupPostTitle());
-        postContent.setText(post.getGroupPostContent());
-        post_ImageList = post.getGroupPostImage();
+//        postGroupProfile.setImageResource(post.getGroupPostProfile());
+//        postGroupName.setText(post.getGroup_id());
+//        postGroupLocation.setText(post.getGroupPostLocation());
+        postTitle.setText(post.getTitle());
+        postContent.setText(post.getContent());
+//        post_ImageList = post.getGroupPostImage();
 
         setPostImage(post_ImageList);
         setPostComment(recyclerView_postComments);
