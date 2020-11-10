@@ -27,6 +27,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+        android:requestLegacyExternalStorage="true"
         android:usesCleartextTraffic="true"
         android:networkSecurityConfig="@xml/network_security_config"
         >
@@ -68,7 +69,10 @@
         <activity android:name=".SignUpActivity" />
         <activity android:name=".AddPetActivity" />
         <activity android:name=".PostDetailActivity" />
+        <activity android:name=".ui.group.CreateGroupUploadActivity" />
         <activity android:name=".StartActivity">
+
+
 <!--            <intent-filter>-->
 <!--                <action android:name="android.intent.action.MAIN" />-->
 

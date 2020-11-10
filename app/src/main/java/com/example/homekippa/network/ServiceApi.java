@@ -3,6 +3,8 @@ package com.example.homekippa.network;
 import com.example.homekippa.data.AddPetData;
 import com.example.homekippa.data.AddPetDesData;
 import com.example.homekippa.data.AddPetResponse;
+import com.example.homekippa.data.AddPostData;
+import com.example.homekippa.data.AddPostResponse;
 import com.example.homekippa.data.AddpetDesResponse;
 import com.example.homekippa.data.CreateDailyWorkData;
 import com.example.homekippa.data.CreateDailyWorkResponse;
@@ -50,6 +52,9 @@ public interface ServiceApi {
 
     @POST("/pet/reports/add")
     Call<CreateDailyWorkResponse> createDailyWork(@Body CreateDailyWorkData data);
+
+    @POST("/post/add")
+    Call<AddPostResponse> addPost(@Body AddPostData data);
 
     @POST("/pet/add")
     Call<AddPetResponse> addPetReg(@Body AddPetData data);

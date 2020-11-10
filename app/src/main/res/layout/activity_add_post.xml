@@ -45,7 +45,7 @@
     </androidx.appcompat.widget.Toolbar>
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/editText_postContent"
         android:layout_width="0dp"
         android:layout_height="300dp"
         android:gravity="top"
@@ -68,7 +68,7 @@
 
 
         app:layout_constraintStart_toStartOf="@+id/toolbar"
-        app:layout_constraintTop_toBottomOf="@+id/editText" />
+        app:layout_constraintTop_toBottomOf="@+id/editText_postContent" />
 
 <!--    <ImageView-->
 <!--        android:id="@+id/img_photo_post"-->

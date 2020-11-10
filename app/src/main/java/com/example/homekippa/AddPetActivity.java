@@ -91,7 +91,8 @@ public class AddPetActivity extends AppCompatActivity {
                 intent.putExtra("petSpecies", petSpecies);
                 intent.putExtra("petNeutralization", petNeutralization);
                 intent.putExtra("groupData",groupData);
-                startActivity(intent);
+                startActivityForResult(intent, 0 );
+
             }
         });
 
@@ -116,7 +117,7 @@ public class AddPetActivity extends AppCompatActivity {
                 intent.putExtra("petSpecies", petSpecies);
                 intent.putExtra("petNeutralization", petNeutralization);
                 intent.putExtra("groupData",groupData);
-                startActivity(intent);
+                startActivityForResult(intent,0);
 
 
 
@@ -124,6 +125,8 @@ public class AddPetActivity extends AppCompatActivity {
 
                 if(result.getCode() == 200){
 
+                    finish();
+                }else{
                     finish();
                 }
             }
@@ -136,6 +139,21 @@ public class AddPetActivity extends AppCompatActivity {
 
 
             }
+
         });
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode==0){
+            if (resultCode==RESULT_OK) {
+                finish();;
+                Toast.makeText(AddPetActivity.this, "result ok!", Toast.LENGTH_SHORT).show();
+            }else{
+                finish();
+                Toast.makeText(AddPetActivity.this, "result cancle!", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }
