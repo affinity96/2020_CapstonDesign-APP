@@ -17,6 +17,7 @@ import com.example.homekippa.data.UidData;
 import com.example.homekippa.data.UidRespense;
 import com.example.homekippa.data.UserData;
 import com.example.homekippa.ui.group.SingleItemPet;
+import com.example.homekippa.ui.group.SingleItemPost;
 
 import java.util.List;
 import java.util.Map;
@@ -86,4 +87,6 @@ public interface ServiceApi {
 //    @POST("/pet/reports/add")
 //    Call<CreateGroupResponse> createDailyWork(@Body CreateGroupData data);
 
+    @GET("/user/group")
+    Call<List<UserData>> getUsersInGroup(@Query("groupId") int groupId);
 }

@@ -3,14 +3,22 @@ package com.example.homekippa.data;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class UserData implements Parcelable {
+import com.google.gson.annotations.SerializedName;
 
+public class UserData implements Parcelable {
+//    @SerializedName("id")
     private final String userId;
+//    @SerializedName("name")
     private final String userName;
+//    @SerializedName("group_id")
     private final int groupId;
+//    @SerializedName("image")
     private final String userImage;
+//    @SerializedName("birth")
     private final String userBirth;
+//    @SerializedName("phone")
     private final String userPhone;
+//    @SerializedName("email")
     private final String userEmail;
 
     public String getUserId() {
