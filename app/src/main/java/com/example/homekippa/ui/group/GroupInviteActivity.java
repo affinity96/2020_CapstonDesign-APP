@@ -65,6 +65,7 @@ public class GroupInviteActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     List<UserData> users = response.body();
                     userList.addAll(users);
+                    Log.d("사용자 확인", response.body().toString());
 
                     ListUserAdapter userAdapter = new ListUserAdapter(userList);
                     LinearLayoutManager pLayoutManager = new LinearLayoutManager(getApplicationContext());

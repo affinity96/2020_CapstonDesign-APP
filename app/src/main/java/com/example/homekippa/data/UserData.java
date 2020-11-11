@@ -6,19 +6,19 @@ import android.os.Parcelable;
 import com.google.gson.annotations.SerializedName;
 
 public class UserData implements Parcelable {
-//    @SerializedName("id")
+    @SerializedName("id")
     private final String userId;
-//    @SerializedName("name")
+    @SerializedName("name")
     private final String userName;
-//    @SerializedName("group_id")
+    @SerializedName("group_id")
     private final int groupId;
-//    @SerializedName("image")
+    @SerializedName("image")
     private final String userImage;
-//    @SerializedName("birth")
+    @SerializedName("birth")
     private final String userBirth;
-//    @SerializedName("phone")
+    @SerializedName("phone")
     private final String userPhone;
-//    @SerializedName("email")
+    @SerializedName("email")
     private final String userEmail;
 
     public String getUserId() {
