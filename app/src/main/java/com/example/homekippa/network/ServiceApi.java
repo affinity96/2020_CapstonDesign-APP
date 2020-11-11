@@ -12,6 +12,7 @@ import com.example.homekippa.data.CreateGroupData;
 import com.example.homekippa.data.CreateGroupResponse;
 import com.example.homekippa.data.CreateGroupUploadResponse;
 import com.example.homekippa.data.GroupData;
+import com.example.homekippa.data.GroupInviteData;
 import com.example.homekippa.data.PostResponse;
 import com.example.homekippa.data.SignUpData;
 import com.example.homekippa.data.SignUpResponse;
@@ -94,4 +95,10 @@ public interface ServiceApi {
 
     @GET("/user/group")
     Call<List<UserData>> getUsersInGroup(@Query("groupId") int groupId);
+
+    @GET("/user/list/filter")
+    Call<List<UserData>> getUserSearchResult(@Query("searchFilter") String filter);
+
+    @POST("/group/invite")
+    Call<UidRespense> sendGroupInvite(@Body GroupInviteData data);
 }

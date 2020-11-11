@@ -11,12 +11,28 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         />
-    <SearchView
-        android:id="@+id/searchView_user"
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:iconifiedByDefault="false"
-        android:queryHint="Email로 사용자를 검색하세요"/>
+        android:layout_height="wrap_content">
+
+        <SearchView
+            android:id="@+id/searchView_user"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:iconifiedByDefault="false"
+            android:layout_toLeftOf="@+id/button_SearchUser"
+            android:queryHint="사용자를 검색하세요">
+        </SearchView>
+
+        <Button
+            android:id="@+id/button_SearchUser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:text="검색" />
+    </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/listView_Search_Users"
