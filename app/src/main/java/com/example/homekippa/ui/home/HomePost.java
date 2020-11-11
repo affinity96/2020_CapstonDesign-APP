@@ -76,8 +76,7 @@ public class HomePost extends Fragment {
         super.onCreate(savedInstanceState);
 
         userData = ((MainActivity) getActivity()).getUserData();
-        groupData = ((MainActivity) getActivity()).getGroupData();
-
+        if(!isGroupCreated()){groupData = ((MainActivity) getActivity()).getGroupData();}
         service = RetrofitClient.getClient().create(ServiceApi.class);
 
         if (getArguments() != null) {
@@ -85,6 +84,8 @@ public class HomePost extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
+
+    public boolean isGroupCreated(){return ((MainActivity) getActivity()).getGroupData().equals(null);};
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

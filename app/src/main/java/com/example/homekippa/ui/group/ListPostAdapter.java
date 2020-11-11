@@ -175,6 +175,7 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
 
                         @Override
                         public void onFailure(Call<LikeResponse> call, Throwable t) {
+                            Log.d("like", "fail");
 
                         }
                     });
