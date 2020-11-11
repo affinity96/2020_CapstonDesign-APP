@@ -3,30 +3,45 @@ package com.example.homekippa.ui.group;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.homekippa.MainActivity;
 import com.example.homekippa.PostDetailActivity;
 import com.example.homekippa.R;
 import com.example.homekippa.data.GroupData;
+import com.example.homekippa.data.LikeData;
+import com.example.homekippa.data.LikeResponse;
+import com.example.homekippa.data.UserData;
+import com.example.homekippa.network.RetrofitClient;
+import com.example.homekippa.network.ServiceApi;
 
 import org.w3c.dom.Text;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyViewHolder> {
     private ArrayList<SingleItemPost> post_Items;
     private ArrayList<GroupData> groupData = new ArrayList<>();
+    private UserData userData;
 
     private Context context;
     private boolean isgroup;
+
+    private ServiceApi service;
 
     public ListPostAdapter(Context context, ArrayList<SingleItemPost> postItems, ArrayList<GroupData> groupData, boolean isgroup) {
         this.context = context;
@@ -47,6 +62,8 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.listitem_post, parent, false);
+        service = RetrofitClient.getClient().create(ServiceApi.class);
+        userData = ((MainActivity) context).getUserData();
         return new MyViewHolder(itemView);
     }
 
@@ -104,6 +121,9 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
         TextView postCommentNum;
         RecyclerView recyclerView_postImages;
 
+        ImageView postLikeImage;
+        ImageView postCommentImage;
+
         MyViewHolder(View view) {
             super(view);
 //            postGroupProfile = (ImageView) view.findViewById(R.id.imageView_PostGroupProfile);
@@ -114,15 +134,54 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
             postLikedNum = (TextView) view.findViewById(R.id.textView_PostLikedNum);
             postCommentNum = (TextView) view.findViewById(R.id.textView_PostCommentNum);
             recyclerView_postImages = (RecyclerView) view.findViewById(R.id.listview_PostImages);
+            postLikeImage = (ImageView) view.findViewById(R.id.imageView_PostLiked);
+            postCommentImage = (ImageView) view.findViewById(R.id.imageView_PostComment);
 
             //각 게시글(PostListItem) 클릭
-            view.setOnClickListener(new View.OnClickListener() {
+            postCommentImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(context, PostDetailActivity.class);
                     SingleItemPost post = post_Items.get(getAdapterPosition());
                     intent.putExtra("post", post);
                     context.startActivity(intent);
+                }
+            });
+
+            postLikeImage.setOnClickListener(new View.OnClickListener() {
+
+
+                @Override
+                public void onClick(View v) {
+                    SingleItemPost post = post_Items.get(getAdapterPosition());
+                    if (!v.isActivated()) {
+                        postLikedNum.setText(String.valueOf(post.getLikeNum() + 1));
+                        post.setLikeNum(post.getLikeNum() + 1);
+                    } else {
+                        postLikedNum.setText(String.valueOf(post.getLikeNum() - 1));
+                        post.setLikeNum(post.getLikeNum() - 1);
+                    }
+                    v.setActivated(!v.isActivated());
+                    Log.d("liked bool", String.valueOf(v.isActivated()));
+                    LikeData likeData = new LikeData(post.getPostId(), userData.getUserId(), v.isActivated());
+
+                    service.setLike(likeData).enqueue(new Callback<LikeResponse>() {
+                        @Override
+                        public void onResponse(Call<LikeResponse> call, Response<LikeResponse> response) {
+                            if (response.code() == 200) {
+                                Log.d("like", "success");
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<LikeResponse> call, Throwable t) {
+
+                        }
+                    });
+
+
+                    //TODO: like num update!
+
                 }
             });
 

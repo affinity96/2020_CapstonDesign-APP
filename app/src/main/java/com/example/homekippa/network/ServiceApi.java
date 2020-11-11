@@ -12,6 +12,8 @@ import com.example.homekippa.data.CreateGroupData;
 import com.example.homekippa.data.CreateGroupResponse;
 import com.example.homekippa.data.CreateGroupUploadResponse;
 import com.example.homekippa.data.GroupData;
+import com.example.homekippa.data.LikeData;
+import com.example.homekippa.data.LikeResponse;
 import com.example.homekippa.data.PostResponse;
 import com.example.homekippa.data.SignUpData;
 import com.example.homekippa.data.SignUpResponse;
@@ -88,6 +90,9 @@ public interface ServiceApi {
 
     @GET("/post/location")
     Call<PostResponse> getLocationPost(@Query("groupId") int groupId);
+
+    @POST("/post/setlike")
+    Call<LikeResponse> setLike(@Body LikeData data);
 
 //    @POST("/pet/reports/add")
 //    Call<CreateGroupResponse> createDailyWork(@Body CreateGroupData data);

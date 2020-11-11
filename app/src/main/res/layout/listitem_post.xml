@@ -85,13 +85,13 @@
             android:layout_below="@+id/textView_PostContent" />
 
         <ImageView
-            android:id="@+id/imageView_PostCommentLiked"
-            android:layout_width="15dp"
-            android:layout_height="15dp"
+            android:id="@+id/imageView_PostLiked"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_below="@+id/listview_PostImages"
             android:layout_margin="3dp"
             android:clickable="true"
-            app:srcCompat="@drawable/ic_bone_svgrepo_com" />
+            android:src="@drawable/like_selector" />
 
         <TextView
             android:id="@+id/textView_PostLikedNum"
@@ -99,7 +99,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/listview_PostImages"
-            android:layout_toRightOf="@+id/imageView_PostCommentLiked"
+            android:layout_toRightOf="@+id/imageView_PostLiked"
             android:text="12"
             android:textSize="12dp" />
 

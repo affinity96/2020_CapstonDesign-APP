@@ -80,6 +80,18 @@ public class SingleItemPost implements Parcelable {
         return scope;
     }
 
+    public void setLikeNum(int like_num) {
+        this.like_num = like_num;
+    }
+
+    public void setCommentNum(int comment_num) {
+        this.comment_num = comment_num;
+    }
+
+    public void setScope(String scope) {
+        this.scope = scope;
+    }
+
     protected SingleItemPost(Parcel in) {
         id = in.readInt();
         group_id = in.readInt();
