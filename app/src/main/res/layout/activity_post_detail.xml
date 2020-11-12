@@ -130,6 +130,17 @@
             android:layout_alignRight="@+id/listview_DetailPostImages"
             android:text="2020년 11월 12일 "
             android:textSize="12dp" />
+
+        <EditText
+            android:id="@+id/editText_comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView_commentNum"
+            android:layout_margin="5dp"
+            android:background="@drawable/color_comment_background"
+            android:hint="댓글 입력... "
+            android:padding="9dp"
+            android:textSize="12dp" />
     </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView

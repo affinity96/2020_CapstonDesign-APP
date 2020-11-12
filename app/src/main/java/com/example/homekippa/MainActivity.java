@@ -173,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
 
         username.setText(userData.getUserName() + "님");
         if (userData.getGroupId()!=0){
-            usergroup.setText(groupData.getGroupName());
+            usergroup.setText(groupData.getName());
 
         }
     }

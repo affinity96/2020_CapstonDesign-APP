@@ -114,7 +114,7 @@ public class GroupInviteActivity extends AppCompatActivity {
 
     private void setUserListView(RecyclerView listView) {
         Log.d("사용자 확인", "들어옴");
-        service.getUsersInGroup(groupData.getGroupId()).enqueue(new Callback<List<UserData>>() {
+        service.getUsersInGroup(groupData.getId()).enqueue(new Callback<List<UserData>>() {
             @Override
             public void onResponse(Call<List<UserData>> call, Response<List<UserData>> response) {
                 if (response.isSuccessful()) {
@@ -166,7 +166,7 @@ public class GroupInviteActivity extends AppCompatActivity {
             holder.button_InviteUser.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    service.sendGroupInvite(new GroupInviteData(groupData.getGroupId(), user.getUserId())).enqueue(new Callback<UidRespense>() {
+                    service.sendGroupInvite(new GroupInviteData(groupData.getId(), user.getUserId())).enqueue(new Callback<UidRespense>() {
                         @Override
                         public void onResponse(Call<UidRespense> call, Response<UidRespense> response) {
                             if(response.isSuccessful() && response.body().getResult()){
