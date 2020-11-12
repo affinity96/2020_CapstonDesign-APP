@@ -61,6 +61,7 @@ public class YesGroup extends Fragment {
     private RecyclerView listView_dailyWorks;
     private CircleImageView imageView_groupProfile;
     private Button button_addPet;
+    private Button button_addUser;
 
     public static YesGroup newInstance() {
         return new YesGroup();
@@ -108,6 +109,7 @@ public class YesGroup extends Fragment {
         tv_groupIntro = root.findViewById(R.id.textView_groupIntro);
         button_Add_DW = root.findViewById(R.id.button_Add_DW);
         button_addPet = root.findViewById(R.id.button_AddPet);
+        button_addUser = root.findViewById(R.id.button_Add_User);
 
         button_Add_DW.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -124,6 +126,15 @@ public class YesGroup extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), AddPetActivity.class);
+                intent.putExtra("groupData", groupData);
+                startActivity(intent);
+            }
+        });
+
+        button_addUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), GroupInviteActivity.class);
                 intent.putExtra("groupData", groupData);
                 startActivity(intent);
             }

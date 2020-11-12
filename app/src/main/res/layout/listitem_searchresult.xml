@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/border_gray"
+    android:gravity="center|left"
+    android:padding="5dp">
+
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/imageView_SearchUserProfile"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_centerVertical="true"
+        android:layout_margin="5dp"
+        android:clickable="true"
+        android:src="@drawable/dog_woong" />
+
+    <LinearLayout
+        android:id="@+id/layout_SearchContent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/imageView_SearchUserProfile"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/layout_SearchContentIn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView_SearchUserName"
+                style="@style/BlackText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/imageView_SearchUserProfile"
+                android:text="사용자 이름"
+                android:textSize="13dp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView_SearchUserDesc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layout_SearchContentIn"
+            android:layout_toRightOf="@id/imageView_SearchUserProfile"
+            android:gravity="center"
+            android:hint="사용자 설명"
+            android:textSize="11dp" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/button_InviteUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:layout_centerVertical="true"
+        android:text="초대" />
+
+</RelativeLayout>
