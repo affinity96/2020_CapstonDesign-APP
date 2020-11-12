@@ -76,7 +76,9 @@ public class HomePost extends Fragment {
         super.onCreate(savedInstanceState);
 
         userData = ((MainActivity) getActivity()).getUserData();
-        if(!isGroupCreated()){groupData = ((MainActivity) getActivity()).getGroupData();}
+        if (!isGroupCreated()) {
+            groupData = ((MainActivity) getActivity()).getGroupData();
+        }
         service = RetrofitClient.getClient().create(ServiceApi.class);
 
         if (getArguments() != null) {
@@ -85,7 +87,11 @@ public class HomePost extends Fragment {
         }
     }
 
-    public boolean isGroupCreated(){return ((MainActivity) getActivity()).getGroupData().equals(null);};
+    public boolean isGroupCreated() {
+        return ((MainActivity) getActivity()).getGroupData() == null;
+    }
+
+    ;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -93,8 +99,12 @@ public class HomePost extends Fragment {
 
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_home_post, container, false);
         RecyclerView listView_posts = root.findViewById(R.id.listView_HomePost);
+        Log.d("Homepost", "It's Here");
 
-        setPostListView(listView_posts);
+        if (!isGroupCreated()) {
+            setPostListView(listView_posts);
+        }
+
 
         return root;
     }
@@ -104,6 +114,46 @@ public class HomePost extends Fragment {
 
         switch (tab_) {
             case "F":
+                service.getLocationPost(groupData.getGroupId()).enqueue(new Callback<PostResponse>() {
+
+                    @Override
+                    public void onResponse(Call<PostResponse> call, Response<PostResponse> response) {
+                        if (response.isSuccessful()) {
+                            Log.d("location", "success");
+                            PostResponse LocationPosts = response.body();
+                            Log.d("location body", LocationPosts.toString());
+
+                            postList = LocationPosts.getPostData();
+                            groupList = LocationPosts.getGroupData();
+
+                            ArrayList<SingleItemPostImage> post_ImageList = new ArrayList<>();
+                            SingleItemPostImage postImage = new SingleItemPostImage(R.drawable.dog_tan);
+                            post_ImageList.add(postImage);
+                            postImage = new SingleItemPostImage(R.drawable.dog_woong);
+                            post_ImageList.add(postImage);
+
+
+                            postList.get(0).setGroupPostImage(post_ImageList);
+                            postList.get(1).setGroupPostImage(post_ImageList);
+                            Log.d("postpostpostImage", postList.get(0).getGroupPostImage().toString());
+
+
+                            ListPostAdapter postAdapter = new ListPostAdapter(getActivity(), postList, groupList, false);
+                            listView.setAdapter(postAdapter);
+                            LinearLayoutManager pLayoutManager = new LinearLayoutManager(getActivity());
+                            pLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+                            listView.setLayoutManager(pLayoutManager);
+                            listView.setItemAnimator(new DefaultItemAnimator());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<PostResponse> call, Throwable t) {
+                        Log.d("location", "에러");
+                        Log.e("location", t.getMessage());
+                    }
+                });
+                break;
             case "L":
                 service.getLocationPost(groupData.getGroupId()).enqueue(new Callback<PostResponse>() {
 
@@ -116,6 +166,16 @@ public class HomePost extends Fragment {
 
                             postList = LocationPosts.getPostData();
                             groupList = LocationPosts.getGroupData();
+
+                            ArrayList<SingleItemPostImage> post_ImageList = new ArrayList<>();
+                            SingleItemPostImage postImage = new SingleItemPostImage(R.drawable.dog_tan);
+                            post_ImageList.add(postImage);
+                            postImage = new SingleItemPostImage(R.drawable.dog_woong);
+                            post_ImageList.add(postImage);
+
+                            postList.get(0).setGroupPostImage(post_ImageList);
+                            Log.d("postpostpostImage", postList.get(0).getGroupPostImage().toString());
+
 
                             ListPostAdapter postAdapter = new ListPostAdapter(getActivity(), postList, groupList, false);
                             listView.setAdapter(postAdapter);

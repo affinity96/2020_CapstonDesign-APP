@@ -44,6 +44,7 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
     private ServiceApi service;
 
     public ListPostAdapter(Context context, ArrayList<SingleItemPost> postItems, ArrayList<GroupData> groupData, boolean isgroup) {
+        Log.d("postpostpostImage", postItems.get(0).getGroupPostImage().toString());
         this.context = context;
         this.post_Items = postItems;
         this.groupData = groupData;
@@ -53,7 +54,6 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
     public ListPostAdapter(Context context, ArrayList<SingleItemPost> postItems, GroupData groupData, boolean isGroup) {
         this.context = context;
         this.post_Items = postItems;
-
         this.isgroup = isGroup;
         this.groupData.add(groupData);
     }
@@ -69,11 +69,10 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        setPostData(holder, position);
-    }
-
-    private void setPostData(MyViewHolder holder, int position) {
+//        setPostData(holder, position);
         SingleItemPost post = post_Items.get(position);
+        Log.d("ListpostAdatper post", String.valueOf(position));
+        Log.d("postpostpostImage", post.getGroupPostImage().toString());
         GroupData group;
         if (isgroup) {
             group = groupData.get(0);
@@ -94,7 +93,22 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
         holder.postGroupAddress.setText(group.getGroupAddress());
 
 
-//        setPostImageAdapter(holder, post_Items.get(position).getGroupPostImage());
+        ArrayList<SingleItemPostImage> post_ImageList = new ArrayList<>();
+
+        SingleItemPostImage postImage = new SingleItemPostImage(R.drawable.dog_tan);
+        post_ImageList.add(postImage);
+        postImage = new SingleItemPostImage(R.drawable.dog_woong);
+        post_ImageList.add(postImage);
+        post_Items.get(position).setGroupPostImage(post_ImageList);
+        Log.d("listpostAdapterrrrrrr",  post_Items.get(position).getGroupPostImage().toString());
+        setPostImageAdapter(holder, post_Items.get(position).getGroupPostImage());
+    }
+
+    private void setPostData(MyViewHolder holder, int position) {
+
+
+//        setPostImageAdapter(holder, post_ImageList);
+
     }
 
     private void setPostImageAdapter(MyViewHolder holder, ArrayList<SingleItemPostImage> postImageList) {
