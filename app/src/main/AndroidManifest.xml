@@ -33,10 +33,6 @@
             </intent-filter>
         </service>
 
-        <service
-            android:name="com.amazonaws.mobileconnectors.s3.transferutility.TransferService"
-            android:enabled="true" />
-
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main" />
@@ -59,7 +55,6 @@
         <activity android:name=".SignUpActivity" />
         <activity android:name=".AddPetActivity" />
         <activity android:name=".PostDetailActivity" />
-        <activity android:name=".ui.group.CreateGroupUploadActivity" />
         <activity android:name=".StartActivity">
 
 
