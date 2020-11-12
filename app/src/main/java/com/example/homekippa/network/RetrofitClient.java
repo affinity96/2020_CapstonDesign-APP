@@ -6,7 +6,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient {
 //    테스트용 IP - 나중에 삭제
-//    private final static String BASE_URL = "http://192.168.219.113:3000";
+//은창이꺼
+    //private final static String BASE_URL = "http://192.168.219.113:3000";
+
+//이게우리서버
     private final static String BASE_URL = "http://101.101.208.180:3000";
 
 //    private final static String BASE_URL = "http://172.30.1.14:3000";
