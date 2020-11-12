@@ -167,20 +167,19 @@ public class YesGroup extends Fragment {
 
     private void setPetListView(RecyclerView listView) {
 //        getPetData(listView);
-        Log.d("반려동물 확인", "들어옴");
-        Log.d("반려동물 확인", String.valueOf(groupData.getId()));
+//        Log.d("반려동물 확인", "들어옴");
+//        Log.d("반려동물 확인", String.valueOf(groupData.getId()));
         service.getPetsData(groupData.getId()).enqueue(new Callback<List<SingleItemPet>>() {
             @Override
             public void onResponse(Call<List<SingleItemPet>> call, Response<List<SingleItemPet>> response) {
                 if (response.isSuccessful()) {
                     Log.d("반려동물 확인", "성공");
                     List<SingleItemPet> pets = response.body();
-                    Log.d("반려동물 아이디 확인", pets.get(0).getName());
-                    petList.addAll(pets);
-
-                    //TODO:나중에 바꿔야 할 부분. 일단 가장 처음 강아지의 아이디만을 petId라 해놓음!
-                    petId = pets.get(0).getId();
-
+                    if (!pets.isEmpty()) {
+                        petList.addAll(pets);
+                        //TODO:나중에 바꿔야 할 부분. 일단 가장 처음 강아지의 아이디만을 petId라 해놓음!
+                        petId = pets.get(0).getId();
+                    }
                     ListPetAdapter petAdapter = new ListPetAdapter(petList);
 
                     LinearLayoutManager pLayoutManager = new LinearLayoutManager(getActivity());
