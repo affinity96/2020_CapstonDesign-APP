@@ -83,7 +83,7 @@ public interface ServiceApi {
     Call<List<SingleItemPost>> getGroupPost(@Query("groupId") int groupId);
 
     @GET("/post/location")
-    Call<PostResponse> getLocationPost(@Query("groupId") int groupId);
+    Call<PostResponse> getLocationPost();
 
     @POST("/post/setlike")
     Call<LikeResponse> setLike(@Body LikeData data);

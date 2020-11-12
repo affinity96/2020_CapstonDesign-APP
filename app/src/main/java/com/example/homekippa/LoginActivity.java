@@ -120,6 +120,9 @@ public class LoginActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     Log.d("로그인", "성공");
                     UserData userData = response.body();
+//                    Log.d("cheeck user", userData.getUserBirth());
+//                    Log.d("cheeck user", userData.getUserName());
+
                     intent.putExtra("user", userData);
 
                     if (userData.getGroupId() != 0) {
@@ -151,6 +154,7 @@ public class LoginActivity extends AppCompatActivity {
                     Log.d("그룹 확인", "성공");
                     groupData = response.body();
                     intent.putExtra("group", groupData);
+                    Log.d("그룹 확인", String.valueOf(groupData.getId()));
                     loading.loadingEnd();
                     Toast.makeText(getApplicationContext(), "로그인 성공", Toast.LENGTH_SHORT).show();
                     startActivity(intent);

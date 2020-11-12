@@ -24,9 +24,6 @@ import com.example.homekippa.data.UserData;
 import com.example.homekippa.network.RetrofitClient;
 import com.example.homekippa.network.ServiceApi;
 
-import org.w3c.dom.Text;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import retrofit2.Call;
@@ -34,7 +31,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyViewHolder> {
-    private ArrayList<SingleItemPost> post_Items;
+    private ArrayList<SingleItemPost> post_Items = new ArrayList<>();
     private ArrayList<GroupData> groupData = new ArrayList<>();
     private UserData userData;
 
@@ -44,7 +41,6 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
     private ServiceApi service;
 
     public ListPostAdapter(Context context, ArrayList<SingleItemPost> postItems, ArrayList<GroupData> groupData, boolean isgroup) {
-        Log.d("postpostpostImage", postItems.get(0).getGroupPostImage().toString());
         this.context = context;
         this.post_Items = postItems;
         this.groupData = groupData;
@@ -69,15 +65,21 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-//        setPostData(holder, position);
+        setPostData(holder, position);
+
+    }
+
+    private void setPostData(MyViewHolder holder, int position) {
+
         SingleItemPost post = post_Items.get(position);
-        Log.d("ListpostAdatper post", String.valueOf(position));
-        Log.d("postpostpostImage", post.getGroupPostImage().toString());
         GroupData group;
         if (isgroup) {
             group = groupData.get(0);
+            Log.d("group name", group.getName());
         } else {
             group = groupData.get(position);
+            Log.d("group position", String.valueOf(position));
+//            Log.d("group name", group.getGroupName());
         }
 
 //        Glide.with(context).load(R.drawable.dog_woong).circleCrop().into(holder.postGroupProfile);
@@ -89,10 +91,8 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
         holder.postContent.setText(post.getContent());
         holder.postCommentNum.setText(String.valueOf(post.getCommentNum()));
         holder.postLikedNum.setText(String.valueOf(post.getLikeNum()));
-        holder.postGroupName.setText(group.getGroupName());
-        holder.postGroupAddress.setText(group.getGroupAddress());
-
-
+        holder.postGroupName.setText(group.getName());
+        holder.postGroupAddress.setText(group.getAddress());
         ArrayList<SingleItemPostImage> post_ImageList = new ArrayList<>();
 
         SingleItemPostImage postImage = new SingleItemPostImage(R.drawable.dog_tan);
@@ -100,14 +100,7 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
         postImage = new SingleItemPostImage(R.drawable.dog_woong);
         post_ImageList.add(postImage);
         post_Items.get(position).setGroupPostImage(post_ImageList);
-        Log.d("listpostAdapterrrrrrr",  post_Items.get(position).getGroupPostImage().toString());
-        setPostImageAdapter(holder, post_Items.get(position).getGroupPostImage());
-    }
-
-    private void setPostData(MyViewHolder holder, int position) {
-
-
-//        setPostImageAdapter(holder, post_ImageList);
+        setPostImageAdapter(holder, post.getGroupPostImage());
 
     }
 
@@ -157,6 +150,11 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
                 public void onClick(View v) {
                     Intent intent = new Intent(context, PostDetailActivity.class);
                     SingleItemPost post = post_Items.get(getAdapterPosition());
+
+                    for (SingleItemPostImage sit : post.getGroupPostImage()) {
+                        Log.d("ListPostAdatper, set", String.valueOf(sit.getPostImageId()));
+                    }
+
                     intent.putExtra("post", post);
                     context.startActivity(intent);
                 }

@@ -53,7 +53,7 @@ public class PostDetailActivity extends AppCompatActivity {
 //        postGroupLocation.setText(post.getGroupPostLocation());
         postTitle.setText(post.getTitle());
         postContent.setText(post.getContent());
-//        post_ImageList = post.getGroupPostImage();
+        post_ImageList = post.getGroupPostImage();
 
         setPostImage(post_ImageList);
         setPostComment(recyclerView_postComments);

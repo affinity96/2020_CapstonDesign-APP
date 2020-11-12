@@ -50,7 +50,6 @@ public class YesGroup extends Fragment {
     private ServiceApi service;
     final Loading loading = new Loading();
 
-
     private ArrayList<SingleItemPet> petList = new ArrayList<>();
     private ArrayList<SingleItemDailyWork> dailyWorkList = new ArrayList<>();
 
@@ -144,8 +143,9 @@ public class YesGroup extends Fragment {
         listView_dailyWorks = root.findViewById(R.id.listview_dailywork);
         imageView_groupProfile = root.findViewById(R.id.ImageView_groupProfile);
 
-        tv_groupName.setText(groupData.getGroupName());
-        tv_groupIntro.setText(groupData.getGroupIntro());
+        tv_groupName.setText(groupData.getName());
+        tv_groupIntro.setText(groupData.getIntroduction());
+
 
         setPetListView(listView_pets);
         setDailyWorkListView(listView_dailyWorks);
@@ -168,7 +168,8 @@ public class YesGroup extends Fragment {
     private void setPetListView(RecyclerView listView) {
 //        getPetData(listView);
         Log.d("반려동물 확인", "들어옴");
-        service.getPetsData(groupData.getGroupId()).enqueue(new Callback<List<SingleItemPet>>() {
+        Log.d("반려동물 확인", String.valueOf(groupData.getId()));
+        service.getPetsData(groupData.getId()).enqueue(new Callback<List<SingleItemPet>>() {
             @Override
             public void onResponse(Call<List<SingleItemPet>> call, Response<List<SingleItemPet>> response) {
                 if (response.isSuccessful()) {

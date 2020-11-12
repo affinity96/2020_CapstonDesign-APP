@@ -4,50 +4,50 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class GroupData implements Parcelable {
-    private final int groupId;
-    private final String groupName;
-    private final String groupImage;
-    private final String groupAddress;
-    private final String groupIntro;
-    private final String groupBackground;
-    private final int groupTag;
+    private final int id;
+    private final String name;
+    private final String image;
+    private final String address;
+    private final String introduction;
+    private final String background;
+    private final int tag;
 
-    public int getGroupId() {
-        return groupId;
+    public int getId() {
+        return id;
     }
 
-    public String getGroupName() {
-        return groupName;
+    public String getName() {
+        return name;
     }
 
-    public String getGroupImage() {
-        return groupImage;
+    public String getImage() {
+        return image;
     }
 
-    public String getGroupAddress() {
-        return groupAddress;
+    public String getAddress() {
+        return address;
     }
 
-    public String getGroupIntro() {
-        return groupIntro;
+    public String getIntroduction() {
+        return introduction;
     }
 
-    public String getGroupBackground() {
-        return groupBackground;
+    public String getBackground() {
+        return background;
     }
 
-    public int getGroupTag() {
-        return groupTag;
+    public int getTag() {
+        return tag;
     }
 
-    public GroupData(int groupId, String groupName, String groupImage, String groupAddress, String groupIntro, String groupBackground, int groupTag) {
-        this.groupId = groupId;
-        this.groupName = groupName;
-        this.groupImage = groupImage;
-        this.groupAddress = groupAddress;
-        this.groupIntro = groupIntro;
-        this.groupBackground = groupBackground;
-        this.groupTag = groupTag;
+    public GroupData(int id, String name, String image, String address, String introduction, String background, int tag) {
+        this.id = id;
+        this.name = name;
+        this.image = image;
+        this.address = address;
+        this.introduction = introduction;
+        this.background = background;
+        this.tag = tag;
     }
 
     @Override
@@ -55,13 +55,13 @@ public class GroupData implements Parcelable {
         return 0;
     }
     public GroupData(Parcel parcel) {
-        this.groupId = parcel.readInt();
-        this.groupName = parcel.readString();
-        this.groupImage = parcel.readString();
-        this.groupAddress = parcel.readString();
-        this.groupIntro = parcel.readString();
-        this.groupBackground = parcel.readString();
-        this.groupTag = parcel.readInt();
+        this.id = parcel.readInt();
+        this.name = parcel.readString();
+        this.image = parcel.readString();
+        this.address = parcel.readString();
+        this.introduction = parcel.readString();
+        this.background = parcel.readString();
+        this.tag = parcel.readInt();
     }
 
 
@@ -78,12 +78,12 @@ public class GroupData implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeInt(this.groupId);
-        parcel.writeString(this.groupName);
-        parcel.writeString(this.groupImage);
-        parcel.writeString(this.groupAddress);
-        parcel.writeString(this.groupIntro);
-        parcel.writeString(this.groupBackground);
-        parcel.writeInt(this.groupTag);
+        parcel.writeInt(this.id);
+        parcel.writeString(this.name);
+        parcel.writeString(this.image);
+        parcel.writeString(this.address);
+        parcel.writeString(this.introduction);
+        parcel.writeString(this.background);
+        parcel.writeInt(this.tag);
     }
 }

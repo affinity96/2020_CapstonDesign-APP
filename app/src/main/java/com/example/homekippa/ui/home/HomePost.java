@@ -1,6 +1,5 @@
 package com.example.homekippa.ui.home;
 
-import android.location.Location;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -25,7 +24,6 @@ import com.example.homekippa.ui.group.SingleItemPost;
 import com.example.homekippa.ui.group.SingleItemPostImage;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -114,29 +112,29 @@ public class HomePost extends Fragment {
 
         switch (tab_) {
             case "F":
-                service.getLocationPost(groupData.getGroupId()).enqueue(new Callback<PostResponse>() {
+                Log.d("group body", String.valueOf(groupData.getId()));
+                service.getLocationPost().enqueue(new Callback<PostResponse>() {
 
                     @Override
                     public void onResponse(Call<PostResponse> call, Response<PostResponse> response) {
                         if (response.isSuccessful()) {
-                            Log.d("location", "success");
-                            PostResponse LocationPosts = response.body();
-                            Log.d("location body", LocationPosts.toString());
+                            PostResponse FollwerPosts = response.body();
 
-                            postList = LocationPosts.getPostData();
-                            groupList = LocationPosts.getGroupData();
+                            postList = FollwerPosts.getPostData();
+                            groupList = FollwerPosts.getGroupData();
 
+                            //TODO: Change the sample Image Data!!!!!!
+                            //Setting Sample Image Data
                             ArrayList<SingleItemPostImage> post_ImageList = new ArrayList<>();
                             SingleItemPostImage postImage = new SingleItemPostImage(R.drawable.dog_tan);
                             post_ImageList.add(postImage);
                             postImage = new SingleItemPostImage(R.drawable.dog_woong);
                             post_ImageList.add(postImage);
 
-
-                            postList.get(0).setGroupPostImage(post_ImageList);
-                            postList.get(1).setGroupPostImage(post_ImageList);
-                            Log.d("postpostpostImage", postList.get(0).getGroupPostImage().toString());
-
+                            for (SingleItemPost sit : postList) {
+                                sit.setGroupPostImage(post_ImageList);
+                            }
+                            //Setting Sample Image Data
 
                             ListPostAdapter postAdapter = new ListPostAdapter(getActivity(), postList, groupList, false);
                             listView.setAdapter(postAdapter);
@@ -155,27 +153,31 @@ public class HomePost extends Fragment {
                 });
                 break;
             case "L":
-                service.getLocationPost(groupData.getGroupId()).enqueue(new Callback<PostResponse>() {
+                service.getLocationPost().enqueue(new Callback<PostResponse>() {
 
                     @Override
                     public void onResponse(Call<PostResponse> call, Response<PostResponse> response) {
                         if (response.isSuccessful()) {
                             Log.d("location", "success");
                             PostResponse LocationPosts = response.body();
-                            Log.d("location body", LocationPosts.toString());
+
 
                             postList = LocationPosts.getPostData();
                             groupList = LocationPosts.getGroupData();
 
+
+                            //TODO: Change the sample Image Data!!!!!!
+                            //Setting Sample Image Data
                             ArrayList<SingleItemPostImage> post_ImageList = new ArrayList<>();
                             SingleItemPostImage postImage = new SingleItemPostImage(R.drawable.dog_tan);
                             post_ImageList.add(postImage);
                             postImage = new SingleItemPostImage(R.drawable.dog_woong);
                             post_ImageList.add(postImage);
 
-                            postList.get(0).setGroupPostImage(post_ImageList);
-                            Log.d("postpostpostImage", postList.get(0).getGroupPostImage().toString());
-
+                            for (SingleItemPost sit : postList) {
+                                sit.setGroupPostImage(post_ImageList);
+                            }
+                            //Setting Sample Image Data
 
                             ListPostAdapter postAdapter = new ListPostAdapter(getActivity(), postList, groupList, false);
                             listView.setAdapter(postAdapter);
