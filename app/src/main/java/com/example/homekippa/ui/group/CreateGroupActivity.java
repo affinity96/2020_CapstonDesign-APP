@@ -74,29 +74,29 @@ public class CreateGroupActivity extends AppCompatActivity {
         moveToSearchAddress = findViewById(R.id.moveToSearchAddress);
         mAuth = FirebaseAuth.getInstance();
         service = RetrofitClient.getClient().create(ServiceApi.class);
-//        button_gallery = findViewById(R.id.button_gallery);
-//        button_camera = findViewById(R.id.button_camera);
+        button_gallery = findViewById(R.id.button_gallery);
+        button_camera = findViewById(R.id.button_camera);
 
         // 권한 요청
         tedPermission();
 
-//        button_gallery.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                // 권한 허용에 동의하지 않았을 경우 토스트를 띄웁니다.
-//                if(isPermission) goToAlbum();
-//                else Toast.makeText(view.getContext(), getResources().getString(R.string.permission_2), Toast.LENGTH_LONG).show();
-//            }
-//        });
+        button_gallery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // 권한 허용에 동의하지 않았을 경우 토스트를 띄웁니다.
+                if(isPermission) goToAlbum();
+                else Toast.makeText(view.getContext(), getResources().getString(R.string.permission_2), Toast.LENGTH_LONG).show();
+            }
+        });
 
-//        button_camera.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                // 권한 허용에 동의하지 않았을 경우 토스트를 띄웁니다.
-//                if(isPermission)  takePhoto();
-//                else Toast.makeText(view.getContext(), getResources().getString(R.string.permission_2), Toast.LENGTH_LONG).show();
-//            }
-//        });
+        button_camera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // 권한 허용에 동의하지 않았을 경우 토스트를 띄웁니다.
+                if(isPermission)  takePhoto();
+                else Toast.makeText(view.getContext(), getResources().getString(R.string.permission_2), Toast.LENGTH_LONG).show();
+            }
+        });
 
         service = RetrofitClient.getClient().create(ServiceApi.class);
 
@@ -141,7 +141,7 @@ public class CreateGroupActivity extends AppCompatActivity {
                     editText_introduce.setHint("그룹 소개글을 써주세요!");
                 } else {
 
-                    createGroup(new CreateGroupData(userId, groupName, groupAddress, groupIntroduction));
+                    createGroup(userId, groupName, groupAddress, groupIntroduction);
 
                 }
             }
@@ -322,20 +322,33 @@ public class CreateGroupActivity extends AppCompatActivity {
         }
     }
 
-    private void createGroup(CreateGroupData data) {
+    private void createGroup(String userId, String groupName, String groupAddress, String groupIntroduction) {
         Log.i("create", "create");
 
-//        RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), tempFile);
-//        MultipartBody.Part uploadFile = MultipartBody.Part.createFormData("file", tempFile.getName(), reqFile);
+        HashMap<String, RequestBody> data = new HashMap<String, RequestBody>();
 
-        service.groupCreate(data).enqueue(new Callback<CreateGroupResponse>() {
+        RequestBody user_Id = RequestBody.create(MediaType.parse("text/plain"), userId);
+        data.put("userId", user_Id);
+        RequestBody group_Name = RequestBody.create(MediaType.parse("text/plain"), groupName);
+        data.put("groupName", group_Name);
+        RequestBody group_Address = RequestBody.create(MediaType.parse("text/plain"), groupAddress);
+        data.put("groupAddress", group_Address);
+        RequestBody group_Introduction = RequestBody.create(MediaType.parse("text/plain"), groupIntroduction);
+        data.put("groupIntroduction", group_Introduction);
+
+        RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), tempFile);
+        MultipartBody.Part uploadFile = MultipartBody.Part.createFormData("upload", tempFile.getName(), reqFile);
+
+//        RequestBody name = RequestBody.create(MediaType.parse("text/plain"), "upload");
+
+        service.groupCreate(data, uploadFile).enqueue(new Callback<CreateGroupResponse>() {
 
             @Override
             public void onResponse(Call<CreateGroupResponse> call, Response<CreateGroupResponse> response) {
                 CreateGroupResponse result = response.body();
 //              Toast.makeText(CreateGroupActivity.this, result.getMessage(),Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getApplicationContext(), CreateGroupUploadActivity.class);
-                startActivity(intent);
+//                Intent intent = new Intent(getApplicationContext(), CreateGroupUploadActivity.class);
+//                startActivity(intent);
                 if (result.getCode() == 200) {
 
                     finish();
