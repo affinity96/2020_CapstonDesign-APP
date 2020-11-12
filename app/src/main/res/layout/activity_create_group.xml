@@ -101,5 +101,17 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearlayout_groupinfo" />
 
+        <Button
+            android:id="@+id/button_gallery"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="앨범" />
+
+        <Button
+            android:id="@+id/button_camera"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="카메라" />
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
