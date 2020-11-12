@@ -178,6 +178,7 @@ public class YesGroup extends Fragment {
                     petList.addAll(pets);
 
                     //TODO:나중에 바꿔야 할 부분. 일단 가장 처음 강아지의 아이디만을 petId라 해놓음!
+                   // petId = 1;
                     petId = pets.get(0).getId();
 
                     ListPetAdapter petAdapter = new ListPetAdapter(petList);

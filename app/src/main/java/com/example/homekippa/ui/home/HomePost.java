@@ -92,8 +92,8 @@ public class HomePost extends Fragment {
 
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_home_post, container, false);
         RecyclerView listView_posts = root.findViewById(R.id.listView_HomePost);
-
-        setPostListView(listView_posts);
+        //이걸 주석해야 일단 노그룹 보여줌
+       // setPostListView(listView_posts);
 
         return root;
     }

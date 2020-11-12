@@ -349,6 +349,7 @@ public class CreateGroupActivity extends AppCompatActivity {
 //              Toast.makeText(CreateGroupActivity.this, result.getMessage(),Toast.LENGTH_SHORT).show();
 //                Intent intent = new Intent(getApplicationContext(), CreateGroupUploadActivity.class);
 //                startActivity(intent);
+                Log.d("이건 무어야!", String.format("%d", result.getCode()));
                 if (result.getCode() == 200) {
 
                     finish();
