@@ -86,5 +86,4 @@ public class PostDetailActivity extends AppCompatActivity {
         listView.setLayoutManager(pLayoutManager);
         listView.setItemAnimator(new DefaultItemAnimator());
     }
-
 }
