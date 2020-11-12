@@ -24,20 +24,23 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
-
+        // mapview에 kakaoMap 연동해서 올리기
         mapView =new MapView(this);
-
         ViewGroup mapViewContainer = (ViewGroup) findViewById(R.id.map_view);
         mapViewContainer.addView(mapView);
-
+        //
         mapView.setMapViewEventListener(this);
+        // 마커등을 올리기
         mapView.setPOIItemEventListener(this);
+        //현재위치
         mapView.setCurrentLocationEventListener(this);
+
 
         mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(37.53737528, 127.00557633), true);
         // zoom 설정하기
         // 줌 레벨 변경
         mapView.setZoomLevel(1, true);
+        //gps로 현 위치 찍어줌
         mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithHeading);
         // 줌 인
         mapView.zoomIn(true);
@@ -47,12 +50,20 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
 
         //현재 위치로 지도 올려 놓기
 
+//setCustomCurrentLocationMarkerImage
+        //-> 이를 사용해서 현 위치 아이콘을 custom 이미지 바꾸기 가능
 
 
-//        int zoomlevel = mapView.getZoomLevel();
-//        Log.d("zoom", String.valueOf(zoomlevel));
+        //화면 중심이 현재 사용하고 있는 유저 중심으로 포커싱이 계속 바뀜
+
+        //addpoint를 사용해서 산책 로드를 이어준다.
+
+        //firebase 백엔드 사용해서 위도 경도 json형식으로 넘겨줌 이떄,
+
+        // mark => ?
 
 
+        //1.
 
     }
 
@@ -78,6 +89,7 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
     }
 
     // 현재위치
+    //현재위치 업데이
     @Override
     public void onCurrentLocationUpdate(MapView mapView, MapPoint mapPoint, float v) {
 
