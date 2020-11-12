@@ -52,11 +52,11 @@
         <activity
             android:name=".SplashScreen"
             android:theme="@style/Theme.AppCompat.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
         </activity>
         <activity android:name=".CreateDailyWorkActivity" />
         <activity android:name=".AddPostActivity" />
@@ -66,36 +66,30 @@
         <activity android:name=".AddPetActivity" />
         <activity android:name=".PostDetailActivity" />
         <activity android:name=".StartActivity">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".LoginActivity" />
         <activity android:name=".ui.searchAddress.searchAddress" />
-<<<<<<< HEAD
-        <activity
-            android:name=".mapActivity"/>
+        <activity android:name=".mapActivity"/>
         <activity android:name=".AddPetDesActivity"/>
 
-<!--    Firebase 푸시 알림
-=======
-        <activity android:name=".mapActivity" />
-        <activity android:name=".AddPetDesActivity" />
-        <!--
-    Firebase 푸시 알림
->>>>>>> ad85028fb5a38f54f079325329ed9d54413b610c
-        <meta-data
-            android:name="com.google.firebase.messaging.default_notification_icon"
-            android:resource="@drawable/simplelogo" />
-        <meta-data
-            android:name="com.google.firebase.messaging.default_notification_channel_id"
-            android:value="@string/default_notification_channel_id" />
-        -->
-        <meta-data
-            android:name="com.google.firebase.messaging.default_notification_color"
-            android:resource="@color/kippaYellow" />
+
+<!--    Firebase 푸시 알림-->
+
+<!--        <meta-data-->
+<!--            android:name="com.google.firebase.messaging.default_notification_icon"-->
+<!--            android:resource="@drawable/simplelogo" />-->
+<!--        <meta-data-->
+<!--            android:name="com.google.firebase.messaging.default_notification_channel_id"-->
+<!--            android:value="@string/default_notification_channel_id" />-->
+<!--        -->
+<!--        <meta-data-->
+<!--            android:name="com.google.firebase.messaging.default_notification_color"-->
+<!--            android:resource="@color/kippaYellow" />-->
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"

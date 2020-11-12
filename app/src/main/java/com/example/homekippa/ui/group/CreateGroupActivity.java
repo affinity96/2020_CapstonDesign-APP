@@ -54,6 +54,7 @@ public class CreateGroupActivity extends AppCompatActivity {
     private Button button_gallery;
     private Button button_camera;
     private TextView moveToSearchAddress;
+    private EditText editText_detailAddress;
     private FirebaseAuth mAuth;
     private ServiceApi service;
 
@@ -76,6 +77,7 @@ public class CreateGroupActivity extends AppCompatActivity {
         service = RetrofitClient.getClient().create(ServiceApi.class);
         button_gallery = findViewById(R.id.button_gallery);
         button_camera = findViewById(R.id.button_camera);
+        editText_detailAddress = findViewById(R.id.editText_detailAddress);
 
         // 권한 요청
         tedPermission();
@@ -131,7 +133,7 @@ public class CreateGroupActivity extends AppCompatActivity {
                 String userId = mAuth.getCurrentUser().getUid();
                 String groupIntroduction = editText_introduce.getText().toString();
 
-                final String groupAddress = moveToSearchAddress.getText().toString();
+                final String groupAddress = moveToSearchAddress.getText().toString() + editText_detailAddress.getText().toString();
 
                 if (groupName.isEmpty()) {
                     editText_groupName.setHint("GroupName을 입력하세요!");
@@ -139,14 +141,16 @@ public class CreateGroupActivity extends AppCompatActivity {
                     moveToSearchAddress.setHint("주소를 입력하세요!");
                 } else if (groupIntroduction.isEmpty()) {
                     editText_introduce.setHint("그룹 소개글을 써주세요!");
+                    editText_introduce.setText("소개글");
+
+                } else if (editText_detailAddress.getText().toString().isEmpty()){
+                    editText_detailAddress.setHint("상세주소 입력해주세요!");
                 } else {
 
                     createGroup(userId, groupName, groupAddress, groupIntroduction);
-
                 }
             }
         });
-
     }
 
     /**
