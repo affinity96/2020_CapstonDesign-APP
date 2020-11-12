@@ -32,14 +32,24 @@
                     android:scaleType="centerCrop" />
 
                 <Button
+                    android:id="@+id/button_Add_User"
+                    android:layout_width="60dp"
+                    android:layout_height="20dp"
+                    android:layout_marginRight="80dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_gravity="bottom|right"
+                    android:background="@drawable/round_button2"
+                    android:text="구성원 추가"
+                    android:textSize="11dp"  />
+
+                <Button
                     android:id="@+id/button_changeGroupCover"
                     android:layout_width="60dp"
                     android:layout_height="20dp"
                     android:layout_gravity="bottom|right"
                     android:layout_margin="10dp"
-                    android:layout_toRightOf="@+id/frameLayout_profile"
                     android:background="@drawable/round_button2"
-                    android:text="커버 변경 "
+                    android:text="커버 변경"
                     android:textSize="11dp" />
 
             </FrameLayout>
