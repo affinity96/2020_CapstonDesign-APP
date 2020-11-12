@@ -24,6 +24,7 @@ import com.example.homekippa.data.UserData;
 import com.example.homekippa.network.RetrofitClient;
 import com.example.homekippa.network.ServiceApi;
 
+import java.security.acl.Group;
 import java.util.ArrayList;
 
 import retrofit2.Call;
@@ -150,19 +151,27 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
                 public void onClick(View v) {
                     Intent intent = new Intent(context, PostDetailActivity.class);
                     SingleItemPost post = post_Items.get(getAdapterPosition());
+                    GroupData group;
+
+                    if (isgroup) {
+                        group = groupData.get(0);
+                    } else {
+                        group = groupData.get(getAdapterPosition());
+                        Log.d("group name", group.getName());
+                    }
 
                     for (SingleItemPostImage sit : post.getGroupPostImage()) {
                         Log.d("ListPostAdatper, set", String.valueOf(sit.getPostImageId()));
                     }
 
+
                     intent.putExtra("post", post);
+                    intent.putExtra("group", group);
                     context.startActivity(intent);
                 }
             });
 
             postLikeImage.setOnClickListener(new View.OnClickListener() {
-
-
                 @Override
                 public void onClick(View v) {
                     SingleItemPost post = post_Items.get(getAdapterPosition());
