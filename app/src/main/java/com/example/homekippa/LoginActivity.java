@@ -121,6 +121,8 @@ public class LoginActivity extends AppCompatActivity {
                     Log.d("로그인", "성공");
                     UserData userData = response.body();
                     intent.putExtra("user", userData);
+                    Log.d("로그인", userData.getUserId());
+                    Log.d("로그인", userData.getUserImage());
 
                     if (userData.getGroupId() != 0) {
                         getGroupData(userData.getGroupId());
