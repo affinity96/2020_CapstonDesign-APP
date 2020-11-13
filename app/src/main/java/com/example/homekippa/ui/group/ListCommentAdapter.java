@@ -1,5 +1,6 @@
 package com.example.homekippa.ui.group;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,8 +36,9 @@ public class ListCommentAdapter extends RecyclerView.Adapter<ListCommentAdapter.
     private void setPostCommentData(MyViewHolder holder, int position) {
         SingleItemComment comment = postComment_Items.get(position);
         holder.profile.setImageResource(comment.getGroupCommentProfile());
-        holder.groupName.setText(comment.getGroupCommentName());
+        holder.groupName.setText(comment.getGroupCommentGroupName());
         holder.groupLocation.setText(comment.getGroupCommentLocation());
+        Log.d("comment", comment.getGroupCommentContent());
         holder.commentContent.setText(comment.getGroupCommentContent());
     }
 
@@ -49,6 +51,7 @@ public class ListCommentAdapter extends RecyclerView.Adapter<ListCommentAdapter.
 
         ImageView profile;
         TextView groupName;
+        TextView NickName;
         TextView groupLocation;
         TextView commentContent;
 

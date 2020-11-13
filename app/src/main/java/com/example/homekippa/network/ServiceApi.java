@@ -6,6 +6,9 @@ import com.example.homekippa.data.AddPetResponse;
 import com.example.homekippa.data.AddPostData;
 import com.example.homekippa.data.AddPostResponse;
 import com.example.homekippa.data.AddpetDesResponse;
+import com.example.homekippa.data.CommentData;
+import com.example.homekippa.data.CommentGetResponse;
+import com.example.homekippa.data.CommentResponse;
 import com.example.homekippa.data.CreateDailyWorkData;
 import com.example.homekippa.data.CreateDailyWorkResponse;
 import com.example.homekippa.data.CreateGroupData;
@@ -21,6 +24,7 @@ import com.example.homekippa.data.SignUpResponse;
 import com.example.homekippa.data.UidData;
 import com.example.homekippa.data.UidRespense;
 import com.example.homekippa.data.UserData;
+import com.example.homekippa.ui.group.SingleItemComment;
 import com.example.homekippa.ui.group.SingleItemPet;
 import com.example.homekippa.ui.group.SingleItemPost;
 
@@ -87,6 +91,12 @@ public interface ServiceApi {
 
     @POST("/post/setlike")
     Call<LikeResponse> setLike(@Body LikeData data);
+
+    @POST("/post/setComment")
+    Call<CommentResponse> setComment(@Body CommentData data);
+
+    @GET("/post/getComment")
+    Call<CommentGetResponse> getComment(@Query("postId") int postId);
 
 //    @POST("/pet/reports/add")
 //    Call<CreateGroupResponse> createDailyWork(@Body CreateGroupData data);
