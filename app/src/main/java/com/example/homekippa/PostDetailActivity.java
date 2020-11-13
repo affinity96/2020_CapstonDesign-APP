@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.homekippa.data.GroupData;
 import com.example.homekippa.ui.group.ListCommentAdapter;
 import com.example.homekippa.ui.group.ListPostImageAdapter;
 import com.example.homekippa.ui.group.SingleItemComment;
@@ -23,6 +24,7 @@ public class PostDetailActivity extends AppCompatActivity {
     private static final String TAG = "postDetail";
 
     private SingleItemPost post;
+    private GroupData group;
     ImageView postGroupProfile;
     TextView postGroupName;
     TextView postGroupLocation;
@@ -38,6 +40,8 @@ public class PostDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_post_detail);
 
         Intent intent = getIntent();
+        post = (SingleItemPost) intent.getExtras().get("post");
+        group = (GroupData) intent.getExtras().get("group");
 
         postGroupProfile = (ImageView) findViewById(R.id.imageView_DetailPostGroupProfile);
         postGroupName = (TextView) findViewById(R.id.textView__DetailPostGroupName);
@@ -46,14 +50,13 @@ public class PostDetailActivity extends AppCompatActivity {
         postContent = (TextView) findViewById(R.id.textView_DetailPostContent);
         recyclerView_postImages = (RecyclerView) findViewById(R.id.listview_DetailPostImages);
         recyclerView_postComments = (RecyclerView) findViewById(R.id.listview_PostComments);
-        post = (SingleItemPost) intent.getExtras().get("post");
 
 //        postGroupProfile.setImageResource(post.getGroupPostProfile());
-//        postGroupName.setText(post.getGroup_id());
-//        postGroupLocation.setText(post.getGroupPostLocation());
+        post_ImageList = post.getGroupPostImage();
+        postGroupName.setText(group.getName());
+        postGroupLocation.setText(group.getAddress());
         postTitle.setText(post.getTitle());
         postContent.setText(post.getContent());
-//        post_ImageList = post.getGroupPostImage();
 
         setPostImage(post_ImageList);
         setPostComment(recyclerView_postComments);
@@ -83,5 +86,4 @@ public class PostDetailActivity extends AppCompatActivity {
         listView.setLayoutManager(pLayoutManager);
         listView.setItemAnimator(new DefaultItemAnimator());
     }
-
 }

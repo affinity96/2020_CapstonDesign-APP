@@ -2,7 +2,6 @@ package com.example.homekippa;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -10,19 +9,14 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.homekippa.data.AddPostData;
 import com.example.homekippa.data.AddPostResponse;
-import com.example.homekippa.data.CreateDailyWorkData;
-import com.example.homekippa.data.CreateDailyWorkResponse;
 import com.example.homekippa.data.GroupData;
 import com.example.homekippa.data.UserData;
 import com.example.homekippa.network.RetrofitClient;
 import com.example.homekippa.network.ServiceApi;
-
-import java.util.Calendar;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -55,7 +49,7 @@ public class AddPostActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                addPost(new AddPostData(groupData.getGroupId(), userData.getUserId(), "im-si title", postContent.toString(),"im-si img"));
+                addPost(new AddPostData(groupData.getId(), userData.getUserId(), "im-si title", postContent.toString(),"im-si img"));
             }
         });
 

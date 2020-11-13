@@ -27,12 +27,12 @@ public class AddPetDesData {
 
     public AddPetDesData(String petRegNum, String petName, String petSpecies, String petGender, String petNeutralization, int groupId, String petBirth){
         this.petRegNum = petRegNum;
-        this.petSpecies =petSpecies;
-        this.petName =petName;
-        this.petGender =petGender;
+        this.petSpecies = petSpecies;
+        this.petName = petName;
+        this.petGender = petGender;
         this.petNeutralization = petNeutralization;
         this.groupId = groupId;
-        this.petBirth =petBirth;
+        this.petBirth = petBirth;
     }
 
 }
