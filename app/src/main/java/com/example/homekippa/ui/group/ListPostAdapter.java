@@ -164,9 +164,9 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
                         Log.d("ListPostAdatper, set", String.valueOf(sit.getPostImageId()));
                     }
 
-
                     intent.putExtra("post", post);
                     intent.putExtra("group", group);
+                    intent.putExtra("user", userData);
                     context.startActivity(intent);
                 }
             });
@@ -201,9 +201,7 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
                         }
                     });
 
-
                     //TODO: like num update!
-
                 }
             });
 
