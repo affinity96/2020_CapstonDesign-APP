@@ -11,6 +11,8 @@ import androidx.fragment.app.Fragment;
 
 import com.example.homekippa.R;
 
+import java.util.ArrayList;
+
 
 public class SingleItemPost implements Parcelable {
 
@@ -25,7 +27,7 @@ public class SingleItemPost implements Parcelable {
     private int comment_num;
     private String scope;
 //    private String groupPostLocation;
-//    private ArrayList<SingleItemPostImage> groupPostImage;
+    private ArrayList<SingleItemPostImage> groupPostImage;
 
     public SingleItemPost(int id, int group_id, String user_id, String title, String content, String image, String date, int like_num, int comment_num, String scope) {
         this.id = id;
@@ -39,6 +41,52 @@ public class SingleItemPost implements Parcelable {
         this.comment_num = comment_num;
         this.scope = scope;
     }
+
+    protected SingleItemPost(Parcel in) {
+        id = in.readInt();
+        group_id = in.readInt();
+        user_id = in.readString();
+        title = in.readString();
+        content = in.readString();
+        image = in.readString();
+        date = in.readString();
+        like_num = in.readInt();
+        comment_num = in.readInt();
+        scope = in.readString();
+        groupPostImage = in.createTypedArrayList(SingleItemPostImage.CREATOR);
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeInt(group_id);
+        dest.writeString(user_id);
+        dest.writeString(title);
+        dest.writeString(content);
+        dest.writeString(image);
+        dest.writeString(date);
+        dest.writeInt(like_num);
+        dest.writeInt(comment_num);
+        dest.writeString(scope);
+        dest.writeTypedList(groupPostImage);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<SingleItemPost> CREATOR = new Creator<SingleItemPost>() {
+        @Override
+        public SingleItemPost createFromParcel(Parcel in) {
+            return new SingleItemPost(in);
+        }
+
+        @Override
+        public SingleItemPost[] newArray(int size) {
+            return new SingleItemPost[size];
+        }
+    };
 
     public int getPostId() {
         return id;
@@ -80,49 +128,26 @@ public class SingleItemPost implements Parcelable {
         return scope;
     }
 
-    protected SingleItemPost(Parcel in) {
-        id = in.readInt();
-        group_id = in.readInt();
-        user_id = in.readString();
-        title = in.readString();
-        content = in.readString();
-        image = in.readString();
-        date = in.readString();
-        like_num = in.readInt();
-        comment_num = in.readInt();
-        scope = in.readString();
+    public void setLikeNum(int like_num) {
+        this.like_num = like_num;
     }
 
-    public static final Creator<SingleItemPost> CREATOR = new Creator<SingleItemPost>() {
-        @Override
-        public SingleItemPost createFromParcel(Parcel in) {
-            return new SingleItemPost(in);
-        }
-
-        @Override
-        public SingleItemPost[] newArray(int size) {
-            return new SingleItemPost[size];
-        }
-    };
-
-    @Override
-    public int describeContents() {
-        return 0;
+    public void setCommentNum(int comment_num) {
+        this.comment_num = comment_num;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
-        dest.writeInt(group_id);
-        dest.writeString(user_id);
-        dest.writeString(title);
-        dest.writeString(content);
-        dest.writeString(image);
-        dest.writeString(date);
-        dest.writeInt(like_num);
-        dest.writeInt(comment_num);
-        dest.writeString(scope);
+    public void setScope(String scope) {
+        this.scope = scope;
     }
+
+    public ArrayList<SingleItemPostImage> getGroupPostImage() {
+        return groupPostImage;
+    }
+
+    public void setGroupPostImage(ArrayList<SingleItemPostImage> groupPostImage) {
+        this.groupPostImage = groupPostImage;
+    }
+
 
     //getters and setters
 

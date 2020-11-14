@@ -17,7 +17,6 @@ import com.example.homekippa.data.GroupData;
 import com.example.homekippa.network.RetrofitClient;
 import com.example.homekippa.network.ServiceApi;
 import com.example.homekippa.ui.datepicker.DatePetPickerFragment;
-import com.example.homekippa.ui.group.YesGroup;
 
 
 import retrofit2.Call;
@@ -91,7 +90,7 @@ public class AddPetDesActivity extends AppCompatActivity {
         button_petDesSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int groupId = groupData.getGroupId();
+                int groupId = groupData.getId();
                 final String birth = textView_birthDay.getText().toString().trim();
 
                 Log.d("groupId", String.valueOf(groupId));

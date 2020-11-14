@@ -65,9 +65,10 @@ public class GroupPost extends Fragment {
 
         service = RetrofitClient.getClient().create(ServiceApi.class);
         userData = ((MainActivity) getActivity()).getUserData();
-
+//        Log.d("user", userData.getUserName());
 
         groupData = ((MainActivity) getActivity()).getGroupData();
+        Log.d("group", groupData.getName());
 
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
@@ -109,9 +110,21 @@ public class GroupPost extends Fragment {
                 if (response.isSuccessful()) {
                     Log.d("post", "success");
                     List<SingleItemPost> groupPosts = response.body();
-                    Log.d("post id", groupPosts.get(0).getTitle());
-                    Log.d("post id", groupData.getGroupName());
+
                     postList.addAll(groupPosts);
+
+                    //TODO: Change the sample Image Data!!!!!!
+                    //Setting Sample Image Data
+                    ArrayList<SingleItemPostImage> post_ImageList = new ArrayList<>();
+                    SingleItemPostImage postImage = new SingleItemPostImage(R.drawable.dog_tan);
+                    post_ImageList.add(postImage);
+                    postImage = new SingleItemPostImage(R.drawable.dog_woong);
+                    post_ImageList.add(postImage);
+
+                    for (SingleItemPost sit : postList) {
+                        sit.setGroupPostImage(post_ImageList);
+                    }
+                    //Setting Sample Image Data
 
                     ListPostAdapter postAdapter = new ListPostAdapter(getActivity(), postList, groupData, true);
                     LinearLayoutManager pLayoutManager = new LinearLayoutManager(getActivity());
@@ -129,24 +142,4 @@ public class GroupPost extends Fragment {
             }
         });
     }
-
-    //TODO: set GroupPostData and ImageData
-    private void getPostData() {
-
-        ArrayList<SingleItemPostImage> post_ImageList = new ArrayList<>();
-        SingleItemPostImage postImage = new SingleItemPostImage(R.drawable.dog_woong);
-        post_ImageList.add(postImage);
-        postImage = new SingleItemPostImage(R.drawable.base_cover);
-        post_ImageList.add(postImage);
-
-
-//        SingleItemPost post = new SingleItemPost(12, R.drawable.dog_woong, "웅이네 집", "경기도 용인시 기흥구 영덕동", "햇살 좋은날!\uD83C\uDF3B", "미야옹!", post_ImageList);
-//        postList.add(post);
-//        post = new SingleItemPost(13, R.drawable.dog_woong, "웅이네 집", "경기도 용인시 기흥구 영덕동", "아잉!\uD83C\uDF3B", "미야옹!", post_ImageList);
-//        postList.add(post);
-//        post = new SingleItemPost(14, R.drawable.dog_woong, "웅이네 집", "경기도 용인시 기흥구 영덕동", "바봉양!!\uD83C\uDF3B", "미야옹!", post_ImageList);
-//        postList.add(post);
-    }
-
-
 }
