@@ -23,6 +23,8 @@ import com.example.homekippa.ui.group.ListPostAdapter;
 import com.example.homekippa.ui.group.SingleItemPost;
 import com.example.homekippa.ui.group.SingleItemPostImage;
 
+import org.w3c.dom.Comment;
+
 import java.util.ArrayList;
 
 import retrofit2.Call;
@@ -35,6 +37,7 @@ public class HomePost extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
 
     private UserData userData;
     private GroupData groupData;
@@ -102,7 +105,6 @@ public class HomePost extends Fragment {
         if (!isGroupCreated()) {
             setPostListView(listView_posts);
         }
-
 
         return root;
     }

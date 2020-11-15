@@ -98,6 +98,9 @@ public interface ServiceApi {
     @GET("/post/getComment")
     Call<CommentGetResponse> getComment(@Query("postId") int postId);
 
+    @GET("/post/deleteComment")
+    Call<CommentResponse> deleteComment(@Query("commentId") int commentId);
+
 //    @POST("/pet/reports/add")
 //    Call<CreateGroupResponse> createDailyWork(@Body CreateGroupData data);
 

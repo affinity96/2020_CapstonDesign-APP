@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -103,7 +104,7 @@
                     app:srcCompat="@drawable/ic_bone_svgrepo_com" />
 
                 <TextView
-                    android:id="@+id/textView_commentLikedNum"
+                    android:id="@+id/textView_LikedNum"
                     style="@style/BlackText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -123,8 +124,9 @@
                     style="@style/BlackText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
                     android:text="3" />
+
+                <!--          LiveData      The Linear Layout -->
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -139,7 +141,6 @@
                         android:textSize="12dp" />
                 </LinearLayout>
             </LinearLayout>
-
 
             <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
@@ -182,7 +183,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/textView_commentNum"
-                android:padding="10dp" />
+                android:padding="3dp" />
 
         </LinearLayout>
 

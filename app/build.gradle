@@ -29,6 +29,7 @@ android {
             universalApk false
         }
     }
+    dataBinding { enabled = true }
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8

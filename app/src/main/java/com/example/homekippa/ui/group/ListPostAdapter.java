@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.homekippa.MainActivity;
-import com.example.homekippa.PostDetailActivity;
+import com.example.homekippa.ui.home.PostDetailActivity;
 import com.example.homekippa.R;
 import com.example.homekippa.data.GroupData;
 import com.example.homekippa.data.LikeData;
@@ -24,7 +24,6 @@ import com.example.homekippa.data.UserData;
 import com.example.homekippa.network.RetrofitClient;
 import com.example.homekippa.network.ServiceApi;
 
-import java.security.acl.Group;
 import java.util.ArrayList;
 
 import retrofit2.Call;
@@ -166,6 +165,7 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
 
                     intent.putExtra("post", post);
                     intent.putExtra("group", group);
+                    Log.d("group name", group.getName());
                     intent.putExtra("user", userData);
                     context.startActivity(intent);
                 }
