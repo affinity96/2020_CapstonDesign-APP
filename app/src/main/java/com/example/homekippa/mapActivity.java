@@ -2,18 +2,29 @@ package com.example.homekippa;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import net.daum.mf.map.api.MapPOIItem;
 import net.daum.mf.map.api.MapPoint;
 import net.daum.mf.map.api.MapView;
 
+import java.util.List;
+
 
 public class mapActivity extends AppCompatActivity implements MapView.MapViewEventListener, MapView.POIItemEventListener, MapView.CurrentLocationEventListener {
 
     private MapView mapView;
-    private ViewGroup mapViewContainer;
+//    private ViewGroup mapViewContainer;
+//    private static final int GPS_ENABLE_REQUEST_CODE = 2001;
+//    private static final int PERMISSIONS_REQUEST_CODE = 100;
+//    private List<Double> latitude_arrayList;
+//    private List<Double> longitude_arrayList;
+//    private Button button_stopMap;
+
 
 
 
@@ -24,6 +35,8 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
+//        button_stopMap =findViewById(R.id.button_stopMap);
+
         // mapview에 kakaoMap 연동해서 올리기
         mapView =new MapView(this);
         ViewGroup mapViewContainer = (ViewGroup) findViewById(R.id.map_view);
@@ -64,6 +77,18 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
 
 
         //1.
+
+//        button_stopMap.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                for (int i = 0 ; i < longitude_arrayList.size();i++){
+//                    Log.d("array_map", String.valueOf(longitude_arrayList.get(i)));
+//                    Log.d("array_map", String.valueOf(latitude_arrayList.get(i)));
+//                }
+//            }
+//        });
+
+
 
     }
 
@@ -120,6 +145,9 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
     @Override
     public void onMapViewCenterPointMoved(MapView mapView, MapPoint mapPoint) {
         MapPoint.GeoCoordinate mapPointGeo = mapPoint.getMapPointGeoCoord();
+//        latitude_arrayList.add(mapPointGeo.latitude);
+//        longitude_arrayList.add(mapPointGeo.longitude);
+
         //위도 경도 찍
         Log.d("latitude", String.valueOf(mapPointGeo.latitude));
         Log.d("longitude", String.valueOf(mapPointGeo.longitude));
