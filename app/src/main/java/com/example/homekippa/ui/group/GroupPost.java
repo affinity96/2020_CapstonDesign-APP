@@ -69,6 +69,7 @@ public class GroupPost extends Fragment {
 
         groupData = ((MainActivity) getActivity()).getGroupData();
         Log.d("group", groupData.getName());
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -99,6 +100,8 @@ public class GroupPost extends Fragment {
     }
 
     private void setPostListView(RecyclerView listView) {
+//        Log.d("post", "post function start");
+//        Log.d("post group id", String.valueOf(groupData.getGroupId()));
 
         service.getGroupPost(groupData.getId()).enqueue(new Callback<List<SingleItemPost>>() {
 
