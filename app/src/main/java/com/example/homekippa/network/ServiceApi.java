@@ -51,9 +51,12 @@ public interface ServiceApi {
     @POST("/user/add")
     Call<SignUpResponse> userSignUp(@Body SignUpData data);
 
-    @Multipart
     @POST("/group/add")
-    Call<CreateGroupResponse> groupCreate(@PartMap HashMap<String, RequestBody> data, @Part MultipartBody.Part image);
+    Call<CreateGroupResponse> groupCreate(@Body CreateGroupData data);
+
+    @Multipart
+    @POST("/group/add/photo")
+    Call<CreateGroupResponse> groupCreateWithPhoto(@PartMap HashMap<String, RequestBody> data, @Part MultipartBody.Part image);
 
     @POST("/pet/reports/add")
     Call<CreateDailyWorkResponse> createDailyWork(@Body CreateDailyWorkData data);

@@ -329,44 +329,66 @@ public class CreateGroupActivity extends AppCompatActivity {
     private void createGroup(String userId, String groupName, String groupAddress, String groupIntroduction) {
         Log.i("create", "create");
 
-        HashMap<String, RequestBody> data = new HashMap<String, RequestBody>();
+        if (tempFile != null) {
+            HashMap<String, RequestBody> data = new HashMap<String, RequestBody>();
 
-        RequestBody user_Id = RequestBody.create(MediaType.parse("text/plain"), userId);
-        data.put("userId", user_Id);
-        RequestBody group_Name = RequestBody.create(MediaType.parse("text/plain"), groupName);
-        data.put("groupName", group_Name);
-        RequestBody group_Address = RequestBody.create(MediaType.parse("text/plain"), groupAddress);
-        data.put("groupAddress", group_Address);
-        RequestBody group_Introduction = RequestBody.create(MediaType.parse("text/plain"), groupIntroduction);
-        data.put("groupIntroduction", group_Introduction);
+            RequestBody user_Id = RequestBody.create(MediaType.parse("text/plain"), userId);
+            data.put("userId", user_Id);
+            RequestBody group_Name = RequestBody.create(MediaType.parse("text/plain"), groupName);
+            data.put("groupName", group_Name);
+            RequestBody group_Address = RequestBody.create(MediaType.parse("text/plain"), groupAddress);
+            data.put("groupAddress", group_Address);
+            RequestBody group_Introduction = RequestBody.create(MediaType.parse("text/plain"), groupIntroduction);
+            data.put("groupIntroduction", group_Introduction);
 
-        RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), tempFile);
-        MultipartBody.Part uploadFile = MultipartBody.Part.createFormData("upload", tempFile.getName(), reqFile);
+            RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), tempFile);
+            MultipartBody.Part uploadFile = MultipartBody.Part.createFormData("upload", tempFile.getName(), reqFile);
 
-//        RequestBody name = RequestBody.create(MediaType.parse("text/plain"), "upload");
+            service.groupCreateWithPhoto(data, uploadFile).enqueue(new Callback<CreateGroupResponse>() {
 
-        service.groupCreate(data, uploadFile).enqueue(new Callback<CreateGroupResponse>() {
+                @Override
+                public void onResponse(Call<CreateGroupResponse> call, Response<CreateGroupResponse> response) {
+                    CreateGroupResponse result = response.body();
 
-            @Override
-            public void onResponse(Call<CreateGroupResponse> call, Response<CreateGroupResponse> response) {
-                CreateGroupResponse result = response.body();
-//              Toast.makeText(CreateGroupActivity.this, result.getMessage(),Toast.LENGTH_SHORT).show();
-//                Intent intent = new Intent(getApplicationContext(), CreateGroupUploadActivity.class);
-//                startActivity(intent);
-                if (result.getCode() == 200) {
+                    if (result.getCode() == 200) {
 
-                    finish();
+                        finish();
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<CreateGroupResponse> call, Throwable t) {
-                Toast.makeText(CreateGroupActivity.this, "그룹생성 에러 발생", Toast.LENGTH_SHORT).show();
+                @Override
+                public void onFailure(Call<CreateGroupResponse> call, Throwable t) {
+                    Toast.makeText(CreateGroupActivity.this, "그룹생성 에러 발생", Toast.LENGTH_SHORT).show();
 //              Log.e("createGroup error",t.getMessage());
-                t.printStackTrace();
-            }
-        });
+                    t.printStackTrace();
+                }
+            });
+        } else {
+            CreateGroupData data = new CreateGroupData(userId, groupName, groupAddress, groupIntroduction);
+
+            service.groupCreate(data).enqueue(new Callback<CreateGroupResponse>() {
+
+                @Override
+                public void onResponse(Call<CreateGroupResponse> call, Response<CreateGroupResponse> response) {
+                    CreateGroupResponse result = response.body();
+
+                    if (result.getCode() == 200) {
+
+                        finish();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<CreateGroupResponse> call, Throwable t) {
+                    Toast.makeText(CreateGroupActivity.this, "그룹생성 에러 발생", Toast.LENGTH_SHORT).show();
+//              Log.e("createGroup error",t.getMessage());
+                    t.printStackTrace();
+                }
+            });
+        }
     }
+
+
 
 
 }
