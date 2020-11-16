@@ -172,8 +172,18 @@
             android:layout_margin="5dp"
             android:hint="생년월일" />
 
-
     </LinearLayout>
+    <Button
+        android:id="@+id/button_gallery"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="앨범" />
+
+    <Button
+        android:id="@+id/button_camera"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="카메라" />
     <Button
         android:id="@+id/button_petDesSave"
         android:layout_width="200dp"

@@ -1,6 +1,8 @@
 package com.example.homekippa.ui.group;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -23,16 +25,20 @@ import com.example.homekippa.AddPetActivity;
 import com.example.homekippa.CreateDailyWorkActivity;
 import com.example.homekippa.MainActivity;
 import com.example.homekippa.R;
+import com.example.homekippa.data.CreateGroupResponse;
+import com.example.homekippa.data.GetGroupImageResponse;
 import com.example.homekippa.data.GroupData;
 import com.example.homekippa.data.UserData;
 import com.example.homekippa.function.Loading;
 import com.example.homekippa.network.RetrofitClient;
 import com.example.homekippa.network.ServiceApi;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -135,6 +141,7 @@ public class YesGroup extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), GroupInviteActivity.class);
+                intent.putExtra("userData", userData);
                 intent.putExtra("groupData", groupData);
                 startActivity(intent);
             }
@@ -147,7 +154,7 @@ public class YesGroup extends Fragment {
         tv_groupName.setText(groupData.getName());
         tv_groupIntro.setText(groupData.getIntroduction());
 
-
+        getGroupProfileImage();
         setPetListView(listView_pets);
         setDailyWorkListView(listView_dailyWorks);
 
@@ -186,6 +193,31 @@ public class YesGroup extends Fragment {
         });
 
 
+    }
+
+    private void getGroupProfileImage() {
+        Log.d("url", groupData.getImage());
+        service.getProfileImage(groupData.getImage()).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                String TAG = "YesGroup";
+                if (response.isSuccessful()) {
+
+                    Log.d(TAG, "server contacted and has file");
+//                    InputStream is = response.body().byteStream();
+//                    Bitmap bitmap = BitmapFactory.decodeStream(is);
+                } else {
+                    Log.d(TAG, "server contact failed");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+//                Toast.makeText(YesGroup.this, "그룹생성 에러 발생", Toast.LENGTH_SHORT).show();
+//              Log.e("createGroup error",t.getMessage());
+                t.printStackTrace();
+            }
+        });
     }
 
     private void setPetListView(RecyclerView listView) {

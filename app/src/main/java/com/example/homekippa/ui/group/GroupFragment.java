@@ -19,8 +19,6 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 public class GroupFragment extends Fragment {
-
-    private GroupViewModel groupViewModel;
     private UserData userData;
 
     GroupCollectionAdapter groupCollectionAdapter;
@@ -36,8 +34,6 @@ public class GroupFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        groupViewModel =
-                ViewModelProviders.of(this).get(GroupViewModel.class);
         View root = inflater.inflate(R.layout.fragment_group, container, false);
         return root;
     }
