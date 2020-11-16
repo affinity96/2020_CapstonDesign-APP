@@ -79,6 +79,10 @@ public interface ServiceApi {
 //    @POST("/pet/add")
 //    Call<AddPetResponse> addPetReg(@Body AddPetData data);
 
+    @Multipart
+    @POST("/pet/add/des/photo")
+    Call<AddpetDesResponse> addPetDesWithPhoto(@PartMap HashMap<String, RequestBody> data, @Part MultipartBody.Part image);
+
     @POST("/pet/add/des")
     Call<AddpetDesResponse> addPetDes(@Body AddPetDesData data);
 

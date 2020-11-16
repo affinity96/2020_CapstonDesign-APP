@@ -90,16 +90,6 @@
             android:drawableLeft="@drawable/ic_more_24px"
             android:hint="상세주소 "
             android:textSize="15dp" />
-        <Button
-            android:id="@+id/button_createGroup"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:autoSizeMinTextSize="8dp"
-            android:background="@drawable/round_button2"
-            android:text="그룹 만들기 "
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearlayout_groupinfo" />
 
         <Button
             android:id="@+id/button_gallery"
@@ -112,6 +102,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="카메라" />
+
+        <Button
+            android:id="@+id/button_createGroup"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:autoSizeMinTextSize="8dp"
+            android:background="@drawable/round_button2"
+            android:text="그룹 만들기 "
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearlayout_groupinfo" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

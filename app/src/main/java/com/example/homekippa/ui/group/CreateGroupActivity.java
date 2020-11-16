@@ -17,7 +17,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.homekippa.AddPetDesActivity;
 import com.example.homekippa.R;
 import com.example.homekippa.data.CreateGroupData;
 import com.example.homekippa.data.CreateGroupResponse;
@@ -45,6 +44,9 @@ import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 
 public class CreateGroupActivity extends AppCompatActivity {
+
+    public CreateGroupActivity() {
+    }
 
     private static final String TAG = "createGroup";
 
@@ -127,7 +129,6 @@ public class CreateGroupActivity extends AppCompatActivity {
         button_createGroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Map<String, String> data = new HashMap<>();
                 String groupName = editText_groupName.getText().toString();
 //                Log.d("creategroup", "here");
                 String userId = mAuth.getCurrentUser().getUid();
@@ -156,7 +157,7 @@ public class CreateGroupActivity extends AppCompatActivity {
     /**
      *  앨범에서 이미지 가져오기
      */
-    private void goToAlbum() {
+    public void goToAlbum() {
 
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
@@ -166,7 +167,7 @@ public class CreateGroupActivity extends AppCompatActivity {
     /**
      *  카메라에서 이미지 가져오기
      */
-    private void takePhoto() {
+    public void takePhoto() {
 
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
@@ -196,7 +197,7 @@ public class CreateGroupActivity extends AppCompatActivity {
     /**
      *  폴더 및 파일 만들기
      */
-    private File createImageFile() throws IOException {
+    public File createImageFile() throws IOException {
 
         // 이미지 파일 이름 ( Happytogedog_{시간}_ )
         String timeStamp = new SimpleDateFormat("HHmmss").format(new Date());
@@ -238,7 +239,7 @@ public class CreateGroupActivity extends AppCompatActivity {
     /**
      *  권한 설정
      */
-    private void tedPermission() {
+    public void tedPermission() {
         PermissionListener permissionListener = new PermissionListener() {
             @Override
             public void onPermissionGranted() {
