@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="30">
 
     <RelativeLayout
         android:id="@+id/relativeLayout_profile"
@@ -47,12 +49,42 @@
         </LinearLayout>
     </RelativeLayout>
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/textView_DetailPostTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            android:lines="1"
+            android:text="햇살 좋은 날~🌻"
+            android:textColor="#000000"
+            android:textSize="12dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView_DetailPostContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView_DetailPostTitle"
+            android:layout_margin="3dp"
+            android:lines="1"
+            android:text="기분 좋은 강아지들 행복:) "
+            android:textSize="10dp" />
+    </LinearLayout>
+
     <ScrollView
         android:id="@+id/scrollview_post"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/relativeLayout_profile"
-        android:fillViewport="true">
+
+        android:layout_weight="28">
 
         <LinearLayout
             android:id="@+id/linearlayout_post"
@@ -63,26 +95,6 @@
             android:orientation="vertical"
             android:padding="10dp">
 
-            <TextView
-                android:id="@+id/textView_DetailPostTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="3dp"
-                android:lines="1"
-                android:text="햇살 좋은 날~🌻"
-                android:textColor="#000000"
-                android:textSize="12dp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/textView_DetailPostContent"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/textView_DetailPostTitle"
-                android:layout_margin="3dp"
-                android:lines="1"
-                android:text="기분 좋은 강아지들 행복:) "
-                android:textSize="10dp" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/listview_DetailPostImages"
@@ -126,7 +138,7 @@
                     android:layout_height="wrap_content"
                     android:text="3" />
 
-                <!--          LiveData      The Linear Layout -->
+                LiveData The Linear Layout
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -142,41 +154,6 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/scrollview_post"
-                android:layout_margin="5dp"
-                android:background="@drawable/color_comment_background"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1">
-
-                    <EditText
-                        android:id="@+id/editText_comment"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@null"
-                        android:hint="댓글 입력... "
-                        android:padding="9dp"
-                        android:textSize="12dp" />
-
-                </LinearLayout>
-
-                <TextView
-                    android:id="@+id/textView_postComment"
-                    style="@style/BlueText"
-                    android:layout_width="50dp"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:padding="10dp"
-                    android:text="게시"
-                    android:textSize="12dp" />
-
-            </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/listview_PostComments"
@@ -184,10 +161,50 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/textView_commentNum"
                 android:padding="3dp" />
-
         </LinearLayout>
 
     </ScrollView>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="10dp"
+        android:layout_weight="1"
+        android:background="@drawable/color_comment_background"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <EditText
+                android:id="@+id/editText_comment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:hint="댓글 입력... "
+                android:padding="9dp"
+                android:textSize="12dp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView_postComment"
+            style="@style/BlueText"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:padding="10dp"
+
+            android:text="게시"
+            android:textSize="12dp" />
+
+    </LinearLayout>
 
 
     <!--        <EditText-->
@@ -201,4 +218,4 @@
     <!--            android:padding="9dp"-->
     <!--            android:textSize="12dp" />-->
 
-</RelativeLayout>
+</LinearLayout>

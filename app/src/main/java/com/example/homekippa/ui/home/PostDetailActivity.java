@@ -10,13 +10,18 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.homekippa.MainActivity;
 import com.example.homekippa.R;
 import com.example.homekippa.data.CommentData;
 import com.example.homekippa.data.CommentGetResponse;
@@ -26,12 +31,14 @@ import com.example.homekippa.data.UserData;
 import com.example.homekippa.network.RetrofitClient;
 import com.example.homekippa.network.ServiceApi;
 import com.example.homekippa.ui.group.ListCommentAdapter;
+import com.example.homekippa.ui.group.ListPostAdapter;
 import com.example.homekippa.ui.group.ListPostImageAdapter;
 import com.example.homekippa.ui.group.SingleItemComment;
 import com.example.homekippa.ui.group.SingleItemPost;
 import com.example.homekippa.ui.group.SingleItemPostImage;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -41,11 +48,17 @@ public class PostDetailActivity extends AppCompatActivity {
 
     private static final String TAG = "postDetail";
 
-    private CommentViewModel viewModel;
+    private PostViewModel viewModel;
 
-    private SingleItemPost post;
+
     private GroupData group;
     private UserData user;
+    private Intent intent;
+
+    int postPosition;
+
+
+    private SingleItemPost post;
     ImageView postGroupProfile;
     TextView postGroupName;
     TextView postNickName;
@@ -54,6 +67,8 @@ public class PostDetailActivity extends AppCompatActivity {
     TextView postContent;
     TextView postLikeNum;
     TextView postCommentNum;
+
+    TextView comment;
     ArrayList<CommentData> comment_List = new ArrayList<>();
     ArrayList<UserData> user_List = new ArrayList<>();
     ArrayList<GroupData> group_List = new ArrayList<>();
@@ -63,8 +78,18 @@ public class PostDetailActivity extends AppCompatActivity {
     ArrayList<SingleItemPostImage> post_ImageList;
     EditText commentInput;
     private TextView postComment;
+    private int commentNum;
 
     private ServiceApi service;
+
+
+    @Override
+    public void onBackPressed() {
+        Log.d("THIS IS COMMENT NUM", "sdfsdfsdf");
+        intent.putExtra("commentnum", String.valueOf(commentNum));
+        setResult(RESULT_OK, intent);
+        finish();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +97,6 @@ public class PostDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_post_detail);
         service = RetrofitClient.getClient().create(ServiceApi.class);
 
-        setCommentViewModel();
         setPostDetail();
 
         postComment = (TextView) findViewById(R.id.textView_postComment);
@@ -98,10 +122,10 @@ public class PostDetailActivity extends AppCompatActivity {
 
                             setPostComment(recyclerView_postComments);
 
-                            Log.d("comment", viewModel.getCounter().getValue().toString());
-                            CommentViewModel.increase();
-//                            postCommentNum.setText(String.valueOf(post.getCommentNum()+ 1));
-//                            post.setCommentNum(post.getCommentNum() + 1);
+//                            Log.d("comment", viewModel.getCounter().getValue().toString());
+                            PostViewModel.increase(postPosition);
+                            setPostDetail();
+
 
                         }
                     }
@@ -117,50 +141,47 @@ public class PostDetailActivity extends AppCompatActivity {
 
     }
 
-    private void setCommentViewModel() {
-
-        viewModel = new ViewModelProvider(this).get(CommentViewModel.class);
-        final Observer<Integer> countObserver = new Observer<Integer>() {
-            @Override
-            public void onChanged(Integer newNum) {
-                postCommentNum.setText(String.valueOf(newNum));
-            }
-        };
-
-        viewModel.getCounter().observe(this, countObserver);
-
-    }
-
     private void setPostDetail() {
 
-        Intent intent = getIntent();
+        intent = getIntent();
         post = (SingleItemPost) intent.getExtras().get("post");
         group = (GroupData) intent.getExtras().get("group");
         user = (UserData) intent.getExtras().get("user");
+        postPosition = (int) intent.getExtras().get("pos");
+
 
         Log.d("post group", group.getName());
 
-        postGroupProfile = (ImageView) findViewById(R.id.imageView_DetailPostGroupProfile);
-        postGroupName = (TextView) findViewById(R.id.textView__DetailPostGroupName);
-        postGroupLocation = (TextView) findViewById(R.id.textView__DetailPostGroupLocation);
+//        postGroupProfile = (ImageView) findViewById(R.id.imageView_DetailPostGroupProfile);
+//        postGroupName = (TextView) findViewById(R.id.textView__DetailPostGroupName);
+//        postGroupLocation = (TextView) findViewById(R.id.textView__DetailPostGroupLocation);
         postTitle = (TextView) findViewById(R.id.textView_DetailPostTitle);
         postContent = (TextView) findViewById(R.id.textView_DetailPostContent);
-        postLikeNum = (TextView) findViewById(R.id.textView_LikedNum);
+//        postLikeNum = (TextView) findViewById(R.id.textView_LikedNum);
         postCommentNum = (TextView) findViewById(R.id.textView_commentNum);
-        recyclerView_postImages = (RecyclerView) findViewById(R.id.listview_DetailPostImages);
+//        recyclerView_postImages = (RecyclerView) findViewById(R.id.listview_DetailPostImages);
         recyclerView_postComments = (RecyclerView) findViewById(R.id.listview_PostComments);
 
 //        postGroupProfile.setImageResource(post.getGroupPostProfile());
-        post_ImageList = post.getGroupPostImage();
-        postGroupName.setText("s");
-        postGroupLocation.setText(group.getAddress());
+//        post_ImageList = post.getGroupPostImage();
+//        postGroupName.setText(group.getName());
+//        postGroupLocation.setText(group.getAddress());
         postTitle.setText(post.getTitle());
         postContent.setText(post.getContent());
-        postLikeNum.setText(String.valueOf(post.getLikeNum()));
-        postCommentNum.setText(String.valueOf(post.getCommentNum()));
+//        postLikeNum.setText(String.valueOf(post.getLikeNum()));
+//        postCommentNum.setText(String.valueOf(post.getCommentNum()));
 
-        setPostImage(post_ImageList);
+        viewModel = new ViewModelProvider((ViewModelStoreOwner) this).get(PostViewModel.class);
+        postCommentNum.setText(String.valueOf(viewModel.getPostList().getValue().get(postPosition).getCommentNum()));
+
+//        viewModel.getCounter().setValue(post.getCommentNum());
+
+
+//
+//        setPostImage(post_ImageList);
+        commentNum = post.getCommentNum();
         setPostComment(recyclerView_postComments);
+
 
     }
 
@@ -174,7 +195,7 @@ public class PostDetailActivity extends AppCompatActivity {
 
     //TODO: Set Post Comment
     private void setPostComment(RecyclerView listView) {
-
+        Log.d("comment", "setoistcomnt");
         service.getComment(post.getPostId()).enqueue(new Callback<CommentGetResponse>() {
             @Override
             public void onResponse(Call<CommentGetResponse> call, Response<CommentGetResponse> response) {
@@ -202,9 +223,7 @@ public class PostDetailActivity extends AppCompatActivity {
                     listView.setLayoutManager(pLayoutManager);
                     listView.setItemAnimator(new DefaultItemAnimator());
 
-
                 }
-
             }
 
             @Override

@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 
 import com.example.homekippa.data.GroupData;
 import com.example.homekippa.data.UserData;
@@ -53,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
     private GroupData groupData;
     private ServiceApi service;
     private ConstraintLayout main_naviheader;
-
 
 
     @Override
@@ -137,9 +137,9 @@ public class MainActivity extends AppCompatActivity {
                         getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new NotificationsFragment()).commitAllowingStateLoss();
                         return true;
                     case R.id.navigation_group:
-                        if(userData.getGroupId()!=0){
+                        if (userData.getGroupId() != 0) {
                             getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new GroupFragment()).commitAllowingStateLoss();
-                        }else {
+                        } else {
                             getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new NoGroup()).commitAllowingStateLoss();
                         }
 
@@ -174,10 +174,14 @@ public class MainActivity extends AppCompatActivity {
         TextView usergroup = (TextView) findViewById(R.id.nav_user_group);
 
         username.setText(userData.getUserName() + "님");
-        if (userData.getGroupId()!=0){
+        if (userData.getGroupId() != 0) {
             usergroup.setText(groupData.getName());
 
         }
+    }
+
+    public void changeFragment(Fragment fragment) {
+        getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, fragment).commitAllowingStateLoss();
     }
 
     public UserData getUserData() {
@@ -189,7 +193,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed(){
+    public void onBackPressed() {
         this.finishAffinity();
     }
 }
