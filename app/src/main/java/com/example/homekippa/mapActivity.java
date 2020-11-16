@@ -32,8 +32,8 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
     private ViewGroup mapViewContainer;
     private static final int GPS_ENABLE_REQUEST_CODE = 2001;
     private static final int PERMISSIONS_REQUEST_CODE = 100;
-    private List<Double> latitude_arrayList = new ArrayList<>();
-    private List<Double> longitude_arrayList = new ArrayList<>();
+    private ArrayList<Double> latitude_arrayList = new ArrayList<>();
+    private ArrayList<Double> longitude_arrayList = new ArrayList<>();
     private Button button_stopMap;
     private MapPolyline mapPolyLine = new MapPolyline();
 
@@ -42,9 +42,6 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
 
     @Override
     protected  void onCreate(Bundle savedInstanceState) {
-        Log.d("here", "123456789");
-
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
         button_stopMap =findViewById(R.id.button_stopMap);
@@ -93,12 +90,9 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
         button_stopMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mapPolyLine.setTag(1000);
                 mapPolyLine.setLineColor(Color.argb(128, 255, 51, 0));
                 for (int i = 0 ; i < longitude_arrayList.size();i++){
                     mapPolyLine.addPoint(MapPoint.mapPointWithGeoCoord(longitude_arrayList.get(i),latitude_arrayList.get(i)));
-
-
                     Log.d("array_map_long", String.valueOf(longitude_arrayList.get(i)));
                     Log.d("array_map_lati", String.valueOf(latitude_arrayList.get(i)));
 
