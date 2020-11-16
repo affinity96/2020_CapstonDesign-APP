@@ -1,6 +1,9 @@
 package com.example.homekippa;
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,22 +11,31 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.homekippa.ui.group.CreateGroupActivity;
+
+import net.daum.mf.map.api.CameraUpdateFactory;
 import net.daum.mf.map.api.MapPOIItem;
 import net.daum.mf.map.api.MapPoint;
+import net.daum.mf.map.api.MapPointBounds;
+import net.daum.mf.map.api.MapPolyline;
 import net.daum.mf.map.api.MapView;
 
+import java.io.Serializable;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 
 public class mapActivity extends AppCompatActivity implements MapView.MapViewEventListener, MapView.POIItemEventListener, MapView.CurrentLocationEventListener {
 
     private MapView mapView;
-//    private ViewGroup mapViewContainer;
-//    private static final int GPS_ENABLE_REQUEST_CODE = 2001;
-//    private static final int PERMISSIONS_REQUEST_CODE = 100;
-//    private List<Double> latitude_arrayList;
-//    private List<Double> longitude_arrayList;
-//    private Button button_stopMap;
+    private ViewGroup mapViewContainer;
+    private static final int GPS_ENABLE_REQUEST_CODE = 2001;
+    private static final int PERMISSIONS_REQUEST_CODE = 100;
+    private List<Double> latitude_arrayList = new ArrayList<>();
+    private List<Double> longitude_arrayList = new ArrayList<>();
+    private Button button_stopMap;
+    private MapPolyline mapPolyLine = new MapPolyline();
 
 
 
@@ -35,11 +47,11 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
-//        button_stopMap =findViewById(R.id.button_stopMap);
+        button_stopMap =findViewById(R.id.button_stopMap);
 
         // mapview에 kakaoMap 연동해서 올리기
         mapView =new MapView(this);
-        ViewGroup mapViewContainer = (ViewGroup) findViewById(R.id.map_view);
+        mapViewContainer = (ViewGroup) findViewById(R.id.map_view);
         mapViewContainer.addView(mapView);
         //
         mapView.setMapViewEventListener(this);
@@ -78,15 +90,26 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
 
         //1.
 
-//        button_stopMap.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                for (int i = 0 ; i < longitude_arrayList.size();i++){
-//                    Log.d("array_map", String.valueOf(longitude_arrayList.get(i)));
-//                    Log.d("array_map", String.valueOf(latitude_arrayList.get(i)));
-//                }
-//            }
-//        });
+        button_stopMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mapPolyLine.setTag(1000);
+                mapPolyLine.setLineColor(Color.argb(128, 255, 51, 0));
+                for (int i = 0 ; i < longitude_arrayList.size();i++){
+                    mapPolyLine.addPoint(MapPoint.mapPointWithGeoCoord(longitude_arrayList.get(i),latitude_arrayList.get(i)));
+
+
+                    Log.d("array_map_long", String.valueOf(longitude_arrayList.get(i)));
+                    Log.d("array_map_lati", String.valueOf(latitude_arrayList.get(i)));
+
+                }
+                mapView.addPolyline(mapPolyLine);
+
+                MapPointBounds mapPointBounds = new MapPointBounds(mapPolyLine.getMapPoints());
+                int padding = 100; // px
+                mapView.moveCamera(CameraUpdateFactory.newMapPointBounds(mapPointBounds, padding));
+            }
+        });
 
 
 
@@ -145,12 +168,12 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
     @Override
     public void onMapViewCenterPointMoved(MapView mapView, MapPoint mapPoint) {
         MapPoint.GeoCoordinate mapPointGeo = mapPoint.getMapPointGeoCoord();
-//        latitude_arrayList.add(mapPointGeo.latitude);
-//        longitude_arrayList.add(mapPointGeo.longitude);
+        latitude_arrayList.add(mapPointGeo.latitude);
+        longitude_arrayList.add(mapPointGeo.longitude);
 
         //위도 경도 찍
-        Log.d("latitude", String.valueOf(mapPointGeo.latitude));
-        Log.d("longitude", String.valueOf(mapPointGeo.longitude));
+//        Log.d("latitude", String.valueOf(mapPointGeo.latitude));
+//        Log.d("longitude", String.valueOf(mapPointGeo.longitude));
 
     }
 
