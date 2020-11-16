@@ -65,7 +65,7 @@ public interface ServiceApi {
     Call<AddPetResponse> addPetReg(@Body AddPetData data);
 
     @GET("/user")
-    Call<UserData> getUserData(@Query("userId") String userId);
+    Call<UserData> getUserData(@Query("userId") String userId, @Query("token") String token);
 
     @GET("/group")
     Call<GroupData> getGroupData(@Query("groupId") int groupId);
