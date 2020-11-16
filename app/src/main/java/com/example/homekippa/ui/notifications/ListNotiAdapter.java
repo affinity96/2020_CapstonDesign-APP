@@ -85,7 +85,7 @@ public class ListNotiAdapter extends RecyclerView.Adapter<ListNotiAdapter.MyView
                 public void onClick(View view) {
                     if (alarm_code.equals("GROUP_INVITE")){
                         int groupId = Integer.parseInt(alarm_extra);
-                        Toast.makeText(context, alarm_extra + "클릭됨", Toast.LENGTH_LONG).show();
+                        //Todo - 클릭시 초대 받는 화면 구현
                     }
                 }
             });
