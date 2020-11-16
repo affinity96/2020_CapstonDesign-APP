@@ -18,6 +18,7 @@ import com.example.homekippa.data.GroupData;
 import com.example.homekippa.data.GroupInviteData;
 import com.example.homekippa.data.LikeData;
 import com.example.homekippa.data.LikeResponse;
+import com.example.homekippa.data.NotiData;
 import com.example.homekippa.data.PostResponse;
 import com.example.homekippa.data.SignUpData;
 import com.example.homekippa.data.SignUpResponse;
@@ -109,4 +110,7 @@ public interface ServiceApi {
 
     @POST("/group/invite")
     Call<UidRespense> sendGroupInvite(@Body GroupInviteData data);
+
+    @GET("/user/getNoti")
+    Call<List<NotiData>> getNotiData(@Query("userId") String userId);
 }
