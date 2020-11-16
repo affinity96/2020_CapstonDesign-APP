@@ -13,7 +13,7 @@ import com.example.homekippa.data.CreateDailyWorkData;
 import com.example.homekippa.data.CreateDailyWorkResponse;
 import com.example.homekippa.data.CreateGroupData;
 import com.example.homekippa.data.CreateGroupResponse;
-import com.example.homekippa.data.CreateGroupUploadResponse;
+import com.example.homekippa.data.GetGroupImageResponse;
 import com.example.homekippa.data.GroupData;
 import com.example.homekippa.data.GroupInviteData;
 import com.example.homekippa.data.LikeData;
@@ -21,19 +21,17 @@ import com.example.homekippa.data.LikeResponse;
 import com.example.homekippa.data.PostResponse;
 import com.example.homekippa.data.SignUpData;
 import com.example.homekippa.data.SignUpResponse;
-import com.example.homekippa.data.UidData;
 import com.example.homekippa.data.UidRespense;
 import com.example.homekippa.data.UserData;
-import com.example.homekippa.ui.group.SingleItemComment;
 import com.example.homekippa.ui.group.SingleItemPet;
 import com.example.homekippa.ui.group.SingleItemPost;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -41,8 +39,8 @@ import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.PartMap;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
-import retrofit2.http.QueryMap;
 
 public interface ServiceApi {
 //    @POST("/user/login")
@@ -53,6 +51,9 @@ public interface ServiceApi {
 
     @POST("/group/add")
     Call<CreateGroupResponse> groupCreate(@Body CreateGroupData data);
+
+    @GET("images/{apiName}")
+    Call<ResponseBody> getProfileImage(@Path("apiName") String apiName);
 
     @Multipart
     @POST("/group/add/photo")

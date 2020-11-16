@@ -2,6 +2,7 @@ package com.example.homekippa;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.Manifest;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -15,16 +16,17 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.example.homekippa.data.AddPetDesData;
 import com.example.homekippa.data.AddPostData;
 import com.example.homekippa.data.AddPostResponse;
 import com.example.homekippa.data.GroupData;
 import com.example.homekippa.data.UserData;
 import com.example.homekippa.network.RetrofitClient;
 import com.example.homekippa.network.ServiceApi;
-import com.example.homekippa.ui.group.CreateGroupActivity;
+import com.gun0912.tedpermission.PermissionListener;
+import com.gun0912.tedpermission.TedPermission;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import okhttp3.MediaType;
@@ -49,8 +51,6 @@ public class AddPostActivity extends AppCompatActivity {
     private Boolean isPermission = true;
     private static final int PICK_FROM_ALBUM = 1;
 
-    CreateGroupActivity groupActivity = new CreateGroupActivity();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,13 +67,13 @@ public class AddPostActivity extends AppCompatActivity {
         GroupData groupData = (GroupData) intent.getExtras().get("groupData");
 
         // 권한 요청
-        groupActivity.tedPermission();
+        tedPermission();
 
         button_Add_Post_Img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // 권한 허용에 동의하지 않았을 경우 토스트를 띄웁니다.
-                if(isPermission) groupActivity.goToAlbum();
+                if(isPermission) goToAlbum();
                 else Toast.makeText(view.getContext(), getResources().getString(R.string.permission_2), Toast.LENGTH_LONG).show();
             }
         });
@@ -141,6 +141,41 @@ public class AddPostActivity extends AppCompatActivity {
 
             }
         }
+    }
+
+    /**
+     *  앨범에서 이미지 가져오기
+     */
+    public void goToAlbum() {
+
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
+        startActivityForResult(intent, PICK_FROM_ALBUM);
+    }
+
+    /**
+     *  권한 설정
+     */
+    public void tedPermission() {
+        PermissionListener permissionListener = new PermissionListener() {
+            @Override
+            public void onPermissionGranted() {
+                // 권한 요청 성공
+
+            }
+
+            @Override
+            public void onPermissionDenied(ArrayList<String> deniedPermissions) {
+                // 권한 요청 실패
+            }
+        };
+
+        TedPermission.with(this)
+                .setPermissionListener(permissionListener)
+                .setRationaleMessage(getResources().getString(R.string.permission_2))
+                .setDeniedMessage(getResources().getString(R.string.permission_1))
+                .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA)
+                .check();
     }
 
     private void addPost(int groupId, String userId, String content) {

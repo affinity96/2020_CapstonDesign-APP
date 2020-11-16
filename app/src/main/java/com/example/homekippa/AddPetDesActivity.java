@@ -1,9 +1,11 @@
 package com.example.homekippa;
 
+import android.Manifest;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
@@ -13,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.DialogFragment;
 import com.example.homekippa.data.AddPetDesData;
 import com.example.homekippa.data.AddpetDesResponse;
@@ -20,7 +23,6 @@ import com.example.homekippa.data.GroupData;
 import com.example.homekippa.network.RetrofitClient;
 import com.example.homekippa.network.ServiceApi;
 import com.example.homekippa.ui.datepicker.DatePetPickerFragment;
-import com.example.homekippa.ui.group.CreateGroupActivity;
 
 
 import okhttp3.MediaType;
@@ -34,6 +36,10 @@ import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 
 import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 public class AddPetDesActivity extends AppCompatActivity {
@@ -63,8 +69,6 @@ public class AddPetDesActivity extends AppCompatActivity {
     private static final int PICK_FROM_ALBUM = 1;
     private static final int PICK_FROM_CAMERA = 2;
 
-    CreateGroupActivity groupActivity = new CreateGroupActivity();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -84,13 +88,13 @@ public class AddPetDesActivity extends AppCompatActivity {
         button_camera = findViewById(R.id.button_camera);
 
         // 권한 요청
-        groupActivity.tedPermission();
+        tedPermission();
 
         button_gallery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // 권한 허용에 동의하지 않았을 경우 토스트를 띄웁니다.
-                if(isPermission) groupActivity.goToAlbum();
+                if(isPermission) goToAlbum();
                 else Toast.makeText(view.getContext(), getResources().getString(R.string.permission_2), Toast.LENGTH_LONG).show();
             }
         });
@@ -99,7 +103,7 @@ public class AddPetDesActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // 권한 허용에 동의하지 않았을 경우 토스트를 띄웁니다.
-                if(isPermission)  groupActivity.takePhoto();
+                if(isPermission)  takePhoto();
                 else Toast.makeText(view.getContext(), getResources().getString(R.string.permission_2), Toast.LENGTH_LONG).show();
             }
         });
@@ -107,7 +111,9 @@ public class AddPetDesActivity extends AppCompatActivity {
         Intent getintent = getIntent();
 
         regNum = getintent.getExtras().getString("petRegNum");
+        Log.d("여기", "regNum:"+regNum);
         if (regNum != "") {
+            Log.d("위", "name:"+name);
             name = getintent.getExtras().getString("petName");
             gender = getintent.getExtras().getString("petGender");
             species = getintent.getExtras().getString("petSpecies");
@@ -119,6 +125,7 @@ public class AddPetDesActivity extends AppCompatActivity {
             editText_petSpecies.setText(species);
             editText_petNeutralization.setText(neutralization);
         } else {
+            Log.d("아래", "name:"+name);
             regNum = editText_petRegNum.getText().toString();
             name = editText_petName.getText().toString();
             gender = editText_petGender.getText().toString();
@@ -158,6 +165,91 @@ public class AddPetDesActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    /**
+     *  앨범에서 이미지 가져오기
+     */
+    public void goToAlbum() {
+
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
+        startActivityForResult(intent, PICK_FROM_ALBUM);
+    }
+
+    /**
+     *  카메라에서 이미지 가져오기
+     */
+    public void takePhoto() {
+
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+        try {
+            tempFile = createImageFile();
+        } catch (IOException e) {
+            Toast.makeText(this, "이미지 처리 오류! 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
+            finish();
+            e.printStackTrace();
+        }
+        if (tempFile != null) {
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+
+                Uri photoUri = FileProvider.getUriForFile(this,
+                        "com.example.homekippa.provider", tempFile);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+                startActivityForResult(intent, PICK_FROM_CAMERA);
+
+            } else {
+                Uri photoUri = Uri.fromFile(tempFile);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+                startActivityForResult(intent, PICK_FROM_CAMERA);
+            }
+        }
+    }
+
+    /**
+     *  폴더 및 파일 만들기
+     */
+    public File createImageFile() throws IOException {
+
+        // 이미지 파일 이름 ( Happytogedog_{시간}_ )
+        String timeStamp = new SimpleDateFormat("HHmmss").format(new Date());
+        String imageFileName = "Happytogedog_" + timeStamp;
+
+        // 이미지가 저장될 폴더 이름 ( Happytogedog )
+        File storageDir = new File(Environment.getExternalStorageDirectory() + "/Happytogedog/");
+        if (!storageDir.exists()) storageDir.mkdirs();
+
+        // 파일 생성
+        File image = File.createTempFile(imageFileName, ".jpg", storageDir);
+        Log.d(TAG, "createImageFile : " + image.getAbsolutePath());
+
+        return image;
+    }
+
+    /**
+     *  권한 설정
+     */
+    public void tedPermission() {
+        PermissionListener permissionListener = new PermissionListener() {
+            @Override
+            public void onPermissionGranted() {
+                // 권한 요청 성공
+
+            }
+
+            @Override
+            public void onPermissionDenied(ArrayList<String> deniedPermissions) {
+                // 권한 요청 실패
+            }
+        };
+
+        TedPermission.with(this)
+                .setPermissionListener(permissionListener)
+                .setRationaleMessage(getResources().getString(R.string.permission_2))
+                .setDeniedMessage(getResources().getString(R.string.permission_1))
+                .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA)
+                .check();
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
@@ -313,7 +405,6 @@ public class AddPetDesActivity extends AppCompatActivity {
 
                     Toast.makeText(AddPetDesActivity.this, "반려동물 등록번호 등록 에러 발생", Toast.LENGTH_SHORT).show();
                     t.printStackTrace();
-
 
                 }
             });
