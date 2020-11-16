@@ -408,19 +408,19 @@ public class AddPetDesActivity extends AppCompatActivity {
             HashMap<String, RequestBody> data = new HashMap<String, RequestBody>();
 
             RequestBody reg_Num = RequestBody.create(MediaType.parse("text/plain"), regNum);
-            data.put("regNum", reg_Num);
+            data.put("petRegNum", reg_Num);
             RequestBody Name = RequestBody.create(MediaType.parse("text/plain"), name);
-            data.put("name", Name);
+            data.put("petName", Name);
             RequestBody Species = RequestBody.create(MediaType.parse("text/plain"), species);
-            data.put("species", Species);
+            data.put("petSpecies", Species);
             RequestBody Gender = RequestBody.create(MediaType.parse("text/plain"), gender);
-            data.put("gender", Gender);
+            data.put("petGender", Gender);
             RequestBody Neutralization = RequestBody.create(MediaType.parse("text/plain"), neutralization);
-            data.put("neutralization", Neutralization);
+            data.put("petNeutralization", Neutralization);
             RequestBody group_Id = RequestBody.create(MediaType.parse("text/plain"), str_groupId);
-            data.put("groupId", group_Id);
+            data.put("GroupId", group_Id);
             RequestBody Birth = RequestBody.create(MediaType.parse("text/plain"), birth);
-            data.put("birth", Birth);
+            data.put("petBirth", Birth);
 
             RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), tempFile);
             MultipartBody.Part uploadFile = MultipartBody.Part.createFormData("upload", tempFile.getName(), reqFile);
