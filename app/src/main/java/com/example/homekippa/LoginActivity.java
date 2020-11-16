@@ -22,6 +22,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -55,7 +56,7 @@ public class LoginActivity extends AppCompatActivity {
 
         if (curUser != null && curUser.isEmailVerified()) {
             loading.loading(LoginActivity.this);
-            requestUserData(curUser.getUid());
+            getUserToken(curUser.getUid());
         }
 
         editTextID = findViewById(R.id.editText_ID);
@@ -97,8 +98,9 @@ public class LoginActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             curUser = mAuth.getCurrentUser();
+
                             if (curUser.isEmailVerified()) {
-                                requestUserData(curUser.getUid());
+                                getUserToken(curUser.getUid());
                             } else {
                                 mAuth.signOut();
                                 Toast.makeText(getApplicationContext(), "이메일 인증을 완료해주세요", Toast.LENGTH_LONG).show();
@@ -113,8 +115,8 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
-    public void requestUserData(String ID) {
-        service.getUserData(ID).enqueue(new Callback<UserData>() {
+    public void requestUserData(String ID, String token) {
+        service.getUserData(ID, token).enqueue(new Callback<UserData>() {
             @Override
             public void onResponse(Call<UserData> call, Response<UserData> response) {
                 if (response.isSuccessful()) {
@@ -169,6 +171,29 @@ public class LoginActivity extends AppCompatActivity {
                 Log.e("그룹 확인", t.getMessage());
             }
         });
+    }
+
+    public void getUserToken(String ID){
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w("푸시 알림", "Fetching FCM registration token failed", task.getException());
+                            return;
+                        }
+
+                        String token = "";
+                        // Get new FCM registration token
+                        if(!task.getResult().isEmpty()) {
+                            token = task.getResult();
+                        }
+
+                        requestUserData(ID, token);
+                        // Log and toast
+                        Log.d("푸시 알림", "토큰 수신: " + token);
+                    }
+                });
     }
 
     @Override

@@ -141,6 +141,7 @@ public class YesGroup extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), GroupInviteActivity.class);
+                intent.putExtra("userData", userData);
                 intent.putExtra("groupData", groupData);
                 startActivity(intent);
             }
@@ -162,14 +163,36 @@ public class YesGroup extends Fragment {
     }
 
     private void setDailyWorkListView(RecyclerView listView) {
-        getDailyWorkData();
-        ListDailyWorkAdapter workAdapter = new ListDailyWorkAdapter(dailyWorkList);
+        Log.d("펫아이디", String.format("%d", petId));
+        service.getDailyWorkData(1).enqueue(new Callback<List<SingleItemDailyWork>>() {
+            @Override
+            public void onResponse(Call<List<SingleItemDailyWork>> call, Response<List<SingleItemDailyWork>> response) {
+                Log.d("헤에", response.toString());
+                if (response.isSuccessful()) {
+                    Log.d("일과 확인", "성공");
+                    List<SingleItemDailyWork> reports = response.body();
+                    if (!reports.isEmpty()) {
+                        dailyWorkList.addAll(reports);
+                    }
+                    ListDailyWorkAdapter dailyWorkAdapter = new ListDailyWorkAdapter(dailyWorkList);
 
-        LinearLayoutManager dLayoutManager = new LinearLayoutManager(getActivity());
-        dLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        listView.setLayoutManager(dLayoutManager);
-        listView.setItemAnimator(new DefaultItemAnimator());
-        listView.setAdapter(workAdapter);
+                    LinearLayoutManager dLayoutManager = new LinearLayoutManager(getActivity());
+                    dLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+                    listView.setLayoutManager(dLayoutManager);
+                    listView.setItemAnimator(new DefaultItemAnimator());
+                    listView.setAdapter(dailyWorkAdapter);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<SingleItemDailyWork>> call, Throwable t) {
+                Log.e("일과 확인 에러", t.getMessage());
+            }
+
+
+        });
+
+
     }
 
     private void getGroupProfileImage() {
@@ -211,6 +234,8 @@ public class YesGroup extends Fragment {
                         petList.addAll(pets);
                         //TODO:나중에 바꿔야 할 부분. 일단 가장 처음 강아지의 아이디만을 petId라 해놓음!
                         petId = pets.get(0).getId();
+                        Log.d("펫아이디2", String.format("%d", petId));
+
                     }
                     ListPetAdapter petAdapter = new ListPetAdapter(petList);
 
@@ -230,23 +255,12 @@ public class YesGroup extends Fragment {
         });
     }
 
-    private void getDailyWorkData() {
-        SingleItemDailyWork dailyWork = new SingleItemDailyWork("밥", "PM 10:23", "PM 11:23", "시은", R.drawable.base_cover);
-        dailyWorkList.add(dailyWork);
-        dailyWork = new SingleItemDailyWork("간식", "PM 08:00", "PM 09:23", "시은", R.drawable.base_cover);
-        dailyWorkList.add(dailyWork);
-        dailyWork = new SingleItemDailyWork("산책", "PM 04:20", "PM 04:40", "시은", R.drawable.base_cover);
-        dailyWorkList.add(dailyWork);
-        dailyWork = new SingleItemDailyWork("안", "PM 12:20", "PM 12:40", "시은", R.drawable.base_cover);
-        dailyWorkList.add(dailyWork);
-    }
-
 
     class ListDailyWorkAdapter extends RecyclerView.Adapter<ListDailyWorkAdapter.MyViewHolder2> {
         private ArrayList<SingleItemDailyWork> dailyWorks_Items;
 
-        public ListDailyWorkAdapter(ArrayList<SingleItemDailyWork> petItems) {
-            this.dailyWorks_Items = petItems;
+        public ListDailyWorkAdapter(ArrayList<SingleItemDailyWork> dailyWorks_Items) {
+            this.dailyWorks_Items = dailyWorks_Items;
         }
 
         @NonNull
@@ -263,10 +277,11 @@ public class YesGroup extends Fragment {
 
         private void setDailyWorkData(MyViewHolder2 holder, int position) {
             SingleItemDailyWork dailyWork = dailyWorks_Items.get(position);
-            holder.workName.setText(dailyWork.getWorkName());
+            Log.d("흐아아", dailyWork.toString());
+            holder.workName.setText(dailyWork.getTitle());
             //make image circled
-            Glide.with(getActivity()).load(R.drawable.base_cover).circleCrop().into(holder.workPersonImage);
-            holder.workPersonImage.setImageResource(dailyWork.getWorkImage());
+           // Glide.with(getActivity()).load(R.drawable.base_cover).circleCrop().into(holder.workPersonImage);
+          //  holder.workPersonImage.setImageResource(dailyWork.getWorkImage());
         }
 
         @Override
@@ -276,12 +291,21 @@ public class YesGroup extends Fragment {
 
         class MyViewHolder2 extends RecyclerView.ViewHolder {
             TextView workName;
-            ImageView workPersonImage;
+            //ImageView workPersonImage;
 
             MyViewHolder2(View view) {
                 super(view);
                 workName = (TextView) view.findViewById(R.id.textView_workName);
-                workPersonImage = (ImageView) view.findViewById(R.id.personImage);
+                //workPersonImage = (ImageView) view.findViewById(R.id.personImage);
+
+
+                workName.setOnClickListener(new View.OnClickListener(){
+
+                    @Override
+                    public void onClick(View v) {
+                        Log.d("여기왔어","꺄륵");
+                    }
+                });
             }
         }
     }

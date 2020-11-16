@@ -34,6 +34,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class GroupInviteActivity extends AppCompatActivity {
+    private UserData userData;
     private GroupData groupData;
     private SearchView searchView_user;
     private RecyclerView listView_users;
@@ -49,6 +50,7 @@ public class GroupInviteActivity extends AppCompatActivity {
         setContentView(R.layout.group_invite_activity);
 
         groupData = (GroupData)getIntent().getExtras().get("groupData");
+        userData = (UserData)getIntent().getExtras().get("userData");
 
         searchView_user = findViewById(R.id.searchView_user);
         listView_users = findViewById(R.id.listView_Users);
@@ -166,7 +168,7 @@ public class GroupInviteActivity extends AppCompatActivity {
             holder.button_InviteUser.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    service.sendGroupInvite(new GroupInviteData(groupData.getId(), user.getUserId())).enqueue(new Callback<UidRespense>() {
+                    service.sendGroupInvite(new GroupInviteData(groupData, userData, user)).enqueue(new Callback<UidRespense>() {
                         @Override
                         public void onResponse(Call<UidRespense> call, Response<UidRespense> response) {
                             if(response.isSuccessful() && response.body().getResult()){

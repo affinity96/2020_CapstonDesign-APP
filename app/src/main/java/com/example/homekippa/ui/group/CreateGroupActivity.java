@@ -352,7 +352,6 @@ public class CreateGroupActivity extends AppCompatActivity {
                     CreateGroupResponse result = response.body();
 
                     if (result.getCode() == 200) {
-
                         finish();
                     }
                 }

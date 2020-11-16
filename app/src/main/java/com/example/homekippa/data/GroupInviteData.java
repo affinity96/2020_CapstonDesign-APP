@@ -1,19 +1,25 @@
 package com.example.homekippa.data;
 
 public class GroupInviteData {
-    private int from_group;
-    private String to_user;
+    private GroupData from_group;
+    private UserData from_user;
+    private UserData to_user;
 
-    public int getFrom_group() {
+    public GroupData getFrom_group() {
         return from_group;
     }
 
-    public String getTo_user() {
+    public UserData getTo_user() {
         return to_user;
     }
 
-    public GroupInviteData(int from_group, String to_user) {
+    public UserData getFrom_user() {
+        return from_user;
+    }
+
+    public GroupInviteData(GroupData from_group, UserData from_user, UserData to_user) {
         this.from_group = from_group;
+        this.from_user = from_user;
         this.to_user = to_user;
     }
 }

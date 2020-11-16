@@ -18,11 +18,15 @@ import com.example.homekippa.data.GroupData;
 import com.example.homekippa.data.GroupInviteData;
 import com.example.homekippa.data.LikeData;
 import com.example.homekippa.data.LikeResponse;
+import com.example.homekippa.data.NotiData;
 import com.example.homekippa.data.PostResponse;
 import com.example.homekippa.data.SignUpData;
 import com.example.homekippa.data.SignUpResponse;
 import com.example.homekippa.data.UidRespense;
 import com.example.homekippa.data.UserData;
+
+import com.example.homekippa.ui.group.SingleItemComment;
+import com.example.homekippa.ui.group.SingleItemDailyWork;
 import com.example.homekippa.ui.group.SingleItemPet;
 import com.example.homekippa.ui.group.SingleItemPost;
 
@@ -73,13 +77,16 @@ public interface ServiceApi {
     Call<AddPetResponse> addPetReg(@Body AddPetData data);
 
     @GET("/user")
-    Call<UserData> getUserData(@Query("userId") String userId);
+    Call<UserData> getUserData(@Query("userId") String userId, @Query("token") String token);
 
     @GET("/group")
     Call<GroupData> getGroupData(@Query("groupId") int groupId);
 
     @GET("/pet")
     Call<List<SingleItemPet>> getPetsData(@Query("groupId") int groupId);
+
+    @GET("/pet/reports")
+    Call<List<SingleItemDailyWork>> getDailyWorkData(@Query("petId") int petId);
 
 //    @POST("/pet/add")
 //    Call<AddPetResponse> addPetReg(@Body AddPetData data);
@@ -90,10 +97,6 @@ public interface ServiceApi {
 
     @POST("/pet/add/des")
     Call<AddpetDesResponse> addPetDes(@Body AddPetDesData data);
-
-//    @POST("/pet/reports/add")
-//    Call<CreateDailyWorkResponse> createDailyWork(@Body CreateDailyWorkData data);
-
 
     @GET("/post/group")
     Call<List<SingleItemPost>> getGroupPost(@Query("groupId") int groupId);
@@ -110,9 +113,6 @@ public interface ServiceApi {
     @GET("/post/getComment")
     Call<CommentGetResponse> getComment(@Query("postId") int postId);
 
-//    @POST("/pet/reports/add")
-//    Call<CreateGroupResponse> createDailyWork(@Body CreateGroupData data);
-
     @GET("/user/group")
     Call<List<UserData>> getUsersInGroup(@Query("groupId") int groupId);
 
@@ -121,4 +121,7 @@ public interface ServiceApi {
 
     @POST("/group/invite")
     Call<UidRespense> sendGroupInvite(@Body GroupInviteData data);
+
+    @GET("/user/getNoti")
+    Call<List<NotiData>> getNotiData(@Query("userId") String userId);
 }

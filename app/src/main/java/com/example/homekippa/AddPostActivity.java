@@ -204,6 +204,7 @@ public class AddPostActivity extends AppCompatActivity {
                     AddPostResponse result = response.body();
                     Log.d("코드", String.format("%d", result.getCode()));
                     if (result.getCode() == 200) {
+                        Toast.makeText(AddPostActivity.this, "게시글이 성공적으로 등록되었습니다!", Toast.LENGTH_LONG).show();
                         finish();
                     }
                 }
