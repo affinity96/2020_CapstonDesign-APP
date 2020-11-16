@@ -62,7 +62,7 @@ public interface ServiceApi {
     Call<CreateDailyWorkResponse> createDailyWork(@Body CreateDailyWorkData data);
 
     @Multipart
-    @POST("/post/add")
+    @POST("/post/add/photo")
     Call<AddPostResponse> addPostWithPhoto(@PartMap HashMap<String, RequestBody> data, @Part MultipartBody.Part image);
 
     @POST("/post/add")
