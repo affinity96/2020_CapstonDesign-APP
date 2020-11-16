@@ -84,6 +84,8 @@ public class AddPetActivity extends AppCompatActivity {
         button_petDes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("here","here");
+                Log.d("petReg", petReg);
                 Intent intent = new Intent(getApplicationContext(), AddPetDesActivity.class);
                 intent.putExtra("petRegNum", petReg);
                 intent.putExtra("petName", petName);
@@ -148,7 +150,9 @@ public class AddPetActivity extends AppCompatActivity {
 
         if(requestCode==0){
             if (resultCode==RESULT_OK) {
-                finish();;
+                Log.d("nameTest", "test");
+                finish();
+
                 Toast.makeText(AddPetActivity.this, "result ok!", Toast.LENGTH_SHORT).show();
             }else{
                 finish();

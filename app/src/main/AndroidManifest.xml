@@ -52,11 +52,11 @@
         <activity
             android:name=".SplashScreen"
             android:theme="@style/Theme.AppCompat.NoActionBar">
-            <!--            <intent-filter>-->
-            <!--                <action android:name="android.intent.action.MAIN" />-->
+                        <intent-filter>
+                            <action android:name="android.intent.action.MAIN" />
 
-            <!--                <category android:name="android.intent.category.LAUNCHER" />-->
-            <!--            </intent-filter>-->
+                            <category android:name="android.intent.category.LAUNCHER" />
+                        </intent-filter>
         </activity>
         <activity android:name=".CreateDailyWorkActivity" />
         <activity android:name=".AddPostActivity" />
@@ -68,11 +68,11 @@
             android:name=".PostDetailActivity"
             android:windowSoftInputMode="adjustResize" />
         <activity android:name=".StartActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
         </activity>
         <activity android:name=".LoginActivity" />
         <activity android:name=".ui.searchAddress.searchAddress" />
@@ -95,7 +95,7 @@
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"
-            android:value="cfb17236472ae5916b52d76de8fb4354" />
+            android:value="072eca373f972d14800828bcf8a8ab53" />
 
         <!-- 사진 촬영을 위한 provide -->
         <provider

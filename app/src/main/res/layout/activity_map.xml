@@ -10,4 +10,19 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
+    <RelativeLayout
+        android:id="@+id/realtiveLayout_button"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_alignBottom="@+id/map_view"
+        >
+        <Button
+            android:id="@+id/button_stopMap"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:text="stopMap"
+            />
+
+    </RelativeLayout>
+
 </RelativeLayout>
