@@ -61,6 +61,10 @@ public interface ServiceApi {
     @POST("/pet/reports/add")
     Call<CreateDailyWorkResponse> createDailyWork(@Body CreateDailyWorkData data);
 
+    @Multipart
+    @POST("/post/add")
+    Call<AddPostResponse> addPostWithPhoto(@PartMap HashMap<String, RequestBody> data, @Part MultipartBody.Part image);
+
     @POST("/post/add")
     Call<AddPostResponse> addPost(@Body AddPostData data);
 
