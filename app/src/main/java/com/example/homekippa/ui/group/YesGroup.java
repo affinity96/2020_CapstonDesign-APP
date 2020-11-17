@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -58,7 +59,7 @@ public class YesGroup extends Fragment {
     final Loading loading = new Loading();
 
     private ArrayList<SingleItemPet> petList = new ArrayList<>();
-    private ArrayList<SingleItemDailyWork> dailyWorkList = new ArrayList<>();
+
 
     private TextView tv_groupName;
     private TextView tv_groupIntro;
@@ -156,15 +157,15 @@ public class YesGroup extends Fragment {
 
         getGroupProfileImage();
         setPetListView(listView_pets);
-        setDailyWorkListView(listView_dailyWorks);
+        //setDailyWorkListView(listView_dailyWorks);
 
         Glide.with(YesGroup.this).load(R.drawable.dog_woong).circleCrop().into(imageView_groupProfile);
         return root;
     }
 
-    private void setDailyWorkListView(RecyclerView listView) {
+    private void setDailyWorkListView(RecyclerView listView, int petId) {
         Log.d("펫아이디", String.format("%d", petId));
-        service.getDailyWorkData(1).enqueue(new Callback<List<SingleItemDailyWork>>() {
+        service.getDailyWorkData(petId).enqueue(new Callback<List<SingleItemDailyWork>>() {
             @Override
             public void onResponse(Call<List<SingleItemDailyWork>> call, Response<List<SingleItemDailyWork>> response) {
                 Log.d("헤에", response.toString());
@@ -172,15 +173,21 @@ public class YesGroup extends Fragment {
                     Log.d("일과 확인", "성공");
                     List<SingleItemDailyWork> reports = response.body();
                     if (!reports.isEmpty()) {
-                        dailyWorkList.addAll(reports);
-                    }
-                    ListDailyWorkAdapter dailyWorkAdapter = new ListDailyWorkAdapter(dailyWorkList);
+                        ArrayList<SingleItemDailyWork> dailyWorkList = new ArrayList<>();
 
-                    LinearLayoutManager dLayoutManager = new LinearLayoutManager(getActivity());
-                    dLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-                    listView.setLayoutManager(dLayoutManager);
-                    listView.setItemAnimator(new DefaultItemAnimator());
-                    listView.setAdapter(dailyWorkAdapter);
+                        //ArrayList<SingleItemDailyWork> dailyWorkList = new ArrayList<>();
+                        dailyWorkList.addAll(reports);
+                        ListDailyWorkAdapter dailyWorkAdapter = new ListDailyWorkAdapter(dailyWorkList);
+
+                        LinearLayoutManager dLayoutManager = new LinearLayoutManager(getActivity());
+                        dLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+                        listView.setLayoutManager(dLayoutManager);
+                        listView.setItemAnimator(new DefaultItemAnimator());
+                        listView.setAdapter(dailyWorkAdapter);
+                    }else{
+
+                    }
+
                 }
             }
 
@@ -244,6 +251,8 @@ public class YesGroup extends Fragment {
                     listView.setLayoutManager(pLayoutManager);
                     listView.setItemAnimator(new DefaultItemAnimator());
                     listView.setAdapter(petAdapter);
+
+                    setDailyWorkListView(listView_dailyWorks,pets.get(0).getId());
                 }
             }
 
@@ -308,6 +317,8 @@ public class YesGroup extends Fragment {
                 });
             }
         }
+
+
     }
 
     class ListPetAdapter extends RecyclerView.Adapter<ListPetAdapter.MyViewHolder> {
@@ -334,6 +345,9 @@ public class YesGroup extends Fragment {
             holder.petName.setText(pet.getName());
             Glide.with(getActivity()).load(R.drawable.simplelogo).circleCrop().into(holder.petImage);
             holder.petImage.setImageResource(R.drawable.simplelogo);
+
+
+
         }
 
         @Override
@@ -344,11 +358,23 @@ public class YesGroup extends Fragment {
         class MyViewHolder extends RecyclerView.ViewHolder {
             TextView petName;
             ImageView petImage;
+            LinearLayout pet;
 
             MyViewHolder(View view) {
                 super(view);
+                pet = (LinearLayout) view.findViewById(R.id.pet);
                 petName = (TextView) view.findViewById(R.id.listitem_PetName);
                 petImage = (ImageView) view.findViewById(R.id.listitem_PetImage);
+
+                pet.setOnClickListener(new View.OnClickListener(){
+                    @Override
+                    public void onClick(View v) {
+                        Log.d("아 두근거려", "아");
+                        Log.d("응?", String.format("%d",getAdapterPosition() ));
+                        Log.d("오잉?", String.format("%d",petList.get(getAdapterPosition()).getId() ));
+                        setDailyWorkListView(listView_dailyWorks,petList.get(getAdapterPosition()).getId()  );
+                    }
+                });
 
             }
         }
