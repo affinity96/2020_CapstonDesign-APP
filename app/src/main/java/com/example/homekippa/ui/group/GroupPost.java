@@ -18,6 +18,8 @@ import com.example.homekippa.AddPostActivity;
 import com.example.homekippa.MainActivity;
 import com.example.homekippa.R;
 import com.example.homekippa.data.GroupData;
+import com.example.homekippa.data.GroupPostResponse;
+import com.example.homekippa.data.LikeData;
 import com.example.homekippa.data.UserData;
 import com.example.homekippa.network.RetrofitClient;
 import com.example.homekippa.network.ServiceApi;
@@ -44,6 +46,7 @@ public class GroupPost extends Fragment {
 
     private Button button_Add_Post;
     private ArrayList<SingleItemPost> postList = new ArrayList<>();
+    private List<List<LikeData>> likeList = new ArrayList<>();
 
     public GroupPost() {
         // Required empty public constructor
@@ -65,10 +68,7 @@ public class GroupPost extends Fragment {
 
         service = RetrofitClient.getClient().create(ServiceApi.class);
         userData = ((MainActivity) getActivity()).getUserData();
-//        Log.d("user", userData.getUserName());
-
         groupData = ((MainActivity) getActivity()).getGroupData();
-        Log.d("group", groupData.getName());
 
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
@@ -100,46 +100,68 @@ public class GroupPost extends Fragment {
     }
 
     private void setPostListView(RecyclerView listView) {
-//        Log.d("post", "post function start");
-//        Log.d("post group id", String.valueOf(groupData.getGroupId()));
-
-        service.getGroupPost(groupData.getId()).enqueue(new Callback<List<SingleItemPost>>() {
+        service.getGroupPost(groupData.getId()).enqueue(new Callback<GroupPostResponse>() {
 
             @Override
-            public void onResponse(Call<List<SingleItemPost>> call, Response<List<SingleItemPost>> response) {
+            public void onResponse(Call<GroupPostResponse> call, Response<GroupPostResponse> response) {
                 if (response.isSuccessful()) {
                     Log.d("post", "success");
-                    List<SingleItemPost> groupPosts = response.body();
+                    GroupPostResponse groupPostResponse = response.body();
 
-                    postList.addAll(groupPosts);
+                    postList = groupPostResponse.getPostData();
+                    likeList = groupPostResponse.getLikeData();
 
                     //TODO: Change the sample Image Data!!!!!!
-                    //Setting Sample Image Data
-                    ArrayList<SingleItemPostImage> post_ImageList = new ArrayList<>();
-                    SingleItemPostImage postImage = new SingleItemPostImage(R.drawable.dog_tan);
-                    post_ImageList.add(postImage);
-                    postImage = new SingleItemPostImage(R.drawable.dog_woong);
-                    post_ImageList.add(postImage);
+                    setImageData();
 
-                    for (SingleItemPost sit : postList) {
-                        sit.setGroupPostImage(post_ImageList);
-                    }
-                    //Setting Sample Image Data
+                    ArrayList<Boolean> checkLikeList = setLikeData(likeList);
+                    setPostAdapter(listView, checkLikeList);
 
-//                    ListPostAdapter postAdapter = new ListPostAdapter(getActivity(), postList, groupData, true);
-//                    LinearLayoutManager pLayoutManager = new LinearLayoutManager(getActivity());
-//                    pLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-//                    listView.setLayoutManager(pLayoutManager);
-//                    listView.setItemAnimator(new DefaultItemAnimator());
-//                    listView.setAdapter(postAdapter);
                 }
             }
 
             @Override
-            public void onFailure(Call<List<SingleItemPost>> call, Throwable t) {
+            public void onFailure(Call<GroupPostResponse> call, Throwable t) {
                 Log.d("post", "에러");
                 Log.e("post", t.getMessage());
             }
         });
+    }
+
+    private void setImageData() {
+        ArrayList<SingleItemPostImage> post_ImageList = new ArrayList<>();
+        SingleItemPostImage postImage = new SingleItemPostImage(R.drawable.dog_tan);
+        post_ImageList.add(postImage);
+        postImage = new SingleItemPostImage(R.drawable.dog_woong);
+        post_ImageList.add(postImage);
+        for (SingleItemPost sit : postList) {
+            sit.setGroupPostImage(post_ImageList);
+        }
+    }
+
+    private void setPostAdapter(RecyclerView listView, ArrayList<Boolean> checkLikeList) {
+
+        ListPostAdapter postAdapter = new ListPostAdapter(getActivity(), postList, groupData, checkLikeList, true);
+        LinearLayoutManager pLayoutManager = new LinearLayoutManager(getActivity());
+        pLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        listView.setLayoutManager(pLayoutManager);
+        listView.setItemAnimator(new DefaultItemAnimator());
+        listView.setAdapter(postAdapter);
+    }
+
+    private ArrayList<Boolean> setLikeData(List<List<LikeData>> likeList) {
+        ArrayList<Boolean> checkLike = new ArrayList<Boolean>();
+
+        int i = 0;
+        for (List<LikeData> like : likeList) {
+            LikeData l = new LikeData(postList.get(i).getPostId(), userData.getUserId());
+            i = i + 1;
+            if (like.contains(l)) {
+                checkLike.add(true);
+            } else {
+                checkLike.add(false);
+            }
+        }
+        return checkLike;
     }
 }

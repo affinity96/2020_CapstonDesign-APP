@@ -1,28 +1,20 @@
 package com.example.homekippa.ui.home;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.location.Location;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.homekippa.MainActivity;
 import com.example.homekippa.R;
-import com.example.homekippa.data.GetLikeData;
 import com.example.homekippa.data.GroupData;
 import com.example.homekippa.data.LikeData;
 import com.example.homekippa.data.PostResponse;
@@ -33,12 +25,8 @@ import com.example.homekippa.ui.group.ListPostAdapter;
 import com.example.homekippa.ui.group.SingleItemPost;
 import com.example.homekippa.ui.group.SingleItemPostImage;
 
-import org.w3c.dom.Comment;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.HashMap;
-
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -46,37 +34,25 @@ import retrofit2.Response;
 
 public class HomePost extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-
-    ListPostAdapter postAdapter;
-
-    private PostViewModel postViewModel;
-
-    private UserData userData;
-    private GroupData groupData;
-
+    private ServiceApi service;
     /***
      * tab_=F : as Follwer TAb
      * tab_=L : as Location TAb
      */
     private String tab_;
-    //    private ArrayList<SingleItemPost> postList = new ArrayList<>();
+
+    private UserData userData;
+    private GroupData groupData;
+
     private ArrayList<SingleItemPost> postList;
     private ArrayList<GroupData> groupList = new ArrayList<>();
     private List<List<LikeData>> likeList = new ArrayList<>();
-//    private List<HashMap<String, Integer>> likeList = new ArrayList<>();
-
-
-    private ServiceApi service;
-
     private RecyclerView listView_posts;
 
-    private String mParam1;
-    private String mParam2;
+    private ListPostAdapter postAdapter;
+    private PostViewModel postViewModel;
+
+//    private PostResponse wholePosts;
 
     //TODO: get parameters deciding the fragment type: eg) post of followers or post of groups nearby
     public HomePost(String tab_) {
@@ -89,8 +65,6 @@ public class HomePost extends Fragment {
     public static HomePost newInstance(String param1, String param2) {
         HomePost fragment = new HomePost();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -100,26 +74,17 @@ public class HomePost extends Fragment {
         super.onCreate(savedInstanceState);
         service = RetrofitClient.getClient().create(ServiceApi.class);
 
-        userData = ((MainActivity) getActivity()).getUserData();
-
         if (!isGroupCreated()) {
             groupData = ((MainActivity) getActivity()).getGroupData();
         }
-        service = RetrofitClient.getClient().create(ServiceApi.class);
+        userData = ((MainActivity) getActivity()).getUserData();
 
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
     }
-
-    ;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -132,110 +97,46 @@ public class HomePost extends Fragment {
             setPostListView(listView_posts);
         }
 
-
         return root;
     }
 
 
     public void setPostListView(RecyclerView listView) {
-        getPostData();
+        service.getHomePost(tab_).enqueue(new Callback<PostResponse>() {
+            @Override
+            public void onResponse(Call<PostResponse> call, Response<PostResponse> response) {
+                if (response.isSuccessful()) {
+                    PostResponse wholePosts = response.body();
 
-        switch (tab_) {
-            case "F":
-                Log.d("group body", String.valueOf(groupData.getId()));
-                service.getLocationPost().enqueue(new Callback<PostResponse>() {
+                    postList = wholePosts.getPostData();
+                    groupList = wholePosts.getGroupData();
+                    likeList = wholePosts.getLikeData();
 
-                    @Override
-                    public void onResponse(Call<PostResponse> call, Response<PostResponse> response) {
-                        if (response.isSuccessful()) {
-                            PostResponse FollwerPosts = response.body();
+                    postViewModel = new ViewModelProvider(requireActivity()).get(PostViewModel.class);
+                    postViewModel.getPostList().setValue(postList);
 
-                            postList = FollwerPosts.getPostData();
-                            groupList = FollwerPosts.getGroupData();
-                            likeList = FollwerPosts.getLikeData();
+                    setImageData();
 
-                            postViewModel = new ViewModelProvider(requireActivity()).get(PostViewModel.class);
-                            postViewModel.getPostList().setValue(postList);
+                    ArrayList<Boolean> checkLikeList = setLikeData(likeList);
+                    setPostAdapter(listView, checkLikeList);
+                }
+            }
 
-                            ArrayList<Boolean> checkLikeList = setLikeData(likeList);
-                            setImageData();
-                            setPostAdapter(listView, checkLikeList);
+            @Override
+            public void onFailure(Call<PostResponse> call, Throwable t) {
+                Log.d("homepost", "에러");
+                Log.e("homepost", t.getMessage());
+            }
+        });
 
-//                            Log.d("like check", likeList.toString());
-//                            Log.d("like check", String.valueOf(likeList.get(0).get(0).getPost_id()));
-
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<PostResponse> call, Throwable t) {
-                        Log.d("location", "에러");
-                        Log.e("location", t.getMessage());
-                    }
-                });
-                break;
-            case "L":
-//                Log.d("group body", String.valueOf(groupData.getId()));
-//                service.getLocationPost().enqueue(new Callback<PostResponse>() {
-//
-//                    @Override
-//                    public void onResponse(Call<PostResponse> call, Response<PostResponse> response) {
-//                        if (response.isSuccessful()) {
-//                            PostResponse LocationPosts = response.body();
-//
-//                            postList = LocationPosts.getPostData();
-//                            groupList = LocationPosts.getGroupData();
-//                            likeList = LocationPosts.getLikeData();
-//
-//                            postViewModel = new ViewModelProvider(requireActivity()).get(PostViewModel.class);
-//                            postViewModel.getPostList().setValue(postList);
-//
-//                            Log.d("like check", groupList.get(0).toString());
-//                            Log.d("like check", String.valueOf(groupList.get(0).getName()));
-//
-////                            for (int i = 0; i < likeList.size(); i++) {
-////                                for (int j = 0; j < likeList.get(i).size(); j++) {
-////                                    Log.d("like index", likeList.get(i).get(j).toString());
-////                                    Log.d("like index", String.valueOf(likeList.get(i).get(j).getPost_id()));
-////                                }
-////                            }
-//
-//                            //TODO: Change the sample Image Data!!!!!!
-//                            //Setting Sample Image Data
-//                            ArrayList<SingleItemPostImage> post_ImageList = new ArrayList<>();
-//                            SingleItemPostImage postImage = new SingleItemPostImage(R.drawable.dog_tan);
-//                            post_ImageList.add(postImage);
-//                            postImage = new SingleItemPostImage(R.drawable.dog_woong);
-//                            post_ImageList.add(postImage);
-//
-//                            for (SingleItemPost sit : postList) {
-//                                sit.setGroupPostImage(post_ImageList);
-//                            }
-//                            //Setting Sample Image Data
-//
-//                            postAdapter = new ListPostAdapter(getActivity(), (ArrayList<SingleItemPost>) postList, groupList, false);
-//                            listView.setAdapter(postAdapter);
-//                            LinearLayoutManager pLayoutManager = new LinearLayoutManager(getActivity());
-//                            pLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-//                            listView.setLayoutManager(pLayoutManager);
-//                            listView.setItemAnimator(new DefaultItemAnimator());
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Call<PostResponse> call, Throwable t) {
-//                        Log.d("location", "에러");
-//                        Log.e("location", t.getMessage());
-//                    }
-//                });
-//                break;
-        }
     }
+
 
     private void setPostAdapter(RecyclerView listView, ArrayList<Boolean> checkLikeList) {
         //Setting Sample Image Data
-        postAdapter = new ListPostAdapter(getActivity(), (ArrayList<SingleItemPost>) postList, groupList, checkLikeList, false);
+        postAdapter = new ListPostAdapter(getActivity(), postList, groupList, checkLikeList, false);
         listView.setAdapter(postAdapter);
+
         LinearLayoutManager pLayoutManager = new LinearLayoutManager(getActivity());
         pLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         listView.setLayoutManager(pLayoutManager);
@@ -263,14 +164,7 @@ public class HomePost extends Fragment {
 
         int i = 0;
         for (List<LikeData> like : likeList) {
-            Log.d("like ", like.toString());
-//            if (like.size() == 0) if (like.size() == 0) checkLike.add(false);
-
             LikeData l = new LikeData(postList.get(i).getPostId(), userData.getUserId());
-            Log.d("like l post", String.valueOf(postList.get(i).getPostId()));
-            Log.d("like l user", String.valueOf(userData.getUserId()));
-            Log.d("like likedata l ", l.toString());
-            Log.d("like ", like.toString());
             i = i + 1;
             if (like.contains(l)) {
                 checkLike.add(true);
@@ -278,26 +172,7 @@ public class HomePost extends Fragment {
                 checkLike.add(false);
             }
         }
-
-        Log.d("like", checkLike.toString());
         return checkLike;
-    }
-
-    //TODO: set HomePostData and ImageData
-    private void getPostData() {
-
-        ArrayList<SingleItemPostImage> post_ImageList = new ArrayList<>();
-        SingleItemPostImage postImage = new SingleItemPostImage(R.drawable.dog_tan);
-        post_ImageList.add(postImage);
-        postImage = new SingleItemPostImage(R.drawable.dog_woong);
-        post_ImageList.add(postImage);
-
-//        SingleItemPost post = new SingleItemPost(R.drawable.dog_woong, "웅이네 집", "경기도 용인시 기흥구 영덕동", "햇살 좋은날!", "미야옹!", post_ImageList);
-//        postList.add(post);
-//        post = new SingleItemPost(R.drawable.dog_thang, "땡이네 콩 ", "경기도 용인시 기흥구 신갈동 ", "햇살 안좋은날!!", "멍!!", post_ImageList);
-//        postList.add(post);
-//        post = new SingleItemPost(R.drawable.dog_tan, "웅콩탄멍! ", "경기도 용인시 기흥구 영덕동", "햇살 더 좋은날!", "뀨? !", post_ImageList);
-//        postList.add(post);
     }
 
     public boolean isGroupCreated() {
