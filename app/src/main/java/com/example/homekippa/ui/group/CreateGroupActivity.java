@@ -17,7 +17,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.homekippa.AddPetDesActivity;
 import com.example.homekippa.R;
 import com.example.homekippa.data.CreateGroupData;
 import com.example.homekippa.data.CreateGroupResponse;
@@ -45,6 +44,9 @@ import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 
 public class CreateGroupActivity extends AppCompatActivity {
+
+    public CreateGroupActivity() {
+    }
 
     private static final String TAG = "createGroup";
 
@@ -127,7 +129,6 @@ public class CreateGroupActivity extends AppCompatActivity {
         button_createGroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Map<String, String> data = new HashMap<>();
                 String groupName = editText_groupName.getText().toString();
 //                Log.d("creategroup", "here");
                 String userId = mAuth.getCurrentUser().getUid();
@@ -156,7 +157,7 @@ public class CreateGroupActivity extends AppCompatActivity {
     /**
      *  앨범에서 이미지 가져오기
      */
-    private void goToAlbum() {
+    public void goToAlbum() {
 
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
@@ -166,7 +167,7 @@ public class CreateGroupActivity extends AppCompatActivity {
     /**
      *  카메라에서 이미지 가져오기
      */
-    private void takePhoto() {
+    public void takePhoto() {
 
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
@@ -196,7 +197,7 @@ public class CreateGroupActivity extends AppCompatActivity {
     /**
      *  폴더 및 파일 만들기
      */
-    private File createImageFile() throws IOException {
+    public File createImageFile() throws IOException {
 
         // 이미지 파일 이름 ( Happytogedog_{시간}_ )
         String timeStamp = new SimpleDateFormat("HHmmss").format(new Date());
@@ -238,7 +239,7 @@ public class CreateGroupActivity extends AppCompatActivity {
     /**
      *  권한 설정
      */
-    private void tedPermission() {
+    public void tedPermission() {
         PermissionListener permissionListener = new PermissionListener() {
             @Override
             public void onPermissionGranted() {
@@ -329,44 +330,65 @@ public class CreateGroupActivity extends AppCompatActivity {
     private void createGroup(String userId, String groupName, String groupAddress, String groupIntroduction) {
         Log.i("create", "create");
 
-        HashMap<String, RequestBody> data = new HashMap<String, RequestBody>();
+        if (tempFile != null) {
+            HashMap<String, RequestBody> data = new HashMap<String, RequestBody>();
 
-        RequestBody user_Id = RequestBody.create(MediaType.parse("text/plain"), userId);
-        data.put("userId", user_Id);
-        RequestBody group_Name = RequestBody.create(MediaType.parse("text/plain"), groupName);
-        data.put("groupName", group_Name);
-        RequestBody group_Address = RequestBody.create(MediaType.parse("text/plain"), groupAddress);
-        data.put("groupAddress", group_Address);
-        RequestBody group_Introduction = RequestBody.create(MediaType.parse("text/plain"), groupIntroduction);
-        data.put("groupIntroduction", group_Introduction);
+            RequestBody user_Id = RequestBody.create(MediaType.parse("text/plain"), userId);
+            data.put("userId", user_Id);
+            RequestBody group_Name = RequestBody.create(MediaType.parse("text/plain"), groupName);
+            data.put("groupName", group_Name);
+            RequestBody group_Address = RequestBody.create(MediaType.parse("text/plain"), groupAddress);
+            data.put("groupAddress", group_Address);
+            RequestBody group_Introduction = RequestBody.create(MediaType.parse("text/plain"), groupIntroduction);
+            data.put("groupIntroduction", group_Introduction);
 
-        RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), tempFile);
-        MultipartBody.Part uploadFile = MultipartBody.Part.createFormData("upload", tempFile.getName(), reqFile);
+            RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), tempFile);
+            MultipartBody.Part uploadFile = MultipartBody.Part.createFormData("upload", tempFile.getName(), reqFile);
 
-//        RequestBody name = RequestBody.create(MediaType.parse("text/plain"), "upload");
+            service.groupCreateWithPhoto(data, uploadFile).enqueue(new Callback<CreateGroupResponse>() {
 
-        service.groupCreate(data, uploadFile).enqueue(new Callback<CreateGroupResponse>() {
+                @Override
+                public void onResponse(Call<CreateGroupResponse> call, Response<CreateGroupResponse> response) {
+                    CreateGroupResponse result = response.body();
 
-            @Override
-            public void onResponse(Call<CreateGroupResponse> call, Response<CreateGroupResponse> response) {
-                CreateGroupResponse result = response.body();
-//              Toast.makeText(CreateGroupActivity.this, result.getMessage(),Toast.LENGTH_SHORT).show();
-//                Intent intent = new Intent(getApplicationContext(), CreateGroupUploadActivity.class);
-//                startActivity(intent);
-                if (result.getCode() == 200) {
-
-                    finish();
+                    if (result.getCode() == 200) {
+                        finish();
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<CreateGroupResponse> call, Throwable t) {
-                Toast.makeText(CreateGroupActivity.this, "그룹생성 에러 발생", Toast.LENGTH_SHORT).show();
+                @Override
+                public void onFailure(Call<CreateGroupResponse> call, Throwable t) {
+                    Toast.makeText(CreateGroupActivity.this, "그룹생성 에러 발생", Toast.LENGTH_SHORT).show();
 //              Log.e("createGroup error",t.getMessage());
-                t.printStackTrace();
-            }
-        });
+                    t.printStackTrace();
+                }
+            });
+        } else {
+            CreateGroupData data = new CreateGroupData(userId, groupName, groupAddress, groupIntroduction);
+
+            service.groupCreate(data).enqueue(new Callback<CreateGroupResponse>() {
+
+                @Override
+                public void onResponse(Call<CreateGroupResponse> call, Response<CreateGroupResponse> response) {
+                    CreateGroupResponse result = response.body();
+
+                    if (result.getCode() == 200) {
+
+                        finish();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<CreateGroupResponse> call, Throwable t) {
+                    Toast.makeText(CreateGroupActivity.this, "그룹생성 에러 발생", Toast.LENGTH_SHORT).show();
+//              Log.e("createGroup error",t.getMessage());
+                    t.printStackTrace();
+                }
+            });
+        }
     }
+
+
 
 
 }

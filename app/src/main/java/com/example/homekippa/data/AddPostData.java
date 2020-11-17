@@ -13,16 +13,11 @@ public class AddPostData {
     @SerializedName("content")
     private String content;
 
-    @SerializedName("image")
-    private String image;
-
-
-    public  AddPostData(int GroupId, String UserId, String title, String content, String image){
+    public  AddPostData(int GroupId, String UserId, String title, String content){
         this.GroupId = GroupId;
         this.UserId = UserId;
         this.title = title;
         this.content = content;
-        this.image = image;
     }
 
 }

@@ -129,9 +129,9 @@ public class CreateDailyWorkActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<CreateDailyWorkResponse> call, Response<CreateDailyWorkResponse> response) {
                 CreateDailyWorkResponse result = response.body();
-                Log.d("제발좀 되게 해주세요 제발좀", String.format("%d", result.getCode()));
                 if (result.getCode() == 200) {
-                    Log.d("해치웠나?", "웅?");
+                    Toast.makeText(CreateDailyWorkActivity.this, "일과가 성공적으로 등록되었습니다!", Toast.LENGTH_LONG).show();
+
                     finish();
                 }
             }

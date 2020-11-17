@@ -2,6 +2,7 @@ package com.example.homekippa.ui.home;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -35,8 +36,9 @@ import com.example.homekippa.ui.group.SingleItemPostImage;
 import org.w3c.dom.Comment;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
+import java.util.HashMap;
+
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -103,6 +105,7 @@ public class HomePost extends Fragment {
         if (!isGroupCreated()) {
             groupData = ((MainActivity) getActivity()).getGroupData();
         }
+        service = RetrofitClient.getClient().create(ServiceApi.class);
 
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
@@ -116,6 +119,8 @@ public class HomePost extends Fragment {
 
     }
 
+    ;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -126,6 +131,7 @@ public class HomePost extends Fragment {
         if (!isGroupCreated()) {
             setPostListView(listView_posts);
         }
+
 
         return root;
     }
