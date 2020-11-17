@@ -3,10 +3,10 @@ package com.example.homekippa.data;
 import com.google.gson.annotations.SerializedName;
 
 public class GetLikeData {
-    @SerializedName("PostId")
+    @SerializedName("post_id")
     private int post_id;
 
-    @SerializedName("UserId")
+    @SerializedName("user_id")
     private String user_id;
 
     public GetLikeData(int post_id, String user_id) {

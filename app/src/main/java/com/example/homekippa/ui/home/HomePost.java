@@ -35,6 +35,7 @@ import com.example.homekippa.ui.group.SingleItemPostImage;
 import org.w3c.dom.Comment;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import retrofit2.Call;
@@ -64,7 +65,9 @@ public class HomePost extends Fragment {
     //    private ArrayList<SingleItemPost> postList = new ArrayList<>();
     private ArrayList<SingleItemPost> postList;
     private ArrayList<GroupData> groupList = new ArrayList<>();
-    private List<List<GetLikeData>> likeList = new ArrayList<>();
+    //    private List<List<LikeData>> likeList = new ArrayList<>();
+    private List<HashMap<String, Integer>> likeList = new ArrayList<>();
+
 
     private ServiceApi service;
 
@@ -145,39 +148,17 @@ public class HomePost extends Fragment {
                             groupList = FollwerPosts.getGroupData();
                             likeList = FollwerPosts.getLikeData();
 
-
                             postViewModel = new ViewModelProvider(requireActivity()).get(PostViewModel.class);
                             postViewModel.getPostList().setValue(postList);
 
-                            Log.d("like check", groupList.get(0).toString());
-                            Log.d("like check", String.valueOf(groupList.get(0).getName()));
+//                            setLikeData(likeList);
+                            setImageData();
+                            setPostAdapter(listView);
 
-//                            for (int i = 0; i < likeList.size(); i++) {
-//                                for (int j = 0; j < likeList.get(i).size(); j++) {
-//                                    Log.d("like index", likeList.get(i).get(j).toString());
-//                                    Log.d("like index", String.valueOf(likeList.get(i).get(j).getPost_id()));
-//                                }
-//                            }
+//                            Log.d("like check", likeList.toString());
+//                            Log.d("like check", String.valueOf(likeList.get(0).get(0).getPost_id()));
 
-                            //TODO: Change the sample Image Data!!!!!!
-                            //Setting Sample Image Data
-                            ArrayList<SingleItemPostImage> post_ImageList = new ArrayList<>();
-                            SingleItemPostImage postImage = new SingleItemPostImage(R.drawable.dog_tan);
-                            post_ImageList.add(postImage);
-                            postImage = new SingleItemPostImage(R.drawable.dog_woong);
-                            post_ImageList.add(postImage);
 
-                            for (SingleItemPost sit : postList) {
-                                sit.setGroupPostImage(post_ImageList);
-                            }
-                            //Setting Sample Image Data
-
-                            postAdapter = new ListPostAdapter(getActivity(), (ArrayList<SingleItemPost>) postList, groupList, false);
-                            listView.setAdapter(postAdapter);
-                            LinearLayoutManager pLayoutManager = new LinearLayoutManager(getActivity());
-                            pLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-                            listView.setLayoutManager(pLayoutManager);
-                            listView.setItemAnimator(new DefaultItemAnimator());
                         }
                     }
 
@@ -245,6 +226,36 @@ public class HomePost extends Fragment {
 //                break;
         }
     }
+
+    private void setPostAdapter(RecyclerView listView) {
+        //Setting Sample Image Data
+        postAdapter = new ListPostAdapter(getActivity(), (ArrayList<SingleItemPost>) postList, groupList, false);
+        listView.setAdapter(postAdapter);
+        LinearLayoutManager pLayoutManager = new LinearLayoutManager(getActivity());
+        pLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        listView.setLayoutManager(pLayoutManager);
+        listView.setItemAnimator(new DefaultItemAnimator());
+    }
+
+    private void setImageData() {
+
+        //TODO: Change the sample Image Data!!!!!!
+        //Setting Sample Image Data
+        ArrayList<SingleItemPostImage> post_ImageList = new ArrayList<>();
+        SingleItemPostImage postImage = new SingleItemPostImage(R.drawable.dog_tan);
+        post_ImageList.add(postImage);
+        postImage = new SingleItemPostImage(R.drawable.dog_woong);
+        post_ImageList.add(postImage);
+
+        for (SingleItemPost sit : postList) {
+            sit.setGroupPostImage(post_ImageList);
+        }
+    }
+
+//    private void setLikeData(List<List<LikeData>> likeList) {
+//
+//
+//    }
 
     //TODO: set HomePostData and ImageData
     private void getPostData() {

@@ -5,10 +5,10 @@ import android.util.Log;
 import com.google.gson.annotations.SerializedName;
 
 public class LikeData {
-    @SerializedName("PostId")
+    @SerializedName("post_id")
     private int post_id;
 
-    @SerializedName("UserId")
+    @SerializedName("user_id")
     private String user_id;
 
     @SerializedName("isLiked")
@@ -31,5 +31,13 @@ public class LikeData {
 
     public int getPost_id() {
         return post_id;
+    }
+
+    @Override
+    public String toString() {
+        return "PostResult{" +
+                "postid=" + post_id +
+                ", userid=" + user_id +
+                '}';
     }
 }
