@@ -38,6 +38,7 @@ public class NotificationsFragment extends Fragment {
     private RecyclerView listView_noti;
     private ServiceApi service;
     private UserData userData;
+    private String alarm_extra;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -80,5 +81,9 @@ public class NotificationsFragment extends Fragment {
 
             }
         });
+    }
+
+    public void setAlarm_extra(String alarm_extra){
+        this.alarm_extra = alarm_extra;
     }
 }
