@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.homekippa.AddPostActivity;
 import com.example.homekippa.MainActivity;
@@ -48,6 +49,10 @@ public class GroupPost extends Fragment {
     private ArrayList<SingleItemPost> postList = new ArrayList<>();
     private List<List<LikeData>> likeList = new ArrayList<>();
 
+    private RecyclerView listView_posts;
+    private TextView textView_groupName;
+    private TextView textView_address;
+
     public GroupPost() {
         // Required empty public constructor
     }
@@ -81,8 +86,11 @@ public class GroupPost extends Fragment {
                              Bundle savedInstanceState) {
 
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_group_post, container, false);
-        RecyclerView listView_posts = root.findViewById(R.id.listView_GroupPost);
+        listView_posts = root.findViewById(R.id.listView_GroupPost);
+        textView_groupName = root.findViewById(R.id.textView_GroupPostName);
+        textView_address = root.findViewById(R.id.textView_GroupPostAddress);
 
+        setGroupView();
         setPostListView(listView_posts);
 
         button_Add_Post = root.findViewById(R.id.button_Add_Post);
@@ -97,6 +105,12 @@ public class GroupPost extends Fragment {
         });
 
         return root;
+    }
+
+    private void setGroupView() {
+        //TODO:: add group profile Image
+        textView_groupName.setText(groupData.getName());
+        textView_address.setText(groupData.getAddress());
     }
 
     private void setPostListView(RecyclerView listView) {
