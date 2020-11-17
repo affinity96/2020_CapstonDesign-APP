@@ -50,13 +50,11 @@ public class PostDetailActivity extends AppCompatActivity {
 
     private PostViewModel viewModel;
 
-
     private GroupData group;
     private UserData user;
     private Intent intent;
 
     int postPosition;
-
 
     private SingleItemPost post;
     ImageView postGroupProfile;
@@ -153,36 +151,30 @@ public class PostDetailActivity extends AppCompatActivity {
         Log.d("post group", group.getName());
 
 //        postGroupProfile = (ImageView) findViewById(R.id.imageView_DetailPostGroupProfile);
-//        postGroupName = (TextView) findViewById(R.id.textView__DetailPostGroupName);
-//        postGroupLocation = (TextView) findViewById(R.id.textView__DetailPostGroupLocation);
+        postGroupName = (TextView) findViewById(R.id.textView__DetailPostGroupName);
+        postGroupLocation = (TextView) findViewById(R.id.textView__DetailPostGroupLocation);
         postTitle = (TextView) findViewById(R.id.textView_DetailPostTitle);
         postContent = (TextView) findViewById(R.id.textView_DetailPostContent);
-//        postLikeNum = (TextView) findViewById(R.id.textView_LikedNum);
+        postLikeNum = (TextView) findViewById(R.id.textView_LikedNum);
         postCommentNum = (TextView) findViewById(R.id.textView_commentNum);
-//        recyclerView_postImages = (RecyclerView) findViewById(R.id.listview_DetailPostImages);
+        recyclerView_postImages = (RecyclerView) findViewById(R.id.listview_DetailPostImages);
         recyclerView_postComments = (RecyclerView) findViewById(R.id.listview_PostComments);
 
 //        postGroupProfile.setImageResource(post.getGroupPostProfile());
-//        post_ImageList = post.getGroupPostImage();
-//        postGroupName.setText(group.getName());
-//        postGroupLocation.setText(group.getAddress());
+        post_ImageList = post.getGroupPostImage();
+        postGroupName.setText(group.getName());
+        postGroupLocation.setText(group.getAddress());
         postTitle.setText(post.getTitle());
         postContent.setText(post.getContent());
-//        postLikeNum.setText(String.valueOf(post.getLikeNum()));
+        postLikeNum.setText(String.valueOf(post.getLikeNum()));
 //        postCommentNum.setText(String.valueOf(post.getCommentNum()));
 
         viewModel = new ViewModelProvider((ViewModelStoreOwner) this).get(PostViewModel.class);
         postCommentNum.setText(String.valueOf(viewModel.getPostList().getValue().get(postPosition).getCommentNum()));
 
-//        viewModel.getCounter().setValue(post.getCommentNum());
-
-
-//
-//        setPostImage(post_ImageList);
+        setPostImage(post_ImageList);
         commentNum = post.getCommentNum();
         setPostComment(recyclerView_postComments);
-
-
     }
 
     private void setPostImage(ArrayList<SingleItemPostImage> post_ImageList) {

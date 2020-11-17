@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:weightSum="30">
+    android:layout_height="match_parent">
 
     <RelativeLayout
         android:id="@+id/relativeLayout_profile"
@@ -50,9 +48,10 @@
     </RelativeLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_below="@+id/relativeLayout_profile"
         android:orientation="vertical"
         android:padding="5dp">
 
@@ -82,24 +81,21 @@
         android:id="@+id/scrollview_post"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/relativeLayout_profile"
-
-        android:layout_weight="28">
+        android:layout_below="@+id/linearLayout_content"
+        android:layout_marginBottom="50dp">
 
         <LinearLayout
             android:id="@+id/linearlayout_post"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:background="@drawable/border_gray"
             android:orientation="vertical"
             android:padding="10dp">
 
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/listview_DetailPostImages"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="wrap_content"
                 android:layout_below="@+id/textView_DetailPostContent" />
 
             <LinearLayout
@@ -138,7 +134,7 @@
                     android:layout_height="wrap_content"
                     android:text="3" />
 
-                LiveData The Linear Layout
+                <!--                LiveData The Linear Layout-->
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -165,19 +161,18 @@
 
     </ScrollView>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_margin="10dp"
-        android:layout_weight="1"
-        android:background="@drawable/color_comment_background"
+        android:background="@color/kippaLightGray"
         android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="7dp">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
             android:gravity="center">
@@ -199,8 +194,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:clickable="true"
-            android:padding="10dp"
-
+            android:gravity="center"
             android:text="게시"
             android:textSize="12dp" />
 
@@ -218,4 +212,4 @@
     <!--            android:padding="9dp"-->
     <!--            android:textSize="12dp" />-->
 
-</LinearLayout>
+</RelativeLayout>
