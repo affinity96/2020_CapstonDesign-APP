@@ -4,6 +4,7 @@ import com.example.homekippa.ui.group.SingleItemPost;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class PostResponse {
     @SerializedName("code")
@@ -17,6 +18,9 @@ public class PostResponse {
 
     @SerializedName("postData")
     private ArrayList<SingleItemPost> postData;
+
+    @SerializedName("likeData")
+    private List<List<LikeData>> likeData;
 
     public int getCode() {
         return code;
@@ -32,5 +36,9 @@ public class PostResponse {
 
     public ArrayList<SingleItemPost> getPostData() {
         return postData;
+    }
+
+    public List<List<LikeData>> getLikeData() {
+        return likeData;
     }
 }

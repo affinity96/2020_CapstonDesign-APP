@@ -65,7 +65,7 @@
         <activity android:name=".SignUpActivity" />
         <activity android:name=".AddPetActivity" />
         <activity
-            android:name=".PostDetailActivity"
+            android:name=".ui.home.PostDetailActivity"
             android:windowSoftInputMode="adjustResize" />
         <activity android:name=".StartActivity">
             <intent-filter>
