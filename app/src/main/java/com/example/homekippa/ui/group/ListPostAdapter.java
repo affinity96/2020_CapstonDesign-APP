@@ -40,6 +40,7 @@ import retrofit2.Response;
 public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyViewHolder> {
     private ArrayList<SingleItemPost> post_Items = new ArrayList<>();
     private ArrayList<GroupData> groupData = new ArrayList<>();
+    private ArrayList<Boolean> likeCheck = new ArrayList<>();
     private UserData userData;
 
     private PostViewModel viewModel;
@@ -51,17 +52,19 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
 
     private ServiceApi service;
 
-    public ListPostAdapter(Context context, ArrayList<SingleItemPost> postItems, ArrayList<GroupData> groupData, boolean isgroup) {
+    public ListPostAdapter(Context context, ArrayList<SingleItemPost> postItems, ArrayList<GroupData> groupData, ArrayList<Boolean> likeCheck, boolean isgroup) {
         this.context = context;
         this.post_Items = postItems;
         this.groupData = groupData;
+        this.likeCheck = likeCheck;
         this.isgroup = isgroup;
     }
 
-    public ListPostAdapter(Context context, ArrayList<SingleItemPost> postItems, GroupData groupData, boolean isGroup) {
+    public ListPostAdapter(Context context, ArrayList<SingleItemPost> postItems, GroupData groupData, ArrayList<Boolean> likeCheck, boolean isGroup) {
         this.context = context;
         this.post_Items = postItems;
         this.isgroup = isGroup;
+        this.likeCheck = likeCheck;
         this.groupData.add(groupData);
     }
 
@@ -105,6 +108,10 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
         holder.postLikedNum.setText(String.valueOf(post.getLikeNum()));
         holder.postGroupName.setText(group.getName());
         holder.postGroupAddress.setText(group.getAddress());
+
+        if (likeCheck.get(position)) holder.postLikeImage.setActivated(true);
+        else holder.postLikeImage.setActivated(false);
+
         ArrayList<SingleItemPostImage> post_ImageList = new ArrayList<>();
 
         SingleItemPostImage postImage = new SingleItemPostImage(R.drawable.dog_tan);

@@ -67,7 +67,7 @@ public class HomePost extends Fragment {
     //    private ArrayList<SingleItemPost> postList = new ArrayList<>();
     private ArrayList<SingleItemPost> postList;
     private ArrayList<GroupData> groupList = new ArrayList<>();
-        private List<List<LikeData>> likeList = new ArrayList<>();
+    private List<List<LikeData>> likeList = new ArrayList<>();
 //    private List<HashMap<String, Integer>> likeList = new ArrayList<>();
 
 
@@ -157,13 +157,12 @@ public class HomePost extends Fragment {
                             postViewModel = new ViewModelProvider(requireActivity()).get(PostViewModel.class);
                             postViewModel.getPostList().setValue(postList);
 
-//                            setLikeData(likeList);
+                            ArrayList<Boolean> checkLikeList = setLikeData(likeList);
                             setImageData();
-                            setPostAdapter(listView);
+                            setPostAdapter(listView, checkLikeList);
 
 //                            Log.d("like check", likeList.toString());
 //                            Log.d("like check", String.valueOf(likeList.get(0).get(0).getPost_id()));
-
 
                         }
                     }
@@ -233,9 +232,9 @@ public class HomePost extends Fragment {
         }
     }
 
-    private void setPostAdapter(RecyclerView listView) {
+    private void setPostAdapter(RecyclerView listView, ArrayList<Boolean> checkLikeList) {
         //Setting Sample Image Data
-        postAdapter = new ListPostAdapter(getActivity(), (ArrayList<SingleItemPost>) postList, groupList, false);
+        postAdapter = new ListPostAdapter(getActivity(), (ArrayList<SingleItemPost>) postList, groupList, checkLikeList, false);
         listView.setAdapter(postAdapter);
         LinearLayoutManager pLayoutManager = new LinearLayoutManager(getActivity());
         pLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -258,10 +257,31 @@ public class HomePost extends Fragment {
         }
     }
 
-//    private void setLikeData(List<List<LikeData>> likeList) {
-//
-//
-//    }
+    private ArrayList<Boolean> setLikeData(List<List<LikeData>> likeList) {
+
+        ArrayList<Boolean> checkLike = new ArrayList<Boolean>();
+
+        int i = 0;
+        for (List<LikeData> like : likeList) {
+            Log.d("like ", like.toString());
+//            if (like.size() == 0) if (like.size() == 0) checkLike.add(false);
+
+            LikeData l = new LikeData(postList.get(i).getPostId(), userData.getUserId());
+            Log.d("like l post", String.valueOf(postList.get(i).getPostId()));
+            Log.d("like l user", String.valueOf(userData.getUserId()));
+            Log.d("like likedata l ", l.toString());
+            Log.d("like ", like.toString());
+            i = i + 1;
+            if (like.contains(l)) {
+                checkLike.add(true);
+            } else {
+                checkLike.add(false);
+            }
+        }
+
+        Log.d("like", checkLike.toString());
+        return checkLike;
+    }
 
     //TODO: set HomePostData and ImageData
     private void getPostData() {

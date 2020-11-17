@@ -126,12 +126,12 @@ public class GroupPost extends Fragment {
                     }
                     //Setting Sample Image Data
 
-                    ListPostAdapter postAdapter = new ListPostAdapter(getActivity(), postList, groupData, true);
-                    LinearLayoutManager pLayoutManager = new LinearLayoutManager(getActivity());
-                    pLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-                    listView.setLayoutManager(pLayoutManager);
-                    listView.setItemAnimator(new DefaultItemAnimator());
-                    listView.setAdapter(postAdapter);
+//                    ListPostAdapter postAdapter = new ListPostAdapter(getActivity(), postList, groupData, true);
+//                    LinearLayoutManager pLayoutManager = new LinearLayoutManager(getActivity());
+//                    pLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+//                    listView.setLayoutManager(pLayoutManager);
+//                    listView.setItemAnimator(new DefaultItemAnimator());
+//                    listView.setAdapter(postAdapter);
                 }
             }
 
