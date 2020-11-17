@@ -1,28 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    >
 
-    <RelativeLayout
-        android:id="@+id/map_view"
+    <LinearLayout
+        android:id="@+id/layout_mapview"
+        android:layout_weight="24"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content"
+        >
 
-    <RelativeLayout
+        <RelativeLayout
+            android:id="@+id/map_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/realtiveLayout_button"
+        android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_alignBottom="@+id/map_view"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
         >
         <Button
             android:id="@+id/button_stopMap"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:text="stopMap"
             />
+        <LinearLayout
+            android:id="@+id/layout_infor"
+            android:layout_weight="4"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:visibility="gone">
 
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/textView_walkDistance"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="거리"
+                />
+            <TextView
+                android:id="@+id/textView_walkTime"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="right"
+                android:gravity="center"
+                android:text="시간"/>
+            <Button
+                android:id="@+id/button_remove"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="left"
+                android:gravity="center"
+                android:text="remove"/>
 
-</RelativeLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
