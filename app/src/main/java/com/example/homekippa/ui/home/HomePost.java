@@ -67,8 +67,8 @@ public class HomePost extends Fragment {
     //    private ArrayList<SingleItemPost> postList = new ArrayList<>();
     private ArrayList<SingleItemPost> postList;
     private ArrayList<GroupData> groupList = new ArrayList<>();
-    //    private List<List<LikeData>> likeList = new ArrayList<>();
-    private List<HashMap<String, Integer>> likeList = new ArrayList<>();
+        private List<List<LikeData>> likeList = new ArrayList<>();
+//    private List<HashMap<String, Integer>> likeList = new ArrayList<>();
 
 
     private ServiceApi service;

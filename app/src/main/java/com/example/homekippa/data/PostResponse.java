@@ -4,7 +4,6 @@ import com.example.homekippa.ui.group.SingleItemPost;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class PostResponse {
@@ -21,7 +20,7 @@ public class PostResponse {
     private ArrayList<SingleItemPost> postData;
 
     @SerializedName("likeData")
-    private List<HashMap<String, Integer>> likeData;
+    private List<List<LikeData>> likeData;
 
     public int getCode() {
         return code;
@@ -39,7 +38,7 @@ public class PostResponse {
         return postData;
     }
 
-    public List<HashMap<String, Integer>> getLikeData() {
+    public List<List<LikeData>> getLikeData() {
         return likeData;
     }
 }
