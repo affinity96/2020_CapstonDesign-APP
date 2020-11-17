@@ -1,5 +1,6 @@
 package com.example.homekippa.ui.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -37,6 +38,11 @@ public class HomeFragment extends Fragment {
         return root;
     }
 
+    public void onResume() {
+        super.onResume();
+    }
+
+
     @Override
     public void onViewCreated(@Nullable View view, @Nullable Bundle savedInstanceState) {
 //        connectViewPagerToTab(view);
@@ -69,13 +75,13 @@ class HomeCollectionAdapter extends FragmentStateAdapter {
                 tab_ = "F";
                 Fragment fragment = new HomePost(tab_);
                 fragment.setArguments(args);
-                Log.d("Homepost","It's Here");
+                Log.d("Homepost", "It's Here");
                 return fragment;
             case 1:
                 tab_ = "L";
                 Fragment fragment1 = new HomePost(tab_);
                 fragment1.setArguments(args);
-                Log.d("Homepost","It's Here");
+                Log.d("Homepost", "It's Here");
                 return fragment1;
         }
         return null;

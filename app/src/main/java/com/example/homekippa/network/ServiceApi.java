@@ -107,11 +107,17 @@ public interface ServiceApi {
     @POST("/post/setlike")
     Call<LikeResponse> setLike(@Body LikeData data);
 
-    @POST("/post/setComment")
+    @POST("/comment/setComment")
     Call<CommentResponse> setComment(@Body CommentData data);
 
-    @GET("/post/getComment")
+    @GET("/comment/getComment")
     Call<CommentGetResponse> getComment(@Query("postId") int postId);
+
+    @GET("/comment/deleteComment")
+    Call<CommentResponse> deleteComment(@Query("commentId") int commentId);
+
+//    @POST("/pet/reports/add")
+//    Call<CreateGroupResponse> createDailyWork(@Body CreateGroupData data);
 
     @GET("/user/group")
     Call<List<UserData>> getUsersInGroup(@Query("groupId") int groupId);
