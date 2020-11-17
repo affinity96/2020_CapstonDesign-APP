@@ -26,7 +26,7 @@ public class SingleItemPost implements Parcelable {
     private int like_num;
     private int comment_num;
     private String scope;
-//    private String groupPostLocation;
+    //    private String groupPostLocation;
     private ArrayList<SingleItemPostImage> groupPostImage;
 
     public SingleItemPost(int id, int group_id, String user_id, String title, String content, String image, String date, int like_num, int comment_num, String scope) {

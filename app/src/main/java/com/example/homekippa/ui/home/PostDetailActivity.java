@@ -1,33 +1,42 @@
-package com.example.homekippa;
+package com.example.homekippa.ui.home;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.homekippa.MainActivity;
+import com.example.homekippa.R;
 import com.example.homekippa.data.CommentData;
 import com.example.homekippa.data.CommentGetResponse;
 import com.example.homekippa.data.CommentResponse;
 import com.example.homekippa.data.GroupData;
 import com.example.homekippa.data.UserData;
 import com.example.homekippa.network.RetrofitClient;
+import com.example.homekippa.network.ServiceApi;
 import com.example.homekippa.ui.group.ListCommentAdapter;
+import com.example.homekippa.ui.group.ListPostAdapter;
 import com.example.homekippa.ui.group.ListPostImageAdapter;
 import com.example.homekippa.ui.group.SingleItemComment;
 import com.example.homekippa.ui.group.SingleItemPost;
 import com.example.homekippa.ui.group.SingleItemPostImage;
-import com.example.homekippa.network.ServiceApi;
 
-import java.security.acl.Group;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,28 +48,51 @@ public class PostDetailActivity extends AppCompatActivity {
 
     private static final String TAG = "postDetail";
 
-    private SingleItemPost post;
+    private PostViewModel viewModel;
+
     private GroupData group;
     private UserData user;
+    private Intent intent;
+
+    int postPosition;
+
+    private SingleItemPost post;
     ImageView postGroupProfile;
     TextView postGroupName;
+    TextView postNickName;
     TextView postGroupLocation;
     TextView postTitle;
     TextView postContent;
+    TextView postLikeNum;
+    TextView postCommentNum;
+
+    TextView comment;
+    ArrayList<CommentData> comment_List = new ArrayList<>();
+    ArrayList<UserData> user_List = new ArrayList<>();
+    ArrayList<GroupData> group_List = new ArrayList<>();
 
     RecyclerView recyclerView_postImages;
     RecyclerView recyclerView_postComments;
     ArrayList<SingleItemPostImage> post_ImageList;
     EditText commentInput;
     private TextView postComment;
+    private int commentNum;
 
     private ServiceApi service;
+
+
+    @Override
+    public void onBackPressed() {
+        Log.d("THIS IS COMMENT NUM", "sdfsdfsdf");
+        intent.putExtra("commentnum", String.valueOf(commentNum));
+        setResult(RESULT_OK, intent);
+        finish();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_detail);
-
         service = RetrofitClient.getClient().create(ServiceApi.class);
 
         setPostDetail();
@@ -82,14 +114,23 @@ public class PostDetailActivity extends AppCompatActivity {
                         if (response.code() == 200) {
                             Log.d("comment", "success");
                             commentInput.setText(null);
+
+                            InputMethodManager manager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                            manager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+
                             setPostComment(recyclerView_postComments);
+
+//                            Log.d("comment", viewModel.getCounter().getValue().toString());
+                            PostViewModel.increase(postPosition);
+                            setPostDetail();
+
+
                         }
                     }
 
                     @Override
                     public void onFailure(Call<CommentResponse> call, Throwable t) {
                         Log.d("comment", "fail");
-
                     }
                 });
             }
@@ -100,16 +141,22 @@ public class PostDetailActivity extends AppCompatActivity {
 
     private void setPostDetail() {
 
-        Intent intent = getIntent();
+        intent = getIntent();
         post = (SingleItemPost) intent.getExtras().get("post");
         group = (GroupData) intent.getExtras().get("group");
         user = (UserData) intent.getExtras().get("user");
+        postPosition = (int) intent.getExtras().get("pos");
 
-        postGroupProfile = (ImageView) findViewById(R.id.imageView_DetailPostGroupProfile);
+
+        Log.d("post group", group.getName());
+
+//        postGroupProfile = (ImageView) findViewById(R.id.imageView_DetailPostGroupProfile);
         postGroupName = (TextView) findViewById(R.id.textView__DetailPostGroupName);
         postGroupLocation = (TextView) findViewById(R.id.textView__DetailPostGroupLocation);
         postTitle = (TextView) findViewById(R.id.textView_DetailPostTitle);
         postContent = (TextView) findViewById(R.id.textView_DetailPostContent);
+        postLikeNum = (TextView) findViewById(R.id.textView_LikedNum);
+        postCommentNum = (TextView) findViewById(R.id.textView_commentNum);
         recyclerView_postImages = (RecyclerView) findViewById(R.id.listview_DetailPostImages);
         recyclerView_postComments = (RecyclerView) findViewById(R.id.listview_PostComments);
 
@@ -119,8 +166,14 @@ public class PostDetailActivity extends AppCompatActivity {
         postGroupLocation.setText(group.getAddress());
         postTitle.setText(post.getTitle());
         postContent.setText(post.getContent());
+        postLikeNum.setText(String.valueOf(post.getLikeNum()));
+//        postCommentNum.setText(String.valueOf(post.getCommentNum()));
+
+        viewModel = new ViewModelProvider((ViewModelStoreOwner) this).get(PostViewModel.class);
+        postCommentNum.setText(String.valueOf(viewModel.getPostList().getValue().get(postPosition).getCommentNum()));
 
         setPostImage(post_ImageList);
+        commentNum = post.getCommentNum();
         setPostComment(recyclerView_postComments);
     }
 
@@ -134,15 +187,14 @@ public class PostDetailActivity extends AppCompatActivity {
 
     //TODO: Set Post Comment
     private void setPostComment(RecyclerView listView) {
-
+        Log.d("comment", "setoistcomnt");
         service.getComment(post.getPostId()).enqueue(new Callback<CommentGetResponse>() {
             @Override
             public void onResponse(Call<CommentGetResponse> call, Response<CommentGetResponse> response) {
                 if (response.code() == 200) {
-                    ArrayList<CommentData> comment_List = new ArrayList<>();
-                    ArrayList<UserData> user_List = new ArrayList<>();
-                    ArrayList<GroupData> group_List = new ArrayList<>();
+
                     CommentGetResponse commentGetResponse = response.body();
+
                     comment_List = commentGetResponse.getComments();
                     user_List = commentGetResponse.getUsers();
                     group_List = commentGetResponse.getGroups();
@@ -155,7 +207,7 @@ public class PostDetailActivity extends AppCompatActivity {
                         comments.add(comment);
                     }
 
-                    ListCommentAdapter commentAdapter = new ListCommentAdapter(comments);
+                    ListCommentAdapter commentAdapter = new ListCommentAdapter(getApplicationContext(), comments, comment_List);
                     listView.setAdapter(commentAdapter);
 
                     LinearLayoutManager pLayoutManager = new LinearLayoutManager(getApplicationContext());
@@ -163,9 +215,7 @@ public class PostDetailActivity extends AppCompatActivity {
                     listView.setLayoutManager(pLayoutManager);
                     listView.setItemAnimator(new DefaultItemAnimator());
 
-
                 }
-
             }
 
             @Override
@@ -178,5 +228,9 @@ public class PostDetailActivity extends AppCompatActivity {
 //        comment_List.add(comment);
 
 
+    }
+
+    public SingleItemPost getPost() {
+        return post;
     }
 }
