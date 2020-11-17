@@ -40,4 +40,14 @@ public class LikeData {
                 ", userid=" + user_id +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        boolean same = false;
+        if (o != null && o instanceof LikeData) {
+            same = (this.post_id == ((LikeData) o).getPost_id())
+                    && (this.user_id.equals(((LikeData) o).getUser_id()));
+        }
+        return same;
+    }
 }

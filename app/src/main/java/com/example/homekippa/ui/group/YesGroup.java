@@ -72,7 +72,7 @@ public class YesGroup extends Fragment {
     private Button button_addPet;
     private Button button_addUser;
 
-    private int selectedPosition = -1;
+    private int selectedPosition = 0;
     public static YesGroup newInstance() {
         return new YesGroup();
     }
@@ -371,7 +371,6 @@ public class YesGroup extends Fragment {
 
                     selectedPosition = position;
                     notifyDataSetChanged();
-
 
                     Log.d("아 두근거려", "아");
                     Log.d("응?", String.format("%d",position));
