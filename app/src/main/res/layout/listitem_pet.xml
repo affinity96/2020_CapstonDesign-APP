@@ -10,7 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/round_button3"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:id="@+id/pet">
 
         <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/listitem_PetImage"
