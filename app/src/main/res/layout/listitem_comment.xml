@@ -3,25 +3,26 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="10dp"
+    android:layout_margin="2dp"
     android:background="@drawable/color_comment_background"
     android:padding="5dp">
 
     <RelativeLayout
         android:id="@+id/relativeLayout_profile"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="2dp">
+        android:padding="4dp">
 
         <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/imageView_CommentGroupProfile"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:layout_centerVertical="true"
             android:clickable="true"
             android:src="@drawable/dog_woong" />
 
         <LinearLayout
+            android:id="@+id/linearLayout_profile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -41,7 +42,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="5dp"
                     android:text="우만동 땡이가족"
-                    android:textSize="9dp"
+                    android:textSize="12dp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -49,7 +50,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="-"
-                    android:textSize="9dp"
+                    android:textSize="10dp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -59,7 +60,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:text="시으니 인뎅 "
-                    android:textSize="9dp"
+                    android:textSize="11dp"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -69,10 +70,25 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/ic_location_on_24px"
-                android:gravity="center"
+                android:lines="1"
+                android:gravity="left"
                 android:hint="경기도 용인시 기흥구 영덕동"
-                android:textSize="7dp" />
+                android:textSize="9dp" />
         </LinearLayout>
+
+<!--        TODO: text 삭제 -->
+        <TextView
+            android:id="@+id/textView_deleteComment"
+            style="@style/BlueText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="5dp"
+            android:clickable="true"
+            android:gravity="right"
+            android:textSize="10dp" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -87,46 +103,46 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:text="엉멍넘뭉귕영웡용 "
-            android:textSize="9dp" />
+            android:textSize="11dp" />
 
-        <ImageView
-            android:id="@+id/imageView_commentLiked"
-            android:layout_width="10dp"
-            android:layout_height="10dp"
-            android:layout_below="@+id/textView_commentContent"
-            android:layout_margin="3dp"
-            android:clickable="true"
-            app:srcCompat="@drawable/ic_bone_svgrepo_com" />
+        <!--        <ImageView-->
+        <!--            android:id="@+id/imageView_commentLiked"-->
+        <!--            android:layout_width="10dp"-->
+        <!--            android:layout_height="10dp"-->
+        <!--            android:layout_below="@+id/textView_commentContent"-->
+        <!--            android:layout_margin="3dp"-->
+        <!--            android:clickable="true"-->
+        <!--            app:srcCompat="@drawable/ic_bone_svgrepo_com" />-->
 
-        <TextView
-            android:id="@+id/textView_commentLikedNum"
-            style="@style/BlackText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/textView_commentContent"
-            android:layout_toRightOf="@+id/imageView_commentLiked"
-            android:text="12"
-            android:textSize="9dp" />
+        <!--        <TextView-->
+        <!--            android:id="@+id/textView_commentLikedNum"-->
+        <!--            style="@style/BlackText"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_below="@+id/textView_commentContent"-->
+        <!--            android:layout_toRightOf="@+id/imageView_commentLiked"-->
+        <!--            android:text="12"-->
+        <!--            android:textSize="9dp" />-->
 
-        <ImageView
-            android:id="@+id/imageView_comment"
-            android:layout_width="12dp"
-            android:layout_height="12dp"
-            android:layout_below="@+id/textView_commentContent"
-            android:layout_margin="3dp"
-            android:layout_toRightOf="@+id/textView_commentLikedNum"
-            android:clickable="true"
-            app:srcCompat="@drawable/ic_insert_comment_24px" />
+        <!--        <ImageView-->
+        <!--            android:id="@+id/imageView_comment"-->
+        <!--            android:layout_width="12dp"-->
+        <!--            android:layout_height="12dp"-->
+        <!--            android:layout_below="@+id/textView_commentContent"-->
+        <!--            android:layout_margin="3dp"-->
+        <!--            android:layout_toRightOf="@+id/textView_commentLikedNum"-->
+        <!--            android:clickable="true"-->
+        <!--            app:srcCompat="@drawable/ic_insert_comment_24px" />-->
 
-        <TextView
-            android:id="@+id/textView_commentNum"
-            style="@style/BlackText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/textView_commentContent"
-            android:layout_toRightOf="@+id/imageView_comment"
-            android:text="3"
-            android:textSize="9dp" />
+        <!--        <TextView-->
+        <!--            android:id="@+id/textView_commentNum"-->
+        <!--            style="@style/BlackText"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_below="@+id/textView_commentContent"-->
+        <!--            android:layout_toRightOf="@+id/imageView_comment"-->
+        <!--            android:text="3"-->
+        <!--            android:textSize="9dp" />-->
 
         <TextView
             android:layout_width="wrap_content"
@@ -134,8 +150,9 @@
             android:layout_below="@+id/textView_commentContent"
             android:layout_alignEnd="@+id/textView_commentContent"
             android:layout_alignRight="@+id/textView_commentContent"
+            android:layout_margin="5dp"
             android:text="2020년 11월 12일 "
-            android:textSize="7dp" />
+            android:textSize="10dp" />
 
 
     </RelativeLayout>

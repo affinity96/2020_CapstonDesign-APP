@@ -1,12 +1,14 @@
 package com.example.homekippa.data;
 
+import android.util.Log;
+
 import com.google.gson.annotations.SerializedName;
 
 public class LikeData {
-    @SerializedName("PostId")
+    @SerializedName("post_id")
     private int post_id;
 
-    @SerializedName("UserId")
+    @SerializedName("user_id")
     private String user_id;
 
     @SerializedName("isLiked")
@@ -18,4 +20,34 @@ public class LikeData {
         this.isLiked = isLiked;
     }
 
+    public LikeData(int post_id, String user_id) {
+        this.post_id = post_id;
+        this.user_id = user_id;
+    }
+
+    public String getUser_id() {
+        return user_id;
+    }
+
+    public int getPost_id() {
+        return post_id;
+    }
+
+    @Override
+    public String toString() {
+        return "PostResult{" +
+                "postid=" + post_id +
+                ", userid=" + user_id +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        boolean same = false;
+        if (o != null && o instanceof LikeData) {
+            same = (this.post_id == ((LikeData) o).getPost_id())
+                    && (this.user_id.equals(((LikeData) o).getUser_id()));
+        }
+        return same;
+    }
 }

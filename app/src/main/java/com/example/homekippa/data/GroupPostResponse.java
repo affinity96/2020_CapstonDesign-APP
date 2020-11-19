@@ -6,15 +6,12 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PostResponse {
+public class GroupPostResponse {
     @SerializedName("code")
     private int code;
 
     @SerializedName("message")
     private String message;
-
-    @SerializedName("groupData")
-    private ArrayList<GroupData> groupData;
 
     @SerializedName("postData")
     private ArrayList<SingleItemPost> postData;
@@ -28,10 +25,6 @@ public class PostResponse {
 
     public String getMessage() {
         return message;
-    }
-
-    public ArrayList<GroupData> getGroupData() {
-        return groupData;
     }
 
     public ArrayList<SingleItemPost> getPostData() {

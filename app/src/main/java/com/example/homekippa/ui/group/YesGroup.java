@@ -3,6 +3,8 @@ package com.example.homekippa.ui.group;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -17,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -58,7 +61,7 @@ public class YesGroup extends Fragment {
     final Loading loading = new Loading();
 
     private ArrayList<SingleItemPet> petList = new ArrayList<>();
-    private ArrayList<SingleItemDailyWork> dailyWorkList = new ArrayList<>();
+
 
     private TextView tv_groupName;
     private TextView tv_groupIntro;
@@ -69,6 +72,7 @@ public class YesGroup extends Fragment {
     private Button button_addPet;
     private Button button_addUser;
 
+    private int selectedPosition = 0;
     public static YesGroup newInstance() {
         return new YesGroup();
     }
@@ -124,6 +128,7 @@ public class YesGroup extends Fragment {
                 intent.putExtra("userData", userData);
                 intent.putExtra("groupData", groupData);
                 intent.putExtra("petId", petId);
+                Log.d("넘겨넘겨~", String.format("%d", petId));
                 startActivity(intent);
             }
         });
@@ -156,31 +161,45 @@ public class YesGroup extends Fragment {
 
         getGroupProfileImage();
         setPetListView(listView_pets);
-        setDailyWorkListView(listView_dailyWorks);
+        //setDailyWorkListView(listView_dailyWorks);
 
 //        Glide.with(YesGroup.this).load(R.drawable.dog_woong).circleCrop().into(imageView_groupProfile);
         return root;
     }
 
-    private void setDailyWorkListView(RecyclerView listView) {
+    private void setDailyWorkListView(RecyclerView listView, int petId) {
+
         Log.d("펫아이디", String.format("%d", petId));
-        service.getDailyWorkData(1).enqueue(new Callback<List<SingleItemDailyWork>>() {
+        service.getDailyWorkData(petId).enqueue(new Callback<List<SingleItemDailyWork>>() {
             @Override
             public void onResponse(Call<List<SingleItemDailyWork>> call, Response<List<SingleItemDailyWork>> response) {
                 Log.d("헤에", response.toString());
                 if (response.isSuccessful()) {
                     Log.d("일과 확인", "성공");
                     List<SingleItemDailyWork> reports = response.body();
-                    if (!reports.isEmpty()) {
-                        dailyWorkList.addAll(reports);
-                    }
-                    ListDailyWorkAdapter dailyWorkAdapter = new ListDailyWorkAdapter(dailyWorkList);
+                    ArrayList<SingleItemDailyWork> dailyWorkList = new ArrayList<>();
 
-                    LinearLayoutManager dLayoutManager = new LinearLayoutManager(getActivity());
-                    dLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-                    listView.setLayoutManager(dLayoutManager);
-                    listView.setItemAnimator(new DefaultItemAnimator());
-                    listView.setAdapter(dailyWorkAdapter);
+                    if (!reports.isEmpty()) {
+
+                        //ArrayList<SingleItemDailyWork> dailyWorkList = new ArrayList<>();
+                        dailyWorkList.addAll(reports);
+                        ListDailyWorkAdapter dailyWorkAdapter = new ListDailyWorkAdapter(dailyWorkList);
+
+                        LinearLayoutManager dLayoutManager = new LinearLayoutManager(getActivity());
+                        dLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+                        listView.setLayoutManager(dLayoutManager);
+                        listView.setItemAnimator(new DefaultItemAnimator());
+                        listView.setBackgroundColor(Color.parseColor("#ffffff"));
+                        listView.setAdapter(dailyWorkAdapter);
+                    }else{
+                        listView.setBackgroundResource(R.drawable.no_dailywork);
+                        listView.setItemAnimator(new DefaultItemAnimator());
+                        ListDailyWorkAdapter dailyWorkAdapter = new ListDailyWorkAdapter(dailyWorkList);
+
+                        listView.setAdapter(dailyWorkAdapter);
+
+                    }
+
                 }
             }
 
@@ -224,9 +243,7 @@ public class YesGroup extends Fragment {
     }
 
     private void setPetListView(RecyclerView listView) {
-//        getPetData(listView);
-//        Log.d("반려동물 확인", "들어옴");
-//        Log.d("반려동물 확인", String.valueOf(groupData.getId()));
+
         service.getPetsData(groupData.getId()).enqueue(new Callback<List<SingleItemPet>>() {
             @Override
             public void onResponse(Call<List<SingleItemPet>> call, Response<List<SingleItemPet>> response) {
@@ -247,6 +264,8 @@ public class YesGroup extends Fragment {
                     listView.setLayoutManager(pLayoutManager);
                     listView.setItemAnimator(new DefaultItemAnimator());
                     listView.setAdapter(petAdapter);
+
+                    setDailyWorkListView(listView_dailyWorks,pets.get(0).getId());
                 }
             }
 
@@ -311,6 +330,8 @@ public class YesGroup extends Fragment {
                 });
             }
         }
+
+
     }
 
     class ListPetAdapter extends RecyclerView.Adapter<ListPetAdapter.MyViewHolder> {
@@ -324,19 +345,44 @@ public class YesGroup extends Fragment {
         @Override
         public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.listitem_pet, parent, false);
+            List<View>itemViewList = new ArrayList<>();
+            itemViewList.add(itemView);
+            MyViewHolder myViewHolder = new MyViewHolder(itemView);
+
             return new MyViewHolder(itemView);
         }
 
         @Override
         public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+            if(selectedPosition == position){
+                holder.pet.setBackgroundResource(R.drawable.round_button2);
+            }else{
+                holder.pet.setBackgroundResource(R.drawable.round_button);
+            }
             setPetData(holder, position);
         }
 
         private void setPetData(MyViewHolder holder, int position) {
-            SingleItemPet pet = pet_Items.get(position);
-            holder.petName.setText(pet.getName());
+            SingleItemPet selectedPet = pet_Items.get(position);
+            holder.petName.setText(selectedPet.getName());
             Glide.with(getActivity()).load(R.drawable.simplelogo).circleCrop().into(holder.petImage);
             holder.petImage.setImageResource(R.drawable.simplelogo);
+
+            holder.pet.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+
+                    selectedPosition = position;
+                    notifyDataSetChanged();
+
+                    Log.d("아 두근거려", "아");
+                    Log.d("응?", String.format("%d",position));
+                    Log.d("오잉?", String.format("%d",selectedPet.getId() ));
+                    setDailyWorkListView(listView_dailyWorks,selectedPet.getId()  );
+                    petId = petList.get(position).getId();
+                }
+            });
+
         }
 
         @Override
@@ -347,9 +393,11 @@ public class YesGroup extends Fragment {
         class MyViewHolder extends RecyclerView.ViewHolder {
             TextView petName;
             ImageView petImage;
+            LinearLayout pet;
 
             MyViewHolder(View view) {
                 super(view);
+                pet = (LinearLayout) view.findViewById(R.id.pet);
                 petName = (TextView) view.findViewById(R.id.listitem_PetName);
                 petImage = (ImageView) view.findViewById(R.id.listitem_PetImage);
 

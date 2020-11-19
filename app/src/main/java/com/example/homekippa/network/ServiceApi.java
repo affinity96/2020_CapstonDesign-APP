@@ -16,6 +16,7 @@ import com.example.homekippa.data.CreateGroupResponse;
 import com.example.homekippa.data.GetGroupImageResponse;
 import com.example.homekippa.data.GroupData;
 import com.example.homekippa.data.GroupInviteData;
+import com.example.homekippa.data.GroupPostResponse;
 import com.example.homekippa.data.LikeData;
 import com.example.homekippa.data.LikeResponse;
 import com.example.homekippa.data.NotiData;
@@ -100,19 +101,25 @@ public interface ServiceApi {
     Call<AddpetDesResponse> addPetDes(@Body AddPetDesData data);
 
     @GET("/post/group")
-    Call<List<SingleItemPost>> getGroupPost(@Query("groupId") int groupId);
+    Call<GroupPostResponse> getGroupPost(@Query("groupId") int groupId);
 
-    @GET("/post/location")
-    Call<PostResponse> getLocationPost();
+    @GET("/post/home")
+    Call<PostResponse> getHomePost(@Query("tab_") String tab);
 
     @POST("/post/setlike")
     Call<LikeResponse> setLike(@Body LikeData data);
 
-    @POST("/post/setComment")
+    @POST("/comment/setComment")
     Call<CommentResponse> setComment(@Body CommentData data);
 
-    @GET("/post/getComment")
+    @GET("/comment/getComment")
     Call<CommentGetResponse> getComment(@Query("postId") int postId);
+
+    @GET("/comment/deleteComment")
+    Call<CommentResponse> deleteComment(@Query("commentId") int commentId);
+
+//    @POST("/pet/reports/add")
+//    Call<CreateGroupResponse> createDailyWork(@Body CreateGroupData data);
 
     @GET("/user/group")
     Call<List<UserData>> getUsersInGroup(@Query("groupId") int groupId);
