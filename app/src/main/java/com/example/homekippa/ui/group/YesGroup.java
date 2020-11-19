@@ -158,7 +158,7 @@ public class YesGroup extends Fragment {
         setPetListView(listView_pets);
         setDailyWorkListView(listView_dailyWorks);
 
-        Glide.with(YesGroup.this).load(R.drawable.dog_woong).circleCrop().into(imageView_groupProfile);
+//        Glide.with(YesGroup.this).load(R.drawable.dog_woong).circleCrop().into(imageView_groupProfile);
         return root;
     }
 
@@ -204,8 +204,11 @@ public class YesGroup extends Fragment {
                 if (response.isSuccessful()) {
 
                     Log.d(TAG, "server contacted and has file");
-//                    InputStream is = response.body().byteStream();
-//                    Bitmap bitmap = BitmapFactory.decodeStream(is);
+                    InputStream is = response.body().byteStream();
+                    Bitmap bitmap = BitmapFactory.decodeStream(is);
+
+                    Glide.with(YesGroup.this).load(bitmap).circleCrop().into(imageView_groupProfile);
+
                 } else {
                     Log.d(TAG, "server contact failed");
                 }

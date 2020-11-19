@@ -3,6 +3,8 @@ package com.example.homekippa.ui.group;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.homekippa.MainActivity;
 import com.example.homekippa.PostDetailActivity;
 import com.example.homekippa.R;
@@ -24,9 +27,11 @@ import com.example.homekippa.data.UserData;
 import com.example.homekippa.network.RetrofitClient;
 import com.example.homekippa.network.ServiceApi;
 
+import java.io.InputStream;
 import java.security.acl.Group;
 import java.util.ArrayList;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -129,12 +134,14 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
         TextView postCommentNum;
         RecyclerView recyclerView_postImages;
 
+        ImageView postGroupProfile;
         ImageView postLikeImage;
         ImageView postCommentImage;
 
         MyViewHolder(View view) {
             super(view);
 //            postGroupProfile = (ImageView) view.findViewById(R.id.imageView_PostGroupProfile);
+//            getGroupProfileImage();
             postGroupName = (TextView) view.findViewById(R.id.textView__PostGroupName);
             postGroupAddress = (TextView) view.findViewById(R.id.textView__PostGroupLocation);
             postTitle = (TextView) view.findViewById(R.id.textView_PostTitle);
@@ -206,5 +213,33 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
             });
 
         }
+
+//        private void getGroupProfileImage() {
+//            Log.d("url", groupData.getImage());
+//            service.getProfileImage(groupData.getImage()).enqueue(new Callback<ResponseBody>() {
+//                @Override
+//                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+//                    String TAG = "YesGroup";
+//                    if (response.isSuccessful()) {
+//
+//                        Log.d(TAG, "server contacted and has file");
+//                        InputStream is = response.body().byteStream();
+//                        Bitmap bitmap = BitmapFactory.decodeStream(is);
+//
+////                        Glide.with(ListPostAdapter.this).load(bitmap).circleCrop().into(imageView_groupProfile);
+//
+//                    } else {
+//                        Log.d(TAG, "server contact failed");
+//                    }
+//                }
+//
+//                @Override
+//                public void onFailure(Call<ResponseBody> call, Throwable t) {
+////                Toast.makeText(YesGroup.this, "그룹생성 에러 발생", Toast.LENGTH_SHORT).show();
+////              Log.e("createGroup error",t.getMessage());
+//                    t.printStackTrace();
+//                }
+//            });
+//        }
     }
 }

@@ -45,6 +45,7 @@ import retrofit2.http.Part;
 import retrofit2.http.PartMap;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
+import retrofit2.http.Url;
 
 public interface ServiceApi {
 //    @POST("/user/login")
@@ -56,8 +57,8 @@ public interface ServiceApi {
     @POST("/group/add")
     Call<CreateGroupResponse> groupCreate(@Body CreateGroupData data);
 
-    @GET("images/{apiName}")
-    Call<ResponseBody> getProfileImage(@Path("apiName") String apiName);
+    @GET("/group/image")
+    Call<ResponseBody> getProfileImage(@Query("apiName") String apiName);
 
     @Multipart
     @POST("/group/add/photo")
