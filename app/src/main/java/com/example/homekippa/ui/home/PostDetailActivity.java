@@ -78,15 +78,6 @@ public class PostDetailActivity extends AppCompatActivity {
 
     private ServiceApi service;
 
-
-    @Override
-    public void onBackPressed() {
-        Log.d("THIS IS COMMENT NUM", "sdfsdfsdf");
-        intent.putExtra("commentnum", String.valueOf(commentNum));
-        setResult(RESULT_OK, intent);
-        finish();
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -232,9 +223,11 @@ public class PostDetailActivity extends AppCompatActivity {
                     group_List = commentGetResponse.getGroups();
                     ArrayList<SingleItemComment> comments = new ArrayList<>();
 
+
+
                     //TODO: Change the image of GROUP
                     for (int i = 0; i < comment_List.size(); i++) {
-                        Log.d("comment", comment_List.get(i).getContent());
+                        Log.d("comment", comment_List.get(i).getDate());
                         SingleItemComment comment = new SingleItemComment(R.drawable.dog_thang, group_List.get(i).getName(), user_List.get(i).getUserName(), group_List.get(i).getAddress(), comment_List.get(i).getContent());
                         comments.add(comment);
                     }

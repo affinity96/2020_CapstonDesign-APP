@@ -31,6 +31,8 @@ import com.example.homekippa.data.UserData;
 import com.example.homekippa.network.RetrofitClient;
 import com.example.homekippa.network.ServiceApi;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -111,7 +113,6 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
 
         setClickListenerOnHolder(holder, position);
         setPostImageAdapter(holder, post.getGroupPostImage());
-
     }
 
     private void setClickListenerOnHolder(MyViewHolder holder, int position) {
@@ -224,6 +225,7 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
         TextView postContent;
         TextView postLikedNum;
         TextView postCommentNum;
+        TextView postDate;
         RecyclerView recyclerView_postImages;
 
         Button postLikeImage;
@@ -238,6 +240,7 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
             postContent = (TextView) view.findViewById(R.id.textView_PostContent);
             postLikedNum = (TextView) view.findViewById(R.id.textView_PostLikedNum);
             postCommentNum = (TextView) view.findViewById(R.id.textView_PostCommentNum);
+            postDate = (TextView) view.findViewById(R.id.textView_PostDate);
             recyclerView_postImages = (RecyclerView) view.findViewById(R.id.listview_PostImages);
             postLikeImage = (Button) view.findViewById(R.id.imageView_PostLiked);
             postCommentImage = (ImageView) view.findViewById(R.id.imageView_PostComment);
