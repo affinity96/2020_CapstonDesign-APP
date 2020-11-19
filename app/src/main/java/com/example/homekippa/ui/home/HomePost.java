@@ -113,11 +113,13 @@ public class HomePost extends Fragment {
                     likeList = wholePosts.getLikeData();
 
                     postViewModel = new ViewModelProvider(requireActivity()).get(PostViewModel.class);
-                    postViewModel.getPostList().setValue(postList);
 
                     setImageData();
 
                     ArrayList<Boolean> checkLikeList = setLikeData(likeList);
+                    postViewModel.getPostList().setValue(postList);
+                    postViewModel.getLikeCheck().setValue(checkLikeList);
+
                     setPostAdapter(listView, checkLikeList);
                 }
             }

@@ -85,7 +85,7 @@
             android:layout_height="200dp"
             android:layout_below="@+id/textView_PostContent" />
 
-        <ImageView
+        <Button
             android:id="@+id/imageView_PostLiked"
             android:layout_width="22dp"
             android:layout_height="22dp"
@@ -93,7 +93,7 @@
             android:layout_margin="3dp"
             android:clickable="true"
             android:focusable="true"
-            android:src="@drawable/like_selector" />
+            android:background="@drawable/like_selector" />
 
         <TextView
             android:id="@+id/textView_PostLikedNum"

@@ -62,7 +62,6 @@ public class YesGroup extends Fragment {
 
     private ArrayList<SingleItemPet> petList = new ArrayList<>();
 
-
     private TextView tv_groupName;
     private TextView tv_groupIntro;
     private Button button_Add_DW;
@@ -73,6 +72,7 @@ public class YesGroup extends Fragment {
     private Button button_addUser;
 
     private int selectedPosition = 0;
+
     public static YesGroup newInstance() {
         return new YesGroup();
     }
@@ -252,7 +252,7 @@ public class YesGroup extends Fragment {
                         //TODO:나중에 바꿔야 할 부분. 일단 가장 처음 강아지의 아이디만을 petId라 해놓음!
                         petId = pets.get(0).getId();
                         Log.d("펫아이디2", String.format("%d", petId));
-
+                        setDailyWorkListView(listView_dailyWorks, pets.get(0).getId());
                     }
                     ListPetAdapter petAdapter = new ListPetAdapter(petList);
 
@@ -262,7 +262,7 @@ public class YesGroup extends Fragment {
                     listView.setItemAnimator(new DefaultItemAnimator());
                     listView.setAdapter(petAdapter);
 
-                    setDailyWorkListView(listView_dailyWorks, pets.get(0).getId());
+
                 }
             }
 
