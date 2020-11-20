@@ -5,6 +5,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,17 +24,24 @@ import com.example.homekippa.ui.group.YesGroup;
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Callback;
+
 public class ListNotiAdapter extends RecyclerView.Adapter<ListNotiAdapter.MyViewHolder> {
     private List<NotiData> noti_Items;
     private Context context;
+    private OnItemClickListener mListener = null;
+
+    public interface OnItemClickListener {
+        void onItemClick(View v, int pos);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.mListener = listener;
+    }
 
     public ListNotiAdapter(Context context, ArrayList<NotiData> postItems) {
         this.context = context;
         this.noti_Items = postItems;
-    }
-
-    public ListNotiAdapter(ArrayList<SingleItemNoti> notiList) {
-
     }
 
     @NonNull
@@ -70,6 +78,7 @@ public class ListNotiAdapter extends RecyclerView.Adapter<ListNotiAdapter.MyView
     class MyViewHolder extends RecyclerView.ViewHolder {
         TextView notiGroupName;
         TextView notiTime;
+
         TextView notiDescription;
         String alarm_code;
         String alarm_extra;
@@ -83,6 +92,18 @@ public class ListNotiAdapter extends RecyclerView.Adapter<ListNotiAdapter.MyView
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    int pos = getAdapterPosition();
+                    if(pos != RecyclerView.NO_POSITION){
+                        if (mListener != null) {
+                            mListener.onItemClick(view, pos);
+                        }
+                    }
+                }
+            });
+
+/*            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
                     if (alarm_code.equals("GROUP_INVITE")){
 //                        int groupId = Integer.parseInt(alarm_extra);
                         //Todo - 클릭시 초대 받는 화면 구현
@@ -94,7 +115,7 @@ public class ListNotiAdapter extends RecyclerView.Adapter<ListNotiAdapter.MyView
                         fragmentTransaction.replace(R.id.constraintlayout_Noti, yesGroup).commit();
                     }
                 }
-            });
+            });*/
         }
     }
 }

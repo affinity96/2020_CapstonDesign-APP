@@ -36,7 +36,7 @@
                     android:layout_width="130dp"
                     android:layout_height="20dp"
                     android:layout_gravity="bottom|right"
-                    android:layout_marginBottom="35dp"
+                    android:layout_marginBottom="10dp"
                     android:layout_marginRight="10dp"
                     android:background="@drawable/round_button2"
                     android:text="그룹에 들어가기"
