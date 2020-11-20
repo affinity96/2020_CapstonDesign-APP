@@ -36,6 +36,7 @@ import com.example.homekippa.network.ServiceApi;
 
 import org.w3c.dom.Text;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -113,10 +114,40 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
         holder.postLikedNum.setText(String.valueOf(viewModel.getPostList().getValue().get(position).getLikeNum()));
         holder.postGroupName.setText(group.getName());
         holder.postGroupAddress.setText(group.getAddress());
+        getProfileImage(holder, group.getImage());
         setLikeImage(holder, position);
 
         setClickListenerOnHolder(holder, position);
         setPostImageAdapter(holder, post.getGroupPostImage());
+    }
+
+    private void getProfileImage(ListPostAdapter.MyViewHolder holder, String url) {
+        Log.d("url", url);
+        service.getProfileImage(url).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                String TAG = "ListPostAdapter";
+                if (response.isSuccessful()) {
+
+                    Log.d(TAG, "server contacted and has file");
+                    InputStream is = response.body().byteStream();
+                    Bitmap bitmap = BitmapFactory.decodeStream(is);
+
+                    Glide.with(context).load(bitmap).circleCrop().into(holder.postGroupProfile);
+                    holder.postGroupProfile.setImageBitmap(bitmap);
+
+                } else {
+                    Log.d(TAG, "server contact failed");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+//                Toast.makeText(YesGroup.this, "그룹생성 에러 발생", Toast.LENGTH_SHORT).show();
+//              Log.e("createGroup error",t.getMessage());
+                t.printStackTrace();
+            }
+        });
     }
 
     private void setClickListenerOnHolder(MyViewHolder holder, int position) {
@@ -222,7 +253,6 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
-        //        ImageView postGroupProfile;
         TextView postGroupName;
         TextView postGroupAddress;
         TextView postTitle;
@@ -238,8 +268,7 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
 
         MyViewHolder(View view) {
             super(view);
-//            postGroupProfile = (ImageView) view.findViewById(R.id.imageView_PostGroupProfile);
-//            getGroupProfileImage();
+            postGroupProfile = (ImageView) view.findViewById(R.id.imageView_PostGroupProfile);
             postGroupName = (TextView) view.findViewById(R.id.textView__PostGroupName);
             postGroupAddress = (TextView) view.findViewById(R.id.textView__PostGroupLocation);
             postTitle = (TextView) view.findViewById(R.id.textView_PostTitle);
@@ -252,32 +281,5 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
             postCommentImage = (ImageView) view.findViewById(R.id.imageView_PostComment);
         }
 
-//        private void getGroupProfileImage() {
-//            Log.d("url", groupData.getImage());
-//            service.getProfileImage(groupData.getImage()).enqueue(new Callback<ResponseBody>() {
-//                @Override
-//                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-//                    String TAG = "YesGroup";
-//                    if (response.isSuccessful()) {
-//
-//                        Log.d(TAG, "server contacted and has file");
-//                        InputStream is = response.body().byteStream();
-//                        Bitmap bitmap = BitmapFactory.decodeStream(is);
-//
-////                        Glide.with(ListPostAdapter.this).load(bitmap).circleCrop().into(imageView_groupProfile);
-//
-//                    } else {
-//                        Log.d(TAG, "server contact failed");
-//                    }
-//                }
-//
-//                @Override
-//                public void onFailure(Call<ResponseBody> call, Throwable t) {
-////                Toast.makeText(YesGroup.this, "그룹생성 에러 발생", Toast.LENGTH_SHORT).show();
-////              Log.e("createGroup error",t.getMessage());
-//                    t.printStackTrace();
-//                }
-//            });
-//        }
     }
 }
