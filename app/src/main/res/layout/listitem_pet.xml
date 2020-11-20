@@ -13,12 +13,12 @@
         android:orientation="horizontal"
         android:id="@+id/pet">
 
-        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/listitem_PetImage"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:padding="3dp"
-            android:src="@drawable/base_cover" />
+            android:src="@drawable/border" />
 
         <TextView
             android:id="@+id/listitem_PetName"
