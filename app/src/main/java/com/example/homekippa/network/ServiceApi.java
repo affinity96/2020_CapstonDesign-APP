@@ -13,6 +13,8 @@ import com.example.homekippa.data.CreateDailyWorkData;
 import com.example.homekippa.data.CreateDailyWorkResponse;
 import com.example.homekippa.data.CreateGroupData;
 import com.example.homekippa.data.CreateGroupResponse;
+import com.example.homekippa.data.DoneReportsResponse;
+import com.example.homekippa.data.GetGroupImageResponse;
 import com.example.homekippa.data.GroupData;
 import com.example.homekippa.data.GroupInviteData;
 import com.example.homekippa.data.GroupPostResponse;
@@ -88,6 +90,9 @@ public interface ServiceApi {
 
     @GET("/pet/reports")
     Call<List<SingleItemDailyWork>> getDailyWorkData(@Query("petId") int petId);
+
+    @PUT("/pet/reports/done")
+    Call<DoneReportsResponse> doneDailyWork(@Query("id") int id);
 
 //    @POST("/pet/add")
 //    Call<AddPetResponse> addPetReg(@Body AddPetData data);
