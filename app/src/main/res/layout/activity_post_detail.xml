@@ -82,6 +82,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/linearLayout_content"
+        android:fillViewport="true"
         android:layout_marginBottom="50dp">
 
         <LinearLayout
@@ -89,8 +90,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/border_gray"
-            android:orientation="vertical"
-            android:padding="10dp">
+            android:orientation="vertical">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/listview_DetailPostImages"
@@ -101,30 +101,34 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:clickable="true"
                 android:orientation="horizontal">
 
-                <ImageView
-                    android:id="@+id/imageView_commentLiked"
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
+                <Button
+                    android:id="@+id/imageView_DetailPostLiked"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
                     android:layout_margin="3dp"
                     android:clickable="true"
-                    app:srcCompat="@drawable/ic_bone_svgrepo_com" />
+                    android:focusable="true"
+                    android:background="@drawable/like_selector" />
 
                 <TextView
                     android:id="@+id/textView_LikedNum"
                     style="@style/BlackText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:text="12"
-                    android:textSize="12dp" />
+                    android:textSize="15dp" />
 
                 <ImageView
                     android:id="@+id/imageView_comment"
-                    android:layout_width="17dp"
-                    android:layout_height="17dp"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
                     android:layout_margin="3dp"
                     android:clickable="true"
+
                     app:srcCompat="@drawable/ic_insert_comment_24px" />
 
                 <TextView
@@ -132,7 +136,9 @@
                     style="@style/BlackText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="3" />
+                    android:layout_gravity="center"
+                    android:text="3"
+                    android:textSize="15dp" />
 
                 <!--                LiveData The Linear Layout-->
 
@@ -155,8 +161,7 @@
                 android:id="@+id/listview_PostComments"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/textView_commentNum"
-                android:padding="3dp" />
+                android:layout_below="@+id/textView_commentNum" />
         </LinearLayout>
 
     </ScrollView>

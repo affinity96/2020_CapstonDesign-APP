@@ -117,8 +117,6 @@ public class YesGroup extends Fragment {
 
     }
 
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -192,14 +190,14 @@ public class YesGroup extends Fragment {
                         //ArrayList<SingleItemDailyWork> dailyWorkList = new ArrayList<>()
                         dailyWorkList.addAll(reports);
                         ListDailyWorkAdapter dailyWorkAdapter = new ListDailyWorkAdapter(dailyWorkList);
+
                         LinearLayoutManager dLayoutManager = new LinearLayoutManager(getActivity());
                         dLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-
                         listView.setLayoutManager(dLayoutManager);
                         listView.setItemAnimator(new DefaultItemAnimator());
                         listView.setBackgroundColor(Color.parseColor("#ffffff"));
                         listView.setAdapter(dailyWorkAdapter);
-                    }else{
+                    } else {
                         listView.setBackgroundResource(R.drawable.no_dailywork);
                         listView.setItemAnimator(new DefaultItemAnimator());
                         ListDailyWorkAdapter dailyWorkAdapter = new ListDailyWorkAdapter(dailyWorkList);
@@ -260,7 +258,9 @@ public class YesGroup extends Fragment {
                         //TODO:나중에 바꿔야 할 부분. 일단 가장 처음 강아지의 아이디만을 petId라 해놓음!
                         petId = pets.get(0).getId();
                         Log.d("펫아이디2", String.format("%d", petId));
-                        ListPetAdapter petAdapter = new ListPetAdapter(petList);
+                        setDailyWorkListView(listView_dailyWorks, pets.get(0).getId());
+                    }
+                    ListPetAdapter petAdapter = new ListPetAdapter(petList);
 
                         LinearLayoutManager pLayoutManager = new LinearLayoutManager(getActivity());
                         pLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -268,8 +268,6 @@ public class YesGroup extends Fragment {
                         listView.setItemAnimator(new DefaultItemAnimator());
                         listView.setAdapter(petAdapter);
 
-                        setDailyWorkListView(listView_dailyWorks,pets.get(0).getId());
-                    }
 
                 }
             }
@@ -363,8 +361,8 @@ public class YesGroup extends Fragment {
                 }
             });
             //make image circled
-           // Glide.with(getActivity()).load(R.drawable.base_cover).circleCrop().into(holder.workPersonImage);
-          //  holder.workPersonImage.setImageResource(dailyWork.getWorkImage());
+            // Glide.with(getActivity()).load(R.drawable.base_cover).circleCrop().into(holder.workPersonImage);
+            //  holder.workPersonImage.setImageResource(dailyWork.getWorkImage());
         }
 
         @Override
@@ -392,6 +390,13 @@ public class YesGroup extends Fragment {
                 workDone = (TextView) view.findViewById(R.id.textView_workDone);
 
 
+                workName.setOnClickListener(new View.OnClickListener(){
+
+                    @Override
+                    public void onClick(View v) {
+                        Log.d("여기왔어","꺄륵");
+                    }
+                });
             }
         }
 
@@ -463,7 +468,5 @@ public class YesGroup extends Fragment {
 
             }
         }
-
-
     }
 }

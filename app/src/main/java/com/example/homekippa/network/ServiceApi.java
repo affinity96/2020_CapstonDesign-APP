@@ -17,6 +17,7 @@ import com.example.homekippa.data.DoneReportsResponse;
 import com.example.homekippa.data.GetGroupImageResponse;
 import com.example.homekippa.data.GroupData;
 import com.example.homekippa.data.GroupInviteData;
+import com.example.homekippa.data.GroupPostResponse;
 import com.example.homekippa.data.LikeData;
 import com.example.homekippa.data.LikeResponse;
 import com.example.homekippa.data.NotiData;
@@ -26,7 +27,8 @@ import com.example.homekippa.data.SignUpResponse;
 import com.example.homekippa.data.UidRespense;
 import com.example.homekippa.data.UserData;
 
-import com.example.homekippa.ui.group.SingleItemComment;
+import com.example.homekippa.data.WeatherLocationData;
+import com.example.homekippa.data.WeatheLocationResponse;
 import com.example.homekippa.ui.group.SingleItemDailyWork;
 import com.example.homekippa.ui.group.SingleItemPet;
 import com.example.homekippa.ui.group.SingleItemPost;
@@ -42,7 +44,6 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
-import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.PartMap;
 import retrofit2.http.Path;
@@ -92,7 +93,7 @@ public interface ServiceApi {
 
     @PUT("/pet/reports/done")
     Call<DoneReportsResponse> doneDailyWork(@Query("id") int id);
-    
+
 //    @POST("/pet/add")
 //    Call<AddPetResponse> addPetReg(@Body AddPetData data);
 
@@ -104,10 +105,10 @@ public interface ServiceApi {
     Call<AddpetDesResponse> addPetDes(@Body AddPetDesData data);
 
     @GET("/post/group")
-    Call<List<SingleItemPost>> getGroupPost(@Query("groupId") int groupId);
+    Call<GroupPostResponse> getGroupPost(@Query("groupId") int groupId);
 
-    @GET("/post/location")
-    Call<PostResponse> getLocationPost();
+    @GET("/post/home")
+    Call<PostResponse> getHomePost(@Query("tab_") String tab);
 
     @POST("/post/setlike")
     Call<LikeResponse> setLike(@Body LikeData data);
@@ -135,4 +136,9 @@ public interface ServiceApi {
 
     @GET("/user/getNoti")
     Call<List<NotiData>> getNotiData(@Query("userId") String userId);
+
+    @POST("/weather/infor")
+    Call<WeatheLocationResponse> getWeatehrData(@Body WeatherLocationData data);
+
+
 }
