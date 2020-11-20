@@ -63,7 +63,6 @@ public class YesGroup extends Fragment {
 
     private ArrayList<SingleItemPet> petList = new ArrayList<>();
 
-
     private TextView tv_groupName;
     private TextView tv_groupIntro;
     private Button button_Add_DW;
@@ -76,6 +75,7 @@ public class YesGroup extends Fragment {
     private Button button_changeGroupCover;
 
     private int selectedPosition = 0;
+
     public static YesGroup newInstance() {
         return new YesGroup();
     }
@@ -204,7 +204,7 @@ public class YesGroup extends Fragment {
                         listView.setItemAnimator(new DefaultItemAnimator());
                         listView.setBackgroundColor(Color.parseColor("#ffffff"));
                         listView.setAdapter(dailyWorkAdapter);
-                    }else{
+                    } else {
                         listView.setBackgroundResource(R.drawable.no_dailywork);
                         listView.setItemAnimator(new DefaultItemAnimator());
                         ListDailyWorkAdapter dailyWorkAdapter = new ListDailyWorkAdapter(dailyWorkList);
@@ -265,7 +265,7 @@ public class YesGroup extends Fragment {
                         //TODO:나중에 바꿔야 할 부분. 일단 가장 처음 강아지의 아이디만을 petId라 해놓음!
                         petId = pets.get(0).getId();
                         Log.d("펫아이디2", String.format("%d", petId));
-
+                        setDailyWorkListView(listView_dailyWorks, pets.get(0).getId());
                     }
                     ListPetAdapter petAdapter = new ListPetAdapter(petList);
 
@@ -275,7 +275,7 @@ public class YesGroup extends Fragment {
                     listView.setItemAnimator(new DefaultItemAnimator());
                     listView.setAdapter(petAdapter);
 
-                    setDailyWorkListView(listView_dailyWorks,pets.get(0).getId());
+
                 }
             }
 
@@ -312,8 +312,8 @@ public class YesGroup extends Fragment {
             Log.d("흐아아", dailyWork.toString());
             holder.workName.setText(dailyWork.getTitle());
             //make image circled
-           // Glide.with(getActivity()).load(R.drawable.base_cover).circleCrop().into(holder.workPersonImage);
-          //  holder.workPersonImage.setImageResource(dailyWork.getWorkImage());
+            // Glide.with(getActivity()).load(R.drawable.base_cover).circleCrop().into(holder.workPersonImage);
+            //  holder.workPersonImage.setImageResource(dailyWork.getWorkImage());
         }
 
         @Override
@@ -331,11 +331,11 @@ public class YesGroup extends Fragment {
                 //workPersonImage = (ImageView) view.findViewById(R.id.personImage);
 
 
-                workName.setOnClickListener(new View.OnClickListener(){
+                workName.setOnClickListener(new View.OnClickListener() {
 
                     @Override
                     public void onClick(View v) {
-                        Log.d("여기왔어","꺄륵");
+                        Log.d("여기왔어", "꺄륵");
                     }
                 });
             }
@@ -355,7 +355,7 @@ public class YesGroup extends Fragment {
         @Override
         public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.listitem_pet, parent, false);
-            List<View>itemViewList = new ArrayList<>();
+            List<View> itemViewList = new ArrayList<>();
             itemViewList.add(itemView);
             MyViewHolder myViewHolder = new MyViewHolder(itemView);
 
@@ -364,9 +364,9 @@ public class YesGroup extends Fragment {
 
         @Override
         public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-            if(selectedPosition == position){
+            if (selectedPosition == position) {
                 holder.pet.setBackgroundResource(R.drawable.round_button2);
-            }else{
+            } else {
                 holder.pet.setBackgroundResource(R.drawable.round_button);
             }
             setPetData(holder, position);
@@ -378,7 +378,7 @@ public class YesGroup extends Fragment {
             Glide.with(getActivity()).load(R.drawable.simplelogo).circleCrop().into(holder.petImage);
             holder.petImage.setImageResource(R.drawable.simplelogo);
 
-            holder.pet.setOnClickListener(new View.OnClickListener(){
+            holder.pet.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
@@ -386,9 +386,9 @@ public class YesGroup extends Fragment {
                     notifyDataSetChanged();
 
                     Log.d("아 두근거려", "아");
-                    Log.d("응?", String.format("%d",position));
-                    Log.d("오잉?", String.format("%d",selectedPet.getId() ));
-                    setDailyWorkListView(listView_dailyWorks,selectedPet.getId()  );
+                    Log.d("응?", String.format("%d", position));
+                    Log.d("오잉?", String.format("%d", selectedPet.getId()));
+                    setDailyWorkListView(listView_dailyWorks, selectedPet.getId());
                     petId = petList.get(position).getId();
                 }
             });

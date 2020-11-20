@@ -24,6 +24,7 @@ import retrofit2.Response;
 public class PostViewModel extends ViewModel {
     private ServiceApi service = RetrofitClient.getClient().create(ServiceApi.class);
     public static MutableLiveData<List<SingleItemPost>> post = new MutableLiveData<>();
+    public static MutableLiveData<List<Boolean>> likeCheck = new MutableLiveData<>();
 
     public PostViewModel() {
     }
@@ -35,11 +36,35 @@ public class PostViewModel extends ViewModel {
         return post;
     }
 
-    public static void increase(int pos) {
+    public MutableLiveData<List<Boolean>> getLikeCheck() {
+        if (likeCheck == null) {
+            likeCheck = new MutableLiveData<>();
+        }
+        return likeCheck;
+    }
+
+    public static void increaseComment(int pos) {
         List<SingleItemPost> posts = new ArrayList<>();
         posts.addAll(post.getValue());
         posts.get(pos).setCommentNum(posts.get(pos).getCommentNum() + 1);
         post.setValue(posts);
+    }
+
+    public static void setLiveLikeNum(int pos, int val) {
+        List<SingleItemPost> posts = new ArrayList<>();
+        posts.addAll(post.getValue());
+        posts.get(pos).setLikeNum(posts.get(pos).getLikeNum() + (val));
+        Log.d("view model", String.valueOf(val));
+        Log.d("view model", String.valueOf(posts.get(pos).getLikeNum()));
+
+        post.setValue(posts);
+    }
+
+    public static void setLiveLikeCheck(int pos, boolean val) {
+        List<Boolean> likecheck = new ArrayList<>();
+        likecheck.addAll(likeCheck.getValue());
+        likecheck.set(pos, val);
+        likeCheck.setValue(likecheck);
     }
 
 //    public static void decrease(int pos) {
