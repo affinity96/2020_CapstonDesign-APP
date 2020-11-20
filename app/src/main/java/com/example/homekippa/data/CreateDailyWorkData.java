@@ -29,8 +29,6 @@ public class CreateDailyWorkData {
         this.dailyWorkDesc = dailyWorkDesc;
         this.dailyWorkTime = dailyWorkTime;
         this.dailyWorkAlarm = dailyWorkAlarm;
-
-
     }
 
 

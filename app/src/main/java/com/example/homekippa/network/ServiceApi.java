@@ -15,6 +15,7 @@ import com.example.homekippa.data.CreateGroupData;
 import com.example.homekippa.data.CreateGroupResponse;
 import com.example.homekippa.data.GroupData;
 import com.example.homekippa.data.GroupInviteData;
+import com.example.homekippa.data.GroupPostResponse;
 import com.example.homekippa.data.LikeData;
 import com.example.homekippa.data.LikeResponse;
 import com.example.homekippa.data.NotiData;
@@ -99,10 +100,10 @@ public interface ServiceApi {
     Call<AddpetDesResponse> addPetDes(@Body AddPetDesData data);
 
     @GET("/post/group")
-    Call<List<SingleItemPost>> getGroupPost(@Query("groupId") int groupId);
+    Call<GroupPostResponse> getGroupPost(@Query("groupId") int groupId);
 
-    @GET("/post/location")
-    Call<PostResponse> getLocationPost();
+    @GET("/post/home")
+    Call<PostResponse> getHomePost(@Query("tab_") String tab);
 
     @POST("/post/setlike")
     Call<LikeResponse> setLike(@Body LikeData data);

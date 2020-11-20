@@ -6,39 +6,35 @@ import android.text.Editable;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.homekippa.MainActivity;
 import com.example.homekippa.R;
 import com.example.homekippa.data.CommentData;
 import com.example.homekippa.data.CommentGetResponse;
 import com.example.homekippa.data.CommentResponse;
 import com.example.homekippa.data.GroupData;
+import com.example.homekippa.data.LikeData;
+import com.example.homekippa.data.LikeResponse;
 import com.example.homekippa.data.UserData;
 import com.example.homekippa.network.RetrofitClient;
 import com.example.homekippa.network.ServiceApi;
 import com.example.homekippa.ui.group.ListCommentAdapter;
-import com.example.homekippa.ui.group.ListPostAdapter;
 import com.example.homekippa.ui.group.ListPostImageAdapter;
 import com.example.homekippa.ui.group.SingleItemComment;
 import com.example.homekippa.ui.group.SingleItemPost;
 import com.example.homekippa.ui.group.SingleItemPostImage;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -53,8 +49,9 @@ public class PostDetailActivity extends AppCompatActivity {
     private GroupData group;
     private UserData user;
     private Intent intent;
+    private int postPosition;
+    private boolean isliked;
 
-    int postPosition;
 
     private SingleItemPost post;
     ImageView postGroupProfile;
@@ -65,6 +62,7 @@ public class PostDetailActivity extends AppCompatActivity {
     TextView postContent;
     TextView postLikeNum;
     TextView postCommentNum;
+    Button postLikedImage;
 
     TextView comment;
     ArrayList<CommentData> comment_List = new ArrayList<>();
@@ -79,15 +77,6 @@ public class PostDetailActivity extends AppCompatActivity {
     private int commentNum;
 
     private ServiceApi service;
-
-
-    @Override
-    public void onBackPressed() {
-        Log.d("THIS IS COMMENT NUM", "sdfsdfsdf");
-        intent.putExtra("commentnum", String.valueOf(commentNum));
-        setResult(RESULT_OK, intent);
-        finish();
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,7 +110,7 @@ public class PostDetailActivity extends AppCompatActivity {
                             setPostComment(recyclerView_postComments);
 
 //                            Log.d("comment", viewModel.getCounter().getValue().toString());
-                            PostViewModel.increase(postPosition);
+                            PostViewModel.increaseComment(postPosition);
                             setPostDetail();
 
 
@@ -148,7 +137,7 @@ public class PostDetailActivity extends AppCompatActivity {
         postPosition = (int) intent.getExtras().get("pos");
 
 
-        Log.d("post group", group.getName());
+        viewModel = new ViewModelProvider((ViewModelStoreOwner) this).get(PostViewModel.class);
 
 //        postGroupProfile = (ImageView) findViewById(R.id.imageView_DetailPostGroupProfile);
         postGroupName = (TextView) findViewById(R.id.textView__DetailPostGroupName);
@@ -159,22 +148,56 @@ public class PostDetailActivity extends AppCompatActivity {
         postCommentNum = (TextView) findViewById(R.id.textView_commentNum);
         recyclerView_postImages = (RecyclerView) findViewById(R.id.listview_DetailPostImages);
         recyclerView_postComments = (RecyclerView) findViewById(R.id.listview_PostComments);
+        postLikedImage = (Button) findViewById(R.id.imageView_DetailPostLiked);
+        isliked = viewModel.getLikeCheck().getValue().get(postPosition);
 
 //        postGroupProfile.setImageResource(post.getGroupPostProfile());
+
+
         post_ImageList = post.getGroupPostImage();
         postGroupName.setText(group.getName());
         postGroupLocation.setText(group.getAddress());
         postTitle.setText(post.getTitle());
         postContent.setText(post.getContent());
-        postLikeNum.setText(String.valueOf(post.getLikeNum()));
-//        postCommentNum.setText(String.valueOf(post.getCommentNum()));
-
-        viewModel = new ViewModelProvider((ViewModelStoreOwner) this).get(PostViewModel.class);
+        postLikeNum.setText(String.valueOf(viewModel.getPostList().getValue().get(postPosition).getLikeNum()));
         postCommentNum.setText(String.valueOf(viewModel.getPostList().getValue().get(postPosition).getCommentNum()));
+        postLikedImage.setActivated(isliked);
 
+//        commentNum = post.getCommentNum();
         setPostImage(post_ImageList);
-        commentNum = post.getCommentNum();
         setPostComment(recyclerView_postComments);
+
+        postLikedImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                LikeData likeData = new LikeData(post.getPostId(), user.getUserId(), v.isActivated());
+                service.setLike(likeData).enqueue(new Callback<LikeResponse>() {
+                    @Override
+                    public void onResponse(Call<LikeResponse> call, Response<LikeResponse> response) {
+                        if (response.code() == 200) {
+
+                            if (!v.isActivated()) {
+                                Log.d("like", "success");
+                                PostViewModel.setLiveLikeNum(postPosition, 1);
+                                PostViewModel.setLiveLikeCheck(postPosition, true);
+                            } else {
+                                PostViewModel.setLiveLikeNum(postPosition, -1);
+                                PostViewModel.setLiveLikeCheck(postPosition, false);
+                            }
+                            setPostDetail();
+//                            v.setActivated(!v.isActivated());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<LikeResponse> call, Throwable t) {
+                        Log.d("like", "fail");
+                    }
+                });
+            }
+        });
+
     }
 
     private void setPostImage(ArrayList<SingleItemPostImage> post_ImageList) {
@@ -187,7 +210,7 @@ public class PostDetailActivity extends AppCompatActivity {
 
     //TODO: Set Post Comment
     private void setPostComment(RecyclerView listView) {
-        Log.d("comment", "setoistcomnt");
+
         service.getComment(post.getPostId()).enqueue(new Callback<CommentGetResponse>() {
             @Override
             public void onResponse(Call<CommentGetResponse> call, Response<CommentGetResponse> response) {
@@ -200,9 +223,11 @@ public class PostDetailActivity extends AppCompatActivity {
                     group_List = commentGetResponse.getGroups();
                     ArrayList<SingleItemComment> comments = new ArrayList<>();
 
+
+
                     //TODO: Change the image of GROUP
                     for (int i = 0; i < comment_List.size(); i++) {
-                        Log.d("comment", comment_List.get(i).getContent());
+                        Log.d("comment", comment_List.get(i).getDate());
                         SingleItemComment comment = new SingleItemComment(R.drawable.dog_thang, group_List.get(i).getName(), user_List.get(i).getUserName(), group_List.get(i).getAddress(), comment_List.get(i).getContent());
                         comments.add(comment);
                     }
@@ -226,7 +251,6 @@ public class PostDetailActivity extends AppCompatActivity {
 
 //        SingleItemComment comment = new SingleItemComment(R.drawable.dog_thang, "땡이네 콩 ", groupCommentNickName, "경기도 용인시 기흥구 흥덕중앙로", "어머나!!!!!넘모 귕영웡용 ");
 //        comment_List.add(comment);
-
 
     }
 
