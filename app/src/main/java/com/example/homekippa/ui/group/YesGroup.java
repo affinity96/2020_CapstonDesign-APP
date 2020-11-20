@@ -1,5 +1,8 @@
 package com.example.homekippa.ui.group;
 
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -20,6 +23,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +33,7 @@ import com.example.homekippa.CreateDailyWorkActivity;
 import com.example.homekippa.MainActivity;
 import com.example.homekippa.R;
 import com.example.homekippa.data.CreateGroupResponse;
+import com.example.homekippa.data.DoneReportsResponse;
 import com.example.homekippa.data.GetGroupImageResponse;
 import com.example.homekippa.data.GroupData;
 import com.example.homekippa.data.UserData;
@@ -38,6 +43,8 @@ import com.example.homekippa.network.ServiceApi;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -72,7 +79,7 @@ public class YesGroup extends Fragment {
     private Button button_addPet;
     private Button button_addUser;
 
-    private int selectedPosition = -1;
+    private int selectedPosition = 0;
     public static YesGroup newInstance() {
         return new YesGroup();
     }
@@ -109,6 +116,8 @@ public class YesGroup extends Fragment {
 
 
     }
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -180,13 +189,12 @@ public class YesGroup extends Fragment {
                     ArrayList<SingleItemDailyWork> dailyWorkList = new ArrayList<>();
 
                     if (!reports.isEmpty()) {
-
-                        //ArrayList<SingleItemDailyWork> dailyWorkList = new ArrayList<>();
+                        //ArrayList<SingleItemDailyWork> dailyWorkList = new ArrayList<>()
                         dailyWorkList.addAll(reports);
                         ListDailyWorkAdapter dailyWorkAdapter = new ListDailyWorkAdapter(dailyWorkList);
-
                         LinearLayoutManager dLayoutManager = new LinearLayoutManager(getActivity());
                         dLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+
                         listView.setLayoutManager(dLayoutManager);
                         listView.setItemAnimator(new DefaultItemAnimator());
                         listView.setBackgroundColor(Color.parseColor("#ffffff"));
@@ -252,17 +260,17 @@ public class YesGroup extends Fragment {
                         //TODO:나중에 바꿔야 할 부분. 일단 가장 처음 강아지의 아이디만을 petId라 해놓음!
                         petId = pets.get(0).getId();
                         Log.d("펫아이디2", String.format("%d", petId));
+                        ListPetAdapter petAdapter = new ListPetAdapter(petList);
 
+                        LinearLayoutManager pLayoutManager = new LinearLayoutManager(getActivity());
+                        pLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+                        listView.setLayoutManager(pLayoutManager);
+                        listView.setItemAnimator(new DefaultItemAnimator());
+                        listView.setAdapter(petAdapter);
+
+                        setDailyWorkListView(listView_dailyWorks,pets.get(0).getId());
                     }
-                    ListPetAdapter petAdapter = new ListPetAdapter(petList);
 
-                    LinearLayoutManager pLayoutManager = new LinearLayoutManager(getActivity());
-                    pLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-                    listView.setLayoutManager(pLayoutManager);
-                    listView.setItemAnimator(new DefaultItemAnimator());
-                    listView.setAdapter(petAdapter);
-
-                    setDailyWorkListView(listView_dailyWorks,pets.get(0).getId());
                 }
             }
 
@@ -298,6 +306,62 @@ public class YesGroup extends Fragment {
             SingleItemDailyWork dailyWork = dailyWorks_Items.get(position);
             Log.d("흐아아", dailyWork.toString());
             holder.workName.setText(dailyWork.getTitle());
+            holder.workTime.setText(dailyWork.getTime());
+            holder.workAlarm.setText(dailyWork.getAlarm());
+            if(dailyWork.getDone()!=0){
+                holder.workCheck.setBackgroundResource(R.drawable.round_button4);
+
+            }
+
+            holder.workCheck.setOnClickListener(new View.OnClickListener(){
+
+                @SuppressLint("ResourceAsColor")
+                @Override
+                public void onClick(View v) {
+                    Log.d("여기왔어","꺄륵");
+                    AlertDialog.Builder builder  = new AlertDialog.Builder(v.getContext());
+                    builder.setTitle("[ " +holder.workName.getText()+" ]" + " 일과를 수행하셨습니까?");
+                    builder.setMessage("일과를 완료한 시각과 사용자님의 정보가 기록됩니다.");
+                    builder.setPositiveButton("예",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    service.doneDailyWork(dailyWork.getId()).enqueue(new Callback<DoneReportsResponse>() {
+                                        @Override
+                                        public void onResponse(Call<DoneReportsResponse> call, Response<DoneReportsResponse> response) {
+                                            Log.d("헤에", response.toString());
+
+                                        }
+
+                                        @Override
+                                        public void onFailure(Call<DoneReportsResponse> call, Throwable t) {
+                                            Log.e("일과 완료(갱신) 에러", t.getMessage());
+                                        }
+                                    });
+
+                                    Toast.makeText(v.getContext(),"일과가 완료되었습니다!",Toast.LENGTH_SHORT).show();
+                                    Calendar currentTime = Calendar.getInstance();
+                                    int hour24hrs = currentTime.get(Calendar.HOUR_OF_DAY);
+                                    int minutes = currentTime.get(Calendar.MINUTE);
+
+                                    holder.workCheck.setBackgroundResource(R.drawable.round_button4);
+                                    holder.workDone.setText( hour24hrs + ":" + minutes);
+                                    holder.workName.setTextColor(Color.parseColor("#FFFFFF"));
+                                    holder.workTime.setTextColor(Color.parseColor("#FFFFFF"));
+                                    holder.workAlarm.setTextColor(Color.parseColor("#FFFFFF"));
+
+                                    holder.workDone.setTextColor(Color.parseColor("#FFFFFF"));
+                                }
+                            });
+                    builder.setNegativeButton("아니오",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Toast.makeText(v.getContext(),"일과 수행 후 다시 눌러주세요!",Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
+                    builder.show();
+                }
+            });
             //make image circled
            // Glide.with(getActivity()).load(R.drawable.base_cover).circleCrop().into(holder.workPersonImage);
           //  holder.workPersonImage.setImageResource(dailyWork.getWorkImage());
@@ -310,21 +374,24 @@ public class YesGroup extends Fragment {
 
         class MyViewHolder2 extends RecyclerView.ViewHolder {
             TextView workName;
+            TextView workTime;
+            TextView workAlarm;
+            RelativeLayout workCheck;
             //ImageView workPersonImage;
-
+            TextView workDone;
+            TextView workNameTitle;
             MyViewHolder2(View view) {
                 super(view);
+                //workNameTitle =
+
                 workName = (TextView) view.findViewById(R.id.textView_workName);
                 //workPersonImage = (ImageView) view.findViewById(R.id.personImage);
+                workTime = (TextView) view.findViewById(R.id.textView_workTime);
+                workAlarm = (TextView) view.findViewById(R.id.textView_workAlarm);
+                workCheck = (RelativeLayout) view.findViewById(R.id.work_Check);
+                workDone = (TextView) view.findViewById(R.id.textView_workDone);
 
 
-                workName.setOnClickListener(new View.OnClickListener(){
-
-                    @Override
-                    public void onClick(View v) {
-                        Log.d("여기왔어","꺄륵");
-                    }
-                });
             }
         }
 
@@ -371,12 +438,7 @@ public class YesGroup extends Fragment {
 
                     selectedPosition = position;
                     notifyDataSetChanged();
-
-
-                    Log.d("아 두근거려", "아");
-                    Log.d("응?", String.format("%d",position));
-                    Log.d("오잉?", String.format("%d",selectedPet.getId() ));
-                    setDailyWorkListView(listView_dailyWorks,selectedPet.getId()  );
+                    setDailyWorkListView(listView_dailyWorks,selectedPet.getId());
                     petId = petList.get(position).getId();
                 }
             });
@@ -401,5 +463,7 @@ public class YesGroup extends Fragment {
 
             }
         }
+
+
     }
 }
