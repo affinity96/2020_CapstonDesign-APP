@@ -41,42 +41,57 @@
             android:textColor="#ffffff"
             android:textSize="20dp" />
 
-
     </androidx.appcompat.widget.Toolbar>
 
-    <EditText
-        android:id="@+id/editText_postContent"
-        android:layout_width="0dp"
-        android:layout_height="300dp"
-        android:gravity="top"
-        android:hint="반려동물과의 추억을 다른 사람들과 함께 공유해 보세요"
-        android:paddingTop="20dp"
-        android:textSize="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
-    <ImageButton
-        app:srcCompat="@drawable/ic_photo_24px"
-        android:id="@+id/button_Add_Post_Img"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="5dp"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:background="@drawable/border_gray"
+        <EditText
+            android:id="@+id/editText_addPostTitle"
+            style="@style/BlackText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border_gray"
+            android:drawableLeft="@drawable/ic_pets_24px"
+            android:drawablePadding="10dp"
+            android:hint="제목을 입력하세요 "
+            android:padding="20dp"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/editText_postContent"
+            style="@style/BlackText"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:background="@drawable/border_gray"
+            android:gravity="top|left"
+            android:hint="반려동물과의 추억을 다른 사람들과 함께 공유해 보세요"
+            android:padding="20dp"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageButton
+            android:id="@+id/button_Add_Post_Img"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/border_gray"
+            app:layout_constraintHorizontal_bias="0.03"
+            app:srcCompat="@drawable/ic_photo_24px" />
+    </LinearLayout>
 
 
-        app:layout_constraintStart_toStartOf="@+id/toolbar"
-        app:layout_constraintTop_toBottomOf="@+id/editText_postContent" />
-
-<!--    <ImageView-->
-<!--        android:id="@+id/img_photo_post"-->
-<!--        android:layout_width="70dp"-->
-<!--        android:layout_height="70dp"-->
-<!--        android:src="@drawable/simplelogo"-->
-<!--        android:scaleType="centerCrop"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/button_Add_Post_Img"/>-->
+    <!--    <ImageView-->
+    <!--        android:id="@+id/img_photo_post"-->
+    <!--        android:layout_width="70dp"-->
+    <!--        android:layout_height="70dp"-->
+    <!--        android:src="@drawable/simplelogo"-->
+    <!--        android:scaleType="centerCrop"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/button_Add_Post_Img"/>-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

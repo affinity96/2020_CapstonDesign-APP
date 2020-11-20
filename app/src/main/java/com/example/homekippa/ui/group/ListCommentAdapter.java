@@ -19,7 +19,10 @@ import com.example.homekippa.network.ServiceApi;
 
 import org.w3c.dom.Text;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -51,17 +54,48 @@ public class ListCommentAdapter extends RecyclerView.Adapter<ListCommentAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        setPostCommentData(holder, position);
+        try {
+            setPostCommentData(holder, position);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
-    private void setPostCommentData(MyViewHolder holder, int position) {
+    private void setPostCommentData(MyViewHolder holder, int position) throws ParseException {
         SingleItemComment comment = postComment_Items.get(position);
         holder.profile.setImageResource(comment.getGroupCommentProfile());
         holder.groupName.setText(comment.getGroupCommentGroupName());
         holder.NickName.setText(comment.getGroupCommentNickName());
         holder.groupLocation.setText(comment.getGroupCommentLocation());
         holder.commentContent.setText(comment.getGroupCommentContent());
+
+        setCommentDate(holder, position);
+
         //TODO 삭제 버튼 보이고 안보이고 check
+
+    }
+
+    private void setCommentDate(MyViewHolder holder, int position) throws ParseException {
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String olddate = commentData.get(position).getDate();
+        Log.d("date", String.valueOf(olddate));
+
+        Date oldDate = dateFormat.parse(olddate);
+
+        long reqDateTime = oldDate.getTime();
+
+        Date curDate = new Date();
+        curDate = dateFormat.parse(dateFormat.format(curDate));
+        long curDateTime = curDate.getTime();
+
+        long minute = (curDateTime - reqDateTime) / 60000;
+        Log.d("date", String.valueOf(minute));
+
+
+        String newdate = new SimpleDateFormat("yyyy-MM-dd").format(oldDate);
+
+        holder.commentDate.setText(newdate);
     }
 
     @Override
@@ -77,6 +111,8 @@ public class ListCommentAdapter extends RecyclerView.Adapter<ListCommentAdapter.
         TextView groupLocation;
         TextView commentContent;
         TextView deleteComment;
+        TextView commentDate;
+
 
         MyViewHolder(View view) {
             super(view);
@@ -86,6 +122,7 @@ public class ListCommentAdapter extends RecyclerView.Adapter<ListCommentAdapter.
             groupLocation = (TextView) view.findViewById(R.id.textView__CommentGroupLocation);
             commentContent = (TextView) view.findViewById(R.id.textView_commentContent);
             deleteComment = (TextView) view.findViewById(R.id.textView_deleteComment);
+            commentDate = (TextView) view.findViewById(R.id.textView_CommentDate);
 
             deleteComment.setOnClickListener(new View.OnClickListener() {
 
