@@ -36,6 +36,8 @@ import com.example.homekippa.data.CreateGroupResponse;
 import com.example.homekippa.data.DoneReportsResponse;
 import com.example.homekippa.data.GetGroupImageResponse;
 import com.example.homekippa.data.GroupData;
+import com.example.homekippa.data.GroupInviteData;
+import com.example.homekippa.data.UidRespense;
 import com.example.homekippa.data.UserData;
 import com.example.homekippa.function.Loading;
 import com.example.homekippa.network.RetrofitClient;
@@ -140,6 +142,42 @@ public class YesGroup extends Fragment {
             button_Add_DW.setVisibility(View.INVISIBLE);
             button_changeGroupCover.setVisibility(View.INVISIBLE);
         }
+
+        button_join_group.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                service.acceptInvite(new GroupInviteData(groupData, null, userData)).enqueue(new Callback<UserData>() {
+                    @Override
+                    public void onResponse(Call<UserData> call, Response<UserData> response) {
+                        if (response.isSuccessful()) {
+                            userData = response.body();
+                            MainActivity mainActivity = (MainActivity)getActivity();
+/*                            mainActivity.setUserData(userData);
+                            mainActivity.setGroupData(groupData);
+                            mainActivity.getNavView().getMenu().getItem(4).setChecked(true);
+
+                            GroupFragment groupFragment = new GroupFragment();
+                            Bundle bundle = new Bundle();
+                            bundle.putParcelable("groupData", groupData);
+                            groupFragment.setArguments(bundle);
+                            mainActivity.changeFragment(groupFragment);*/
+
+                            mainActivity.finish();
+                            Intent intent = new Intent(getContext(), MainActivity.class);
+                            intent.putExtra("user", userData);
+                            intent.putExtra("group", groupData);
+                            startActivity(intent);
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<UserData> call, Throwable t) {
+                        Toast.makeText(getContext(), "수락 실패", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
 
         button_Add_DW.setOnClickListener(new View.OnClickListener() {
             @Override

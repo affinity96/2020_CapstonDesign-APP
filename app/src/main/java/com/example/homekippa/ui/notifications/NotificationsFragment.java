@@ -87,8 +87,7 @@ public class NotificationsFragment extends Fragment {
                                         Bundle bundle = new Bundle();
                                         bundle.putParcelable("groupData", groupData);
                                         groupFragment.setArguments(bundle);
-                                        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, groupFragment).commitAllowingStateLoss();
-
+                                        ((MainActivity)getActivity()).changeFragment(groupFragment);
                                     }
                                 }
 

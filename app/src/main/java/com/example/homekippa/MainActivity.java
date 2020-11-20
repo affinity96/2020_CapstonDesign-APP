@@ -176,8 +176,20 @@ public class MainActivity extends AppCompatActivity {
         return this.userData;
     }
 
+    public void setUserData(UserData userData){
+        this.userData = userData;
+    }
+
     public GroupData getGroupData() {
         return this.groupData;
+    }
+
+    public void setGroupData(GroupData groupData){
+        this.groupData = groupData;
+    }
+
+    public BottomNavigationView getNavView() {
+        return this.navView;
     }
 
     @Override
