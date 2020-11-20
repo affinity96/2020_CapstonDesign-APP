@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -32,6 +33,8 @@ import com.example.homekippa.data.LikeResponse;
 import com.example.homekippa.data.UserData;
 import com.example.homekippa.network.RetrofitClient;
 import com.example.homekippa.network.ServiceApi;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,12 +83,15 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
         service = RetrofitClient.getClient().create(ServiceApi.class);
         userData = ((MainActivity) context).getUserData();
 
+        viewModel = new ViewModelProvider((ViewModelStoreOwner) context).get(PostViewModel.class);
+
         return new MyViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         setPostData(holder, position);
+        setViewModel(holder, position);
     }
 
     private void setPostData(MyViewHolder holder, int position) {
@@ -104,14 +110,13 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
         holder.postTitle.setText(post.getTitle());
         holder.postContent.setText(post.getContent());
         holder.postCommentNum.setText(String.valueOf(post.getCommentNum()));
-        holder.postLikedNum.setText(String.valueOf(post.getLikeNum()));
+        holder.postLikedNum.setText(String.valueOf(viewModel.getPostList().getValue().get(position).getLikeNum()));
         holder.postGroupName.setText(group.getName());
         holder.postGroupAddress.setText(group.getAddress());
-
         setLikeImage(holder, position);
-        setPostImageAdapter(holder, post.getGroupPostImage());
-        setClickListenerOnHolder(holder, position);
 
+        setClickListenerOnHolder(holder, position);
+        setPostImageAdapter(holder, post.getGroupPostImage());
     }
 
     private void setClickListenerOnHolder(MyViewHolder holder, int position) {
@@ -126,11 +131,10 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
                 intent.putExtra("post", post);
                 intent.putExtra("group", group);
                 intent.putExtra("user", userData);
+                intent.putExtra("isliked", likeCheck.get(position));
                 intent.putExtra("pos", position);
 
                 ((Activity) context).startActivity(intent);
-                setViewModelOnComment(holder, position);
-
             }
         });
 
@@ -139,21 +143,21 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
             public void onClick(View v) {
                 SingleItemPost post = post_Items.get(position);
 
-                LikeData likeData = new LikeData(post.getPostId(), userData.getUserId(), v.isActivated());
+                LikeData likeData = new LikeData(post.getPostId(), userData.getUserId(), !v.isActivated());
                 service.setLike(likeData).enqueue(new Callback<LikeResponse>() {
                     @Override
                     public void onResponse(Call<LikeResponse> call, Response<LikeResponse> response) {
                         if (response.code() == 200) {
                             Log.d("like", "success");
                             if (!v.isActivated()) {
-                                holder.postLikedNum.setText(String.valueOf(post.getLikeNum() + 1));
-                                post.setLikeNum(post.getLikeNum() + 1);
+                                Log.d("like", "Increase");
+                                PostViewModel.setLiveLikeNum(position, 1);
+                                PostViewModel.setLiveLikeCheck(position, true);
                             } else {
-                                holder.postLikedNum.setText(String.valueOf(post.getLikeNum() - 1));
-                                post.setLikeNum(post.getLikeNum() - 1);
+                                PostViewModel.setLiveLikeNum(position, -1);
+                                PostViewModel.setLiveLikeCheck(position, false);
                             }
-
-                            v.setActivated(!v.isActivated());
+//                            v.setActivated(!v.isActivated());
                         }
                     }
 
@@ -166,13 +170,24 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
         });
     }
 
-    private void setViewModelOnComment(MyViewHolder holder, int position) {
+    private void setViewModel(MyViewHolder holder, int position) {
 
         viewModel = new ViewModelProvider((ViewModelStoreOwner) context).get(PostViewModel.class);
         viewModel.getPostList().observe((LifecycleOwner) context, new Observer<List<SingleItemPost>>() {
             @Override
             public void onChanged(List<SingleItemPost> singleItemPosts) {
                 holder.postCommentNum.setText(String.valueOf(singleItemPosts.get(position).getCommentNum()));
+                holder.postLikedNum.setText(String.valueOf(singleItemPosts.get(position).getLikeNum()));
+                boolean isliked = viewModel.getLikeCheck().getValue().get(position);
+                holder.postLikeImage.setActivated(isliked);
+            }
+        });
+        viewModel.getLikeCheck().observe((LifecycleOwner) context, new Observer<List<Boolean>>() {
+            @Override
+            public void onChanged(List<Boolean> likecheck) {
+                holder.postLikedNum.setText(String.valueOf(viewModel.getPostList().getValue().get(position).getLikeNum()));
+                boolean isliked = viewModel.getLikeCheck().getValue().get(position);
+                holder.postLikeImage.setActivated(isliked);
             }
         });
     }
@@ -188,8 +203,9 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
     }
 
     private void setLikeImage(MyViewHolder holder, int position) {
-        if (likeCheck.get(position)) holder.postLikeImage.setActivated(true);
-        else holder.postLikeImage.setActivated(false);
+        boolean isliked = viewModel.getLikeCheck().getValue().get(position);
+        holder.postLikeImage.setActivated(isliked);
+
     }
 
     public void setPostImageAdapter(MyViewHolder holder, ArrayList<SingleItemPostImage> postImageList) {
@@ -213,10 +229,11 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
         TextView postContent;
         TextView postLikedNum;
         TextView postCommentNum;
+        TextView postDate;
         RecyclerView recyclerView_postImages;
 
         ImageView postGroupProfile;
-        ImageView postLikeImage;
+        Button postLikeImage;
         ImageView postCommentImage;
 
         MyViewHolder(View view) {
@@ -229,8 +246,9 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
             postContent = (TextView) view.findViewById(R.id.textView_PostContent);
             postLikedNum = (TextView) view.findViewById(R.id.textView_PostLikedNum);
             postCommentNum = (TextView) view.findViewById(R.id.textView_PostCommentNum);
+            postDate = (TextView) view.findViewById(R.id.textView_PostDate);
             recyclerView_postImages = (RecyclerView) view.findViewById(R.id.listview_PostImages);
-            postLikeImage = (ImageView) view.findViewById(R.id.imageView_PostLiked);
+            postLikeImage = (Button) view.findViewById(R.id.imageView_PostLiked);
             postCommentImage = (ImageView) view.findViewById(R.id.imageView_PostComment);
         }
 
