@@ -2,13 +2,13 @@ package com.example.homekippa.ui.group;
 
 public class SingleItemComment {
 
-    private int groupCommentProfile;
+    private String groupCommentProfile;
     private String groupCommentGroupName;
     private String groupCommentNickName;
     private String groupCommentLocation;
     private String groupCommentContent;
 
-    public SingleItemComment(int profile, String groupName, String nickName, String groupLocation, String commentContent) {
+    public SingleItemComment(String profile, String groupName, String nickName, String groupLocation, String commentContent) {
         groupCommentProfile = profile;
         groupCommentGroupName = groupName;
         groupCommentNickName = nickName;
@@ -16,7 +16,7 @@ public class SingleItemComment {
         groupCommentContent = commentContent;
     }
 
-    public int getGroupCommentProfile() {
+    public String getGroupCommentProfile() {
         return groupCommentProfile;
     }
 

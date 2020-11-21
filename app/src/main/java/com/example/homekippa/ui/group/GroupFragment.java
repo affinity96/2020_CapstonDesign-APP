@@ -14,12 +14,14 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.homekippa.MainActivity;
 import com.example.homekippa.R;
+import com.example.homekippa.data.GroupData;
 import com.example.homekippa.data.UserData;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 public class GroupFragment extends Fragment {
     private UserData userData;
+    private GroupData groupData;
 
     GroupCollectionAdapter groupCollectionAdapter;
     ViewPager2 viewpager;
@@ -41,12 +43,13 @@ public class GroupFragment extends Fragment {
     @Override
     public void onViewCreated(@Nullable View view, @Nullable Bundle savedInstanceState) {
         userData = ((MainActivity) getActivity()).getUserData();
+        groupData = (GroupData)getArguments().get("groupData");
         connectViewPagerToTab(view);
 
     }
 
     private void connectViewPagerToTab(@Nullable View view) {
-        groupCollectionAdapter = new GroupCollectionAdapter(this, userData);
+        groupCollectionAdapter = new GroupCollectionAdapter(this, userData, groupData);
         viewpager = view.findViewById(R.id.group_pager);
         viewpager.setAdapter(groupCollectionAdapter);
         TabLayout tabLayout = view.findViewById(R.id.group_tab_layout);
@@ -56,10 +59,12 @@ public class GroupFragment extends Fragment {
 
 class GroupCollectionAdapter extends FragmentStateAdapter {
     private UserData userData;
+    private GroupData groupData;
 
-    public GroupCollectionAdapter(Fragment fragment, UserData userData) {
+    public GroupCollectionAdapter(Fragment fragment, UserData userData, GroupData groupData) {
         super(fragment);
         this.userData = userData;
+        this.groupData = groupData;
     }
 
     @NonNull
@@ -67,6 +72,13 @@ class GroupCollectionAdapter extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
         int groupId = userData.getGroupId();
         Bundle args = new Bundle();
+        args.putParcelable("groupData", groupData);
+        if(groupId == groupData.getId()){
+            args.putBoolean("myGroup", true);
+        }
+        else {
+            args.putBoolean("myGroup", false);
+        }
         switch (position) {
             case 0:
                 Fragment fragment = new YesGroup();

@@ -1,6 +1,8 @@
 package com.example.homekippa.ui.group;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -15,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.homekippa.AddPostActivity;
 import com.example.homekippa.MainActivity;
 import com.example.homekippa.R;
@@ -25,9 +28,12 @@ import com.example.homekippa.data.UserData;
 import com.example.homekippa.network.RetrofitClient;
 import com.example.homekippa.network.ServiceApi;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -42,6 +48,7 @@ public class GroupPost extends Fragment {
     private UserData userData;
     private GroupData groupData;
 
+    private ViewGroup root;
     private String mParam1;
     private String mParam2;
 
@@ -52,6 +59,7 @@ public class GroupPost extends Fragment {
     private RecyclerView listView_posts;
     private TextView textView_groupName;
     private TextView textView_address;
+    private CircleImageView imageView_PostProfile;
 
     public GroupPost() {
         // Required empty public constructor
@@ -68,30 +76,21 @@ public class GroupPost extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        service = RetrofitClient.getClient().create(ServiceApi.class);
-        userData = ((MainActivity) getActivity()).getUserData();
-        groupData = ((MainActivity) getActivity()).getGroupData();
-
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+    public void onResume(){
+        super.onResume();
+        setPostListView(listView_posts);
     }
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
-        ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_group_post, container, false);
+    public void onStart(){
+        super.onStart();
         listView_posts = root.findViewById(R.id.listView_GroupPost);
         textView_groupName = root.findViewById(R.id.textView_GroupPostName);
         textView_address = root.findViewById(R.id.textView_GroupPostAddress);
+        imageView_PostProfile = root.findViewById(R.id.imageView_GroupPostProfile);
+        getGroupProfileImage(groupData.getImage(), imageView_PostProfile);
 
         setGroupView();
-        setPostListView(listView_posts);
+//        setPostListView(listView_posts);
 
         button_Add_Post = root.findViewById(R.id.button_Add_Post);
         button_Add_Post.setOnClickListener(new View.OnClickListener() {
@@ -103,8 +102,59 @@ public class GroupPost extends Fragment {
                 startActivity(intent);
             }
         });
+    }
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        service = RetrofitClient.getClient().create(ServiceApi.class);
+        userData = ((MainActivity) getActivity()).getUserData();
+        groupData = ((MainActivity) getActivity()).getGroupData();
+
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+        }
+
+
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+
+        root = (ViewGroup) inflater.inflate(R.layout.fragment_group_post, container, false);
+
 
         return root;
+    }
+
+    private void getGroupProfileImage(String url, CircleImageView imageView) {
+        Log.d("url", url);
+        service.getProfileImage(url).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                String TAG = "YesGroup";
+                if (response.isSuccessful()) {
+
+                    Log.d(TAG, "server contacted and has file");
+                    InputStream is = response.body().byteStream();
+                    Bitmap bitmap = BitmapFactory.decodeStream(is);
+
+                    Glide.with(GroupPost.this).load(bitmap).circleCrop().into(imageView);
+
+                } else {
+                    Log.d(TAG, "server contact failed");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+//                Toast.makeText(YesGroup.this, "그룹생성 에러 발생", Toast.LENGTH_SHORT).show();
+//              Log.e("createGroup error",t.getMessage());
+                t.printStackTrace();
+            }
+        });
     }
 
     private void setGroupView() {
@@ -126,7 +176,7 @@ public class GroupPost extends Fragment {
                     likeList = groupPostResponse.getLikeData();
 
                     //TODO: Change the sample Image Data!!!!!!
-                    setImageData();
+//                    setImageData();
 
                     ArrayList<Boolean> checkLikeList = setLikeData(likeList);
                     setPostAdapter(listView, checkLikeList);
@@ -142,16 +192,16 @@ public class GroupPost extends Fragment {
         });
     }
 
-    private void setImageData() {
-        ArrayList<SingleItemPostImage> post_ImageList = new ArrayList<>();
-        SingleItemPostImage postImage = new SingleItemPostImage(R.drawable.dog_tan);
-        post_ImageList.add(postImage);
-        postImage = new SingleItemPostImage(R.drawable.dog_woong);
-        post_ImageList.add(postImage);
-        for (SingleItemPost sit : postList) {
-            sit.setGroupPostImage(post_ImageList);
-        }
-    }
+//    private void setImageData() {
+//        ArrayList<SingleItemPostImage> post_ImageList = new ArrayList<>();
+//        SingleItemPostImage postImage = new SingleItemPostImage(R.drawable.dog_tan);
+//        post_ImageList.add(postImage);
+////        postImage = new SingleItemPostImage(R.drawable.dog_woong);
+////        post_ImageList.add(postImage);
+//        for (SingleItemPost sit : postList) {
+//            sit.setGroupPostImage(post_ImageList);
+//        }
+//    }
 
     private void setPostAdapter(RecyclerView listView, ArrayList<Boolean> checkLikeList) {
 

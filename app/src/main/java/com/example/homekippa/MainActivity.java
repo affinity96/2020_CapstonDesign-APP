@@ -1,6 +1,8 @@
 package com.example.homekippa;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -18,6 +20,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
 import com.example.homekippa.data.GroupData;
 import com.example.homekippa.data.UserData;
 import com.example.homekippa.network.RetrofitClient;
@@ -25,6 +28,7 @@ import com.example.homekippa.network.ServiceApi;
 import com.example.homekippa.ui.group.GroupFragment;
 import com.example.homekippa.ui.group.NoGroup;
 import com.example.homekippa.ui.group.SingleItemPet;
+import com.example.homekippa.ui.group.YesGroup;
 import com.example.homekippa.ui.home.HomeFragment;
 import com.example.homekippa.ui.notifications.NotificationsFragment;
 import com.example.homekippa.ui.search.SearchFragment;
@@ -37,7 +41,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.messaging.FirebaseMessaging;
 
+import java.io.InputStream;
 import java.util.ArrayList;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
     private FirebaseUser curUser;
@@ -138,7 +148,11 @@ public class MainActivity extends AppCompatActivity {
                         return true;
                     case R.id.navigation_group:
                         if (userData.getGroupId() != 0) {
-                            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new GroupFragment()).commitAllowingStateLoss();
+                            GroupFragment groupFragment = new GroupFragment();
+                            Bundle bundle = new Bundle();
+                            bundle.putParcelable("groupData", groupData);
+                            groupFragment.setArguments(bundle);
+                            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, groupFragment).commitAllowingStateLoss();
                         } else {
                             getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new NoGroup()).commitAllowingStateLoss();
                         }
@@ -155,6 +169,7 @@ public class MainActivity extends AppCompatActivity {
     public void setNavGroupData() {
         TextView username = (TextView) findViewById(R.id.nav_user_name);
         ImageView userProfile = (ImageView) findViewById(R.id.nav_user_image);
+        getGroupProfileImage(userProfile);
         TextView usergroup = (TextView) findViewById(R.id.nav_user_group);
 
         username.setText(userData.getUserName() + "님");
@@ -172,12 +187,58 @@ public class MainActivity extends AppCompatActivity {
         return this.userData;
     }
 
+    public void setUserData(UserData userData){
+        this.userData = userData;
+    }
+
     public GroupData getGroupData() {
         return this.groupData;
     }
 
+    public void setGroupData(GroupData groupData){
+        this.groupData = groupData;
+    }
+
+    public BottomNavigationView getNavView() {
+        return this.navView;
+    }
+
     @Override
     public void onBackPressed() {
-        this.finishAffinity();
+        if(!navView.getMenu().getItem(0).isChecked()){
+            navView.getMenu().getItem(0).setChecked(true);
+            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new HomeFragment()).commitAllowingStateLoss();
+        }
+        else {
+            this.finishAffinity();
+        }
+    }
+
+    private void getGroupProfileImage(ImageView userProfile) {
+        Log.d("url", groupData.getImage());
+        service.getProfileImage(groupData.getImage()).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                String TAG = "MainActivity";
+                if (response.isSuccessful()) {
+
+                    Log.d(TAG, "server contacted and has file");
+                    InputStream is = response.body().byteStream();
+                    Bitmap bitmap = BitmapFactory.decodeStream(is);
+
+                    Glide.with(MainActivity.this).load(bitmap).circleCrop().into(userProfile);
+
+                } else {
+                    Log.d(TAG, "server contact failed");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+//                Toast.makeText(MainActivity.this, "그룹생성 에러 발생", Toast.LENGTH_SHORT).show();
+//              Log.e("createGroup error",t.getMessage());
+                t.printStackTrace();
+            }
+        });
     }
 }

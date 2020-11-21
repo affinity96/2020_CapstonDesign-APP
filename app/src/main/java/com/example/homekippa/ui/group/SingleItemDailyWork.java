@@ -16,9 +16,10 @@ public class SingleItemDailyWork implements Parcelable {
     private String desc;
     private String time;
     private int done;
+    private String done_time;
 
 
-    public SingleItemDailyWork(int id, int group_id, int pet_id, String title, int count, String alarm, String desc, String time, int done) {
+    public SingleItemDailyWork(int id, int group_id, int pet_id, String title, int count, String alarm, String desc, String time, int done, String done_time) {
         this.id = id;
         this.group_id = group_id;
         this.pet_id = pet_id;
@@ -28,6 +29,7 @@ public class SingleItemDailyWork implements Parcelable {
         this.desc = desc;
         this.time = time;
         this.done = done;
+        this.done_time = done_time;
     }
 
 
@@ -41,6 +43,7 @@ public class SingleItemDailyWork implements Parcelable {
         desc = in.readString();
         time = in.readString();
         done = in.readInt();
+        done_time = in.readString();
     }
 
     public static final Creator<SingleItemDailyWork> CREATOR = new Creator<SingleItemDailyWork>() {
@@ -72,6 +75,7 @@ public class SingleItemDailyWork implements Parcelable {
         dest.writeString(desc);
         dest.writeString(time);
         dest.writeInt(done);
+        dest.writeString(done_time);
 
     }
 
@@ -110,6 +114,6 @@ public class SingleItemDailyWork implements Parcelable {
 
     public int getDone(){ return done;}
 
-
+    public String getDone_time(){return done_time;}
 
 }

@@ -18,10 +18,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.homekippa.MainActivity;
 import com.example.homekippa.R;
+import com.example.homekippa.data.GroupData;
 import com.example.homekippa.data.NotiData;
 import com.example.homekippa.data.UserData;
 import com.example.homekippa.network.RetrofitClient;
 import com.example.homekippa.network.ServiceApi;
+import com.example.homekippa.ui.group.GroupFragment;
 import com.example.homekippa.ui.group.GroupInviteActivity;
 import com.example.homekippa.ui.group.SingleItemDailyWork;
 import com.example.homekippa.ui.group.YesGroup;
@@ -38,6 +40,7 @@ public class NotificationsFragment extends Fragment {
     private RecyclerView listView_noti;
     private ServiceApi service;
     private UserData userData;
+    private String alarm_extra;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,6 +48,7 @@ public class NotificationsFragment extends Fragment {
 
         service = RetrofitClient.getClient().create(ServiceApi.class);
         userData = ((MainActivity)getActivity()).getUserData();
+        Log.d("notification", "create");
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -67,6 +71,33 @@ public class NotificationsFragment extends Fragment {
                 }
 
                 ListNotiAdapter workAdapter = new ListNotiAdapter(getContext(), notiList);
+                workAdapter.setOnItemClickListener(new ListNotiAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View v, int pos) {
+                        NotiData notidata = notiList.get(pos);
+                        if (notidata.getAlarm_code().equals("GROUP_INVITE")){
+                            Log.d("notidata group code", notidata.getExtra());
+                            service.getGroupData(Integer.parseInt(notidata.getExtra())).enqueue(new Callback<GroupData>() {
+                                @Override
+                                public void onResponse(Call<GroupData> call, Response<GroupData> response) {
+                                    GroupData groupData = response.body();
+
+                                    if(groupData != null){
+                                        GroupFragment groupFragment = new GroupFragment();
+                                        Bundle bundle = new Bundle();
+                                        bundle.putParcelable("groupData", groupData);
+                                        groupFragment.setArguments(bundle);
+                                        ((MainActivity)getActivity()).changeFragment(groupFragment);
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<GroupData> call, Throwable t) {
+
+                                }
+                            });
+                        }
+                }});
 
                 LinearLayoutManager dLayoutManager = new LinearLayoutManager(getActivity());
                 dLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -80,5 +111,9 @@ public class NotificationsFragment extends Fragment {
 
             }
         });
+    }
+
+    public void setAlarm_extra(String alarm_extra){
+        this.alarm_extra = alarm_extra;
     }
 }
