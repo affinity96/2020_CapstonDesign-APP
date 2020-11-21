@@ -13,11 +13,11 @@
 
         android:padding="10dp">
 
-        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/imageView_DetailPostGroupProfile"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:src="@drawable/dog_woong" />
+            android:src="@drawable/border" />
 
         <LinearLayout
             android:layout_width="wrap_content"

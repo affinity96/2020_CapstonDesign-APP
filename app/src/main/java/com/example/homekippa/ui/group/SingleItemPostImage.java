@@ -4,14 +4,14 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class SingleItemPostImage implements Parcelable {
-    private int PostImageId;
+    private String PostImage;
 
-    public SingleItemPostImage(int postImageId) {
-        PostImageId = postImageId;
+    public SingleItemPostImage(String postImage) {
+        PostImage = postImage;
     }
 
     protected SingleItemPostImage(Parcel in) {
-        PostImageId = in.readInt();
+        PostImage = in.readString();
     }
 
     public static final Creator<SingleItemPostImage> CREATOR = new Creator<SingleItemPostImage>() {
@@ -26,12 +26,12 @@ public class SingleItemPostImage implements Parcelable {
         }
     };
 
-    public int getPostImageId() {
-        return PostImageId;
+    public String getPostImage() {
+        return PostImage;
     }
 
-    public void setPostImageId(int postImageId) {
-        PostImageId = postImageId;
+    public void setPostImage(String postImage) {
+        PostImage = postImage;
     }
 
     @Override
@@ -41,6 +41,6 @@ public class SingleItemPostImage implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(PostImageId);
+        dest.writeString(PostImage);
     }
 }
