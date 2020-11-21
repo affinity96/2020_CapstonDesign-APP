@@ -92,9 +92,10 @@ public class AddPetDesActivity extends AppCompatActivity {
         textView_neutalization = findViewById(R.id.textview_pet_neutralization);
 
 
+
         button_petDesSave = findViewById(R.id.button_petDesSave);
         service = RetrofitClient.getClient().create(ServiceApi.class);
-        groupData = (GroupData) getIntent().getExtras().get("groupData");
+        groupData =(GroupData) getIntent().getExtras().get("groupData");
         textView_birthDay = findViewById(R.id.textView_birthday);
         button_gallery = findViewById(R.id.button_gallery);
         button_camera = findViewById(R.id.button_camera);
@@ -106,9 +107,8 @@ public class AddPetDesActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // 권한 허용에 동의하지 않았을 경우 토스트를 띄웁니다.
-                if (isPermission) goToAlbum();
-                else
-                    Toast.makeText(view.getContext(), getResources().getString(R.string.permission_2), Toast.LENGTH_LONG).show();
+                if(isPermission) goToAlbum();
+                else Toast.makeText(view.getContext(), getResources().getString(R.string.permission_2), Toast.LENGTH_LONG).show();
             }
         });
 
@@ -116,9 +116,8 @@ public class AddPetDesActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // 권한 허용에 동의하지 않았을 경우 토스트를 띄웁니다.
-                if (isPermission) takePhoto();
-                else
-                    Toast.makeText(view.getContext(), getResources().getString(R.string.permission_2), Toast.LENGTH_LONG).show();
+                if(isPermission)  takePhoto();
+                else Toast.makeText(view.getContext(), getResources().getString(R.string.permission_2), Toast.LENGTH_LONG).show();
             }
         });
 
@@ -127,7 +126,7 @@ public class AddPetDesActivity extends AppCompatActivity {
         regNum = getintent.getExtras().getString("petRegNum");
 
         if (!regNum.equals("")) {
-            Log.d("nothere", "not");
+            Log.d("nothere","not");
             name = getintent.getExtras().getString("petName");
             gender = getintent.getExtras().getString("petGender");
             species = getintent.getExtras().getString("petSpecies");
@@ -136,20 +135,22 @@ public class AddPetDesActivity extends AppCompatActivity {
             editText_petRegNum.setText(regNum);
             editText_petName.setText(name);
 
-            if (gender.equals("수컷")) {
+            if(gender.equals("수컷")){
                 checkbox_male.setChecked(true);
-            } else {
+            }else{
                 checkbox_female.setChecked(true);
             }
 
             editText_petSpecies.setText(species);
 
-            if (neutralization.equals("중성")) {
+            if(neutralization.equals("중성")){
                 checkbox_netralizationYes.setChecked(true);
-            } else {
+            }else{
                 checkbox_netralizationNo.setChecked(true);
             }
         }
+
+
 
 
         textView_birthDay.setOnClickListener(new View.OnClickListener() {
@@ -165,27 +166,24 @@ public class AddPetDesActivity extends AppCompatActivity {
 
                 int groupId = groupData.getId();
                 final String birth = textView_birthDay.getText().toString().trim();
-
-                if (regNum.equals("")) {
-                    name = editText_petName.getText().toString();
                 name = editText_petName.getText().toString();
 
                 species = editText_petSpecies.getText().toString();
                 regNum = editText_petRegNum.getText().toString();
 
-                    if (checkbox_male.isChecked()) {
-                        gender = "수컷";
-                    } else if (checkbox_female.isChecked()) {
-                        gender = "암컷";
-                    }
+                if(checkbox_male.isChecked()){
+                    gender = "수컷";
+                }
+                else if(checkbox_female.isChecked()){
+                    gender = "암컷";
+                }
 
-
-                    if (checkbox_netralizationYes.isChecked()) {
-                        neutralization = "중성";
-                    } else if (checkbox_netralizationNo.isChecked()) {
-                        neutralization = "중성 안함";
-                    }
-
+                if(checkbox_netralizationYes.isChecked()){
+                    neutralization = "중성";
+                }
+                else if(checkbox_netralizationNo.isChecked()){
+                    neutralization = "중성 안함";
+                }
 
 
                 Log.d("groupId", String.valueOf(groupId));
@@ -200,17 +198,16 @@ public class AddPetDesActivity extends AppCompatActivity {
                     editText_petRegNum.setError("반려동물 등록번호를 입려해주세요");
                 } else if (neutralization.isEmpty()) {
                     textView_neutalization.setError("반려동물 중성화 여부를 입력해주세요.");
-                } else if (birth.isEmpty()) {
+                }else if (birth.isEmpty()){
                     textView_birthDay.setError("생년월일을 입력하세요");
-                } else {
+                }else {
                     addPetDes(groupId, birth);
                 }
             }
         });
     }
-
     public void onCheckboxClicked_petGender(View v) {
-        switch (v.getId()) {
+        switch (v.getId()){
             case R.id.checkbox_male:
                 checkbox_male.setChecked(true);
                 checkbox_female.setChecked(false);
@@ -225,9 +222,8 @@ public class AddPetDesActivity extends AppCompatActivity {
         }
 
     }
-
     public void onCheckboxClicked_petNeutralization(View v) {
-        switch (v.getId()) {
+        switch (v.getId()){
             case R.id.checkbox_netralizationYes:
                 checkbox_netralizationYes.setChecked(true);
                 checkbox_netralizationNo.setChecked(false);
@@ -357,7 +353,7 @@ public class AddPetDesActivity extends AppCompatActivity {
                      *  Uri 스키마를
                      *  content:/// 에서 file:/// 로  변경한다.
                      */
-                    String[] proj = {MediaStore.Images.Media.DATA};
+                    String[] proj = { MediaStore.Images.Media.DATA };
 
                     assert photoUri != null;
                     cursor = getContentResolver().query(photoUri, proj, null, null, null);
@@ -389,11 +385,11 @@ public class AddPetDesActivity extends AppCompatActivity {
 
     private void datePicker(View view) {
         DialogFragment newFragment = new DatePetPickerFragment();
-        newFragment.show(getSupportFragmentManager(), "datePicker");
+        newFragment.show(getSupportFragmentManager(),"datePicker");
     }
 
-    public void processDatePickerResult(int year, int month, int day) {
-        String month_string = Integer.toString(month + 1);
+    public void processDatePickerResult(int year, int month, int day){
+        String month_string = Integer.toString(month+1);
         String day_string = Integer.toString(day);
         String year_string = Integer.toString(year);
         String dateMessage = (year_string + "-" + month_string + "-" + day_string);
