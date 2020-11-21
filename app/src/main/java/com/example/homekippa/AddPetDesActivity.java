@@ -184,10 +184,7 @@ public class AddPetDesActivity extends AppCompatActivity {
                 else if(checkbox_netralizationNo.isChecked()){
                     neutralization = "중성 안함";
                 }
-
-
                 Log.d("groupId", String.valueOf(groupId));
-
                 if (name.isEmpty()) {
                     editText_petName.setError("반려동물 이름을 입력해주세요");
                 } else if (gender.isEmpty()) {
