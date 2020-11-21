@@ -54,10 +54,6 @@ public class AddPetActivity extends AppCompatActivity {
 
         groupData =(GroupData) getIntent().getExtras().get("groupData");
 
-
-
-
-
         editText_petReg_num.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
