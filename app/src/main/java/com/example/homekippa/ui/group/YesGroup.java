@@ -36,6 +36,8 @@ import com.example.homekippa.data.CreateGroupResponse;
 import com.example.homekippa.data.DoneReportsResponse;
 import com.example.homekippa.data.GetGroupImageResponse;
 import com.example.homekippa.data.GroupData;
+import com.example.homekippa.data.GroupInviteData;
+import com.example.homekippa.data.UidRespense;
 import com.example.homekippa.data.UserData;
 import com.example.homekippa.function.Loading;
 import com.example.homekippa.network.RetrofitClient;
@@ -62,6 +64,7 @@ public class YesGroup extends Fragment {
     private static final String ARG_PARAM1 = "object";
     private UserData userData;
     private GroupData groupData;
+    private boolean myGroup;
     private int petId; // 나중에 버튼 누르면 현재의 펫 아이디가 바뀌어져 일과를 추가할때 함께 인텐트에 실어보냄
 
     private ServiceApi service;
@@ -78,6 +81,8 @@ public class YesGroup extends Fragment {
     private CircleImageView imageView_groupProfile;
     private Button button_addPet;
     private Button button_addUser;
+    private Button button_join_group;
+    private Button button_changeGroupCover;
 
     private int selectedPosition = 0;
     public static YesGroup newInstance() {
@@ -107,7 +112,8 @@ public class YesGroup extends Fragment {
         userData = ((MainActivity) getActivity()).getUserData();
 //        Log.d("user", userData.getUserName());
 
-        groupData = ((MainActivity) getActivity()).getGroupData();
+        groupData = (GroupData)getArguments().get("groupData");
+        myGroup = (boolean)getArguments().get("myGroup");
 //        Log.d("group", groupData.getGroupName());
 
         if (getArguments() != null) {
@@ -127,6 +133,51 @@ public class YesGroup extends Fragment {
         button_Add_DW = root.findViewById(R.id.button_Add_DW);
         button_addPet = root.findViewById(R.id.button_AddPet);
         button_addUser = root.findViewById(R.id.button_Add_User);
+        button_join_group = root.findViewById(R.id.button_join_group);
+        button_changeGroupCover = root.findViewById(R.id.button_changeGroupCover);
+        if(!myGroup) {
+            button_join_group.setVisibility(View.VISIBLE);
+            button_addUser.setVisibility(View.INVISIBLE);
+            button_addPet.setVisibility(View.INVISIBLE);
+            button_Add_DW.setVisibility(View.INVISIBLE);
+            button_changeGroupCover.setVisibility(View.INVISIBLE);
+        }
+
+        button_join_group.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                service.acceptInvite(new GroupInviteData(groupData, null, userData)).enqueue(new Callback<UserData>() {
+                    @Override
+                    public void onResponse(Call<UserData> call, Response<UserData> response) {
+                        if (response.isSuccessful()) {
+                            userData = response.body();
+                            MainActivity mainActivity = (MainActivity)getActivity();
+/*                            mainActivity.setUserData(userData);
+                            mainActivity.setGroupData(groupData);
+                            mainActivity.getNavView().getMenu().getItem(4).setChecked(true);
+
+                            GroupFragment groupFragment = new GroupFragment();
+                            Bundle bundle = new Bundle();
+                            bundle.putParcelable("groupData", groupData);
+                            groupFragment.setArguments(bundle);
+                            mainActivity.changeFragment(groupFragment);*/
+
+                            mainActivity.finish();
+                            Intent intent = new Intent(getContext(), MainActivity.class);
+                            intent.putExtra("user", userData);
+                            intent.putExtra("group", groupData);
+                            startActivity(intent);
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<UserData> call, Throwable t) {
+                        Toast.makeText(getContext(), "수락 실패", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
 
         button_Add_DW.setOnClickListener(new View.OnClickListener() {
             @Override

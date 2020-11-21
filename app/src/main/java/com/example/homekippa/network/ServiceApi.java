@@ -141,5 +141,6 @@ public interface ServiceApi {
     @POST("/weather/infor")
     Call<WeatheLocationResponse> getWeatehrData(@Body WeatherLocationData data);
 
-
+    @POST("/group/invite/accept")
+    Call<UserData> acceptInvite(@Body GroupInviteData data);
 }
