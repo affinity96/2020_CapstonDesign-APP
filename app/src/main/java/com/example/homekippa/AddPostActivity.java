@@ -41,6 +41,7 @@ public class AddPostActivity extends AppCompatActivity {
 
     private ServiceApi service;
 
+    private EditText editText_postTitle;
     private EditText editText_postContent;
     private Button button_CompletePost;
     private Editable postContent;
@@ -56,10 +57,12 @@ public class AddPostActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_post);
         service = RetrofitClient.getClient().create(ServiceApi.class);
-        editText_postContent = (EditText)this.findViewById(R.id.editText_postContent);
-        button_CompletePost = (Button)this.findViewById(R.id.button_CompletePost);
+
+        editText_postTitle = (EditText) this.findViewById(R.id.editText_addPostTitle);
+        editText_postContent = (EditText) this.findViewById(R.id.editText_postContent);
+        button_CompletePost = (Button) this.findViewById(R.id.button_CompletePost);
         postContent = editText_postContent.getText();
-        button_Add_Post_Img = (ImageButton)this.findViewById(R.id.button_Add_Post_Img);
+        button_Add_Post_Img = (ImageButton) this.findViewById(R.id.button_Add_Post_Img);
 
         Intent intent = getIntent();
 
@@ -73,8 +76,9 @@ public class AddPostActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // 권한 허용에 동의하지 않았을 경우 토스트를 띄웁니다.
-                if(isPermission) goToAlbum();
-                else Toast.makeText(view.getContext(), getResources().getString(R.string.permission_2), Toast.LENGTH_LONG).show();
+                if (isPermission) goToAlbum();
+                else
+                    Toast.makeText(view.getContext(), getResources().getString(R.string.permission_2), Toast.LENGTH_LONG).show();
             }
         });
 
@@ -82,7 +86,7 @@ public class AddPostActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                addPost(groupData.getId(), userData.getUserId(), postContent.toString());
+                addPost(groupData.getId(), userData.getUserId(), postContent.toString(), editText_postTitle.toString());
             }
         });
 
@@ -93,7 +97,7 @@ public class AddPostActivity extends AppCompatActivity {
         if (resultCode != RESULT_OK) {
             Toast.makeText(this, "취소 되었습니다.", Toast.LENGTH_SHORT).show();
 
-            if(tempFile != null) {
+            if (tempFile != null) {
                 if (tempFile.exists()) {
                     if (tempFile.delete()) {
                         Log.e(TAG, tempFile.getAbsolutePath() + " 삭제 성공");
@@ -117,7 +121,7 @@ public class AddPostActivity extends AppCompatActivity {
                      *  Uri 스키마를
                      *  content:/// 에서 file:/// 로  변경한다.
                      */
-                    String[] proj = { MediaStore.Images.Media.DATA };
+                    String[] proj = {MediaStore.Images.Media.DATA};
 
                     assert photoUri != null;
                     cursor = getContentResolver().query(photoUri, proj, null, null, null);
@@ -144,7 +148,7 @@ public class AddPostActivity extends AppCompatActivity {
     }
 
     /**
-     *  앨범에서 이미지 가져오기
+     * 앨범에서 이미지 가져오기
      */
     public void goToAlbum() {
 
@@ -154,7 +158,7 @@ public class AddPostActivity extends AppCompatActivity {
     }
 
     /**
-     *  권한 설정
+     * 권한 설정
      */
     public void tedPermission() {
         PermissionListener permissionListener = new PermissionListener() {
@@ -178,7 +182,7 @@ public class AddPostActivity extends AppCompatActivity {
                 .check();
     }
 
-    private void addPost(int groupId, String userId, String content) {
+    private void addPost(int groupId, String userId, String content, String title) {
 
         if (tempFile != null) {
             String str_groupId = String.valueOf(groupId);
@@ -189,7 +193,7 @@ public class AddPostActivity extends AppCompatActivity {
             data.put("groupId", group_Id);
             RequestBody user_Id = RequestBody.create(MediaType.parse("text/plain"), userId);
             data.put("userId", user_Id);
-            RequestBody Title = RequestBody.create(MediaType.parse("text/plain"), "임시제목");
+            RequestBody Title = RequestBody.create(MediaType.parse("text/plain"), title);
             data.put("title", Title);
             RequestBody Content = RequestBody.create(MediaType.parse("text/plain"), content);
             data.put("content", Content);
@@ -218,7 +222,7 @@ public class AddPostActivity extends AppCompatActivity {
                 }
             });
         } else {
-            AddPostData data = new AddPostData(groupId, userId, "임시제목", content);
+            AddPostData data = new AddPostData(groupId, userId, title, content);
 
             service.addPost(data).enqueue(new Callback<AddPostResponse>() {
 
