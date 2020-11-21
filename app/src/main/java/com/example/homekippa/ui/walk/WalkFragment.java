@@ -15,19 +15,30 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.homekippa.AddPetDesActivity;
 import com.example.homekippa.R;
+import com.example.homekippa.data.GroupData;
 import com.example.homekippa.data.WeatheLocationResponse;
 import com.example.homekippa.data.WeatherLocationData;
 import com.example.homekippa.mapActivity;
 import com.example.homekippa.network.RetrofitClient;
 import com.example.homekippa.network.ServiceApi;
+import com.example.homekippa.ui.group.SingleItemPet;
+import com.example.homekippa.ui.group.YesGroup;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -44,16 +55,18 @@ public class WalkFragment extends Fragment {
     private Location userLocation;
     private ServiceApi service;
     private static final int REQUEST_CODE_LOCATION = 2;
+
+    private ArrayList<SingleItemPet> petList = new ArrayList<>();
+    private int petId;
+    private GroupData groupData;
+    private int selectedPosition = 0;
+
     private Drawable drawable;
 
     private EditText editText_temperature;
     private EditText editText_weather;
     private ImageView imageView_weather;
     private Button button_startWalk;
-
-
-
-
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -94,6 +107,104 @@ public class WalkFragment extends Fragment {
 
         return root;
     }
+//    private void setPetListView(RecyclerView listView) {
+//
+//        service.getPetsData(groupData.getId()).enqueue(new Callback<List<SingleItemPet>>() {
+//            @Override
+//            public void onResponse(Call<List<SingleItemPet>> call, Response<List<SingleItemPet>> response) {
+//                if (response.isSuccessful()) {
+//                    Log.d("반려동물 확인", "성공");
+//                    List<SingleItemPet> pets = response.body();
+//                    if (!pets.isEmpty()) {
+//                        petList.addAll(pets);
+//                        //TODO:나중에 바꿔야 할 부분. 일단 가장 처음 강아지의 아이디만을 petId라 해놓음!
+//                        petId = pets.get(0).getId();
+//
+//                        ListPetAdapter petAdapter = new ListPetAdapter(petList);
+//
+//                        LinearLayoutManager pLayoutManager = new LinearLayoutManager(getActivity());
+//                        pLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+//                        listView.setLayoutManager(pLayoutManager);
+//                        listView.setItemAnimator(new DefaultItemAnimator());
+//                        listView.setAdapter(petAdapter);
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<List<SingleItemPet>> call, Throwable t) {
+//                Log.d("반려동물 확인", "에러");
+//                Log.e("반려동물 확인", t.getMessage());
+//            }
+//        });
+//    }
+//
+//    class ListPetAdapter extends RecyclerView.Adapter<ListPetAdapter.MyViewHolder> {
+//        private ArrayList<SingleItemPet> pet_Items;
+//
+//        public ListPetAdapter(ArrayList<SingleItemPet> petItems) {
+//            this.pet_Items = petItems;
+//        }
+//
+//        @NonNull
+//        @Override
+//        public ListPetAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+//            View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.listitem_pet, parent, false);
+//            List<View>itemViewList = new ArrayList<>();
+//            itemViewList.add(itemView);
+//            ListPetAdapter.MyViewHolder myViewHolder = new ListPetAdapter.MyViewHolder(itemView);
+//
+//            return new ListPetAdapter.MyViewHolder(itemView);
+//        }
+//
+//        @Override
+//        public void onBindViewHolder(@NonNull ListPetAdapter.MyViewHolder holder, int position) {
+//            if(selectedPosition == position){
+//                holder.pet.setBackgroundResource(R.drawable.round_button2);
+//            }else{
+//                holder.pet.setBackgroundResource(R.drawable.round_button);
+//            }
+//            setPetData(holder, position);
+//        }
+//
+//        private void setPetData(ListPetAdapter.MyViewHolder holder, int position) {
+//            SingleItemPet selectedPet = pet_Items.get(position);
+//            holder.petName.setText(selectedPet.getName());
+////            Glide.with(getActivity()).load(R.drawable.simplelogo).circleCrop().into(holder.petImage);
+////            holder.petImage.setImageResource(R.drawable.simplelogo);
+//
+//
+//            holder.pet.setOnClickListener(new View.OnClickListener(){
+//                @Override
+//                public void onClick(View v) {
+//
+//                    selectedPosition = position;
+//                    notifyDataSetChanged();
+//                    petId = petList.get(position).getId();
+//                }
+//            });
+//
+//        }
+
+//        @Override
+//        public int getItemCount() {
+//            return pet_Items.size();
+//        }
+//
+//        class MyViewHolder extends RecyclerView.ViewHolder {
+//            TextView petName;
+//            ImageView petImage;
+//            LinearLayout pet;
+//
+//            MyViewHolder(View view) {
+//                super(view);
+//                pet = (LinearLayout) view.findViewById(R.id.pet);
+//                petName = (TextView) view.findViewById(R.id.listitem_PetName);
+//                petImage = (ImageView) view.findViewById(R.id.listitem_PetImage);
+//
+//            }
+//        }
+//    }
 
 
 

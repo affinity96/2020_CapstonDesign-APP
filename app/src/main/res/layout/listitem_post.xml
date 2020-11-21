@@ -141,7 +141,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="end"
-                android:text="2020년 11월 12일 "
+                android:text="2020년 11월 21일 "
                 android:textSize="14sp" />
         </LinearLayout>
 
