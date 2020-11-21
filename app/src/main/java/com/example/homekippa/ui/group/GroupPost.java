@@ -48,6 +48,7 @@ public class GroupPost extends Fragment {
     private UserData userData;
     private GroupData groupData;
 
+    private ViewGroup root;
     private String mParam1;
     private String mParam2;
 
@@ -75,24 +76,13 @@ public class GroupPost extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        service = RetrofitClient.getClient().create(ServiceApi.class);
-        userData = ((MainActivity) getActivity()).getUserData();
-        groupData = ((MainActivity) getActivity()).getGroupData();
-
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+    public void onResume(){
+        super.onResume();
+        setPostListView(listView_posts);
     }
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
-        ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_group_post, container, false);
+    public void onStart(){
+        super.onStart();
         listView_posts = root.findViewById(R.id.listView_GroupPost);
         textView_groupName = root.findViewById(R.id.textView_GroupPostName);
         textView_address = root.findViewById(R.id.textView_GroupPostAddress);
@@ -100,7 +90,7 @@ public class GroupPost extends Fragment {
         getGroupProfileImage(groupData.getImage(), imageView_PostProfile);
 
         setGroupView();
-        setPostListView(listView_posts);
+//        setPostListView(listView_posts);
 
         button_Add_Post = root.findViewById(R.id.button_Add_Post);
         button_Add_Post.setOnClickListener(new View.OnClickListener() {
@@ -112,6 +102,29 @@ public class GroupPost extends Fragment {
                 startActivity(intent);
             }
         });
+    }
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        service = RetrofitClient.getClient().create(ServiceApi.class);
+        userData = ((MainActivity) getActivity()).getUserData();
+        groupData = ((MainActivity) getActivity()).getGroupData();
+
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+        }
+
+
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+
+        root = (ViewGroup) inflater.inflate(R.layout.fragment_group_post, container, false);
+
 
         return root;
     }

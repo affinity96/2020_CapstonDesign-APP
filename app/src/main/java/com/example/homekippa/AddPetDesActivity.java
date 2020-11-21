@@ -101,7 +101,7 @@ public class AddPetDesActivity extends AppCompatActivity {
         button_camera = findViewById(R.id.button_camera);
 
         // 권한 요청
-        tedPermission();
+//        tedPermission();
 
         button_gallery.setOnClickListener(new View.OnClickListener() {
             @Override
