@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:background="@drawable/border_gray"
+
         android:padding="10dp">
 
         <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -47,41 +47,13 @@
         </LinearLayout>
     </RelativeLayout>
 
-    <LinearLayout
-        android:id="@+id/linearLayout_content"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/relativeLayout_profile"
-        android:orientation="vertical"
-        android:padding="5dp">
 
-        <TextView
-            android:id="@+id/textView_DetailPostTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="3dp"
-            android:lines="1"
-            android:text="햇살 좋은 날~🌻"
-            android:textColor="#000000"
-            android:textSize="12dp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/textView_DetailPostContent"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/textView_DetailPostTitle"
-            android:layout_margin="3dp"
-            android:lines="1"
-            android:text="기분 좋은 강아지들 행복:) "
-            android:textSize="10dp" />
-    </LinearLayout>
 
     <ScrollView
         android:id="@+id/scrollview_post"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/linearLayout_content"
+        android:layout_below="@+id/relativeLayout_profile"
         android:fillViewport="true"
         android:layout_marginBottom="50dp">
 
@@ -91,77 +63,116 @@
             android:layout_height="wrap_content"
             android:background="@drawable/border_gray"
             android:orientation="vertical">
+            <LinearLayout
+                android:id="@+id/linearLayout_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="5dp">
+
+                <TextView
+                    android:id="@+id/textView_DetailPostTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="3dp"
+                    android:lines="1"
+                    android:text="햇살 좋은 날~🌻"
+                    android:textColor="#000000"
+                    android:textSize="12dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textView_DetailPostContent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/textView_DetailPostTitle"
+                    android:layout_margin="3dp"
+                    android:lines="1"
+                    android:text="기분 좋은 강아지들 행복:) "
+                    android:textSize="10dp" />
+            </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/listview_DetailPostImages"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/textView_DetailPostContent" />
+                />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:clickable="true"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/imageView_DetailPostLiked"
-                    android:layout_width="22dp"
-                    android:layout_height="22dp"
-                    android:layout_margin="3dp"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:background="@drawable/like_selector" />
-
-                <TextView
-                    android:id="@+id/textView_LikedNum"
-                    style="@style/BlackText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="12"
-                    android:textSize="15dp" />
-
-                <ImageView
-                    android:id="@+id/imageView_comment"
-                    android:layout_width="22dp"
-                    android:layout_height="22dp"
-                    android:layout_margin="3dp"
-                    android:clickable="true"
-
-                    app:srcCompat="@drawable/ic_insert_comment_24px" />
-
-                <TextView
-                    android:id="@+id/textView_commentNum"
-                    style="@style/BlackText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="3"
-                    android:textSize="15dp" />
-
-                <!--                LiveData The Linear Layout-->
-
+                android:background="@drawable/border_gray"
+                android:orientation="vertical">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="right"
+                    android:clickable="true"
+
                     android:orientation="horizontal">
 
+                    <Button
+                        android:id="@+id/imageView_DetailPostLiked"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:layout_margin="3dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:background="@drawable/like_selector" />
+
                     <TextView
+                        android:id="@+id/textView_LikedNum"
+                        style="@style/BlackText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="2020년 11월 12일 "
-                        android:textSize="12dp" />
+                        android:layout_gravity="center"
+                        android:text="12"
+                        android:textSize="15dp" />
+
+                    <ImageView
+                        android:id="@+id/imageView_comment"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:layout_margin="3dp"
+                        android:clickable="true"
+
+                        app:srcCompat="@drawable/ic_insert_comment_24px" />
+
+                    <TextView
+                        android:id="@+id/textView_commentNum"
+                        style="@style/BlackText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="3"
+                        android:textSize="15dp" />
+
+                    <!--                LiveData The Linear Layout-->
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="right"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="2020년 11월 21일 "
+                            android:textSize="12dp" />
+                    </LinearLayout>
                 </LinearLayout>
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/listview_PostComments"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/textView_commentNum"
+
+                    />
+
+
             </LinearLayout>
-
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/listview_PostComments"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/textView_commentNum" />
         </LinearLayout>
 
     </ScrollView>
