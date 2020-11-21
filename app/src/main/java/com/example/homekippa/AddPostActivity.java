@@ -86,7 +86,7 @@ public class AddPostActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                addPost(groupData.getId(), userData.getUserId(), postContent.toString(), editText_postTitle.toString());
+                addPost(groupData.getId(), userData.getUserId(), postContent.toString(), editText_postTitle.getText().toString());
             }
         });
 

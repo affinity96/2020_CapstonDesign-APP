@@ -414,8 +414,14 @@ public class YesGroup extends Fragment {
             holder.workName.setText(dailyWork.getTitle());
             holder.workTime.setText(dailyWork.getTime());
             holder.workAlarm.setText(dailyWork.getAlarm());
+            holder.workDone.setText(dailyWork.getDone_time());
             if(dailyWork.getDone()!=0){
                 holder.workCheck.setBackgroundResource(R.drawable.round_button4);
+                holder.workName.setTextColor(Color.parseColor("#FFFFFF"));
+                holder.workTime.setTextColor(Color.parseColor("#FFFFFF"));
+                holder.workAlarm.setTextColor(Color.parseColor("#FFFFFF"));
+
+                holder.workDone.setTextColor(Color.parseColor("#FFFFFF"));
 
             }
 
