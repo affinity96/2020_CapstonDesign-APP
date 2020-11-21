@@ -124,9 +124,6 @@ public class WalkFragment extends Fragment {
 
                 editText_temperature.setText(result.getCurrent_temperature());
                 weather(result.getCurrent_weather());
-
-
-
                 if(result.getCode() == 200){
                     Log.d("weather","server connect");
                 }else{
