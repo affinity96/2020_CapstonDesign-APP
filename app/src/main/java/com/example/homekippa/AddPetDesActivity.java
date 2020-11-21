@@ -18,7 +18,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.DialogFragment;
-
 import com.example.homekippa.data.AddPetDesData;
 import com.example.homekippa.data.AddpetDesResponse;
 import com.example.homekippa.data.GroupData;
@@ -169,9 +168,10 @@ public class AddPetDesActivity extends AppCompatActivity {
 
                 if (regNum.equals("")) {
                     name = editText_petName.getText().toString();
+                name = editText_petName.getText().toString();
 
-                    species = editText_petSpecies.getText().toString();
-                    regNum = editText_petRegNum.getText().toString();
+                species = editText_petSpecies.getText().toString();
+                regNum = editText_petRegNum.getText().toString();
 
                     if (checkbox_male.isChecked()) {
                         gender = "수컷";
@@ -179,12 +179,14 @@ public class AddPetDesActivity extends AppCompatActivity {
                         gender = "암컷";
                     }
 
+
                     if (checkbox_netralizationYes.isChecked()) {
                         neutralization = "중성";
                     } else if (checkbox_netralizationNo.isChecked()) {
                         neutralization = "중성 안함";
                     }
-                }
+
+
 
                 Log.d("groupId", String.valueOf(groupId));
 
@@ -242,7 +244,7 @@ public class AddPetDesActivity extends AppCompatActivity {
     }
 
     /**
-     * 앨범에서 이미지 가져오기
+     *  앨범에서 이미지 가져오기
      */
     public void goToAlbum() {
 
@@ -252,7 +254,7 @@ public class AddPetDesActivity extends AppCompatActivity {
     }
 
     /**
-     * 카메라에서 이미지 가져오기
+     *  카메라에서 이미지 가져오기
      */
     public void takePhoto() {
 
@@ -282,7 +284,7 @@ public class AddPetDesActivity extends AppCompatActivity {
     }
 
     /**
-     * 폴더 및 파일 만들기
+     *  폴더 및 파일 만들기
      */
     public File createImageFile() throws IOException {
 
@@ -302,7 +304,7 @@ public class AddPetDesActivity extends AppCompatActivity {
     }
 
     /**
-     * 권한 설정
+     *  권한 설정
      */
     public void tedPermission() {
         PermissionListener permissionListener = new PermissionListener() {
@@ -331,7 +333,7 @@ public class AddPetDesActivity extends AppCompatActivity {
         if (resultCode != RESULT_OK) {
             Toast.makeText(this, "취소 되었습니다.", Toast.LENGTH_SHORT).show();
 
-            if (tempFile != null) {
+            if(tempFile != null) {
                 if (tempFile.exists()) {
                     if (tempFile.delete()) {
                         Log.e(TAG, tempFile.getAbsolutePath() + " 삭제 성공");

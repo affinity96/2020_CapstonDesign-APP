@@ -13,6 +13,7 @@ import com.example.homekippa.data.CreateDailyWorkData;
 import com.example.homekippa.data.CreateDailyWorkResponse;
 import com.example.homekippa.data.CreateGroupData;
 import com.example.homekippa.data.CreateGroupResponse;
+import com.example.homekippa.data.DoneReportsResponse;
 import com.example.homekippa.data.GetGroupImageResponse;
 import com.example.homekippa.data.GroupData;
 import com.example.homekippa.data.GroupInviteData;
@@ -26,7 +27,8 @@ import com.example.homekippa.data.SignUpResponse;
 import com.example.homekippa.data.UidRespense;
 import com.example.homekippa.data.UserData;
 
-import com.example.homekippa.ui.group.SingleItemComment;
+import com.example.homekippa.data.WeatherLocationData;
+import com.example.homekippa.data.WeatheLocationResponse;
 import com.example.homekippa.ui.group.SingleItemDailyWork;
 import com.example.homekippa.ui.group.SingleItemPet;
 import com.example.homekippa.ui.group.SingleItemPost;
@@ -89,6 +91,9 @@ public interface ServiceApi {
     @GET("/pet/reports")
     Call<List<SingleItemDailyWork>> getDailyWorkData(@Query("petId") int petId);
 
+    @PUT("/pet/reports/done")
+    Call<DoneReportsResponse> doneDailyWork(@Query("id") int id);
+
 //    @POST("/pet/add")
 //    Call<AddPetResponse> addPetReg(@Body AddPetData data);
 
@@ -131,4 +136,9 @@ public interface ServiceApi {
 
     @GET("/user/getNoti")
     Call<List<NotiData>> getNotiData(@Query("userId") String userId);
+
+    @POST("/weather/infor")
+    Call<WeatheLocationResponse> getWeatehrData(@Body WeatherLocationData data);
+
+
 }

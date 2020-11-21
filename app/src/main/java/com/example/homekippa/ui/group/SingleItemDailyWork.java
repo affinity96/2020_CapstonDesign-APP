@@ -1,7 +1,10 @@
 package com.example.homekippa.ui.group;
 
+import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import androidx.annotation.RequiresApi;
 
 public class SingleItemDailyWork implements Parcelable {
     private int id;
@@ -12,9 +15,10 @@ public class SingleItemDailyWork implements Parcelable {
     private String alarm;
     private String desc;
     private String time;
+    private int done;
 
 
-    public SingleItemDailyWork(int id, int group_id, int pet_id, String title, int count, String alarm, String desc, String time) {
+    public SingleItemDailyWork(int id, int group_id, int pet_id, String title, int count, String alarm, String desc, String time, int done) {
         this.id = id;
         this.group_id = group_id;
         this.pet_id = pet_id;
@@ -23,7 +27,9 @@ public class SingleItemDailyWork implements Parcelable {
         this.alarm = alarm;
         this.desc = desc;
         this.time = time;
+        this.done = done;
     }
+
 
     protected SingleItemDailyWork(Parcel in) {
         id = in.readInt();
@@ -34,6 +40,7 @@ public class SingleItemDailyWork implements Parcelable {
         alarm = in.readString();
         desc = in.readString();
         time = in.readString();
+        done = in.readInt();
     }
 
     public static final Creator<SingleItemDailyWork> CREATOR = new Creator<SingleItemDailyWork>() {
@@ -53,6 +60,7 @@ public class SingleItemDailyWork implements Parcelable {
         return 0;
     }
 
+
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(id);
@@ -63,6 +71,7 @@ public class SingleItemDailyWork implements Parcelable {
         dest.writeString(alarm);
         dest.writeString(desc);
         dest.writeString(time);
+        dest.writeInt(done);
 
     }
 
@@ -98,6 +107,8 @@ public class SingleItemDailyWork implements Parcelable {
     public String getTime() {
         return time;
     }
+
+    public int getDone(){ return done;}
 
 
 
