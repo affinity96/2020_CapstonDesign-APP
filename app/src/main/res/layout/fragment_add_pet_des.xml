@@ -8,188 +8,190 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:id="@+id/layout_reg_name"
+        android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/layout_gender">
-
-        <LinearLayout
-            android:id="@+id/layout_reg"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_weight="1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="등록번호"/>
-
-
-            <EditText
-                android:id="@+id/editText_pet_regNum"
-                android:layout_weight="4"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:hint="등록번호"
-                android:inputType="number"
-                tools:layout_editor_absoluteX="104dp"
-                tools:layout_editor_absoluteY="91dp"
-                />
-
-
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_weight="1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="이름"/>
-
-            <EditText
-                android:id="@+id/editText_pet_name"
-                android:layout_weight="4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="이름"
-                tools:layout_editor_absoluteX="104dp"
-                tools:layout_editor_absoluteY="91dp"
-                />
-
-
-        </LinearLayout>
-
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/layout_gender"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
-
-        <TextView
-            android:id="@+id/textView_pet_gender"
-            android:layout_weight="1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="성별"
-            android:layout_gravity="center"/>
-        <CheckBox
-            android:id="@+id/checkbox_male"
-            android:layout_weight="2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="onCheckboxClicked_petGender"
-            android:text="수컷" />
-        <CheckBox
-            android:id="@+id/checkbox_female"
-            android:layout_weight="2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="onCheckboxClicked_petGender"
-            android:text="암컷" />
-
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@+id/layout_gender">
+        android:orientation="horizontal">
 
         <TextView
             android:layout_weight="1"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="이름"
+            style="@style/BlackText"/>
+
+        <EditText
+            android:id="@+id/editText_pet_name"
+            android:layout_weight="4"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:hint="이름"
+            />
+
+
+        <TextView
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
             android:text="종"
-            android:layout_gravity="center"/>
+            style="@style/BlackText"/>
 
         <EditText
             android:layout_weight="4"
             android:id="@+id/editText_pet_species"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
             android:hint="종"
-            tools:layout_editor_absoluteX="112dp"
-            tools:layout_editor_absoluteY="274dp"
             />
-
-
     </LinearLayout>
+
     <LinearLayout
         android:id="@+id/layout_neutralization"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_weight="1">
         <TextView
             android:id="@+id/textview_pet_neutralization"
             android:layout_weight="1"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="중성화여부"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
+            android:gravity="center"
+            android:text="중성화여부"
+            style="@style/BlackText"
             />
         <CheckBox
             android:id="@+id/checkbox_netralizationYes"
             android:layout_weight="2"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
             android:onClick="onCheckboxClicked_petNeutralization"
             android:text="중성" />
         <CheckBox
             android:id="@+id/checkbox_neutralizationNo"
             android:layout_weight="2"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
             android:onClick="onCheckboxClicked_petNeutralization"
             android:text="중성 안함" />
+
+        <TextView
+            android:id="@+id/textView_pet_gender"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="성별"
+            android:layout_gravity="center"
+            android:gravity="center"
+            style="@style/BlackText"/>
+
+        <CheckBox
+            android:id="@+id/checkbox_male"
+            android:layout_weight="2"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:onClick="onCheckboxClicked_petGender"
+            android:text="수컷" />
+        <CheckBox
+            android:id="@+id/checkbox_female"
+            android:layout_weight="2"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:onClick="onCheckboxClicked_petGender"
+            android:text="암컷" />
+
+
     </LinearLayout>
+
     <LinearLayout
         android:id="@+id/layout_birthday"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_weight="1">
         <TextView
             android:layout_weight="1"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:text="생년월일"/>
+            android:gravity="center"
+            android:text="생년월일"
+            style="@style/BlackText"
+            />
 
         <TextView
             android:id="@+id/textView_birthday"
             android:layout_weight="4"
             android:layout_width="wrap_content"
-            android:layout_height="37.3dp"
+            android:layout_height="match_parent"
             android:ems="10"
             android:textSize="6pt"
             android:background="@drawable/shape"
             android:layout_gravity="center"
+            android:gravity="center"
             android:layout_margin="5dp"
             android:hint="생년월일" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
 
     </LinearLayout>
-    <Button
-        android:id="@+id/button_gallery"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="앨범" />
 
-    <Button
-        android:id="@+id/button_camera"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="카메라" />
-    <Button
-        android:id="@+id/button_petDesSave"
-        android:layout_width="200dp"
-        android:layout_height="50dp"
-        android:text="반려동물 등록"
-        app:layout_constraintTop_toBottomOf="@+id/editText_pet_neutralization"/>
+        android:orientation="horizontal"
+        android:layout_weight="1">
+        <Button
+            android:id="@+id/button_gallery"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="앨범" />
+
+        <Button
+            android:id="@+id/button_camera"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="카메라" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="11"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/button_petDesSave"
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:text="반려동물 등록"
+            app:layout_constraintTop_toBottomOf="@+id/editText_pet_neutralization"/>
+
+    </LinearLayout>
 
 </LinearLayout>
