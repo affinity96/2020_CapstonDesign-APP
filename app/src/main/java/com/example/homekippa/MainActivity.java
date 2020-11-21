@@ -138,7 +138,11 @@ public class MainActivity extends AppCompatActivity {
                         return true;
                     case R.id.navigation_group:
                         if (userData.getGroupId() != 0) {
-                            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new GroupFragment()).commitAllowingStateLoss();
+                            GroupFragment groupFragment = new GroupFragment();
+                            Bundle bundle = new Bundle();
+                            bundle.putParcelable("groupData", groupData);
+                            groupFragment.setArguments(bundle);
+                            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, groupFragment).commitAllowingStateLoss();
                         } else {
                             getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new NoGroup()).commitAllowingStateLoss();
                         }
@@ -172,12 +176,30 @@ public class MainActivity extends AppCompatActivity {
         return this.userData;
     }
 
+    public void setUserData(UserData userData){
+        this.userData = userData;
+    }
+
     public GroupData getGroupData() {
         return this.groupData;
     }
 
+    public void setGroupData(GroupData groupData){
+        this.groupData = groupData;
+    }
+
+    public BottomNavigationView getNavView() {
+        return this.navView;
+    }
+
     @Override
     public void onBackPressed() {
-        this.finishAffinity();
+        if(!navView.getMenu().getItem(0).isChecked()){
+            navView.getMenu().getItem(0).setChecked(true);
+            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new HomeFragment()).commitAllowingStateLoss();
+        }
+        else {
+            this.finishAffinity();
+        }
     }
 }
