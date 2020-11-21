@@ -23,7 +23,7 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:text="이름"
-            android:textSize="17dp"
+            android:textSize="15sp"
             style="@style/BlackText"/>
 
         <EditText
@@ -44,7 +44,7 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:text="종"
-            android:textSize="17dp"
+            android:textSize="15sp"
             style="@style/BlackText"/>
 
         <EditText
@@ -73,7 +73,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="성   별"
-            android:textSize="15dp"
+            android:textSize="15sp"
             android:layout_gravity="center"
             android:gravity="center"
             style="@style/BlackText"
@@ -111,15 +111,14 @@
 
         <TextView
             android:id="@+id/textview_pet_neutralization"
-            android:layout_weight="1"
+            style="@style/BlackText"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="center"
+            android:layout_weight="1"
             android:gravity="center"
             android:text="중성화\n여부"
-            android:textSize="15dp"
-            style="@style/BlackText"
-            />
+            android:textSize="15dp" />
         <CheckBox
             android:id="@+id/checkbox_netralizationYes"
             android:layout_weight="2"
@@ -155,6 +154,7 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:text="생년월일"
+            android:textSize="15dp"
             style="@style/BlackText"
             />
 
