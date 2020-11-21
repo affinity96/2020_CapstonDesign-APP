@@ -52,7 +52,7 @@ public class AddPetDesActivity extends AppCompatActivity {
     private EditText editText_petSpecies;
     private CheckBox checkbox_netralizationYes;
     private CheckBox checkbox_netralizationNo;
-    private EditText editText_petRegNum;
+
     private Button button_petDesSave;
     private ServiceApi service;
     private GroupData groupData;
@@ -81,7 +81,7 @@ public class AddPetDesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_add_pet_des);
 
-        editText_petRegNum = findViewById(R.id.editText_pet_regNum);
+
         editText_petName = findViewById(R.id.editText_pet_name);
         checkbox_female = findViewById(R.id.checkbox_female);
         checkbox_male = findViewById(R.id.checkbox_male);
@@ -131,8 +131,6 @@ public class AddPetDesActivity extends AppCompatActivity {
             gender = getintent.getExtras().getString("petGender");
             species = getintent.getExtras().getString("petSpecies");
             neutralization = getintent.getExtras().getString("petNeutralization");
-
-            editText_petRegNum.setText(regNum);
             editText_petName.setText(name);
 
             if(gender.equals("수컷")){
@@ -169,7 +167,7 @@ public class AddPetDesActivity extends AppCompatActivity {
                 name = editText_petName.getText().toString();
 
                 species = editText_petSpecies.getText().toString();
-                regNum = editText_petRegNum.getText().toString();
+
 
                 if(checkbox_male.isChecked()){
                     gender = "수컷";
@@ -184,18 +182,13 @@ public class AddPetDesActivity extends AppCompatActivity {
                 else if(checkbox_netralizationNo.isChecked()){
                     neutralization = "중성 안함";
                 }
-
-
                 Log.d("groupId", String.valueOf(groupId));
-
                 if (name.isEmpty()) {
                     editText_petName.setError("반려동물 이름을 입력해주세요");
                 } else if (gender.isEmpty()) {
                     textView_gender.setError("반려동물성별을 입력해주세요");
                 } else if (species.isEmpty()) {
                     editText_petSpecies.setError("반려동물 종을 입력해주세요");
-                } else if (regNum.isEmpty()) {
-                    editText_petRegNum.setError("반려동물 등록번호를 입려해주세요");
                 } else if (neutralization.isEmpty()) {
                     textView_neutalization.setError("반려동물 중성화 여부를 입력해주세요.");
                 }else if (birth.isEmpty()){
