@@ -38,7 +38,10 @@ import com.example.homekippa.network.ServiceApi;
 import org.w3c.dom.Text;
 
 import java.io.InputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import okhttp3.ResponseBody;
@@ -92,11 +95,15 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        setPostData(holder, position);
+        try {
+            setPostData(holder, position);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         setViewModel(holder, position);
     }
 
-    private void setPostData(MyViewHolder holder, int position) {
+    private void setPostData(MyViewHolder holder, int position) throws ParseException {
 
         SingleItemPost post = post_Items.get(position);
         GroupData group;
@@ -121,6 +128,11 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
             setImageData(post.getImage());
             setPostImageAdapter(holder, post.getGroupPostImage());
         }
+
+//        String pd = post.getDate();
+//        SimpleDateFormat fm = new SimpleDateFormat("yyyy-MM-dd");
+//        Date postdate = fm.parse(pd);
+//        holder.postDate.setText(String.valueOf(postdate));
 
         setLikeImage(holder, position);
         setClickListenerOnHolder(holder, position);

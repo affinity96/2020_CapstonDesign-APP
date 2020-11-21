@@ -166,27 +166,25 @@ public class AddPetDesActivity extends AppCompatActivity {
 
                 int groupId = groupData.getId();
                 final String birth = textView_birthDay.getText().toString().trim();
+                name = editText_petName.getText().toString();
 
-                if(regNum.equals("")){
-                    name = editText_petName.getText().toString();
+                species = editText_petSpecies.getText().toString();
+                regNum = editText_petRegNum.getText().toString();
 
-                    species = editText_petSpecies.getText().toString();
-                    regNum = editText_petRegNum.getText().toString();
-
-                    if(checkbox_male.isChecked()){
-                        gender = "수컷";
-                    }
-                    else if(checkbox_female.isChecked()){
-                        gender = "암컷";
-                    }
-
-                    if(checkbox_netralizationYes.isChecked()){
-                        neutralization = "중성";
-                    }
-                    else if(checkbox_netralizationNo.isChecked()){
-                        neutralization = "중성 안함";
-                    }
+                if(checkbox_male.isChecked()){
+                    gender = "수컷";
                 }
+                else if(checkbox_female.isChecked()){
+                    gender = "암컷";
+                }
+
+                if(checkbox_netralizationYes.isChecked()){
+                    neutralization = "중성";
+                }
+                else if(checkbox_netralizationNo.isChecked()){
+                    neutralization = "중성 안함";
+                }
+
 
                 Log.d("groupId", String.valueOf(groupId));
 

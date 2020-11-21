@@ -171,7 +171,6 @@ public class PostDetailActivity extends AppCompatActivity {
         postLikedImage.setActivated(isliked);
         getGroupProfileImage(group.getImage(), postGroupProfile);
 
-//        commentNum = post.getCommentNum();
         setPostImage(post_ImageList);
         setPostComment(recyclerView_postComments);
 
@@ -258,6 +257,7 @@ public class PostDetailActivity extends AppCompatActivity {
                     user_List = commentGetResponse.getUsers();
                     group_List = commentGetResponse.getGroups();
                     ArrayList<SingleItemComment> comments = new ArrayList<>();
+
 
 
 
