@@ -12,6 +12,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -72,6 +73,7 @@ public class YesGroup extends Fragment {
 
     private ArrayList<SingleItemPet> petList = new ArrayList<>();
 
+    private PetViewModel petViewModel;
 
     private TextView tv_groupName;
     private TextView tv_groupIntro;
@@ -83,6 +85,8 @@ public class YesGroup extends Fragment {
     private Button button_addUser;
     private Button button_join_group;
     private Button button_changeGroupCover;
+
+    private ViewGroup root;
 
     private int selectedPosition = 0;
     public static YesGroup newInstance() {
@@ -127,9 +131,14 @@ public class YesGroup extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_yes_group, container, false);
+    public void onResume(){
+        super.onResume();
+//        setPetListView(listView_pets);
+    }
+
+    @Override
+    public void onStart(){
+        super.onStart();
 
         tv_groupName = root.findViewById(R.id.textView_groupName);
         tv_groupIntro = root.findViewById(R.id.textView_groupIntro);
@@ -224,7 +233,14 @@ public class YesGroup extends Fragment {
         setPetListView(listView_pets);
         //setDailyWorkListView(listView_dailyWorks);
 
-//        Glide.with(YesGroup.this).load(R.drawable.dog_woong).circleCrop().into(imageView_groupProfile);
+        Glide.with(YesGroup.this).load(R.drawable.dog_woong).circleCrop().into(imageView_groupProfile);
+
+    }
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        root = (ViewGroup) inflater.inflate(R.layout.fragment_yes_group, container, false);
+
         return root;
     }
 
@@ -339,21 +355,28 @@ public class YesGroup extends Fragment {
                 if (response.isSuccessful()) {
                     Log.d("반려동물 확인", "성공");
                     List<SingleItemPet> pets = response.body();
+
+                    petViewModel = new ViewModelProvider(requireActivity()).get(PetViewModel.class);
+
+                    petViewModel.getPetList().setValue(pets);
+
                     if (!pets.isEmpty()) {
+                        petList.clear();
                         petList.addAll(pets);
                         //TODO:나중에 바꿔야 할 부분. 일단 가장 처음 강아지의 아이디만을 petId라 해놓음!
                         petId = pets.get(0).getId();
                         Log.d("펫아이디2", String.format("%d", petId));
-                        setDailyWorkListView(listView_dailyWorks, pets.get(0).getId());
-
-                        ListPetAdapter petAdapter = new ListPetAdapter(petList);
+                        setDailyWorkListView(listView_dailyWorks, pets.get(selectedPosition).getId());
+                    }
+                    ListPetAdapter petAdapter = new ListPetAdapter(petList);
 
                         LinearLayoutManager pLayoutManager = new LinearLayoutManager(getActivity());
                         pLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
                         listView.setLayoutManager(pLayoutManager);
                         listView.setItemAnimator(new DefaultItemAnimator());
                         listView.setAdapter(petAdapter);
-                    }
+
+
                 }
             }
 
@@ -391,8 +414,14 @@ public class YesGroup extends Fragment {
             holder.workName.setText(dailyWork.getTitle());
             holder.workTime.setText(dailyWork.getTime());
             holder.workAlarm.setText(dailyWork.getAlarm());
+            holder.workDone.setText(dailyWork.getDone_time());
             if(dailyWork.getDone()!=0){
                 holder.workCheck.setBackgroundResource(R.drawable.round_button4);
+                holder.workName.setTextColor(Color.parseColor("#FFFFFF"));
+                holder.workTime.setTextColor(Color.parseColor("#FFFFFF"));
+                holder.workAlarm.setTextColor(Color.parseColor("#FFFFFF"));
+
+                holder.workDone.setTextColor(Color.parseColor("#FFFFFF"));
 
             }
 
