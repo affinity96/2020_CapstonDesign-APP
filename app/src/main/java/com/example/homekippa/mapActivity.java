@@ -46,7 +46,7 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
     private LinearLayout linearLayout_infor;
     private TextView textView_walkDistance;
     private TextView textView_walkTime;
-    private Button button_remove;
+//    private Button button_remove;
     private long startTime;
     private long endTime;
     private long totalTime;
@@ -61,7 +61,7 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
         setContentView(R.layout.activity_map);
         button_stopMap =findViewById(R.id.button_stopMap);
         linearLayout_infor = findViewById(R.id.layout_infor);
-        button_remove = findViewById(R.id.button_remove);
+//        button_remove = findViewById(R.id.button_remove);
         textView_walkDistance = findViewById(R.id.textView_walkDistance);
         textView_walkTime = findViewById(R.id.textView_walkTime);
 
@@ -106,29 +106,27 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
         //1.
 
         //재시작 버튼
-        button_remove.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mapView.removePolyline(mapPolyLine);
-                mapPolyLine = new MapPolyline();
-
-            }
-        });
+//        button_remove.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                mapView.removePolyline(mapPolyLine);
+//                mapPolyLine = new MapPolyline();
+//
+//            }
+//        });
 
 
         button_stopMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 mapPolyLine.setLineColor(Color.argb(128, 255, 51, 0));
 
                 //addpoint를 사용해서 산책 로드를 이어준다.
-                for (int i = 0 ; i < longitude_arrayList.size();i++) {
-                    mapPolyLine.addPoint(MapPoint.mapPointWithGeoCoord(latitude_arrayList.get(i),longitude_arrayList.get(i)));
-                    Log.d("array_map_long", String.valueOf(longitude_arrayList.get(i)));
-                    Log.d("array_map_lati", String.valueOf(latitude_arrayList.get(i)));
-                }
+//                for (int i = 0 ; i < longitude_arrayList.size();i++) {
+//                    mapPolyLine.addPoint(MapPoint.mapPointWithGeoCoord(latitude_arrayList.get(i),longitude_arrayList.get(i)));
+//                    Log.d("array_map_long", String.valueOf(longitude_arrayList.get(i)));
+//                    Log.d("array_map_lati", String.valueOf(latitude_arrayList.get(i)));
+//                }
 
                 mapView.addPolyline(mapPolyLine);
 
@@ -150,13 +148,9 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
                 totalTime = (endTime - startTime)/1000;
                 textView_walkTime.setText(String.valueOf(totalTime));
                 startTime =System.currentTimeMillis();
-
-
                 //위도 경도 초기화
                 latitude_arrayList = new ArrayList<>();
                 longitude_arrayList = new ArrayList<>();
-
-
 
             }
         });
@@ -266,6 +260,13 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
         mapPointGeo = mapPoint.getMapPointGeoCoord();
         latitude_arrayList.add(mapPointGeo.latitude);
         longitude_arrayList.add(mapPointGeo.longitude);
+        mapPolyLine.addPoint(MapPoint.mapPointWithGeoCoord(mapPointGeo.latitude,mapPointGeo.longitude));
+        mapView.addPolyline(mapPolyLine);
+
+        MapPointBounds mapPointBounds = new MapPointBounds(mapPolyLine.getMapPoints());
+        int padding = 100; // px
+        //mapView에 찍어준다.
+        mapView.moveCamera(CameraUpdateFactory.newMapPointBounds(mapPointBounds, padding));
 
         //위도 경도 찍
 //        Log.d("latitude", String.valueOf(mapPointGeo.latitude));
