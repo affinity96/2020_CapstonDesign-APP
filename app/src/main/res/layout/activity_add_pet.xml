@@ -37,29 +37,48 @@
 
 
     </LinearLayout>
-
-    <EditText
-        android:id="@+id/editText_petReg_num"
-        android:layout_marginTop="50dp"
-        android:layout_width="300dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="number"
-        android:hint="12345678"
-        android:layout_gravity="center"/>
+        android:orientation="horizontal">
+        <TextView
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="등록번호"
+            style="@style/BlackText"/>
+        <EditText
+            android:id="@+id/editText_petReg_num"
+            android:layout_weight="8"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:inputType="number"
+            android:hint="12345678" />
 
-    <Button
-        android:id="@+id/button_petReg"
-        android:layout_width="170dp"
-        android:layout_height="43dp"
-        android:text="반려동물 조회"
-        />
+        <Button
+            android:id="@+id/button_petReg"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="반려동물 조회"
+            />
+
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/button_petDes"
         android:layout_width="170dp"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:gravity="center"
         android:text="직접입력"
         />
-
 
 </LinearLayout>
