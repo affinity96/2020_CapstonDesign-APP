@@ -1,6 +1,8 @@
 package com.example.homekippa.ui.group;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.homekippa.R;
 import com.example.homekippa.data.CommentData;
 import com.example.homekippa.data.CommentResponse;
@@ -19,11 +22,13 @@ import com.example.homekippa.network.ServiceApi;
 
 import org.w3c.dom.Text;
 
+import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -63,7 +68,7 @@ public class ListCommentAdapter extends RecyclerView.Adapter<ListCommentAdapter.
 
     private void setPostCommentData(MyViewHolder holder, int position) throws ParseException {
         SingleItemComment comment = postComment_Items.get(position);
-        holder.profile.setImageResource(comment.getGroupCommentProfile());
+        getProfileImage(holder, comment.getGroupCommentProfile());
         holder.groupName.setText(comment.getGroupCommentGroupName());
         holder.NickName.setText(comment.getGroupCommentNickName());
         holder.groupLocation.setText(comment.getGroupCommentLocation());
@@ -96,6 +101,35 @@ public class ListCommentAdapter extends RecyclerView.Adapter<ListCommentAdapter.
         String newdate = new SimpleDateFormat("yyyy-MM-dd").format(oldDate);
 
         holder.commentDate.setText(newdate);
+    }
+
+    private void getProfileImage(MyViewHolder holder, String url) {
+        Log.d("url", url);
+        service.getProfileImage(url).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                String TAG = "ListCommentAdapter";
+                if (response.isSuccessful()) {
+
+                    Log.d(TAG, "server contacted and has file");
+                    InputStream is = response.body().byteStream();
+                    Bitmap bitmap = BitmapFactory.decodeStream(is);
+
+                    Glide.with(context).load(bitmap).circleCrop().into(holder.profile);
+                    holder.profile.setImageBitmap(bitmap);
+
+                } else {
+                    Log.d(TAG, "server contact failed");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+//                Toast.makeText(YesGroup.this, "그룹생성 에러 발생", Toast.LENGTH_SHORT).show();
+//              Log.e("createGroup error",t.getMessage());
+                t.printStackTrace();
+            }
+        });
     }
 
     @Override

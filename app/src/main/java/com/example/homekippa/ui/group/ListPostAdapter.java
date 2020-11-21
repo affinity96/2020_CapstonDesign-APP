@@ -4,6 +4,9 @@ package com.example.homekippa.ui.group;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +23,7 @@ import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.homekippa.MainActivity;
 import com.example.homekippa.ui.home.PostViewModel;
 import com.example.homekippa.ui.home.PostDetailActivity;
@@ -33,12 +37,14 @@ import com.example.homekippa.network.ServiceApi;
 
 import org.w3c.dom.Text;
 
+import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -107,15 +113,21 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
             group = groupData.get(position);
         }
 
-//        Glide.with(context).load(R.drawable.dog_woong).circleCrop().into(holder.postGroupProfile);
-//        holder.postGroupProfile.setImageResource(post.getGroupPostProfile());
-
         holder.postTitle.setText(post.getTitle());
         holder.postContent.setText(post.getContent());
         holder.postCommentNum.setText(String.valueOf(post.getCommentNum()));
         holder.postLikedNum.setText(String.valueOf(viewModel.getPostList().getValue().get(position).getLikeNum()));
         holder.postGroupName.setText(group.getName());
         holder.postGroupAddress.setText(group.getAddress());
+        getProfileImage(holder, group.getImage());
+
+        if(post.getImage() == null){
+            holder.recyclerView_postImages.setVisibility(View.GONE);
+        }
+        else{
+            setImageData(post.getImage());
+            setPostImageAdapter(holder, post.getGroupPostImage());
+        }
 
 //        String pd = post.getDate();
 //        SimpleDateFormat fm = new SimpleDateFormat("yyyy-MM-dd");
@@ -123,9 +135,47 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
 //        holder.postDate.setText(String.valueOf(postdate));
 
         setLikeImage(holder, position);
-
         setClickListenerOnHolder(holder, position);
-        setPostImageAdapter(holder, post.getGroupPostImage());
+    }
+
+    private void getProfileImage(MyViewHolder holder, String url) {
+        Log.d("url", url);
+        service.getProfileImage(url).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                String TAG = "ListPostAdapter";
+                if (response.isSuccessful()) {
+
+                    Log.d(TAG, "server contacted and has file");
+                    InputStream is = response.body().byteStream();
+                    Bitmap bitmap = BitmapFactory.decodeStream(is);
+
+                    Glide.with(context).load(bitmap).circleCrop().into(holder.postGroupProfile);
+                    holder.postGroupProfile.setImageBitmap(bitmap);
+
+                } else {
+                    Log.d(TAG, "server contact failed");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+//                Toast.makeText(YesGroup.this, "그룹생성 에러 발생", Toast.LENGTH_SHORT).show();
+//              Log.e("createGroup error",t.getMessage());
+                t.printStackTrace();
+            }
+        });
+    }
+
+    private void setImageData(String url) {
+        ArrayList<SingleItemPostImage> post_ImageList = new ArrayList<>();
+        SingleItemPostImage postImage = new SingleItemPostImage(url);
+        post_ImageList.add(postImage);
+//        postImage = new SingleItemPostImage(R.drawable.dog_woong);
+//        post_ImageList.add(postImage);
+        for (SingleItemPost sit : post_Items) {
+            sit.setGroupPostImage(post_ImageList);
+        }
     }
 
     private void setClickListenerOnHolder(MyViewHolder holder, int position) {
@@ -218,6 +268,7 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
     }
 
     public void setPostImageAdapter(MyViewHolder holder, ArrayList<SingleItemPostImage> postImageList) {
+
         ListPostImageAdapter adapter = new ListPostImageAdapter(postImageList);
         holder.recyclerView_postImages.setLayoutManager(new LinearLayoutManager(context
                 , LinearLayoutManager.HORIZONTAL
@@ -231,7 +282,6 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
-        //        ImageView postGroupProfile;
         TextView postGroupName;
         TextView postGroupAddress;
         TextView postTitle;
@@ -241,12 +291,13 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
         TextView postDate;
         RecyclerView recyclerView_postImages;
 
+        ImageView postGroupProfile;
         Button postLikeImage;
         ImageView postCommentImage;
 
         MyViewHolder(View view) {
             super(view);
-//            postGroupProfile = (ImageView) view.findViewById(R.id.imageView_PostGroupProfile);
+            postGroupProfile = (ImageView) view.findViewById(R.id.imageView_PostGroupProfile);
             postGroupName = (TextView) view.findViewById(R.id.textView__PostGroupName);
             postGroupAddress = (TextView) view.findViewById(R.id.textView__PostGroupLocation);
             postTitle = (TextView) view.findViewById(R.id.textView_PostTitle);
@@ -258,5 +309,6 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
             postLikeImage = (Button) view.findViewById(R.id.imageView_PostLiked);
             postCommentImage = (ImageView) view.findViewById(R.id.imageView_PostComment);
         }
+
     }
 }

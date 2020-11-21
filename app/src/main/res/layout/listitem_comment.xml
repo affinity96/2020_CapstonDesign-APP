@@ -13,13 +13,13 @@
         android:layout_height="wrap_content"
         android:padding="4dp">
 
-        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/imageView_CommentGroupProfile"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_centerVertical="true"
             android:clickable="true"
-            android:src="@drawable/dog_woong" />
+            android:src="@drawable/border" />
 
         <LinearLayout
             android:id="@+id/linearLayout_profile"

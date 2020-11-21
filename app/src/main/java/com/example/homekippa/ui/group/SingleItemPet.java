@@ -44,8 +44,8 @@ public class SingleItemPet {
         return neutrality;
     }
 
-    public int getImage() {
-        return petImage;
+    public String getImage() {
+        return image;
     }
 
     public SingleItemPet(String name, int ImageID) {
