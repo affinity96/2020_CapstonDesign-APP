@@ -69,8 +69,12 @@ public class AddPostActivity extends AppCompatActivity {
         UserData userData = (UserData) intent.getExtras().get("userData");
         GroupData groupData = (GroupData) intent.getExtras().get("groupData");
 
+        Log.d("ted","tedPermission()");
+
         // 권한 요청
-        tedPermission();
+//        tedPermission();
+
+
 
         button_Add_Post_Img.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,7 +90,7 @@ public class AddPostActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                addPost(groupData.getId(), userData.getUserId(), postContent.toString(), editText_postTitle.toString());
+                addPost(groupData.getId(), userData.getUserId(), postContent.toString(), editText_postTitle.getText().toString());
             }
         });
 
@@ -161,6 +165,7 @@ public class AddPostActivity extends AppCompatActivity {
      * 권한 설정
      */
     public void tedPermission() {
+        Log.d("ted","here");
         PermissionListener permissionListener = new PermissionListener() {
             @Override
             public void onPermissionGranted() {
