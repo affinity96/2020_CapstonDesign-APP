@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -105,9 +106,6 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
             group = groupData.get(position);
         }
 
-//        Glide.with(context).load(R.drawable.dog_woong).circleCrop().into(holder.postGroupProfile);
-//        holder.postGroupProfile.setImageResource(post.getGroupPostProfile());
-
         holder.postTitle.setText(post.getTitle());
         holder.postContent.setText(post.getContent());
         holder.postCommentNum.setText(String.valueOf(post.getCommentNum()));
@@ -115,13 +113,20 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
         holder.postGroupName.setText(group.getName());
         holder.postGroupAddress.setText(group.getAddress());
         getProfileImage(holder, group.getImage());
-        setLikeImage(holder, position);
 
+        if(post.getImage() == null){
+            holder.recyclerView_postImages.setVisibility(View.GONE);
+        }
+        else{
+            setImageData(post.getImage());
+            setPostImageAdapter(holder, post.getGroupPostImage());
+        }
+
+        setLikeImage(holder, position);
         setClickListenerOnHolder(holder, position);
-        setPostImageAdapter(holder, post.getGroupPostImage());
     }
 
-    private void getProfileImage(ListPostAdapter.MyViewHolder holder, String url) {
+    private void getProfileImage(MyViewHolder holder, String url) {
         Log.d("url", url);
         service.getProfileImage(url).enqueue(new Callback<ResponseBody>() {
             @Override
@@ -148,6 +153,17 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
                 t.printStackTrace();
             }
         });
+    }
+
+    private void setImageData(String url) {
+        ArrayList<SingleItemPostImage> post_ImageList = new ArrayList<>();
+        SingleItemPostImage postImage = new SingleItemPostImage(url);
+        post_ImageList.add(postImage);
+//        postImage = new SingleItemPostImage(R.drawable.dog_woong);
+//        post_ImageList.add(postImage);
+        for (SingleItemPost sit : post_Items) {
+            sit.setGroupPostImage(post_ImageList);
+        }
     }
 
     private void setClickListenerOnHolder(MyViewHolder holder, int position) {
@@ -240,6 +256,7 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
     }
 
     public void setPostImageAdapter(MyViewHolder holder, ArrayList<SingleItemPostImage> postImageList) {
+
         ListPostImageAdapter adapter = new ListPostImageAdapter(postImageList);
         holder.recyclerView_postImages.setLayoutManager(new LinearLayoutManager(context
                 , LinearLayoutManager.HORIZONTAL

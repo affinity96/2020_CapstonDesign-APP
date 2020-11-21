@@ -203,7 +203,7 @@ public class AddPetDesActivity extends AppCompatActivity {
                 }else if (birth.isEmpty()){
                     textView_birthDay.setError("생년월일을 입력하세요");
                 }else {
-                    addPetDes(groupId, birth);
+                    addPetDes(regNum, name, species, gender, neutralization, groupId, birth);
                 }
             }
         });
@@ -399,9 +399,8 @@ public class AddPetDesActivity extends AppCompatActivity {
         textView_birthDay.setText(dateMessage);
     }
 
-    private void addPetDes(int groupId, String birth) {
+    private void addPetDes(String regNum, String name, String species, String gender, String neutralization, int groupId, String birth) {
         Log.i("create2", "create");
-
         if (tempFile != null) {
             String str_groupId = String.valueOf(groupId);
 

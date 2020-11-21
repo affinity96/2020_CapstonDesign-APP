@@ -1,6 +1,8 @@
 package com.example.homekippa.ui.home;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.text.Editable;
 import android.util.Log;
@@ -18,6 +20,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.homekippa.R;
 import com.example.homekippa.data.CommentData;
 import com.example.homekippa.data.CommentGetResponse;
@@ -28,14 +31,18 @@ import com.example.homekippa.data.LikeResponse;
 import com.example.homekippa.data.UserData;
 import com.example.homekippa.network.RetrofitClient;
 import com.example.homekippa.network.ServiceApi;
+import com.example.homekippa.ui.group.GroupPost;
 import com.example.homekippa.ui.group.ListCommentAdapter;
 import com.example.homekippa.ui.group.ListPostImageAdapter;
 import com.example.homekippa.ui.group.SingleItemComment;
 import com.example.homekippa.ui.group.SingleItemPost;
 import com.example.homekippa.ui.group.SingleItemPostImage;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -139,7 +146,7 @@ public class PostDetailActivity extends AppCompatActivity {
 
         viewModel = new ViewModelProvider((ViewModelStoreOwner) this).get(PostViewModel.class);
 
-//        postGroupProfile = (ImageView) findViewById(R.id.imageView_DetailPostGroupProfile);
+        postGroupProfile = (ImageView) findViewById(R.id.imageView_DetailPostGroupProfile);
         postGroupName = (TextView) findViewById(R.id.textView__DetailPostGroupName);
         postGroupLocation = (TextView) findViewById(R.id.textView__DetailPostGroupLocation);
         postTitle = (TextView) findViewById(R.id.textView_DetailPostTitle);
@@ -162,6 +169,7 @@ public class PostDetailActivity extends AppCompatActivity {
         postLikeNum.setText(String.valueOf(viewModel.getPostList().getValue().get(postPosition).getLikeNum()));
         postCommentNum.setText(String.valueOf(viewModel.getPostList().getValue().get(postPosition).getCommentNum()));
         postLikedImage.setActivated(isliked);
+        getGroupProfileImage(group.getImage(), postGroupProfile);
 
 //        commentNum = post.getCommentNum();
         setPostImage(post_ImageList);
@@ -200,6 +208,34 @@ public class PostDetailActivity extends AppCompatActivity {
 
     }
 
+    private void getGroupProfileImage(String url, ImageView imageView) {
+        Log.d("url", url);
+        service.getProfileImage(url).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                String TAG = "PostDetailActivity";
+                if (response.isSuccessful()) {
+
+                    Log.d(TAG, "server contacted and has file");
+                    InputStream is = response.body().byteStream();
+                    Bitmap bitmap = BitmapFactory.decodeStream(is);
+
+                    Glide.with(PostDetailActivity.this).load(bitmap).circleCrop().into(imageView);
+
+                } else {
+                    Log.d(TAG, "server contact failed");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+//                Toast.makeText(YesGroup.this, "그룹생성 에러 발생", Toast.LENGTH_SHORT).show();
+//              Log.e("createGroup error",t.getMessage());
+                t.printStackTrace();
+            }
+        });
+    }
+
     private void setPostImage(ArrayList<SingleItemPostImage> post_ImageList) {
         ListPostImageAdapter adapter = new ListPostImageAdapter(post_ImageList);
         recyclerView_postImages.setLayoutManager(new LinearLayoutManager(this
@@ -228,7 +264,7 @@ public class PostDetailActivity extends AppCompatActivity {
                     //TODO: Change the image of GROUP
                     for (int i = 0; i < comment_List.size(); i++) {
                         Log.d("comment", comment_List.get(i).getDate());
-                        SingleItemComment comment = new SingleItemComment(R.drawable.dog_thang, group_List.get(i).getName(), user_List.get(i).getUserName(), group_List.get(i).getAddress(), comment_List.get(i).getContent());
+                        SingleItemComment comment = new SingleItemComment(group_List.get(i).getImage() , group_List.get(i).getName(), user_List.get(i).getUserName(), group_List.get(i).getAddress(), comment_List.get(i).getContent());
                         comments.add(comment);
                     }
 

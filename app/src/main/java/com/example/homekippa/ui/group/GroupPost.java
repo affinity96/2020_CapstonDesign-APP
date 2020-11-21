@@ -163,7 +163,7 @@ public class GroupPost extends Fragment {
                     likeList = groupPostResponse.getLikeData();
 
                     //TODO: Change the sample Image Data!!!!!!
-                    setImageData();
+//                    setImageData();
 
                     ArrayList<Boolean> checkLikeList = setLikeData(likeList);
                     setPostAdapter(listView, checkLikeList);
@@ -179,16 +179,16 @@ public class GroupPost extends Fragment {
         });
     }
 
-    private void setImageData() {
-        ArrayList<SingleItemPostImage> post_ImageList = new ArrayList<>();
-        SingleItemPostImage postImage = new SingleItemPostImage(R.drawable.dog_tan);
-        post_ImageList.add(postImage);
-        postImage = new SingleItemPostImage(R.drawable.dog_woong);
-        post_ImageList.add(postImage);
-        for (SingleItemPost sit : postList) {
-            sit.setGroupPostImage(post_ImageList);
-        }
-    }
+//    private void setImageData() {
+//        ArrayList<SingleItemPostImage> post_ImageList = new ArrayList<>();
+//        SingleItemPostImage postImage = new SingleItemPostImage(R.drawable.dog_tan);
+//        post_ImageList.add(postImage);
+////        postImage = new SingleItemPostImage(R.drawable.dog_woong);
+////        post_ImageList.add(postImage);
+//        for (SingleItemPost sit : postList) {
+//            sit.setGroupPostImage(post_ImageList);
+//        }
+//    }
 
     private void setPostAdapter(RecyclerView listView, ArrayList<Boolean> checkLikeList) {
 
