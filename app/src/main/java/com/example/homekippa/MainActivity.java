@@ -28,18 +28,14 @@ import com.example.homekippa.network.ServiceApi;
 import com.example.homekippa.ui.group.GroupFragment;
 import com.example.homekippa.ui.group.NoGroup;
 import com.example.homekippa.ui.group.SingleItemPet;
-import com.example.homekippa.ui.group.YesGroup;
 import com.example.homekippa.ui.home.HomeFragment;
 import com.example.homekippa.ui.notifications.NotificationsFragment;
 import com.example.homekippa.ui.search.SearchFragment;
 import com.example.homekippa.ui.walk.WalkFragment;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -169,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
     public void setNavGroupData() {
         TextView username = (TextView) findViewById(R.id.nav_user_name);
         ImageView userProfile = (ImageView) findViewById(R.id.nav_user_image);
-        getGroupProfileImage(userProfile);
+        getUserProfileImage(userProfile);
         TextView usergroup = (TextView) findViewById(R.id.nav_user_group);
 
         username.setText(userData.getUserName() + "님");
@@ -214,9 +210,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void getGroupProfileImage(ImageView userProfile) {
-        Log.d("url", groupData.getImage());
-        service.getProfileImage(groupData.getImage()).enqueue(new Callback<ResponseBody>() {
+    private void getUserProfileImage(ImageView userProfile) {
+        Log.d("url", userData.getUserImage());
+        service.getProfileImage(userData.getUserImage()).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 String TAG = "MainActivity";

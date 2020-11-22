@@ -94,7 +94,7 @@ public interface ServiceApi {
     Call<List<SingleItemDailyWork>> getDailyWorkData(@Query("petId") int petId);
 
     @PUT("/pet/reports/done")
-    Call<DoneReportsResponse> doneDailyWork(@Query("id") int id);
+    Call<DoneReportsResponse> doneDailyWork(@Query("id") int id, @Query("done_user_id") String userId, @Query("done_user_image") String userImage);
 
 //    @POST("/pet/add")
 //    Call<AddPetResponse> addPetReg(@Body AddPetData data);

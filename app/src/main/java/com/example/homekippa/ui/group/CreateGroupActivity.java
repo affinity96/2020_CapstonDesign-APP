@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.homekippa.LoginActivity;
 import com.example.homekippa.R;
 import com.example.homekippa.data.CreateGroupData;
 import com.example.homekippa.data.CreateGroupResponse;
@@ -327,7 +328,9 @@ public class CreateGroupActivity extends AppCompatActivity {
         }
     }
 
-    private void createGroup(String userId, String groupName, String groupAddress, String groupIntroduction) {
+    private void
+
+    createGroup(String userId, String groupName, String groupAddress, String groupIntroduction) {
         Log.i("create", "create");
 
         if (tempFile != null) {
@@ -353,7 +356,10 @@ public class CreateGroupActivity extends AppCompatActivity {
                     Log.d("사ㅏㅏㅏㅏㅏ", "절반성공");
                     if (result.getCode() == 200) {
                         Log.d("바ㅏㅏㅏㅏㅏ", "성공");
-                        finish();
+//                        finish();
+                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
                     }
                 }
 
@@ -376,7 +382,11 @@ public class CreateGroupActivity extends AppCompatActivity {
 
                     if (result.getCode() == 200) {
 
-                        finish();
+//                        finish();
+
+                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
                     }
                 }
 
