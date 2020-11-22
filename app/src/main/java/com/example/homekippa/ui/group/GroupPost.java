@@ -5,7 +5,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,6 +31,8 @@ import com.example.homekippa.network.RetrofitClient;
 import com.example.homekippa.network.ServiceApi;
 
 import java.io.InputStream;
+import java.lang.reflect.Array;
+import java.security.acl.Group;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,6 +65,8 @@ public class GroupPost extends Fragment {
     private TextView textView_address;
     private CircleImageView imageView_PostProfile;
 
+    private GroupViewModel groupViewModel;
+
     public GroupPost() {
         // Required empty public constructor
     }
@@ -75,14 +81,44 @@ public class GroupPost extends Fragment {
         return fragment;
     }
 
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        setPostListView(listView_posts);
+//    }
+
     @Override
-    public void onResume(){
-        super.onResume();
-        setPostListView(listView_posts);
-    }
-    @Override
-    public void onStart(){
+    public void onStart() {
         super.onStart();
+
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        service = RetrofitClient.getClient().create(ServiceApi.class);
+        userData = ((MainActivity) getActivity()).getUserData();
+        groupData = ((MainActivity) getActivity()).getGroupData();
+
+        groupViewModel = new ViewModelProvider(requireActivity()).get(GroupViewModel.class);
+
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+        }
+
+
+    }
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+
+        root = (ViewGroup) inflater.inflate(R.layout.fragment_group_post, container, false);
         listView_posts = root.findViewById(R.id.listView_GroupPost);
         textView_groupName = root.findViewById(R.id.textView_GroupPostName);
         textView_address = root.findViewById(R.id.textView_GroupPostAddress);
@@ -90,7 +126,7 @@ public class GroupPost extends Fragment {
         getGroupProfileImage(groupData.getImage(), imageView_PostProfile);
 
         setGroupView();
-//        setPostListView(listView_posts);
+        setPostListView(listView_posts);
 
         button_Add_Post = root.findViewById(R.id.button_Add_Post);
         button_Add_Post.setOnClickListener(new View.OnClickListener() {
@@ -102,29 +138,6 @@ public class GroupPost extends Fragment {
                 startActivity(intent);
             }
         });
-    }
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        service = RetrofitClient.getClient().create(ServiceApi.class);
-        userData = ((MainActivity) getActivity()).getUserData();
-        groupData = ((MainActivity) getActivity()).getGroupData();
-
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-
-
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
-        root = (ViewGroup) inflater.inflate(R.layout.fragment_group_post, container, false);
-
 
         return root;
     }
@@ -174,13 +187,13 @@ public class GroupPost extends Fragment {
 
                     postList = groupPostResponse.getPostData();
                     likeList = groupPostResponse.getLikeData();
-
-                    //TODO: Change the sample Image Data!!!!!!
-//                    setImageData();
-
+                    setImageData();
+                    Log.d("like", likeList.toString());
                     ArrayList<Boolean> checkLikeList = setLikeData(likeList);
-                    setPostAdapter(listView, checkLikeList);
+                    groupViewModel.getPostList().setValue(postList);
+                    groupViewModel.getLikeCheck().setValue(checkLikeList);
 
+                    setPostAdapter(listView, checkLikeList);
                 }
             }
 
@@ -192,25 +205,25 @@ public class GroupPost extends Fragment {
         });
     }
 
-//    private void setImageData() {
-//        ArrayList<SingleItemPostImage> post_ImageList = new ArrayList<>();
-//        SingleItemPostImage postImage = new SingleItemPostImage(R.drawable.dog_tan);
-//        post_ImageList.add(postImage);
-////        postImage = new SingleItemPostImage(R.drawable.dog_woong);
-////        post_ImageList.add(postImage);
-//        for (SingleItemPost sit : postList) {
-//            sit.setGroupPostImage(post_ImageList);
-//        }
-//    }
+    private void setImageData() {
+        for (SingleItemPost p : postList) {
+            ArrayList<SingleItemPostImage> post_ImageList = new ArrayList<>();
+            SingleItemPostImage postImage = new SingleItemPostImage(p.getImage());
+            post_ImageList.add(postImage);
+            p.setGroupPostImage(post_ImageList);
+        }
+    }
 
     private void setPostAdapter(RecyclerView listView, ArrayList<Boolean> checkLikeList) {
 
         ListPostAdapter postAdapter = new ListPostAdapter(getActivity(), postList, groupData, checkLikeList, true);
+        listView.setAdapter(postAdapter);
+
         LinearLayoutManager pLayoutManager = new LinearLayoutManager(getActivity());
         pLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         listView.setLayoutManager(pLayoutManager);
         listView.setItemAnimator(new DefaultItemAnimator());
-        listView.setAdapter(postAdapter);
+
     }
 
     private ArrayList<Boolean> setLikeData(List<List<LikeData>> likeList) {
@@ -219,6 +232,7 @@ public class GroupPost extends Fragment {
         int i = 0;
         for (List<LikeData> like : likeList) {
             LikeData l = new LikeData(postList.get(i).getPostId(), userData.getUserId());
+
             i = i + 1;
             if (like.contains(l)) {
                 checkLike.add(true);
