@@ -89,6 +89,7 @@ public class YesGroup extends Fragment {
     private ViewGroup root;
 
     private int selectedPosition = 0;
+
     public static YesGroup newInstance() {
         return new YesGroup();
     }
@@ -119,8 +120,8 @@ public class YesGroup extends Fragment {
         userData = ((MainActivity) getActivity()).getUserData();
 //        Log.d("user", userData.getUserName());
 
-        groupData = (GroupData)getArguments().get("groupData");
-        myGroup = (boolean)getArguments().get("myGroup");
+        groupData = (GroupData) getArguments().get("groupData");
+        myGroup = (boolean) getArguments().get("myGroup");
 //        Log.d("group", groupData.getGroupName());
 
         if (getArguments() != null) {
@@ -131,13 +132,13 @@ public class YesGroup extends Fragment {
     }
 
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
 //        setPetListView(listView_pets);
     }
 
     @Override
-    public void onStart(){
+    public void onStart() {
         super.onStart();
 
         tv_groupName = root.findViewById(R.id.textView_groupName);
@@ -147,7 +148,7 @@ public class YesGroup extends Fragment {
         button_addUser = root.findViewById(R.id.button_Add_User);
         button_join_group = root.findViewById(R.id.button_join_group);
         button_changeGroupCover = root.findViewById(R.id.button_changeGroupCover);
-        if(!myGroup) {
+        if (!myGroup) {
             button_join_group.setVisibility(View.VISIBLE);
             button_addUser.setVisibility(View.INVISIBLE);
             button_addPet.setVisibility(View.INVISIBLE);
@@ -163,7 +164,7 @@ public class YesGroup extends Fragment {
                     public void onResponse(Call<UserData> call, Response<UserData> response) {
                         if (response.isSuccessful()) {
                             userData = response.body();
-                            MainActivity mainActivity = (MainActivity)getActivity();
+                            MainActivity mainActivity = (MainActivity) getActivity();
 /*                            mainActivity.setUserData(userData);
                             mainActivity.setGroupData(groupData);
                             mainActivity.getNavView().getMenu().getItem(4).setChecked(true);
@@ -236,6 +237,7 @@ public class YesGroup extends Fragment {
         Glide.with(YesGroup.this).load(R.drawable.dog_woong).circleCrop().into(imageView_groupProfile);
 
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -370,11 +372,11 @@ public class YesGroup extends Fragment {
                     }
                     ListPetAdapter petAdapter = new ListPetAdapter(petList);
 
-                        LinearLayoutManager pLayoutManager = new LinearLayoutManager(getActivity());
-                        pLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-                        listView.setLayoutManager(pLayoutManager);
-                        listView.setItemAnimator(new DefaultItemAnimator());
-                        listView.setAdapter(petAdapter);
+                    LinearLayoutManager pLayoutManager = new LinearLayoutManager(getActivity());
+                    pLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+                    listView.setLayoutManager(pLayoutManager);
+                    listView.setItemAnimator(new DefaultItemAnimator());
+                    listView.setAdapter(petAdapter);
 
 
                 }
@@ -415,29 +417,30 @@ public class YesGroup extends Fragment {
             holder.workTime.setText(dailyWork.getTime());
             holder.workAlarm.setText(dailyWork.getAlarm());
             holder.workDone.setText(dailyWork.getDone_time());
-            if(dailyWork.getDone()!=0){
+
+            if (dailyWork.getDone() != 0) {
                 holder.workCheck.setBackgroundResource(R.drawable.round_button4);
                 holder.workName.setTextColor(Color.parseColor("#FFFFFF"));
                 holder.workTime.setTextColor(Color.parseColor("#FFFFFF"));
                 holder.workAlarm.setTextColor(Color.parseColor("#FFFFFF"));
-
+                getUserProfileImage(holder.workPersonImage, dailyWork.getDone_user_image());
                 holder.workDone.setTextColor(Color.parseColor("#FFFFFF"));
 
             }
 
-            holder.workCheck.setOnClickListener(new View.OnClickListener(){
+            holder.workCheck.setOnClickListener(new View.OnClickListener() {
 
                 @SuppressLint("ResourceAsColor")
                 @Override
                 public void onClick(View v) {
-                    Log.d("여기왔어","꺄륵");
-                    AlertDialog.Builder builder  = new AlertDialog.Builder(v.getContext());
-                    builder.setTitle("[ " +holder.workName.getText()+" ]" + " 일과를 수행하셨습니까?");
+                    Log.d("여기왔어", "꺄륵");
+                    AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                    builder.setTitle("[ " + holder.workName.getText() + " ]" + " 일과를 수행하셨습니까?");
                     builder.setMessage("일과를 완료한 시각과 사용자님의 정보가 기록됩니다.");
                     builder.setPositiveButton("예",
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
-                                    service.doneDailyWork(dailyWork.getId()).enqueue(new Callback<DoneReportsResponse>() {
+                                    service.doneDailyWork(dailyWork.getId(), userData.getUserId(), userData.getUserImage()).enqueue(new Callback<DoneReportsResponse>() {
                                         @Override
                                         public void onResponse(Call<DoneReportsResponse> call, Response<DoneReportsResponse> response) {
                                             Log.d("헤에", response.toString());
@@ -450,24 +453,24 @@ public class YesGroup extends Fragment {
                                         }
                                     });
 
-                                    Toast.makeText(v.getContext(),"일과가 완료되었습니다!",Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(v.getContext(), "일과가 완료되었습니다!", Toast.LENGTH_SHORT).show();
                                     Calendar currentTime = Calendar.getInstance();
                                     int hour24hrs = currentTime.get(Calendar.HOUR_OF_DAY);
                                     int minutes = currentTime.get(Calendar.MINUTE);
 
                                     holder.workCheck.setBackgroundResource(R.drawable.round_button4);
-                                    holder.workDone.setText( hour24hrs + ":" + minutes);
+                                    holder.workDone.setText(hour24hrs + ":" + minutes);
                                     holder.workName.setTextColor(Color.parseColor("#FFFFFF"));
                                     holder.workTime.setTextColor(Color.parseColor("#FFFFFF"));
                                     holder.workAlarm.setTextColor(Color.parseColor("#FFFFFF"));
-
+                                    getUserProfileImage(holder.workPersonImage, dailyWork.getDone_user_image());
                                     holder.workDone.setTextColor(Color.parseColor("#FFFFFF"));
                                 }
                             });
                     builder.setNegativeButton("아니오",
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
-                                    Toast.makeText(v.getContext(),"일과 수행 후 다시 눌러주세요!",Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(v.getContext(), "일과 수행 후 다시 눌러주세요!", Toast.LENGTH_SHORT).show();
                                 }
                             });
 
@@ -489,26 +492,27 @@ public class YesGroup extends Fragment {
             TextView workTime;
             TextView workAlarm;
             RelativeLayout workCheck;
-            //ImageView workPersonImage;
+            ImageView workPersonImage;
             TextView workDone;
             TextView workNameTitle;
+
             MyViewHolder2(View view) {
                 super(view);
                 //workNameTitle =
 
                 workName = (TextView) view.findViewById(R.id.textView_workName);
-                //workPersonImage = (ImageView) view.findViewById(R.id.personImage);
+                workPersonImage = (ImageView) view.findViewById(R.id.personImage);
                 workTime = (TextView) view.findViewById(R.id.textView_workTime);
                 workAlarm = (TextView) view.findViewById(R.id.textView_workAlarm);
                 workCheck = (RelativeLayout) view.findViewById(R.id.work_Check);
                 workDone = (TextView) view.findViewById(R.id.textView_workDone);
 
 
-                workName.setOnClickListener(new View.OnClickListener(){
+                workName.setOnClickListener(new View.OnClickListener() {
 
                     @Override
                     public void onClick(View v) {
-                        Log.d("여기왔어","꺄륵");
+                        Log.d("여기왔어", "꺄륵");
                     }
                 });
             }
@@ -528,7 +532,7 @@ public class YesGroup extends Fragment {
         @Override
         public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.listitem_pet, parent, false);
-            List<View>itemViewList = new ArrayList<>();
+            List<View> itemViewList = new ArrayList<>();
             itemViewList.add(itemView);
             MyViewHolder myViewHolder = new MyViewHolder(itemView);
 
@@ -537,9 +541,9 @@ public class YesGroup extends Fragment {
 
         @Override
         public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-            if(selectedPosition == position){
+            if (selectedPosition == position) {
                 holder.pet.setBackgroundResource(R.drawable.round_button2);
-            }else{
+            } else {
                 holder.pet.setBackgroundResource(R.drawable.round_button);
             }
             setPetData(holder, position);
@@ -553,13 +557,13 @@ public class YesGroup extends Fragment {
 //            holder.petImage.setImageResource(R.drawable.simplelogo);
 
 
-            holder.pet.setOnClickListener(new View.OnClickListener(){
+            holder.pet.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
                     selectedPosition = position;
                     notifyDataSetChanged();
-                    setDailyWorkListView(listView_dailyWorks,selectedPet.getId());
+                    setDailyWorkListView(listView_dailyWorks, selectedPet.getId());
                     petId = petList.get(position).getId();
                 }
             });
@@ -584,5 +588,35 @@ public class YesGroup extends Fragment {
 
             }
         }
+
+
+    }
+
+
+    private void getUserProfileImage(ImageView userProfile, String img) {
+        service.getProfileImage(img).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                String TAG = "MainActivity";
+                if (response.isSuccessful()) {
+
+                    Log.d(TAG, "server contacted and has file");
+                    InputStream is = response.body().byteStream();
+                    Bitmap bitmap = BitmapFactory.decodeStream(is);
+
+                    Glide.with(getActivity()).load(bitmap).circleCrop().into(userProfile);
+
+                } else {
+                    Log.d(TAG, "server contact failed");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+//                Toast.makeText(MainActivity.this, "그룹생성 에러 발생", Toast.LENGTH_SHORT).show();
+//              Log.e("createGroup error",t.getMessage());
+                t.printStackTrace();
+            }
+        });
     }
 }
