@@ -423,7 +423,7 @@ public class YesGroup extends Fragment {
                 holder.workName.setTextColor(Color.parseColor("#FFFFFF"));
                 holder.workTime.setTextColor(Color.parseColor("#FFFFFF"));
                 holder.workAlarm.setTextColor(Color.parseColor("#FFFFFF"));
-                getUserProfileImage(holder.workPersonImage);
+                getUserProfileImage(holder.workPersonImage, dailyWork.getDone_user_image());
                 holder.workDone.setTextColor(Color.parseColor("#FFFFFF"));
 
             }
@@ -463,7 +463,7 @@ public class YesGroup extends Fragment {
                                     holder.workName.setTextColor(Color.parseColor("#FFFFFF"));
                                     holder.workTime.setTextColor(Color.parseColor("#FFFFFF"));
                                     holder.workAlarm.setTextColor(Color.parseColor("#FFFFFF"));
-                                    getUserProfileImage(holder.workPersonImage);
+                                    getUserProfileImage(holder.workPersonImage, dailyWork.getDone_user_image());
                                     holder.workDone.setTextColor(Color.parseColor("#FFFFFF"));
                                 }
                             });
@@ -593,9 +593,8 @@ public class YesGroup extends Fragment {
     }
 
 
-    private void getUserProfileImage(ImageView userProfile) {
-        Log.d("url", userData.getUserImage());
-        service.getProfileImage(userData.getUserImage()).enqueue(new Callback<ResponseBody>() {
+    private void getUserProfileImage(ImageView userProfile, String img) {
+        service.getProfileImage(img).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 String TAG = "MainActivity";
