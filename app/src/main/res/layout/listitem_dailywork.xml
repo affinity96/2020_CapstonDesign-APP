@@ -28,8 +28,8 @@
                 android:layout_height="40dp"
                 android:layout_gravity="center"
                 android:layout_margin="5dp"
-                android:gravity="center"
-                android:src="@drawable/ic_account_circle_24px_filled" />
+                android:background="@drawable/ic_account_circle_24px_filled"
+                android:gravity="center" />
 
         </LinearLayout>
 
@@ -62,8 +62,6 @@
 
                 <TextView
                     android:id="@+id/textView_workName"
-                    android:layout_gravity="center"
-                    android:gravity="center|bottom"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
