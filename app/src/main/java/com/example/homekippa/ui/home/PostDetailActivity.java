@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.Group;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -31,7 +32,7 @@ import com.example.homekippa.data.LikeResponse;
 import com.example.homekippa.data.UserData;
 import com.example.homekippa.network.RetrofitClient;
 import com.example.homekippa.network.ServiceApi;
-import com.example.homekippa.ui.group.GroupPost;
+import com.example.homekippa.ui.group.GroupViewModel;
 import com.example.homekippa.ui.group.ListCommentAdapter;
 import com.example.homekippa.ui.group.ListPostImageAdapter;
 import com.example.homekippa.ui.group.SingleItemComment;
@@ -41,7 +42,6 @@ import com.example.homekippa.ui.group.SingleItemPostImage;
 import java.io.InputStream;
 import java.util.ArrayList;
 
-import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -51,13 +51,14 @@ public class PostDetailActivity extends AppCompatActivity {
 
     private static final String TAG = "postDetail";
 
-    private PostViewModel viewModel;
-
+    private PostViewModel postViewModel;
+    private GroupViewModel groupViewModel;
     private GroupData group;
     private UserData user;
     private Intent intent;
     private int postPosition;
     private boolean isliked;
+    private boolean isgroup;
 
 
     private SingleItemPost post;
@@ -117,10 +118,9 @@ public class PostDetailActivity extends AppCompatActivity {
                             setPostComment(recyclerView_postComments);
 
 //                            Log.d("comment", viewModel.getCounter().getValue().toString());
-                            PostViewModel.increaseComment(postPosition);
+                            if (isgroup) GroupViewModel.increaseComment(postPosition);
+                            else PostViewModel.increaseComment(postPosition);
                             setPostDetail();
-
-
                         }
                     }
 
@@ -136,15 +136,21 @@ public class PostDetailActivity extends AppCompatActivity {
     }
 
     private void setPostDetail() {
+        postViewModel = new ViewModelProvider((ViewModelStoreOwner) this).get(PostViewModel.class);
+        groupViewModel = new ViewModelProvider((ViewModelStoreOwner) this).get(GroupViewModel.class);
 
         intent = getIntent();
-        post = (SingleItemPost) intent.getExtras().get("post");
+
         group = (GroupData) intent.getExtras().get("group");
         user = (UserData) intent.getExtras().get("user");
         postPosition = (int) intent.getExtras().get("pos");
+        isgroup = (Boolean) intent.getExtras().get("isgroup");
 
-
-        viewModel = new ViewModelProvider((ViewModelStoreOwner) this).get(PostViewModel.class);
+        if (isgroup)
+            post = (SingleItemPost) groupViewModel.getPostList().getValue().get(postPosition);
+        else post = (SingleItemPost) postViewModel.getPostList().getValue().get(postPosition);
+        if (isgroup) isliked = groupViewModel.getLikeCheck().getValue().get(postPosition);
+        else isliked = postViewModel.getLikeCheck().getValue().get(postPosition);
 
         postGroupProfile = (ImageView) findViewById(R.id.imageView_DetailPostGroupProfile);
         postGroupName = (TextView) findViewById(R.id.textView__DetailPostGroupName);
@@ -156,18 +162,26 @@ public class PostDetailActivity extends AppCompatActivity {
         recyclerView_postImages = (RecyclerView) findViewById(R.id.listview_DetailPostImages);
         recyclerView_postComments = (RecyclerView) findViewById(R.id.listview_PostComments);
         postLikedImage = (Button) findViewById(R.id.imageView_DetailPostLiked);
-        isliked = viewModel.getLikeCheck().getValue().get(postPosition);
+
+
 
 //        postGroupProfile.setImageResource(post.getGroupPostProfile());
-
-
+        Log.d("post _detail", postViewModel.getPostList().getValue().get(postPosition).getGroupPostImage().toString());
         post_ImageList = post.getGroupPostImage();
+
         postGroupName.setText(group.getName());
         postGroupLocation.setText(group.getAddress());
         postTitle.setText(post.getTitle());
         postContent.setText(post.getContent());
-        postLikeNum.setText(String.valueOf(viewModel.getPostList().getValue().get(postPosition).getLikeNum()));
-        postCommentNum.setText(String.valueOf(viewModel.getPostList().getValue().get(postPosition).getCommentNum()));
+
+        if (isgroup) {
+            postLikeNum.setText(String.valueOf(groupViewModel.getPostList().getValue().get(postPosition).getLikeNum()));
+            postCommentNum.setText(String.valueOf(groupViewModel.getPostList().getValue().get(postPosition).getCommentNum()));
+        } else {
+            postLikeNum.setText(String.valueOf(postViewModel.getPostList().getValue().get(postPosition).getLikeNum()));
+            postCommentNum.setText(String.valueOf(postViewModel.getPostList().getValue().get(postPosition).getCommentNum()));
+        }
+
         postLikedImage.setActivated(isliked);
         getGroupProfileImage(group.getImage(), postGroupProfile);
 
@@ -183,14 +197,24 @@ public class PostDetailActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<LikeResponse> call, Response<LikeResponse> response) {
                         if (response.code() == 200) {
-
-                            if (!v.isActivated()) {
-                                Log.d("like", "success");
-                                PostViewModel.setLiveLikeNum(postPosition, 1);
-                                PostViewModel.setLiveLikeCheck(postPosition, true);
+                            if (isgroup) {
+                                if (!v.isActivated()) {
+                                    Log.d("like", "Increase");
+                                    GroupViewModel.setLiveLikeNum(postPosition, 1);
+                                    GroupViewModel.setLiveLikeCheck(postPosition, true);
+                                } else {
+                                    GroupViewModel.setLiveLikeNum(postPosition, -1);
+                                    GroupViewModel.setLiveLikeCheck(postPosition, false);
+                                }
                             } else {
-                                PostViewModel.setLiveLikeNum(postPosition, -1);
-                                PostViewModel.setLiveLikeCheck(postPosition, false);
+                                if (!v.isActivated()) {
+                                    Log.d("like", "Increase");
+                                    PostViewModel.setLiveLikeNum(postPosition, 1);
+                                    PostViewModel.setLiveLikeCheck(postPosition, true);
+                                } else {
+                                    PostViewModel.setLiveLikeNum(postPosition, -1);
+                                    PostViewModel.setLiveLikeCheck(postPosition, false);
+                                }
                             }
                             setPostDetail();
 //                            v.setActivated(!v.isActivated());
@@ -259,12 +283,10 @@ public class PostDetailActivity extends AppCompatActivity {
                     ArrayList<SingleItemComment> comments = new ArrayList<>();
 
 
-
-
                     //TODO: Change the image of GROUP
                     for (int i = 0; i < comment_List.size(); i++) {
                         Log.d("comment", comment_List.get(i).getDate());
-                        SingleItemComment comment = new SingleItemComment(group_List.get(i).getImage() , group_List.get(i).getName(), user_List.get(i).getUserName(), group_List.get(i).getAddress(), comment_List.get(i).getContent());
+                        SingleItemComment comment = new SingleItemComment(group_List.get(i).getImage(), group_List.get(i).getName(), user_List.get(i).getUserName(), group_List.get(i).getAddress(), comment_List.get(i).getContent());
                         comments.add(comment);
                     }
 
@@ -275,7 +297,6 @@ public class PostDetailActivity extends AppCompatActivity {
                     pLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
                     listView.setLayoutManager(pLayoutManager);
                     listView.setItemAnimator(new DefaultItemAnimator());
-
                 }
             }
 

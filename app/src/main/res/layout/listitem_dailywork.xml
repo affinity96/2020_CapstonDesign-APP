@@ -5,32 +5,31 @@
     android:layout_height="wrap_content"
     android:background="@drawable/border_gray"
     android:gravity="center"
-    android:orientation="vertical"
-   >
+    android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/work_Check"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
+        android:layout_gravity="center"
 
-        android:layout_gravity="center">
+        android:gravity="center">
 
         <LinearLayout
             android:id="@+id/linearLayout_image"
-            android:layout_margin="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="5dp"
             android:gravity="center">
 
-            <de.hdodenhof.circleimageview.CircleImageView
+            <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/personImage"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_gravity="center"
                 android:layout_margin="5dp"
-                android:gravity="center"
-                android:src="@drawable/ic_account_circle_24px_filled" />
+                android:background="@drawable/ic_account_circle_24px_filled"
+                android:gravity="center" />
 
         </LinearLayout>
 
@@ -50,39 +49,40 @@
 
                 android:layout_marginLeft="20dp"
                 android:orientation="vertical">
+
                 <TextView
+                    android:id="@+id/textView_workName_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="top"
-                    android:textSize="13dp"
-                    android:textColor="@color/colorPrimaryDark"
+                    android:text="일과"
 
-                    android:id="@+id/textView_workName_title"
-                    android:text="일과" />
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="13dp" />
 
                 <TextView
                     android:id="@+id/textView_workName"
-                    android:layout_gravity="center"
-                    android:gravity="center|bottom"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center|bottom"
+                    android:text="밥"
+
                     android:textColor="@color/colorPrimaryDark"
 
-                    android:textSize="11dp"
-
-                    android:text="밥" />
+                    android:textSize="11dp" />
             </LinearLayout>
 
 
             <LinearLayout
+                android:id="@+id/textView_workTime_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginLeft="30dp"
 
+                android:layout_marginLeft="30dp"
                 android:layout_toRightOf="@+id/textView_workName"
                 android:gravity="center"
-                android:id="@+id/textView_workTime_title"
 
                 android:orientation="vertical">
 
@@ -90,19 +90,19 @@
 
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorPrimaryDark"
+                    android:text="예정시각"
 
-                    android:textSize="13dp"
-                    android:text="예정시각" />
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="13dp" />
 
                 <TextView
                     android:id="@+id/textView_workTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="11dp"
+                    android:text="PM: 01:49"
                     android:textColor="@color/colorPrimaryDark"
 
-                    android:text="PM: 01:49" />
+                    android:textSize="11dp" />
 
 
             </LinearLayout>
@@ -118,27 +118,27 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/textView_workAlarm_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+
+                    android:text="알람"
                     android:textColor="@color/colorPrimaryDark"
 
-                    android:textSize="13dp"
-                    android:id="@+id/textView_workAlarm_title"
-
-                    android:text="알람" />
+                    android:textSize="13dp" />
 
                 <TextView
-                    android:textSize="11dp"
                     android:id="@+id/textView_workAlarm"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="PM: 01:49"
                     android:textColor="@color/colorPrimaryDark"
 
-                    android:text="PM: 01:49" />
-
+                    android:textSize="11dp" />
 
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -149,24 +149,23 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/textView_workDone_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="13dp"
-                    android:id="@+id/textView_workDone_title"
+                    android:text="완료시각"
                     android:textColor="@color/colorPrimaryDark"
 
 
-                    android:text="완료시각" />
+                    android:textSize="13dp" />
 
                 <TextView
-                    android:textSize="11dp"
                     android:id="@+id/textView_workDone"
-                    android:textColor="@color/colorPrimaryDark"
-
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text=" " />
 
+                    android:text=" "
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="11dp" />
 
 
             </LinearLayout>

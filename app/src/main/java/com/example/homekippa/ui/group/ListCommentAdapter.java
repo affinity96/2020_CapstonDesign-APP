@@ -90,15 +90,17 @@ public class ListCommentAdapter extends RecyclerView.Adapter<ListCommentAdapter.
 
         long reqDateTime = oldDate.getTime();
 
-        Date curDate = new Date();
-        curDate = dateFormat.parse(dateFormat.format(curDate));
-        long curDateTime = curDate.getTime();
-
-        long minute = (curDateTime - reqDateTime) / 60000;
-        Log.d("date", String.valueOf(minute));
+//        Date curDate = new Date();
+//        curDate = dateFormat.parse(dateFormat.format(curDate));
+//        long curDateTime = curDate.getTime();
+//
+//        long minute = (curDateTime - reqDateTime) / 60000;
+//        Log.d("date", String.valueOf(minute));
 
 
         String newdate = new SimpleDateFormat("yyyy-MM-dd").format(oldDate);
+                Log.d("date", String.valueOf(newdate));
+
 
         holder.commentDate.setText(newdate);
     }

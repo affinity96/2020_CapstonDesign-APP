@@ -115,6 +115,7 @@ public class HomePost extends Fragment {
                     postViewModel = new ViewModelProvider(requireActivity()).get(PostViewModel.class);
 
 //                    setImageData();
+
                     ArrayList<Boolean> checkLikeList = setLikeData(likeList);
                     postViewModel.getPostList().setValue(postList);
                     postViewModel.getLikeCheck().setValue(checkLikeList);
@@ -135,7 +136,7 @@ public class HomePost extends Fragment {
 
     private void setPostAdapter(RecyclerView listView, ArrayList<Boolean> checkLikeList) {
         //Setting Sample Image Data
-        postAdapter = new ListPostAdapter(getActivity(), postList, groupList, checkLikeList, false);
+        postAdapter = new ListPostAdapter(getActivity(), (ArrayList<SingleItemPost>) postViewModel.getPostList().getValue(), groupList, checkLikeList, false);
         listView.setAdapter(postAdapter);
 
         LinearLayoutManager pLayoutManager = new LinearLayoutManager(getActivity());
@@ -144,20 +145,17 @@ public class HomePost extends Fragment {
         listView.setItemAnimator(new DefaultItemAnimator());
     }
 
-//    private void setImageData() {
-//
-//        //TODO: Change the sample Image Data!!!!!!
-//        //Setting Sample Image Data
-//        ArrayList<SingleItemPostImage> post_ImageList = new ArrayList<>();
-//        SingleItemPostImage postImage = new SingleItemPostImage(R.drawable.dog_tan);
-//        post_ImageList.add(postImage);
-//        postImage = new SingleItemPostImage(R.drawable.dog_woong);
-//        post_ImageList.add(postImage);
-//
-//        for (SingleItemPost sit : postList) {
-//            sit.setGroupPostImage(post_ImageList);
-//        }
-//    }
+    private void setImageData() {
+
+        //TODO: Change the sample Image Data!!!!!!
+        //Setting Sample Image Data
+        for (SingleItemPost p : postList) {
+            ArrayList<SingleItemPostImage> post_ImageList = new ArrayList<>();
+            SingleItemPostImage postImage = new SingleItemPostImage(p.getImage());
+            post_ImageList.add(postImage);
+            p.setGroupPostImage(post_ImageList);
+        }
+    }
 
     private ArrayList<Boolean> setLikeData(List<List<LikeData>> likeList) {
 
