@@ -115,7 +115,6 @@ public class HomePost extends Fragment {
                     postViewModel = new ViewModelProvider(requireActivity()).get(PostViewModel.class);
 
 //                    setImageData();
-
                     ArrayList<Boolean> checkLikeList = setLikeData(likeList);
                     postViewModel.getPostList().setValue(postList);
                     postViewModel.getLikeCheck().setValue(checkLikeList);

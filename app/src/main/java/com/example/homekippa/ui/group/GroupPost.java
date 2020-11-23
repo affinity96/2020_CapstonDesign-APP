@@ -47,6 +47,7 @@ public class GroupPost extends Fragment {
     private ServiceApi service;
     private UserData userData;
     private GroupData groupData;
+    private boolean myGroup;
 
     private ViewGroup root;
     private String mParam1;
@@ -92,6 +93,10 @@ public class GroupPost extends Fragment {
         setGroupView();
 //        setPostListView(listView_posts);
 
+        if(!myGroup){
+            button_Add_Post.setVisibility(View.INVISIBLE);
+        }
+
         button_Add_Post = root.findViewById(R.id.button_Add_Post);
         button_Add_Post.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,12 +114,13 @@ public class GroupPost extends Fragment {
 
         service = RetrofitClient.getClient().create(ServiceApi.class);
         userData = ((MainActivity) getActivity()).getUserData();
-        groupData = ((MainActivity) getActivity()).getGroupData();
+        groupData = (GroupData) getArguments().get("groupData");
+        myGroup = (boolean) getArguments().get("myGroup");
 
-        if (getArguments() != null) {
+/*        if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        }*/
 
 
     }
