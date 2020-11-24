@@ -52,8 +52,6 @@ public class HomePost extends Fragment {
     private ListPostAdapter postAdapter;
     private PostViewModel postViewModel;
 
-//    private PostResponse wholePosts;
-
     //TODO: get parameters deciding the fragment type: eg) post of followers or post of groups nearby
     public HomePost(String tab_) {
         this.tab_ = tab_;
@@ -96,7 +94,6 @@ public class HomePost extends Fragment {
         if (!isGroupCreated()) {
             setPostListView(listView_posts);
         }
-
         return root;
     }
 
@@ -108,19 +105,19 @@ public class HomePost extends Fragment {
                 if (response.isSuccessful()) {
                     PostResponse wholePosts = response.body();
 
+                    postViewModel = new ViewModelProvider(requireActivity()).get(PostViewModel.class);
+
                     postList = wholePosts.getPostData();
                     groupList = wholePosts.getGroupData();
                     likeList = wholePosts.getLikeData();
 
-                    postViewModel = new ViewModelProvider(requireActivity()).get(PostViewModel.class);
-
-//                    setImageData();
-
+                    setImageData();
                     ArrayList<Boolean> checkLikeList = setLikeData(likeList);
                     postViewModel.getPostList().setValue(postList);
                     postViewModel.getLikeCheck().setValue(checkLikeList);
 
                     setPostAdapter(listView, checkLikeList);
+
                 }
             }
 
@@ -143,12 +140,11 @@ public class HomePost extends Fragment {
         pLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         listView.setLayoutManager(pLayoutManager);
         listView.setItemAnimator(new DefaultItemAnimator());
+
+
     }
 
     private void setImageData() {
-
-        //TODO: Change the sample Image Data!!!!!!
-        //Setting Sample Image Data
         for (SingleItemPost p : postList) {
             ArrayList<SingleItemPostImage> post_ImageList = new ArrayList<>();
             SingleItemPostImage postImage = new SingleItemPostImage(p.getImage());

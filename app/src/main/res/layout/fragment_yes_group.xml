@@ -36,23 +36,36 @@
                     android:layout_width="130dp"
                     android:layout_height="20dp"
                     android:layout_gravity="bottom|right"
-                    android:layout_marginBottom="10dp"
                     android:layout_marginRight="10dp"
+                    android:layout_marginBottom="10dp"
                     android:background="@drawable/round_button2"
                     android:text="그룹에 들어가기"
                     android:textSize="11dp"
                     android:visibility="invisible" />
 
                 <Button
+                    android:id="@+id/button_follow_group"
+                    android:layout_width="130dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="bottom|right"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="35dp"
+                    android:background="@drawable/follow_selector"
+                    android:text="팔로우"
+                    android:visibility="invisible"
+                    android:textSize="11dp" />
+
+
+                <Button
                     android:id="@+id/button_Add_User"
                     android:layout_width="60dp"
                     android:layout_height="20dp"
+                    android:layout_gravity="bottom|right"
                     android:layout_marginRight="80dp"
                     android:layout_marginBottom="10dp"
-                    android:layout_gravity="bottom|right"
                     android:background="@drawable/round_button2"
                     android:text="구성원 추가"
-                    android:textSize="11dp"  />
+                    android:textSize="11dp" />
 
                 <Button
                     android:id="@+id/button_changeGroupCover"
@@ -85,6 +98,7 @@
                     android:layout_width="70dp"
                     android:layout_height="70dp" />
 
+
             </FrameLayout>
 
             <TextView
@@ -107,6 +121,7 @@
                 android:lines="2"
                 android:text="우만동 땡이가족에 대해서 설명해주세요!^^ "
                 android:textSize="11dp" />
+
 
             <LinearLayout
                 android:id="@+id/linearlayout_pets"

@@ -47,7 +47,7 @@ public class NotificationsFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         service = RetrofitClient.getClient().create(ServiceApi.class);
-        userData = ((MainActivity)getActivity()).getUserData();
+        userData = ((MainActivity) getActivity()).getUserData();
         Log.d("notification", "create");
     }
 
@@ -66,7 +66,7 @@ public class NotificationsFragment extends Fragment {
             @Override
             public void onResponse(Call<List<NotiData>> call, Response<List<NotiData>> response) {
                 List<NotiData> notis = response.body();
-                if(!notis.isEmpty()) {
+                if (!notis.isEmpty()) {
                     notiList.addAll(notis);
                 }
 
@@ -75,19 +75,19 @@ public class NotificationsFragment extends Fragment {
                     @Override
                     public void onItemClick(View v, int pos) {
                         NotiData notidata = notiList.get(pos);
-                        if (notidata.getAlarm_code().equals("GROUP_INVITE")){
+                        if (notidata.getAlarm_code().equals("GROUP_INVITE")) {
                             Log.d("notidata group code", notidata.getExtra());
                             service.getGroupData(Integer.parseInt(notidata.getExtra())).enqueue(new Callback<GroupData>() {
                                 @Override
                                 public void onResponse(Call<GroupData> call, Response<GroupData> response) {
                                     GroupData groupData = response.body();
 
-                                    if(groupData != null){
+                                    if (groupData != null) {
                                         GroupFragment groupFragment = new GroupFragment();
                                         Bundle bundle = new Bundle();
                                         bundle.putParcelable("groupData", groupData);
                                         groupFragment.setArguments(bundle);
-                                        ((MainActivity)getActivity()).changeFragment(groupFragment);
+                                        ((MainActivity) getActivity()).changeFragment(groupFragment);
                                     }
                                 }
 
@@ -97,7 +97,8 @@ public class NotificationsFragment extends Fragment {
                                 }
                             });
                         }
-                }});
+                    }
+                });
 
                 LinearLayoutManager dLayoutManager = new LinearLayoutManager(getActivity());
                 dLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -113,7 +114,7 @@ public class NotificationsFragment extends Fragment {
         });
     }
 
-    public void setAlarm_extra(String alarm_extra){
+    public void setAlarm_extra(String alarm_extra) {
         this.alarm_extra = alarm_extra;
     }
 }
