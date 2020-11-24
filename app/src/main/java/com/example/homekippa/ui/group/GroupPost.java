@@ -81,11 +81,11 @@ public class GroupPost extends Fragment {
         return fragment;
     }
 
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//        setPostListView(listView_posts);
-//    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        setPostListView(listView_posts);
+    }
 
     @Override
     public void onStart() {
@@ -110,6 +110,7 @@ public class GroupPost extends Fragment {
 
 
     }
+
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
     }
@@ -126,7 +127,7 @@ public class GroupPost extends Fragment {
         getGroupProfileImage(groupData.getImage(), imageView_PostProfile);
 
         setGroupView();
-        setPostListView(listView_posts);
+//        setPostListView(listView_posts);
 
         button_Add_Post = root.findViewById(R.id.button_Add_Post);
         button_Add_Post.setOnClickListener(new View.OnClickListener() {

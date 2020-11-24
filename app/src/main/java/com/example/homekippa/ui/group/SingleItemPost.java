@@ -113,7 +113,7 @@ public class SingleItemPost implements Parcelable {
     }
 
     public String getDate() {
-        return getDate();
+        return date;
     }
 
     public int getLikeNum() {

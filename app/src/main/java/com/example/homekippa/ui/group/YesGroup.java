@@ -35,6 +35,8 @@ import com.example.homekippa.MainActivity;
 import com.example.homekippa.R;
 import com.example.homekippa.data.CreateGroupResponse;
 import com.example.homekippa.data.DoneReportsResponse;
+import com.example.homekippa.data.FollowData;
+import com.example.homekippa.data.FollowResponse;
 import com.example.homekippa.data.GetGroupImageResponse;
 import com.example.homekippa.data.GroupData;
 import com.example.homekippa.data.GroupInviteData;
@@ -85,6 +87,7 @@ public class YesGroup extends Fragment {
     private Button button_addUser;
     private Button button_join_group;
     private Button button_changeGroupCover;
+    private Button button_follow_group;
 
     private ViewGroup root;
 
@@ -118,23 +121,18 @@ public class YesGroup extends Fragment {
 
         service = RetrofitClient.getClient().create(ServiceApi.class);
         userData = ((MainActivity) getActivity()).getUserData();
-//        Log.d("user", userData.getUserName());
-
         groupData = (GroupData) getArguments().get("groupData");
         myGroup = (boolean) getArguments().get("myGroup");
-//        Log.d("group", groupData.getGroupName());
 
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
         }
-
-
     }
 
     @Override
     public void onResume() {
         super.onResume();
-//        setPetListView(listView_pets);
+        setPetListView(listView_pets);
     }
 
     @Override
@@ -148,13 +146,70 @@ public class YesGroup extends Fragment {
         button_addUser = root.findViewById(R.id.button_Add_User);
         button_join_group = root.findViewById(R.id.button_join_group);
         button_changeGroupCover = root.findViewById(R.id.button_changeGroupCover);
+        button_follow_group = root.findViewById(R.id.button_follow_group);
+        listView_pets = root.findViewById(R.id.listview_pets);
+        listView_dailyWorks = root.findViewById(R.id.listview_dailywork);
+        imageView_groupProfile = root.findViewById(R.id.ImageView_groupProfile);
+
+
+        tv_groupName.setText(groupData.getName());
+        tv_groupIntro.setText(groupData.getIntroduction());
+        getGroupProfileImage(groupData.getImage(), imageView_groupProfile);
+        setPetListView(listView_pets);
+//        setDailyWorkListView(listView_dailyWorks);
+
+        Glide.with(YesGroup.this).load(R.drawable.dog_woong).circleCrop().into(imageView_groupProfile);
         if (!myGroup) {
             button_join_group.setVisibility(View.VISIBLE);
+            button_follow_group.setVisibility(View.VISIBLE);
             button_addUser.setVisibility(View.INVISIBLE);
             button_addPet.setVisibility(View.INVISIBLE);
             button_Add_DW.setVisibility(View.INVISIBLE);
             button_changeGroupCover.setVisibility(View.INVISIBLE);
+
+            button_follow_group.setActivated(true);
         }
+        button_follow_group.setOnClickListener(new View.OnClickListener() {
+            GroupData myGroup = ((MainActivity) getActivity()).getGroupData();
+
+            @Override
+            public void onClick(View v) {
+                if (button_follow_group.isActivated()) {
+                    service.followGroup(new FollowData(myGroup.getId(), groupData.getId())).enqueue(new Callback<FollowResponse>() {
+                        @Override
+                        public void onResponse(Call<FollowResponse> call, Response<FollowResponse> response) {
+                            if (response.isSuccessful()) {
+                                Log.d("follow", "success");
+                                button_follow_group.setActivated(false);
+                                button_follow_group.setText("팔로잉");
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<FollowResponse> call, Throwable t) {
+                            Log.d("follow", "fail");
+                        }
+                    });
+                } else {
+                    service.unfollowGroup(new FollowData(myGroup.getId(), groupData.getId())).enqueue(new Callback<FollowResponse>() {
+                        @Override
+                        public void onResponse(Call<FollowResponse> call, Response<FollowResponse> response) {
+                            if (response.isSuccessful()) {
+                                Log.d("follow cancel", "success");
+                                button_follow_group.setActivated(true);
+                                button_follow_group.setText("팔로우");
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<FollowResponse> call, Throwable t) {
+                            Log.d("follow", "fail");
+                        }
+                    });
+                }
+
+            }
+        });
 
         button_join_group.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -223,18 +278,6 @@ public class YesGroup extends Fragment {
             }
         });
 
-        listView_pets = root.findViewById(R.id.listview_pets);
-        listView_dailyWorks = root.findViewById(R.id.listview_dailywork);
-        imageView_groupProfile = root.findViewById(R.id.ImageView_groupProfile);
-
-        tv_groupName.setText(groupData.getName());
-        tv_groupIntro.setText(groupData.getIntroduction());
-
-        getGroupProfileImage(groupData.getImage(), imageView_groupProfile);
-        setPetListView(listView_pets);
-        //setDailyWorkListView(listView_dailyWorks);
-
-        Glide.with(YesGroup.this).load(R.drawable.dog_woong).circleCrop().into(imageView_groupProfile);
 
     }
 

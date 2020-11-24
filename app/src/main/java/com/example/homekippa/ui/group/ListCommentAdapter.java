@@ -99,8 +99,6 @@ public class ListCommentAdapter extends RecyclerView.Adapter<ListCommentAdapter.
 
 
         String newdate = new SimpleDateFormat("yyyy-MM-dd").format(oldDate);
-                Log.d("date", String.valueOf(newdate));
-
 
         holder.commentDate.setText(newdate);
     }

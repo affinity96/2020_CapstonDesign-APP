@@ -14,6 +14,8 @@ import com.example.homekippa.data.CreateDailyWorkResponse;
 import com.example.homekippa.data.CreateGroupData;
 import com.example.homekippa.data.CreateGroupResponse;
 import com.example.homekippa.data.DoneReportsResponse;
+import com.example.homekippa.data.FollowData;
+import com.example.homekippa.data.FollowResponse;
 import com.example.homekippa.data.GetGroupImageResponse;
 import com.example.homekippa.data.GroupData;
 import com.example.homekippa.data.GroupInviteData;
@@ -144,4 +146,15 @@ public interface ServiceApi {
 
     @POST("/group/invite/accept")
     Call<UserData> acceptInvite(@Body GroupInviteData data);
+
+    @POST("/group/follow")
+    Call<FollowResponse> followGroup(@Body FollowData data);
+
+    @POST("/group/unfollow")
+    Call<FollowResponse> unfollowGroup(@Body FollowData data);
+
+    @POST("/group/checkFollow")
+    Call<FollowResponse> checkFollow(@Body FollowData data);
+
+
 }
