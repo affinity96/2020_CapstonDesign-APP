@@ -81,11 +81,11 @@ public class GroupPost extends Fragment {
         return fragment;
     }
 
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//        setPostListView(listView_posts);
-//    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        setPostListView(listView_posts);
+    }
 
     @Override
     public void onStart() {
