@@ -14,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.Group;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -117,7 +116,6 @@ public class PostDetailActivity extends AppCompatActivity {
 
                             setPostComment(recyclerView_postComments);
 
-//                            Log.d("comment", viewModel.getCounter().getValue().toString());
                             if (isgroup) GroupViewModel.increaseComment(postPosition);
                             else PostViewModel.increaseComment(postPosition);
                             setPostDetail();
@@ -162,12 +160,8 @@ public class PostDetailActivity extends AppCompatActivity {
         recyclerView_postImages = (RecyclerView) findViewById(R.id.listview_DetailPostImages);
         recyclerView_postComments = (RecyclerView) findViewById(R.id.listview_PostComments);
         postLikedImage = (Button) findViewById(R.id.imageView_DetailPostLiked);
-
-
-
-//        postGroupProfile.setImageResource(post.getGroupPostProfile());
-        Log.d("post _detail", postViewModel.getPostList().getValue().get(postPosition).getGroupPostImage().toString());
         post_ImageList = post.getGroupPostImage();
+
 
         postGroupName.setText(group.getName());
         postGroupLocation.setText(group.getAddress());
@@ -217,7 +211,6 @@ public class PostDetailActivity extends AppCompatActivity {
                                 }
                             }
                             setPostDetail();
-//                            v.setActivated(!v.isActivated());
                         }
                     }
 
