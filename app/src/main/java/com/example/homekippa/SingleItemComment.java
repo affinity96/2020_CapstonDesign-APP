@@ -1,4 +1,4 @@
-package com.example.homekippa.ui.group;
+package com.example.homekippa;
 
 public class SingleItemComment {
 

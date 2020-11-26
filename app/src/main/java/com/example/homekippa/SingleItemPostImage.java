@@ -1,4 +1,4 @@
-package com.example.homekippa.ui.group;
+package com.example.homekippa;
 
 import android.os.Parcel;
 import android.os.Parcelable;
