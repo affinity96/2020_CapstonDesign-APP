@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -33,14 +32,11 @@ import com.example.homekippa.AddPetActivity;
 import com.example.homekippa.CreateDailyWorkActivity;
 import com.example.homekippa.MainActivity;
 import com.example.homekippa.R;
-import com.example.homekippa.data.CreateGroupResponse;
 import com.example.homekippa.data.DoneReportsResponse;
 import com.example.homekippa.data.FollowData;
 import com.example.homekippa.data.FollowResponse;
-import com.example.homekippa.data.GetGroupImageResponse;
 import com.example.homekippa.data.GroupData;
 import com.example.homekippa.data.GroupInviteData;
-import com.example.homekippa.data.UidRespense;
 import com.example.homekippa.data.UserData;
 import com.example.homekippa.function.Loading;
 import com.example.homekippa.network.RetrofitClient;
@@ -49,7 +45,6 @@ import com.example.homekippa.network.ServiceApi;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -76,6 +71,7 @@ public class YesGroup extends Fragment {
     private ArrayList<SingleItemPet> petList = new ArrayList<>();
 
     private PetViewModel petViewModel;
+    private FollowViewModel followViewModel;
 
     private TextView tv_groupName;
     private TextView tv_groupIntro;
@@ -88,6 +84,12 @@ public class YesGroup extends Fragment {
     private Button button_join_group;
     private Button button_changeGroupCover;
     private Button button_follow_group;
+    private TextView textView_followingNum;
+    private TextView textView_followerNum;
+
+    private LinearLayout ll_follower;
+    private LinearLayout ll_following;
+
 
     private ViewGroup root;
 
@@ -120,6 +122,8 @@ public class YesGroup extends Fragment {
         super.onCreate(savedInstanceState);
 
         service = RetrofitClient.getClient().create(ServiceApi.class);
+        followViewModel = new ViewModelProvider(requireActivity()).get(FollowViewModel.class);
+
         userData = ((MainActivity) getActivity()).getUserData();
         groupData = (GroupData) getArguments().get("groupData");
         myGroup = (boolean) getArguments().get("myGroup");
@@ -150,12 +154,18 @@ public class YesGroup extends Fragment {
         listView_pets = root.findViewById(R.id.listview_pets);
         listView_dailyWorks = root.findViewById(R.id.listview_dailywork);
         imageView_groupProfile = root.findViewById(R.id.ImageView_groupProfile);
+        textView_followerNum = root.findViewById(R.id.textView__followerNum);
+        textView_followingNum = root.findViewById(R.id.textView__followingNum);
 
+        ll_follower = root.findViewById(R.id.linearLayout_follower);
+        ll_following = root.findViewById(R.id.linearLayout_following);
 
         tv_groupName.setText(groupData.getName());
         tv_groupIntro.setText(groupData.getIntroduction());
         getGroupProfileImage(groupData.getImage(), imageView_groupProfile);
         setPetListView(listView_pets);
+
+
 //        setDailyWorkListView(listView_dailyWorks);
 
         Glide.with(YesGroup.this).load(R.drawable.dog_woong).circleCrop().into(imageView_groupProfile);
@@ -166,20 +176,34 @@ public class YesGroup extends Fragment {
             button_addPet.setVisibility(View.INVISIBLE);
             button_Add_DW.setVisibility(View.INVISIBLE);
             button_changeGroupCover.setVisibility(View.INVISIBLE);
+            boolean isfollowed = followViewModel.checkFollow(groupData.getId());
 
-            button_follow_group.setActivated(true);
+            if (isfollowed) {
+                button_follow_group.setActivated(false);
+                button_follow_group.setText("팔로잉");
+            } else {
+                button_follow_group.setActivated(true);
+                button_follow_group.setText("팔로우");
+            }
+        } else {
+            Log.d("follow", "why not working..?");
+            ll_follower.setVisibility(View.VISIBLE);
+            ll_following.setVisibility(View.VISIBLE);
+            textView_followerNum.setText(String.valueOf(followViewModel.getFollowerNum()));
+            textView_followingNum.setText(String.valueOf(followViewModel.getFollowingNum()));
         }
         button_follow_group.setOnClickListener(new View.OnClickListener() {
-            GroupData myGroup = ((MainActivity) getActivity()).getGroupData();
+            GroupData myG = ((MainActivity) getActivity()).getGroupData();
 
             @Override
             public void onClick(View v) {
                 if (button_follow_group.isActivated()) {
-                    service.followGroup(new FollowData(myGroup.getId(), groupData.getId())).enqueue(new Callback<FollowResponse>() {
+                    service.followGroup(new FollowData(myG.getId(), groupData.getId())).enqueue(new Callback<FollowResponse>() {
                         @Override
                         public void onResponse(Call<FollowResponse> call, Response<FollowResponse> response) {
                             if (response.isSuccessful()) {
                                 Log.d("follow", "success");
+                                followViewModel.addFollowing(groupData.getId());
                                 button_follow_group.setActivated(false);
                                 button_follow_group.setText("팔로잉");
                             }
@@ -191,11 +215,12 @@ public class YesGroup extends Fragment {
                         }
                     });
                 } else {
-                    service.unfollowGroup(new FollowData(myGroup.getId(), groupData.getId())).enqueue(new Callback<FollowResponse>() {
+                    service.unfollowGroup(new FollowData(myG.getId(), groupData.getId())).enqueue(new Callback<FollowResponse>() {
                         @Override
                         public void onResponse(Call<FollowResponse> call, Response<FollowResponse> response) {
                             if (response.isSuccessful()) {
                                 Log.d("follow cancel", "success");
+                                followViewModel.cancelFollowing(groupData.getId());
                                 button_follow_group.setActivated(true);
                                 button_follow_group.setText("팔로우");
                             }
