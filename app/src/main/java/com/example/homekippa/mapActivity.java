@@ -14,13 +14,19 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.homekippa.data.GroupData;
 import com.example.homekippa.ui.group.CreateGroupActivity;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import net.daum.mf.map.api.CameraUpdateFactory;
 import net.daum.mf.map.api.MapPOIItem;
 import net.daum.mf.map.api.MapPoint;
 import net.daum.mf.map.api.MapPointBounds;
 import net.daum.mf.map.api.MapPolyline;
+import net.daum.mf.map.api.MapReverseGeoCoder;
 import net.daum.mf.map.api.MapView;
 
 import java.io.Serializable;
@@ -50,8 +56,9 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
     private long startTime;
     private long endTime;
     private long totalTime;
-
-
+    private GroupData groupData;
+    private DatabaseReference mDatabase;
+    private MapReverseGeoCoder reverseGeoCoder;
 
 
 
@@ -64,6 +71,14 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
 //        button_remove = findViewById(R.id.button_remove);
         textView_walkDistance = findViewById(R.id.textView_walkDistance);
         textView_walkTime = findViewById(R.id.textView_walkTime);
+        groupData = (GroupData) getIntent().getExtras().get("groupData");
+
+
+        //firebase 백엔드 사용해서 위도 경도 저장
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        mDatabase = database.getReference("walk");
+        mDatabase.child("walking_group").child(String.valueOf(groupData.getId()));
+
 
         // mapview에 kakaoMap 연동해서 올리기
         mapView =new MapView(this);
@@ -98,12 +113,10 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
 
         //거리와 시간을 팝업 창처럼 띄우기?? 이렇게 할까?
 
-        //firebase 백엔드 사용해서 위도 경도 json형식으로 넘겨줌 이떄,
+
 
         // mark => ?
 
-
-        //1.
 
         //재시작 버튼
 //        button_remove.setOnClickListener(new View.OnClickListener() {
@@ -219,11 +232,15 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
     public void onCurrentLocationUpdate(MapView mapView, MapPoint currentLocation, float v) {
 //        mapPointGeo = currentLocation.getMapPointGeoCoord();
 //
-//        if(cycle >1){
-//            cycle =0;
-//        }else{
-//            cycle++;
-//        }
+        if(cycle >1){
+            cycle =0;
+            mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("latiatiude").setValue(mapPointGeo.latitude);
+            mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("longitude").setValue(mapPointGeo.longitude);
+        }else{
+            cycle++;
+        }
+        mapPointGeo = currentLocation.getMapPointGeoCoord();
+
 
         Log.d("cycleCount", String.valueOf(cycle));
 
@@ -264,6 +281,11 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
         int padding = 100; // px
         //mapView에 찍어준다.
         mapView.moveCamera(CameraUpdateFactory.newMapPointBounds(mapPointBounds, padding));
+
+//        mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("latiatiude").setValue(mapPointGeo.latitude);
+//        mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("longitude").setValue(mapPointGeo.longitude);
+
+
 
         //위도 경도 찍
 //        Log.d("latitude", String.valueOf(mapPointGeo.latitude));

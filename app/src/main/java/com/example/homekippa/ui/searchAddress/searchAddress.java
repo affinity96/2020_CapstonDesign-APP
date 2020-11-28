@@ -79,7 +79,7 @@ public class searchAddress extends AppCompatActivity {
 
 
         // webview url load. php 파일 주소
-        daum_webView.loadUrl("http://192.168.1.109:3000/searchAddress.html");
+        daum_webView.loadUrl("http://115.85.183.152:3000/searchAddress.html");
     }
 
 
