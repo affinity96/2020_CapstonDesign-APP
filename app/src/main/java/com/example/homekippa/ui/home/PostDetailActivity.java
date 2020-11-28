@@ -33,10 +33,10 @@ import com.example.homekippa.network.RetrofitClient;
 import com.example.homekippa.network.ServiceApi;
 import com.example.homekippa.ui.group.GroupViewModel;
 import com.example.homekippa.ui.group.ListCommentAdapter;
-import com.example.homekippa.ui.group.ListPostImageAdapter;
-import com.example.homekippa.ui.group.SingleItemComment;
-import com.example.homekippa.ui.group.SingleItemPost;
-import com.example.homekippa.ui.group.SingleItemPostImage;
+import com.example.homekippa.ListPostImageAdapter;
+import com.example.homekippa.SingleItemComment;
+import com.example.homekippa.SingleItemPost;
+import com.example.homekippa.SingleItemPostImage;
 
 import java.io.InputStream;
 import java.util.ArrayList;

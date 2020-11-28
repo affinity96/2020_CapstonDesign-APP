@@ -15,12 +15,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.homekippa.R;
+import com.example.homekippa.SingleItemComment;
 import com.example.homekippa.data.CommentData;
 import com.example.homekippa.data.CommentResponse;
 import com.example.homekippa.network.RetrofitClient;
 import com.example.homekippa.network.ServiceApi;
-
-import org.w3c.dom.Text;
 
 import java.io.InputStream;
 import java.text.ParseException;

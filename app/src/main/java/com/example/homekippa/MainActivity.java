@@ -201,13 +201,13 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-//        if(!navView.getMenu().getItem(0).isChecked()){
+        if(!navView.getMenu().getItem(0).isChecked()){
             navView.getMenu().getItem(0).setChecked(true);
             getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new HomeFragment()).commitAllowingStateLoss();
-//        }
-//        else {
-//            this.finishAffinity();
-//        }
+        }
+        else {
+            this.finishAffinity();
+        }
     }
 
     private void getUserProfileImage(ImageView userProfile) {

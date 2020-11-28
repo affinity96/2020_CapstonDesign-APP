@@ -16,7 +16,7 @@ import com.example.homekippa.data.CreateGroupResponse;
 import com.example.homekippa.data.DoneReportsResponse;
 import com.example.homekippa.data.FollowData;
 import com.example.homekippa.data.FollowResponse;
-import com.example.homekippa.data.GetGroupImageResponse;
+import com.example.homekippa.data.GetFollowData;
 import com.example.homekippa.data.GroupData;
 import com.example.homekippa.data.GroupInviteData;
 import com.example.homekippa.data.GroupPostResponse;
@@ -33,7 +33,6 @@ import com.example.homekippa.data.WeatherLocationData;
 import com.example.homekippa.data.WeatheLocationResponse;
 import com.example.homekippa.ui.group.SingleItemDailyWork;
 import com.example.homekippa.ui.group.SingleItemPet;
-import com.example.homekippa.ui.group.SingleItemPost;
 
 import java.util.HashMap;
 import java.util.List;
@@ -49,9 +48,7 @@ import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.PartMap;
-import retrofit2.http.Path;
 import retrofit2.http.Query;
-import retrofit2.http.Url;
 
 public interface ServiceApi {
 //    @POST("/user/login")
@@ -112,7 +109,7 @@ public interface ServiceApi {
     Call<GroupPostResponse> getGroupPost(@Query("groupId") int groupId);
 
     @GET("/post/home")
-    Call<PostResponse> getHomePost(@Query("tab_") String tab);
+    Call<PostResponse> getHomePost(@Query("groupId") int groupid, @Query("tab_") String tab_);
 
     @POST("/post/setlike")
     Call<LikeResponse> setLike(@Body LikeData data);
@@ -147,14 +144,13 @@ public interface ServiceApi {
     @POST("/group/invite/accept")
     Call<UserData> acceptInvite(@Body GroupInviteData data);
 
-    @POST("/group/follow")
+    @POST("/follow/follow")
     Call<FollowResponse> followGroup(@Body FollowData data);
 
-    @POST("/group/unfollow")
+    @POST("/follow/unfollow")
     Call<FollowResponse> unfollowGroup(@Body FollowData data);
 
-    @POST("/group/checkFollow")
-    Call<FollowResponse> checkFollow(@Body FollowData data);
-
+    @GET("/follow/getFollow")
+    Call<GetFollowData> getFollow(@Query("groupId") int groupId);
 
 }

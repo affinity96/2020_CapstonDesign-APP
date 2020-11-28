@@ -21,9 +21,9 @@ import com.example.homekippa.data.PostResponse;
 import com.example.homekippa.data.UserData;
 import com.example.homekippa.network.RetrofitClient;
 import com.example.homekippa.network.ServiceApi;
-import com.example.homekippa.ui.group.ListPostAdapter;
-import com.example.homekippa.ui.group.SingleItemPost;
-import com.example.homekippa.ui.group.SingleItemPostImage;
+import com.example.homekippa.ListPostAdapter;
+import com.example.homekippa.SingleItemPost;
+import com.example.homekippa.SingleItemPostImage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -98,7 +98,8 @@ public class HomePost extends Fragment {
 
 
     public void setPostListView(RecyclerView listView) {
-        service.getHomePost(tab_).enqueue(new Callback<PostResponse>() {
+
+        service.getHomePost(groupData.getId(), tab_).enqueue(new Callback<PostResponse>() {
             @Override
             public void onResponse(Call<PostResponse> call, Response<PostResponse> response) {
                 if (response.isSuccessful()) {
