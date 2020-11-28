@@ -89,6 +89,7 @@ public class YesGroup extends Fragment {
     private Button button_changeGroupCover;
     private Button button_follow_group;
 
+
     private ViewGroup root;
 
     private int selectedPosition = 0;
@@ -258,6 +259,8 @@ public class YesGroup extends Fragment {
                 startActivity(intent);
             }
         });
+
+
 
         button_addPet.setOnClickListener(new View.OnClickListener() {
             @Override
