@@ -1,9 +1,6 @@
 package com.example.homekippa.data;
 
-import com.example.homekippa.ui.group.SingleItemPost;
 import com.google.gson.annotations.SerializedName;
-
-import java.util.ArrayList;
 
 public class LikeResponse {
     @SerializedName("code")

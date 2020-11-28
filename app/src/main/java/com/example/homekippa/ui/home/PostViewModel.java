@@ -5,21 +5,12 @@ import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.homekippa.R;
-import com.example.homekippa.data.GetLikeData;
-import com.example.homekippa.data.GroupData;
-import com.example.homekippa.data.PostResponse;
 import com.example.homekippa.network.RetrofitClient;
 import com.example.homekippa.network.ServiceApi;
-import com.example.homekippa.ui.group.SingleItemPost;
-import com.example.homekippa.ui.group.SingleItemPostImage;
+import com.example.homekippa.SingleItemPost;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class PostViewModel extends ViewModel {
     private ServiceApi service = RetrofitClient.getClient().create(ServiceApi.class);

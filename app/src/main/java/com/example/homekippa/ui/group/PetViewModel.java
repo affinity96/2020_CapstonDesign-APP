@@ -1,12 +1,7 @@
 package com.example.homekippa.ui.group;
 
-import android.util.Log;
-
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-
-import com.example.homekippa.ui.group.SingleItemPet;
-import com.example.homekippa.ui.group.SingleItemPost;
 
 import java.util.ArrayList;
 import java.util.List;

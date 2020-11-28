@@ -1,4 +1,4 @@
-package com.example.homekippa.ui.group;
+package com.example.homekippa;
 
 
 import android.app.Activity;
@@ -24,10 +24,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.homekippa.MainActivity;
+import com.example.homekippa.ui.group.GroupFragment;
+import com.example.homekippa.ui.group.GroupViewModel;
 import com.example.homekippa.ui.home.PostViewModel;
 import com.example.homekippa.ui.home.PostDetailActivity;
-import com.example.homekippa.R;
 import com.example.homekippa.data.GroupData;
 import com.example.homekippa.data.LikeData;
 import com.example.homekippa.data.LikeResponse;
