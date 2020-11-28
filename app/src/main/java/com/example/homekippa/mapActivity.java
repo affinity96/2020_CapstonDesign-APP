@@ -2,6 +2,8 @@ package com.example.homekippa;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -29,6 +31,7 @@ import net.daum.mf.map.api.MapPolyline;
 import net.daum.mf.map.api.MapReverseGeoCoder;
 import net.daum.mf.map.api.MapView;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -59,7 +62,7 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
     private GroupData groupData;
     private DatabaseReference mDatabase;
     private MapReverseGeoCoder reverseGeoCoder;
-
+    private MapReverseGeoCoder.ReverseGeoCodingResultListener reverseGeoCodingResultListener;
 
 
     @Override
@@ -78,6 +81,8 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         mDatabase = database.getReference("walk");
         mDatabase.child("walking_group").child(String.valueOf(groupData.getId()));
+
+
 
 
         // mapview에 kakaoMap 연동해서 올리기
@@ -230,16 +235,30 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
     int cycle = 0;
     @Override
     public void onCurrentLocationUpdate(MapView mapView, MapPoint currentLocation, float v) {
-//        mapPointGeo = currentLocation.getMapPointGeoCoord();
-//
+        mapPointGeo = currentLocation.getMapPointGeoCoord();
+
         if(cycle >1){
             cycle =0;
             mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("latiatiude").setValue(mapPointGeo.latitude);
             mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("longitude").setValue(mapPointGeo.longitude);
+
+            Geocoder g = new Geocoder(this);
+            List<Address> address = null;
+            try{
+                address =g.getFromLocation(mapPointGeo.latitude, mapPointGeo.longitude,10);
+            }catch (IOException e){
+                e.printStackTrace();
+                Log.d("test","입출력오류");
+            }
+
+
+            Log.d("address","address");
+            Log.d("address",address.get(0).toString());
+            Log.d("address",address.get(0).getThoroughfare());
+            mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("address").setValue(address.get(0).getThoroughfare());
         }else{
             cycle++;
         }
-        mapPointGeo = currentLocation.getMapPointGeoCoord();
 
 
         Log.d("cycleCount", String.valueOf(cycle));
@@ -277,10 +296,10 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
         mapPolyLine.addPoint(MapPoint.mapPointWithGeoCoord(mapPointGeo.latitude,mapPointGeo.longitude));
         mapView.addPolyline(mapPolyLine);
 
-        MapPointBounds mapPointBounds = new MapPointBounds(mapPolyLine.getMapPoints());
+//        MapPointBounds mapPointBounds = new MapPointBounds(mapPolyLine.getMapPoints());
         int padding = 100; // px
         //mapView에 찍어준다.
-        mapView.moveCamera(CameraUpdateFactory.newMapPointBounds(mapPointBounds, padding));
+//        mapView.moveCamera(CameraUpdateFactory.newMapPointBounds(mapPointBounds, padding));
 
 //        mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("latiatiude").setValue(mapPointGeo.latitude);
 //        mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("longitude").setValue(mapPointGeo.longitude);
