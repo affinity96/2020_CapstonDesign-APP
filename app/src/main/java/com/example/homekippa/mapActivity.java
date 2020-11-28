@@ -19,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.homekippa.data.GroupData;
 import com.example.homekippa.ui.group.CreateGroupActivity;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
@@ -81,6 +82,34 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         mDatabase = database.getReference("walk");
         mDatabase.child("walking_group").child(String.valueOf(groupData.getId()));
+
+
+        mDatabase.child("walking_group").child(String.valueOf(15));
+        mDatabase.child("walking_group").child(String.valueOf(15)).child("address").setValue("우만2동");
+        mDatabase.child("walking_group").child(String.valueOf(15)).child("latiatiude").setValue(String.valueOf(37.27897262573242));
+        mDatabase.child("walking_group").child(String.valueOf(15)).child("longitude").setValue(String.valueOf(127.04090118408203));
+
+
+        mDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                for(DataSnapshot GroupData : dataSnapshot.child("walking_group").getChildren()){
+                    Log.d("database_read", String.valueOf(GroupData));
+                }
+                //안에 있는 데이터 확인
+//                String value = dataSnapshot.child("walking_group").child("14").child("address").getValue(String.class);
+//                Log.d("database_read", value);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.d("database_read_error", "Failed to read value.", error.toException());
+            }
+        });
+
 
 
 
@@ -307,8 +336,8 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
 
 
         //위도 경도 찍
-//        Log.d("latitude", String.valueOf(mapPointGeo.latitude));
-//        Log.d("longitude", String.valueOf(mapPointGeo.longitude));
+        Log.d("latitude", String.valueOf(mapPointGeo.latitude));
+        Log.d("longitude", String.valueOf(mapPointGeo.longitude));
 
     }
 
