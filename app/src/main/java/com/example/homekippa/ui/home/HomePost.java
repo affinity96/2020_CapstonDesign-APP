@@ -99,12 +99,13 @@ public class HomePost extends Fragment {
 
 
     public void setPostListView(RecyclerView listView) {
-
-        service.getHomePost(groupData.getId(), tab_).enqueue(new Callback<PostResponse>() {
+        Log.d("tab", tab_);
+        service.getHomePost(groupData.getId(), tab_, groupData.getArea()).enqueue(new Callback<PostResponse>() {
             @Override
             public void onResponse(Call<PostResponse> call, Response<PostResponse> response) {
                 if (response.isSuccessful()) {
                     PostResponse wholePosts = response.body();
+                    Log.d("tab", wholePosts.getGroupData().toString());
 
                     postViewModel = new ViewModelProvider(requireActivity()).get(PostViewModel.class);
 
