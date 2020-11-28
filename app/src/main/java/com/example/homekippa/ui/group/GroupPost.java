@@ -52,6 +52,7 @@ public class GroupPost extends Fragment {
     private ServiceApi service;
     private UserData userData;
     private GroupData groupData;
+    private boolean myGroup;
 
     private ViewGroup root;
     private String mParam1;
@@ -89,7 +90,7 @@ public class GroupPost extends Fragment {
     }
 
     @Override
-    public void onStart() {
+    public void onStart(){
         super.onStart();
 
     }
@@ -130,7 +131,12 @@ public class GroupPost extends Fragment {
         setGroupView();
 //        setPostListView(listView_posts);
 
+
+
         button_Add_Post = root.findViewById(R.id.button_Add_Post);
+        if(!myGroup){
+            button_Add_Post.setVisibility(View.INVISIBLE);
+        }
         button_Add_Post.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -196,6 +202,7 @@ public class GroupPost extends Fragment {
                     groupViewModel.getLikeCheck().setValue(checkLikeList);
 
                     setPostAdapter(listView, checkLikeList);
+
                 }
             }
 

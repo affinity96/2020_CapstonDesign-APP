@@ -135,7 +135,9 @@ public class CreateGroupActivity extends AppCompatActivity {
                 String userId = mAuth.getCurrentUser().getUid();
                 String groupIntroduction = editText_introduce.getText().toString();
 
-                final String groupAddress = moveToSearchAddress.getText().toString() + editText_detailAddress.getText().toString();
+                final String tempAddress = moveToSearchAddress.getText().toString();
+                final String groupArea = tempAddress.substring(tempAddress.lastIndexOf("/")+1);
+                final String groupAddress = tempAddress.substring(0, tempAddress.lastIndexOf("/")) + editText_detailAddress.getText().toString();
 
                 if (groupName.isEmpty()) {
                     editText_groupName.setHint("GroupName을 입력하세요!");
@@ -149,7 +151,7 @@ public class CreateGroupActivity extends AppCompatActivity {
                     editText_detailAddress.setHint("상세주소 입력해주세요!");
                 } else {
 
-                    createGroup(userId, groupName, groupAddress, groupIntroduction);
+                    createGroup(userId, groupName, groupAddress, groupIntroduction, groupArea);
                 }
             }
         });
@@ -330,7 +332,7 @@ public class CreateGroupActivity extends AppCompatActivity {
 
     private void
 
-    createGroup(String userId, String groupName, String groupAddress, String groupIntroduction) {
+    createGroup(String userId, String groupName, String groupAddress, String groupIntroduction, String groupArea) {
         Log.i("create", "create");
 
         if (tempFile != null) {
@@ -344,6 +346,8 @@ public class CreateGroupActivity extends AppCompatActivity {
             data.put("groupAddress", group_Address);
             RequestBody group_Introduction = RequestBody.create(MediaType.parse("text/plain"), groupIntroduction);
             data.put("groupIntroduction", group_Introduction);
+            RequestBody group_Area = RequestBody.create(MediaType.parse("text/plain"), groupArea);
+            data.put("groupArea", group_Area);
 
             RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), tempFile);
             MultipartBody.Part uploadFile = MultipartBody.Part.createFormData("upload", tempFile.getName(), reqFile);
@@ -372,7 +376,7 @@ public class CreateGroupActivity extends AppCompatActivity {
                 }
             });
         } else {
-            CreateGroupData data = new CreateGroupData(userId, groupName, groupAddress, groupIntroduction);
+            CreateGroupData data = new CreateGroupData(userId, groupName, groupAddress, groupIntroduction, groupArea);
 
             service.groupCreate(data).enqueue(new Callback<CreateGroupResponse>() {
 

@@ -87,7 +87,7 @@ public class searchAddress extends AppCompatActivity {
 
         @JavascriptInterface
 
-        public void setAddress(final String arg1, final String arg2, final String arg3) {
+        public void setAddress(final String arg1, final String arg2, final String arg3, final String arg4) {
 
             handler.post(new Runnable() {
 
@@ -95,13 +95,15 @@ public class searchAddress extends AppCompatActivity {
 
                 public void run() {
 
-                    daum_result.setText(String.format("(%s) %s %s", arg1, arg2, arg3));
+                    daum_result.setText(String.format("(%s) %s %s / %s", arg1, arg2, arg3, arg4));
 
                     // WebView를 초기화 하지않으면 재사용할 수 없음
                     init_webView();
 
                     Intent intent = new Intent();
                     intent.putExtra("address", daum_result.getText().toString());
+
+
                     Log.d("address",daum_result.getText().toString());
 
                     setResult(RESULT_OK, intent);

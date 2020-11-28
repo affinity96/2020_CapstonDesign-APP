@@ -90,7 +90,7 @@ public class AddPostActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                addPost(groupData.getId(), userData.getUserId(), postContent.toString(), editText_postTitle.getText().toString());
+                addPost(groupData.getId(), userData.getUserId(), postContent.toString(), editText_postTitle.getText().toString(), groupData.getArea());
             }
         });
 
@@ -187,10 +187,11 @@ public class AddPostActivity extends AppCompatActivity {
                 .check();
     }
 
-    private void addPost(int groupId, String userId, String content, String title) {
+    private void addPost(int groupId, String userId, String content, String title, String area) {
 
         if (tempFile != null) {
             String str_groupId = String.valueOf(groupId);
+            String str_area = String.valueOf(area);
 
             HashMap<String, RequestBody> data = new HashMap<String, RequestBody>();
 
@@ -202,7 +203,8 @@ public class AddPostActivity extends AppCompatActivity {
             data.put("title", Title);
             RequestBody Content = RequestBody.create(MediaType.parse("text/plain"), content);
             data.put("content", Content);
-
+            RequestBody area_ = RequestBody.create(MediaType.parse("text/plain"), str_area);
+            data.put("area", area_);
             RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), tempFile);
             MultipartBody.Part uploadFile = MultipartBody.Part.createFormData("upload", tempFile.getName(), reqFile);
 
@@ -227,7 +229,7 @@ public class AddPostActivity extends AppCompatActivity {
                 }
             });
         } else {
-            AddPostData data = new AddPostData(groupId, userId, title, content);
+            AddPostData data = new AddPostData(groupId, userId, title, content, area);
 
             service.addPost(data).enqueue(new Callback<AddPostResponse>() {
 
