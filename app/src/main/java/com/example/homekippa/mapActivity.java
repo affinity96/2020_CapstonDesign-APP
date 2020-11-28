@@ -170,13 +170,10 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
             }
             //distanceLocation에 넣어준다.
             disSum += distanceLocation(longitude_arrayList.get(l),latitude_arrayList.get(l),longitude_arrayList.get(l+1),latitude_arrayList.get(l+1));
-
-
         }
+
         return disSum;
     }
-
-
 
     public double distanceLocation(double locationA_long, double locationA_lati, double locationB_long, double locationB_lati){
 
