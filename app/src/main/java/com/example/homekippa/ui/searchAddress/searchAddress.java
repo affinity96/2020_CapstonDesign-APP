@@ -79,8 +79,7 @@ public class searchAddress extends AppCompatActivity {
 
 
         // webview url load. php 파일 주소
-
-        daum_webView.loadUrl("http://192.168.219.110:3000/searchAddress.html");
+        daum_webView.loadUrl("http://115.85.183.152:3000/searchAddress.html");
     }
 
 
@@ -95,7 +94,7 @@ public class searchAddress extends AppCompatActivity {
                 @Override
 
                 public void run() {
-                    Log.d("이것은 무엇일까", arg4);
+
                     daum_result.setText(String.format("(%s) %s %s / %s", arg1, arg2, arg3, arg4));
 
                     // WebView를 초기화 하지않으면 재사용할 수 없음
