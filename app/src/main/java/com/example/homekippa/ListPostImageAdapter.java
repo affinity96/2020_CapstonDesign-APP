@@ -42,7 +42,6 @@ public class ListPostImageAdapter extends RecyclerView.Adapter<ListPostImageAdap
     @Override
     public void onBindViewHolder(@NonNull ListPostImageAdapter.MyViewHolder holder, int position) {
         setPostImageData(holder, position);
-
     }
 
     private void setPostImageData(MyViewHolder holder, int position) {
