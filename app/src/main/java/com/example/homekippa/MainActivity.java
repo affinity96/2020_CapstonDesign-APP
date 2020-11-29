@@ -74,9 +74,13 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = getIntent();
         userData = (UserData) intent.getExtras().get("user");
 
-       // Log.d("로그인에어리아??", groupData.getArea());
+
+
         Toast.makeText(getApplicationContext(), userData.getUserName() + "님 로그인", Toast.LENGTH_LONG).show();
         groupData = (GroupData) intent.getExtras().get("group");
+
+
+
         //tob navigation
         tb = findViewById(R.id.top_bar);
         setSupportActionBar(tb);
