@@ -298,27 +298,37 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
     public void onCurrentLocationUpdate(MapView mapView, MapPoint currentLocation, float v) {
         mapPointGeo = currentLocation.getMapPointGeoCoord();
 
-        if(cycle >1){
-            cycle =0;
-            mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("latitude").setValue(mapPointGeo.latitude);
-            mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("longitude").setValue(mapPointGeo.longitude);
-
-            Geocoder g = new Geocoder(this);
-            List<Address> address = null;
-            try{
-                address =g.getFromLocation(mapPointGeo.latitude, mapPointGeo.longitude,10);
-            }catch (IOException e){
-                e.printStackTrace();
-                Log.d("test","입출력오류");
-            }
-
-            mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("address").setValue(address.get(0).getThoroughfare());
-
-        }else{
-            cycle++;
-        }
+//        if(cycle >1){
+//            cycle =0;
+//            mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("latitude").setValue(mapPointGeo.latitude);
+//            mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("longitude").setValue(mapPointGeo.longitude);
+//
+//            Geocoder g = new Geocoder(this);
+//            List<Address> address = null;
+//            try{
+//                address =g.getFromLocation(mapPointGeo.latitude, mapPointGeo.longitude,10);
+//            }catch (IOException e){
+//                e.printStackTrace();
+//                Log.d("test","입출력오류");
+//            }
+//
+//            mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("address").setValue(address.get(0).getThoroughfare());
+//
+//        }else{
+//            cycle++;
+//        }
         mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("latitude").setValue(mapPointGeo.latitude);
         mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("longitude").setValue(mapPointGeo.longitude);
+        Geocoder g = new Geocoder(this);
+        List<Address> address = null;
+        try{
+            address =g.getFromLocation(mapPointGeo.latitude, mapPointGeo.longitude,10);
+        }catch (IOException e){
+            e.printStackTrace();
+            Log.d("test","입출력오류");
+        }
+
+        mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("address").setValue(address.get(0).getThoroughfare());
 
 
 
