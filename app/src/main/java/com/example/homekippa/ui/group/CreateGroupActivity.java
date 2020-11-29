@@ -6,14 +6,20 @@ import androidx.core.content.FileProvider;
 import android.Manifest;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.PopupMenu;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -54,9 +60,8 @@ public class CreateGroupActivity extends AppCompatActivity {
     private EditText editText_groupName;
     private EditText editText_introduce;
     private Button button_createGroup;
-    private Button button_gallery;
-    private Button button_camera;
     private TextView moveToSearchAddress;
+    private ImageView imageView_profileImage;
     private EditText editText_detailAddress;
     private FirebaseAuth mAuth;
     private ServiceApi service;
@@ -78,32 +83,47 @@ public class CreateGroupActivity extends AppCompatActivity {
         moveToSearchAddress = findViewById(R.id.moveToSearchAddress);
         mAuth = FirebaseAuth.getInstance();
         service = RetrofitClient.getClient().create(ServiceApi.class);
-        button_gallery = findViewById(R.id.button_gallery);
-        button_camera = findViewById(R.id.button_camera);
         editText_detailAddress = findViewById(R.id.editText_detailAddress);
+        imageView_profileImage = findViewById(R.id.imageView_profileImage);
+
+        service = RetrofitClient.getClient().create(ServiceApi.class);
 
         // 권한 요청
         tedPermission();
-
-        button_gallery.setOnClickListener(new View.OnClickListener() {
+        Log.d("마ㅏㅏㅏㅏㅏ", "밖임");
+        imageView_profileImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // 권한 허용에 동의하지 않았을 경우 토스트를 띄웁니다.
-                if(isPermission) goToAlbum();
-                else Toast.makeText(view.getContext(), getResources().getString(R.string.permission_2), Toast.LENGTH_LONG).show();
+                Log.d("사ㅏㅏㅏㅏㅏ", "절반성공");
+                PopupMenu popup = new PopupMenu(getApplicationContext(), view);
+                getMenuInflater().inflate(R.menu.selete_image_menu, popup.getMenu());
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        Log.d("바ㅏㅏㅏㅏㅏ", "성공");
+                        switch (item.getItemId()){
+                            case R.id.menu_default:
+                                break;
+                            case R.id.menu_album:
+                                // 권한 허용에 동의하지 않았을 경우 토스트를 띄웁니다.
+                                if(isPermission) goToAlbum();
+                                else Toast.makeText(view.getContext(), getResources().getString(R.string.permission_2), Toast.LENGTH_LONG).show();
+                                break;
+                            case R.id.menu_camera:
+                                // 권한 허용에 동의하지 않았을 경우 토스트를 띄웁니다.
+                                if(isPermission) takePhoto();
+                                else Toast.makeText(view.getContext(), getResources().getString(R.string.permission_2), Toast.LENGTH_LONG).show();
+                                break;
+                            default:
+                                break;
+                        }
+                        return false;
+                    }
+                });
+
+                popup.show();
             }
         });
-
-        button_camera.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // 권한 허용에 동의하지 않았을 경우 토스트를 띄웁니다.
-                if(isPermission)  takePhoto();
-                else Toast.makeText(view.getContext(), getResources().getString(R.string.permission_2), Toast.LENGTH_LONG).show();
-            }
-        });
-
-        service = RetrofitClient.getClient().create(ServiceApi.class);
 
         editText_groupName.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -218,24 +238,22 @@ public class CreateGroupActivity extends AppCompatActivity {
     /**
      *  tempFile 을 bitmap 으로 변환 후 ImageView 에 설정한다.
      */
-//    private void setImage() {
-//
-////        ImageView imageView = findViewById(R.id.imageView);
-//
-//        BitmapFactory.Options options = new BitmapFactory.Options();
-//        Bitmap originalBm = BitmapFactory.decodeFile(tempFile.getAbsolutePath(), options);
-//        Log.d(TAG, "setImage : " + tempFile.getAbsolutePath());
-//
-////        imageView.setImageBitmap(originalBm);
-//
-//        /**
-//         *  tempFile 사용 후 null 처리를 해줘야 합니다.
-//         *  (resultCode != RESULT_OK) 일 때 tempFile 을 삭제하기 때문에
-//         *  기존에 데이터가 남아 있게 되면 원치 않은 삭제가 이뤄집니다.
-//         */
+    private void setImage() {
+
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        Bitmap originalBm = BitmapFactory.decodeFile(tempFile.getAbsolutePath(), options);
+        Log.d(TAG, "setImage : " + tempFile.getAbsolutePath());
+
+        imageView_profileImage.setImageBitmap(originalBm);
+
+        /**
+         *  tempFile 사용 후 null 처리를 해줘야 합니다.
+         *  (resultCode != RESULT_OK) 일 때 tempFile 을 삭제하기 때문에
+         *  기존에 데이터가 남아 있게 되면 원치 않은 삭제가 이뤄집니다.
+         */
 //        tempFile = null;
-//
-//    }
+
+    }
 
     /**
      *  권한 설정
@@ -267,7 +285,6 @@ public class CreateGroupActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, intent);
         if (resultCode != RESULT_OK) {
 //            Log.d("주소", "error");
-            // 사진 업로드 버튼들 눌러서 들어갔다가 취소하는 경우 (이부분 주소랑 겹쳐서 잘 모르겠음)
             Toast.makeText(this, "취소 되었습니다.", Toast.LENGTH_SHORT).show();
 
             if(tempFile != null) {
@@ -318,11 +335,11 @@ public class CreateGroupActivity extends AppCompatActivity {
                     }
                 }
 
-//                setImage();
+                setImage();
 
             } else if (requestCode == PICK_FROM_CAMERA) {
 
-//                setImage();
+                setImage();
 
             }
         }
