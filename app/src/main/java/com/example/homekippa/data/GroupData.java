@@ -13,7 +13,7 @@ public class GroupData implements Parcelable {
     private final int tag;
     private final String area;
 
-    public GroupData(int id, String name, String image, String address, String introduction, String background, int tag,String area) {
+    public GroupData(int id, String name, String image, String address, String introduction, String background, int tag, String area) {
         this.id = id;
         this.name = name;
         this.image = image;
@@ -39,7 +39,6 @@ public class GroupData implements Parcelable {
         this.tag = parcel.readInt();
         this.area = parcel.readString();
     }
-
 
     public static final Parcelable.Creator<GroupData> CREATOR = new Parcelable.Creator<GroupData>() {
         @Override
@@ -94,12 +93,8 @@ public class GroupData implements Parcelable {
         return tag;
     }
 
-    public Bitmap getGroupProfile() {
-        return groupProfile;
-    }
-
-    public void setGroupProfile(Bitmap groupProfile) {
-        this.groupProfile = groupProfile;
+    public String getArea() {
+        return area;
     }
 
 }
