@@ -136,12 +136,12 @@
 
             <TextView
                 android:id="@+id/textView_PostDate"
-                android:layout_weight="16"
-                android:layout_width="wrap_content"
+                android:layout_width="243dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_weight="16"
                 android:gravity="end"
-                android:text="2020년 11월 21일 "
+                android:text="2020년 11월 22일 "
                 android:textSize="14sp" />
         </LinearLayout>
 

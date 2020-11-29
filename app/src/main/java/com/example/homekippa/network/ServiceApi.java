@@ -109,7 +109,7 @@ public interface ServiceApi {
     Call<GroupPostResponse> getGroupPost(@Query("groupId") int groupId);
 
     @GET("/post/home")
-    Call<PostResponse> getHomePost(@Query("groupId") int groupid, @Query("tab_") String tab_);
+    Call<PostResponse> getHomePost(@Query("groupId") int groupid, @Query("tab_") String tab_, @Query("area") String area);
 
     @POST("/post/setlike")
     Call<LikeResponse> setLike(@Body LikeData data);
