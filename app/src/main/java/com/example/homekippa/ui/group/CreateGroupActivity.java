@@ -347,6 +347,7 @@ public class CreateGroupActivity extends AppCompatActivity {
             RequestBody group_Introduction = RequestBody.create(MediaType.parse("text/plain"), groupIntroduction);
             data.put("groupIntroduction", group_Introduction);
             RequestBody group_Area = RequestBody.create(MediaType.parse("text/plain"), groupArea);
+            Log.d("ㄱ,릅에어리아ㅏ",  groupArea);
             data.put("groupArea", group_Area);
 
             RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), tempFile);
