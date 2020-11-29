@@ -357,6 +357,7 @@ public class YesGroup extends Fragment {
         String[] w = url.split("/");
         String key = w[w.length - 1];
 
+
         Bitmap bit = getBitmapFromCacheDir(key);
         if (bit != null) {
             Glide.with(YesGroup.this).load(bit).diskCacheStrategy(DiskCacheStrategy.NONE).circleCrop().into(imageView);
@@ -368,9 +369,11 @@ public class YesGroup extends Fragment {
                     if (response.isSuccessful()) {
                         InputStream is = response.body().byteStream();
                         Bitmap bitmap = BitmapFactory.decodeStream(is);
-                        Glide.with(YesGroup.this).load(bitmap).diskCacheStrategy(DiskCacheStrategy.NONE).circleCrop().into(imageView);
+                        if (bitmap != null) {
+                            Glide.with(YesGroup.this).load(bitmap).diskCacheStrategy(DiskCacheStrategy.NONE).circleCrop().into(imageView);
+                            saveBitmapToJpeg(bitmap, key);
+                        }
 
-                        saveBitmapToJpeg(bitmap, key);
                     } else {
                         Log.d(TAG, "server contact failed");
                     }
@@ -389,6 +392,7 @@ public class YesGroup extends Fragment {
     private void getPetProfileImage(ListPetAdapter.MyViewHolder holder, String url) {
         String[] w = url.split("/");
         String key = w[w.length - 1];
+        Log.d("Yes", url);
 
         Bitmap bit = getBitmapFromCacheDir(key);
         if (bit != null) {
@@ -401,8 +405,12 @@ public class YesGroup extends Fragment {
                     if (response.isSuccessful()) {
                         InputStream is = response.body().byteStream();
                         Bitmap bitmap = BitmapFactory.decodeStream(is);
-                        Glide.with(YesGroup.this).load(bitmap).diskCacheStrategy(DiskCacheStrategy.NONE).circleCrop().into(holder.petImage);
-                        saveBitmapToJpeg(bitmap, key);
+
+                        if (bitmap != null) {
+                            Glide.with(YesGroup.this).load(bitmap).diskCacheStrategy(DiskCacheStrategy.NONE).circleCrop().into(holder.petImage);
+                            saveBitmapToJpeg(bitmap, key);
+                        }
+
                     } else {
                         Log.d(TAG, "server contact failed");
                     }
@@ -483,6 +491,7 @@ public class YesGroup extends Fragment {
         try {
             File tempFile = new File(storage, fileName);
             tempFile.createNewFile();
+
             FileOutputStream out = new FileOutputStream(tempFile);
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
             // 스트림 사용후 닫아줍니다.
