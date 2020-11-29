@@ -2,6 +2,8 @@ package com.example.homekippa;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -14,15 +16,23 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.homekippa.data.GroupData;
 import com.example.homekippa.ui.group.CreateGroupActivity;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import net.daum.mf.map.api.CameraUpdateFactory;
 import net.daum.mf.map.api.MapPOIItem;
 import net.daum.mf.map.api.MapPoint;
 import net.daum.mf.map.api.MapPointBounds;
 import net.daum.mf.map.api.MapPolyline;
+import net.daum.mf.map.api.MapReverseGeoCoder;
 import net.daum.mf.map.api.MapView;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -50,9 +60,10 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
     private long startTime;
     private long endTime;
     private long totalTime;
-
-
-
+    private GroupData groupData;
+    private DatabaseReference mDatabase;
+    private MapPOIItem marker;
+    private int markerCount;
 
 
     @Override
@@ -64,6 +75,9 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
 //        button_remove = findViewById(R.id.button_remove);
         textView_walkDistance = findViewById(R.id.textView_walkDistance);
         textView_walkTime = findViewById(R.id.textView_walkTime);
+        groupData = (GroupData) getIntent().getExtras().get("groupData");
+
+
 
         // mapview에 kakaoMap 연동해서 올리기
         mapView =new MapView(this);
@@ -91,19 +105,68 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
         // 줌 아웃
         mapView.zoomOut(true);
 
-        //현재 위치로 지도 올려 놓기
+        //마커 생성
+        marker = new MapPOIItem();
 
+
+        //firebase 백엔드 사용해서 위도 경도 저장
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        mDatabase = database.getReference("walk");
+        mDatabase.child("walking_group").child(String.valueOf(groupData.getId()));
+
+
+        mDatabase.child("walking_group").child(String.valueOf(15));
+        mDatabase.child("walking_group").child(String.valueOf(15)).child("address").setValue("우만2동");
+        mDatabase.child("walking_group").child(String.valueOf(15)).child("latitude").setValue(37.27897262573242);
+        mDatabase.child("walking_group").child(String.valueOf(15)).child("longitude").setValue(127.04090118408203);
+
+        mDatabase.child("walking_group").child(String.valueOf(16));
+        mDatabase.child("walking_group").child(String.valueOf(16)).child("address").setValue("우만2동");
+        mDatabase.child("walking_group").child(String.valueOf(16)).child("latitude").setValue(37.28105163574219);
+        mDatabase.child("walking_group").child(String.valueOf(16)).child("longitude").setValue(127.04118347167969);
+        mDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                //마커 초기화
+                markerCount = 0;
+                // 다른 그룹 위치 판별하기
+                String currentAddress = dataSnapshot.child("walking_group").child(String.valueOf(groupData.getId())).child("address").getValue(String.class);
+                for (DataSnapshot GroupMapData : dataSnapshot.child("walking_group").getChildren()) {
+                    Log.d("database_read", String.valueOf(GroupMapData));
+                    String otherGroup = GroupMapData.getKey();
+                    String otherAddress = GroupMapData.child("address").getValue(String.class);
+                    Double latitude = GroupMapData.child("latitude").getValue(Double.class);
+                    Double longitude = GroupMapData.child("longitude").getValue(Double.class);
+
+                    Log.d("database_read",otherAddress);
+                    Log.d("database_read", String.valueOf(latitude));
+                    Log.d("database_read", String.valueOf(longitude));
+                    //자신 그룹은 제외 시킨다.
+                    if (!otherGroup.equals(String.valueOf(groupData.getId()))) {
+                        Log.d("database_read","group");
+                        if (otherAddress.equals(currentAddress)) {
+                            Log.d("database_read","address");
+                            //다른 그룹 위치 띄우기
+                            walkingOtherGroup(GroupMapData.child("latitude").getValue(Double.class), GroupMapData.child("longitude").getValue(Double.class));
+                        }
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.d("database_read_error", "Failed to read value.", error.toException());
+            }
+        });
 //setCustomCurrentLocationMarkerImage
         //-> 이를 사용해서 현 위치 아이콘을 custom 이미지 바꾸기 가능
 
         //거리와 시간을 팝업 창처럼 띄우기?? 이렇게 할까?
 
-        //firebase 백엔드 사용해서 위도 경도 json형식으로 넘겨줌 이떄,
+
 
         // mark => ?
 
-
-        //1.
 
         //재시작 버튼
 //        button_remove.setOnClickListener(new View.OnClickListener() {
@@ -174,6 +237,22 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
 
         return disSum;
     }
+    // 산책 중인 다른 그룹 마커로 표시
+
+    public void walkingOtherGroup(Double latitude, Double longitude){
+        Log.d("database_read","here");
+        MapPoint walkingMapPoint = MapPoint.mapPointWithGeoCoord(latitude,longitude);
+        marker.setItemName("otherGroup");
+        marker.setTag(markerCount);
+        marker.setMapPoint(walkingMapPoint);
+        // 기본으로 제공하는 BluePin 마커 모양.
+        marker.setMarkerType(MapPOIItem.MarkerType.BluePin);
+        // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
+        marker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin);
+        mapView.addPOIItem(marker);
+
+
+    }
 
     public double distanceLocation(double locationA_long, double locationA_lati, double locationB_long, double locationB_lati){
 
@@ -217,13 +296,41 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
     int cycle = 0;
     @Override
     public void onCurrentLocationUpdate(MapView mapView, MapPoint currentLocation, float v) {
-//        mapPointGeo = currentLocation.getMapPointGeoCoord();
-//
+        mapPointGeo = currentLocation.getMapPointGeoCoord();
+
 //        if(cycle >1){
 //            cycle =0;
+//            mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("latitude").setValue(mapPointGeo.latitude);
+//            mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("longitude").setValue(mapPointGeo.longitude);
+//
+//            Geocoder g = new Geocoder(this);
+//            List<Address> address = null;
+//            try{
+//                address =g.getFromLocation(mapPointGeo.latitude, mapPointGeo.longitude,10);
+//            }catch (IOException e){
+//                e.printStackTrace();
+//                Log.d("test","입출력오류");
+//            }
+//
+//            mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("address").setValue(address.get(0).getThoroughfare());
+//
 //        }else{
 //            cycle++;
 //        }
+        mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("latitude").setValue(mapPointGeo.latitude);
+        mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("longitude").setValue(mapPointGeo.longitude);
+        Geocoder g = new Geocoder(this);
+        List<Address> address = null;
+        try{
+            address =g.getFromLocation(mapPointGeo.latitude, mapPointGeo.longitude,10);
+        }catch (IOException e){
+            e.printStackTrace();
+            Log.d("test","입출력오류");
+        }
+
+        mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("address").setValue(address.get(0).getThoroughfare());
+
+
 
         Log.d("cycleCount", String.valueOf(cycle));
 
@@ -260,14 +367,19 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
         mapPolyLine.addPoint(MapPoint.mapPointWithGeoCoord(mapPointGeo.latitude,mapPointGeo.longitude));
         mapView.addPolyline(mapPolyLine);
 
-        MapPointBounds mapPointBounds = new MapPointBounds(mapPolyLine.getMapPoints());
+//        MapPointBounds mapPointBounds = new MapPointBounds(mapPolyLine.getMapPoints());
         int padding = 100; // px
         //mapView에 찍어준다.
-        mapView.moveCamera(CameraUpdateFactory.newMapPointBounds(mapPointBounds, padding));
+//        mapView.moveCamera(CameraUpdateFactory.newMapPointBounds(mapPointBounds, padding));
+
+//        mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("latiatiude").setValue(mapPointGeo.latitude);
+//        mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("longitude").setValue(mapPointGeo.longitude);
+
+
 
         //위도 경도 찍
-//        Log.d("latitude", String.valueOf(mapPointGeo.latitude));
-//        Log.d("longitude", String.valueOf(mapPointGeo.longitude));
+        Log.d("latitude", String.valueOf(mapPointGeo.latitude));
+        Log.d("longitude", String.valueOf(mapPointGeo.longitude));
 
     }
 

@@ -37,6 +37,8 @@ import com.example.homekippa.network.RetrofitClient;
 import com.example.homekippa.network.ServiceApi;
 import com.example.homekippa.ui.group.SingleItemPet;
 import com.example.homekippa.ui.group.YesGroup;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,11 +66,14 @@ public class WalkFragment extends Fragment {
 
     private Drawable drawable;
 
+
     private EditText editText_temperature;
     private EditText editText_weather;
     private ImageView imageView_weather;
     private Button button_startWalk;
     private RecyclerView listView_walk_pets;
+
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -85,6 +90,12 @@ public class WalkFragment extends Fragment {
         button_startWalk = root.findViewById(R.id.button_startWalk);
         listView_walk_pets = root.findViewById(R.id.listview_walk_pets);
         groupData = ((MainActivity) getActivity()).getGroupData();
+        Log.d("groupData", String.valueOf(groupData.getId()));
+
+
+        //Firebase연동 -> mapActivity로 이
+
+
 
         userLocation =getMyLocation();
         setPetListView(listView_walk_pets);
@@ -105,7 +116,9 @@ public class WalkFragment extends Fragment {
         button_startWalk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent intent = new Intent(getActivity(), mapActivity.class);
+                intent.putExtra("groupData", groupData);
                 startActivity(intent);
             }
         });

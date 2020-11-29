@@ -23,7 +23,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ListPostImageAdapter extends RecyclerView.Adapter<ListPostImageAdapter.MyViewHolder> {
-    private ArrayList<SingleItemPostImage> postImage_Items;
+    private ArrayList<SingleItemPostImage> postImage_Items ;
 
     private ServiceApi service;
 

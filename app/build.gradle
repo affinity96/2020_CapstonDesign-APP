@@ -85,6 +85,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-dynamic-links'
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.google.firebase:firebase-messaging'
+    implementation 'com.google.firebase:firebase-database'
 
     //ted permission
     implementation "gun0912.ted:tedpermission:2.1.0"

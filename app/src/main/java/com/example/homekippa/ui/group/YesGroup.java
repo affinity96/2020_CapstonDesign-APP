@@ -91,6 +91,7 @@ public class YesGroup extends Fragment {
     private LinearLayout ll_following;
 
 
+
     private ViewGroup root;
 
     private int selectedPosition = 0;
@@ -283,6 +284,8 @@ public class YesGroup extends Fragment {
                 startActivity(intent);
             }
         });
+
+
 
         button_addPet.setOnClickListener(new View.OnClickListener() {
             @Override
