@@ -119,6 +119,11 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
         mDatabase.child("walking_group").child(String.valueOf(15)).child("address").setValue("우만2동");
         mDatabase.child("walking_group").child(String.valueOf(15)).child("latitude").setValue(37.27897262573242);
         mDatabase.child("walking_group").child(String.valueOf(15)).child("longitude").setValue(127.04090118408203);
+
+        mDatabase.child("walking_group").child(String.valueOf(16));
+        mDatabase.child("walking_group").child(String.valueOf(16)).child("address").setValue("우만2동");
+        mDatabase.child("walking_group").child(String.valueOf(16)).child("latitude").setValue(37.28105163574219);
+        mDatabase.child("walking_group").child(String.valueOf(16)).child("longitude").setValue(127.04118347167969);
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
