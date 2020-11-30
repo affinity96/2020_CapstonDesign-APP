@@ -57,6 +57,8 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
     private LinearLayout linearLayout_infor;
     private TextView textView_walkDistance;
     private TextView textView_walkTime;
+    private Button button_walktest;
+
 //    private Button button_remove;
     private long startTime;
     private long endTime;
@@ -76,10 +78,11 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
 //        button_remove = findViewById(R.id.button_remove);
         textView_walkDistance = findViewById(R.id.textView_walkDistance);
         textView_walkTime = findViewById(R.id.textView_walkTime);
+        button_walktest =findViewById(R.id.button_walktest);
         groupData = (GroupData) getIntent().getExtras().get("groupData");
 
-
-
+        //마커 생성
+        marker = new MapPOIItem();
         // mapview에 kakaoMap 연동해서 올리기
         mapView =new MapView(this);
         mapViewContainer = (ViewGroup) findViewById(R.id.map_view);
@@ -135,8 +138,7 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                //마커 생성
-                marker = new MapPOIItem();
+                mapView.removeAllPOIItems();
                 //마커 초기화
                 markerCount = 0;
                 // 다른 그룹 위치 판별하기
@@ -224,6 +226,15 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
                 //위도 경도 초기화
                 latitude_arrayList = new ArrayList<>();
                 longitude_arrayList = new ArrayList<>();
+
+            }
+        });
+
+        button_walktest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), mapTestActivity.class);
+                startActivity(intent);
 
             }
         });
