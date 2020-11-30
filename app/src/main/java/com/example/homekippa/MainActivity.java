@@ -97,6 +97,14 @@ public class MainActivity extends AppCompatActivity {
         });
         //채팅 버튼 - To Do
         chatButton = findViewById(R.id.top_btn_chat);
+        chatButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
+                intent.putExtra("userData", userData);
+                startActivity(intent);
+            }
+        });
 
         //좌측 메뉴
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
