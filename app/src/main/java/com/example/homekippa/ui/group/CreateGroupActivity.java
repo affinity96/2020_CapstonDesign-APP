@@ -332,7 +332,7 @@ public class CreateGroupActivity extends AppCompatActivity {
 
     private void
 
-    createGroup(String userId, String groupName, String groupAddress, String groupIntroduction, String groupArea) {
+    createGroup(String userId, String groupName, String groupAddress, String groupIntroduction, String area) {
         Log.i("create", "create");
 
         if (tempFile != null) {
@@ -346,9 +346,9 @@ public class CreateGroupActivity extends AppCompatActivity {
             data.put("groupAddress", group_Address);
             RequestBody group_Introduction = RequestBody.create(MediaType.parse("text/plain"), groupIntroduction);
             data.put("groupIntroduction", group_Introduction);
-            RequestBody group_Area = RequestBody.create(MediaType.parse("text/plain"), groupArea);
-            Log.d("ㄱ,릅에어리아ㅏ",  groupArea);
-            data.put("groupArea", group_Area);
+            RequestBody group_Area = RequestBody.create(MediaType.parse("text/plain"), area);
+            Log.d("ㄱ,릅에어리아ㅏ",  area);
+            data.put("area", group_Area);
 
             RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), tempFile);
             MultipartBody.Part uploadFile = MultipartBody.Part.createFormData("upload", tempFile.getName(), reqFile);
@@ -377,7 +377,7 @@ public class CreateGroupActivity extends AppCompatActivity {
                 }
             });
         } else {
-            CreateGroupData data = new CreateGroupData(userId, groupName, groupAddress, groupIntroduction, groupArea);
+            CreateGroupData data = new CreateGroupData(userId, groupName, groupAddress, groupIntroduction, area);
 
             service.groupCreate(data).enqueue(new Callback<CreateGroupResponse>() {
 
