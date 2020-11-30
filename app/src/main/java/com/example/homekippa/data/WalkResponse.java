@@ -2,7 +2,8 @@ package com.example.homekippa.data;
 
 import com.google.gson.annotations.SerializedName;
 
-public class LikeResponse {
+public class WalkResponse {
+
     @SerializedName("code")
     private int code;
 
@@ -16,5 +17,4 @@ public class LikeResponse {
     public String getMessage() {
         return message;
     }
-
 }

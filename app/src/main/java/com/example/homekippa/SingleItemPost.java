@@ -1,15 +1,7 @@
-package com.example.homekippa.ui.group;
+package com.example.homekippa;
 
-import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
-import androidx.fragment.app.Fragment;
-
-import com.example.homekippa.R;
 
 import java.util.ArrayList;
 

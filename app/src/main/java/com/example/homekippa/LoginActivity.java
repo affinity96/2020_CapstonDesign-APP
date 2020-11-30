@@ -1,6 +1,8 @@
 package com.example.homekippa;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,12 +13,21 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
 
+import com.bumptech.glide.Glide;
+import com.example.homekippa.data.FollowResponse;
+import com.example.homekippa.data.GetFollowData;
 import com.example.homekippa.data.GroupData;
 import com.example.homekippa.data.UserData;
 import com.example.homekippa.function.Loading;
 import com.example.homekippa.network.RetrofitClient;
 import com.example.homekippa.network.ServiceApi;
+import com.example.homekippa.ui.group.FollowViewModel;
+import com.example.homekippa.ui.group.GroupViewModel;
+import com.example.homekippa.ui.group.YesGroup;
+import com.example.homekippa.ui.home.PostViewModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -24,6 +35,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.messaging.FirebaseMessaging;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.security.acl.Group;
+
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -38,10 +54,10 @@ public class LoginActivity extends AppCompatActivity {
     private TextView gotoSignTextview;
     private ServiceApi service;
     final Loading loading = new Loading();
+    private FollowViewModel followViewModel;
+    private GroupViewModel groupViewModel;
 
     Intent intent;
-
-
     private GroupData groupData;
 
     @Override
@@ -54,6 +70,8 @@ public class LoginActivity extends AppCompatActivity {
         curUser = mAuth.getCurrentUser();
         service = RetrofitClient.getClient().create(ServiceApi.class);
 
+        followViewModel = new ViewModelProvider(this).get(FollowViewModel.class);
+        groupViewModel = new ViewModelProvider(this).get(GroupViewModel.class);
         if (curUser != null && curUser.isEmailVerified()) {
             loading.loading(LoginActivity.this);
             getUserToken(curUser.getUid());
@@ -159,9 +177,30 @@ public class LoginActivity extends AppCompatActivity {
                     groupData = response.body();
                     intent.putExtra("group", groupData);
                     Log.d("그룹 확인", String.valueOf(groupData.getId()));
-                    loading.loadingEnd();
-                    Toast.makeText(getApplicationContext(), "로그인 성공", Toast.LENGTH_SHORT).show();
-                    startActivity(intent);
+                    service.getFollow(ID).enqueue(new Callback<GetFollowData>() {
+                        @Override
+                        public void onResponse(Call<GetFollowData> call, Response<GetFollowData> response) {
+                            if (response.isSuccessful()) {
+                                Log.d("follow", "successful");
+                                Log.d("follow", response.body().toString());
+
+                                followViewModel.getFollower().setValue(response.body().getFollowerList());
+                                followViewModel.getFollowing().setValue(response.body().getFollowingList());
+                                loading.loadingEnd();
+                                Toast.makeText(getApplicationContext(), "로그인 성공", Toast.LENGTH_SHORT).show();
+                                startActivity(intent);
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<GetFollowData> call, Throwable t) {
+                            Log.d("로그인", "에러");
+                            Log.e("로그인", t.getMessage());
+                            loading.loadingEnd();
+                            Toast.makeText(getApplicationContext(), "로그인 실패", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+//                    getFollowData(ID);
                 }
             }
 
@@ -171,9 +210,11 @@ public class LoginActivity extends AppCompatActivity {
                 Log.e("그룹 확인", t.getMessage());
             }
         });
+
+
     }
 
-    public void getUserToken(String ID){
+    public void getUserToken(String ID) {
         FirebaseMessaging.getInstance().getToken()
                 .addOnCompleteListener(new OnCompleteListener<String>() {
                     @Override
@@ -185,7 +226,7 @@ public class LoginActivity extends AppCompatActivity {
 
                         String token = "";
                         // Get new FCM registration token
-                        if(!task.getResult().isEmpty()) {
+                        if (!task.getResult().isEmpty()) {
                             token = task.getResult();
                         }
 

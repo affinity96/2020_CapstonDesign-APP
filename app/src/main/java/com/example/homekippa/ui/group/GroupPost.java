@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.homekippa.AddPostActivity;
+import com.example.homekippa.ListPostAdapter;
 import com.example.homekippa.MainActivity;
 import com.example.homekippa.R;
 import com.example.homekippa.data.GroupData;
@@ -29,10 +30,10 @@ import com.example.homekippa.data.LikeData;
 import com.example.homekippa.data.UserData;
 import com.example.homekippa.network.RetrofitClient;
 import com.example.homekippa.network.ServiceApi;
+import com.example.homekippa.SingleItemPost;
+import com.example.homekippa.SingleItemPostImage;
 
 import java.io.InputStream;
-import java.lang.reflect.Array;
-import java.security.acl.Group;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,6 +52,7 @@ public class GroupPost extends Fragment {
     private ServiceApi service;
     private UserData userData;
     private GroupData groupData;
+    private boolean myGroup;
 
     private ViewGroup root;
     private String mParam1;
@@ -88,7 +90,7 @@ public class GroupPost extends Fragment {
     }
 
     @Override
-    public void onStart() {
+    public void onStart(){
         super.onStart();
 
     }
@@ -129,7 +131,12 @@ public class GroupPost extends Fragment {
         setGroupView();
 //        setPostListView(listView_posts);
 
+
+
         button_Add_Post = root.findViewById(R.id.button_Add_Post);
+        if(!myGroup){
+            button_Add_Post.setVisibility(View.INVISIBLE);
+        }
         button_Add_Post.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -195,6 +202,7 @@ public class GroupPost extends Fragment {
                     groupViewModel.getLikeCheck().setValue(checkLikeList);
 
                     setPostAdapter(listView, checkLikeList);
+
                 }
             }
 

@@ -27,6 +27,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.homekippa.AddPetDesActivity;
+import com.example.homekippa.MainActivity;
 import com.example.homekippa.R;
 import com.example.homekippa.data.GroupData;
 import com.example.homekippa.data.WeatheLocationResponse;
@@ -36,6 +37,8 @@ import com.example.homekippa.network.RetrofitClient;
 import com.example.homekippa.network.ServiceApi;
 import com.example.homekippa.ui.group.SingleItemPet;
 import com.example.homekippa.ui.group.YesGroup;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,10 +66,14 @@ public class WalkFragment extends Fragment {
 
     private Drawable drawable;
 
+
     private EditText editText_temperature;
     private EditText editText_weather;
     private ImageView imageView_weather;
     private Button button_startWalk;
+    private RecyclerView listView_walk_pets;
+
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -81,130 +88,141 @@ public class WalkFragment extends Fragment {
         editText_weather = root.findViewById(R.id.editText_weather);
         imageView_weather = root.findViewById(R.id.imageView_weather);
         button_startWalk = root.findViewById(R.id.button_startWalk);
+        listView_walk_pets = root.findViewById(R.id.listview_walk_pets);
+        groupData = ((MainActivity) getActivity()).getGroupData();
+        Log.d("groupData", String.valueOf(groupData.getId()));
+
+
+        //Firebase연동 -> mapActivity로 이
+
+
 
         userLocation =getMyLocation();
+        setPetListView(listView_walk_pets);
         if( userLocation != null ) {
             lat = userLocation.getLatitude();
             lon = userLocation.getLongitude();
             Log.d("weather_lat", String.valueOf(lat));
             Log.d("weather_lon", String.valueOf(lon));
         }else {
-            Log.d("weather_error", "나 자고 싶엉!!");
+            Log.d("weather_error", "날씨 에러");
         }
         // lat하고 lon의 값을 받아와서 weatherLocation을 통해 서버로 값을 보낸다.
 
 
         weatherLocation(new WeatherLocationData(lat, lon));
 
-
+// 펫 id하고 userID를 넘겨준다.
         button_startWalk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent intent = new Intent(getActivity(), mapActivity.class);
+                intent.putExtra("groupData", groupData);
                 startActivity(intent);
             }
         });
 
         return root;
     }
-//    private void setPetListView(RecyclerView listView) {
-//
-//        service.getPetsData(groupData.getId()).enqueue(new Callback<List<SingleItemPet>>() {
-//            @Override
-//            public void onResponse(Call<List<SingleItemPet>> call, Response<List<SingleItemPet>> response) {
-//                if (response.isSuccessful()) {
-//                    Log.d("반려동물 확인", "성공");
-//                    List<SingleItemPet> pets = response.body();
-//                    if (!pets.isEmpty()) {
-//                        petList.addAll(pets);
-//                        //TODO:나중에 바꿔야 할 부분. 일단 가장 처음 강아지의 아이디만을 petId라 해놓음!
-//                        petId = pets.get(0).getId();
-//
-//                        ListPetAdapter petAdapter = new ListPetAdapter(petList);
-//
-//                        LinearLayoutManager pLayoutManager = new LinearLayoutManager(getActivity());
-//                        pLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-//                        listView.setLayoutManager(pLayoutManager);
-//                        listView.setItemAnimator(new DefaultItemAnimator());
-//                        listView.setAdapter(petAdapter);
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<List<SingleItemPet>> call, Throwable t) {
-//                Log.d("반려동물 확인", "에러");
-//                Log.e("반려동물 확인", t.getMessage());
-//            }
-//        });
-//    }
-//
-//    class ListPetAdapter extends RecyclerView.Adapter<ListPetAdapter.MyViewHolder> {
-//        private ArrayList<SingleItemPet> pet_Items;
-//
-//        public ListPetAdapter(ArrayList<SingleItemPet> petItems) {
-//            this.pet_Items = petItems;
-//        }
-//
-//        @NonNull
-//        @Override
-//        public ListPetAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-//            View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.listitem_pet, parent, false);
-//            List<View>itemViewList = new ArrayList<>();
-//            itemViewList.add(itemView);
-//            ListPetAdapter.MyViewHolder myViewHolder = new ListPetAdapter.MyViewHolder(itemView);
-//
-//            return new ListPetAdapter.MyViewHolder(itemView);
-//        }
-//
-//        @Override
-//        public void onBindViewHolder(@NonNull ListPetAdapter.MyViewHolder holder, int position) {
-//            if(selectedPosition == position){
-//                holder.pet.setBackgroundResource(R.drawable.round_button2);
-//            }else{
-//                holder.pet.setBackgroundResource(R.drawable.round_button);
-//            }
-//            setPetData(holder, position);
-//        }
-//
-//        private void setPetData(ListPetAdapter.MyViewHolder holder, int position) {
-//            SingleItemPet selectedPet = pet_Items.get(position);
-//            holder.petName.setText(selectedPet.getName());
-////            Glide.with(getActivity()).load(R.drawable.simplelogo).circleCrop().into(holder.petImage);
-////            holder.petImage.setImageResource(R.drawable.simplelogo);
-//
-//
-//            holder.pet.setOnClickListener(new View.OnClickListener(){
-//                @Override
-//                public void onClick(View v) {
-//
-//                    selectedPosition = position;
-//                    notifyDataSetChanged();
-//                    petId = petList.get(position).getId();
-//                }
-//            });
-//
-//        }
+    private void setPetListView(RecyclerView listView) {
 
-//        @Override
-//        public int getItemCount() {
-//            return pet_Items.size();
-//        }
-//
-//        class MyViewHolder extends RecyclerView.ViewHolder {
-//            TextView petName;
-//            ImageView petImage;
-//            LinearLayout pet;
-//
-//            MyViewHolder(View view) {
-//                super(view);
-//                pet = (LinearLayout) view.findViewById(R.id.pet);
-//                petName = (TextView) view.findViewById(R.id.listitem_PetName);
-//                petImage = (ImageView) view.findViewById(R.id.listitem_PetImage);
-//
-//            }
-//        }
-//    }
+        service.getPetsData(groupData.getId()).enqueue(new Callback<List<SingleItemPet>>() {
+            @Override
+            public void onResponse(Call<List<SingleItemPet>> call, Response<List<SingleItemPet>> response) {
+                if (response.isSuccessful()) {
+                    Log.d("반려동물 확인", "성공");
+                    List<SingleItemPet> pets = response.body();
+                    if (!pets.isEmpty()) {
+                        petList.addAll(pets);
+                        //TODO:나중에 바꿔야 할 부분. 일단 가장 처음 강아지의 아이디만을 petId라 해놓음!
+                        petId = pets.get(0).getId();
+
+                        ListPetAdapter petAdapter = new ListPetAdapter(petList);
+
+                        LinearLayoutManager pLayoutManager = new LinearLayoutManager(getActivity());
+                        pLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+                        listView.setLayoutManager(pLayoutManager);
+                        listView.setItemAnimator(new DefaultItemAnimator());
+                        listView.setAdapter(petAdapter);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<SingleItemPet>> call, Throwable t) {
+                Log.d("반려동물 확인", "에러");
+                Log.e("반려동물 확인", t.getMessage());
+            }
+        });
+    }
+
+    class ListPetAdapter extends RecyclerView.Adapter<ListPetAdapter.MyViewHolder> {
+        private ArrayList<SingleItemPet> pet_Items;
+
+        public ListPetAdapter(ArrayList<SingleItemPet> petItems) {
+            this.pet_Items = petItems;
+        }
+
+        @NonNull
+        @Override
+        public ListPetAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.listitem_pet, parent, false);
+            List<View>itemViewList = new ArrayList<>();
+            itemViewList.add(itemView);
+            ListPetAdapter.MyViewHolder myViewHolder = new ListPetAdapter.MyViewHolder(itemView);
+
+            return new ListPetAdapter.MyViewHolder(itemView);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull ListPetAdapter.MyViewHolder holder, int position) {
+            if(selectedPosition == position){
+                holder.pet.setBackgroundResource(R.drawable.round_button2);
+            }else{
+                holder.pet.setBackgroundResource(R.drawable.round_button);
+            }
+            setPetData(holder, position);
+        }
+
+        private void setPetData(ListPetAdapter.MyViewHolder holder, int position) {
+            SingleItemPet selectedPet = pet_Items.get(position);
+            holder.petName.setText(selectedPet.getName());
+//            Glide.with(getActivity()).load(R.drawable.simplelogo).circleCrop().into(holder.petImage);
+//            holder.petImage.setImageResource(R.drawable.simplelogo);
+
+
+            holder.pet.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+
+                    selectedPosition = position;
+                    notifyDataSetChanged();
+                    petId = petList.get(position).getId();
+                }
+            });
+
+        }
+
+        @Override
+        public int getItemCount() {
+            return pet_Items.size();
+        }
+
+        class MyViewHolder extends RecyclerView.ViewHolder {
+            TextView petName;
+            ImageView petImage;
+            LinearLayout pet;
+
+            MyViewHolder(View view) {
+                super(view);
+                pet = (LinearLayout) view.findViewById(R.id.pet);
+                petName = (TextView) view.findViewById(R.id.listitem_PetName);
+                petImage = (ImageView) view.findViewById(R.id.listitem_PetImage);
+
+            }
+        }
+    }
 
 
 
@@ -283,6 +301,11 @@ public class WalkFragment extends Fragment {
             drawable = getResources().getDrawable(R.drawable.clear);
             imageView_weather.setImageDrawable(drawable);
             editText_weather.setText("맑음");
+        }
+        else if(weather.equals("haze")){
+            drawable = getResources().getDrawable(R.drawable.haze);
+            imageView_weather.setImageDrawable(drawable);
+            editText_weather.setText("안개");
         }
 
     }

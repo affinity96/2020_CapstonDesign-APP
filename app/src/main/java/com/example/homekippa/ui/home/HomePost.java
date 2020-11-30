@@ -21,9 +21,9 @@ import com.example.homekippa.data.PostResponse;
 import com.example.homekippa.data.UserData;
 import com.example.homekippa.network.RetrofitClient;
 import com.example.homekippa.network.ServiceApi;
-import com.example.homekippa.ui.group.ListPostAdapter;
-import com.example.homekippa.ui.group.SingleItemPost;
-import com.example.homekippa.ui.group.SingleItemPostImage;
+import com.example.homekippa.ListPostAdapter;
+import com.example.homekippa.SingleItemPost;
+import com.example.homekippa.SingleItemPostImage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,6 +79,7 @@ public class HomePost extends Fragment {
 
     }
 
+
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
     }
@@ -98,11 +99,13 @@ public class HomePost extends Fragment {
 
 
     public void setPostListView(RecyclerView listView) {
-        service.getHomePost(tab_).enqueue(new Callback<PostResponse>() {
+        Log.d("tab", tab_);
+        service.getHomePost(groupData.getId(), tab_, groupData.getArea()).enqueue(new Callback<PostResponse>() {
             @Override
             public void onResponse(Call<PostResponse> call, Response<PostResponse> response) {
                 if (response.isSuccessful()) {
                     PostResponse wholePosts = response.body();
+                    Log.d("tab", wholePosts.getGroupData().toString());
 
                     postViewModel = new ViewModelProvider(requireActivity()).get(PostViewModel.class);
 
@@ -114,6 +117,7 @@ public class HomePost extends Fragment {
                     ArrayList<Boolean> checkLikeList = setLikeData(likeList);
                     postViewModel.getPostList().setValue(postList);
                     postViewModel.getLikeCheck().setValue(checkLikeList);
+
                     setPostAdapter(listView, checkLikeList);
 
                 }
@@ -130,6 +134,7 @@ public class HomePost extends Fragment {
 
 
     private void setPostAdapter(RecyclerView listView, ArrayList<Boolean> checkLikeList) {
+        //Setting Sample Image Data
         postAdapter = new ListPostAdapter(getActivity(), (ArrayList<SingleItemPost>) postViewModel.getPostList().getValue(), groupList, checkLikeList, false);
         listView.setAdapter(postAdapter);
 

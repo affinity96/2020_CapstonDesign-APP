@@ -1,11 +1,14 @@
 package com.example.homekippa.ui.group;
 
+import android.graphics.Bitmap;
 import android.util.Log;
 
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.homekippa.SingleItemPost;
+
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,11 +16,11 @@ public class GroupViewModel extends ViewModel {
 
     public static MutableLiveData<List<SingleItemPost>> post = new MutableLiveData<>();
     public static MutableLiveData<List<Boolean>> likeCheck = new MutableLiveData<>();
+    public MutableLiveData<InputStream> groupProfile= new MutableLiveData<>();
 
     public GroupViewModel() {
 
     }
-
 
     public MutableLiveData<List<SingleItemPost>> getPostList() {
         if (post == null) {
@@ -31,6 +34,13 @@ public class GroupViewModel extends ViewModel {
             likeCheck = new MutableLiveData<>();
         }
         return likeCheck;
+    }
+
+    public MutableLiveData<InputStream> getGroupProfile(){
+        if (groupProfile == null) {
+            groupProfile = new MutableLiveData<>();
+        }
+        return groupProfile;
     }
 
     public static void increaseComment(int pos) {

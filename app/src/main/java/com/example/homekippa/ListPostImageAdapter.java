@@ -1,4 +1,4 @@
-package com.example.homekippa.ui.group;
+package com.example.homekippa;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,8 +11,6 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-import com.example.homekippa.R;
 import com.example.homekippa.network.RetrofitClient;
 import com.example.homekippa.network.ServiceApi;
 
@@ -25,7 +23,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ListPostImageAdapter extends RecyclerView.Adapter<ListPostImageAdapter.MyViewHolder> {
-    private ArrayList<SingleItemPostImage> postImage_Items;
+    private ArrayList<SingleItemPostImage> postImage_Items ;
 
     private ServiceApi service;
 
@@ -44,7 +42,6 @@ public class ListPostImageAdapter extends RecyclerView.Adapter<ListPostImageAdap
     @Override
     public void onBindViewHolder(@NonNull ListPostImageAdapter.MyViewHolder holder, int position) {
         setPostImageData(holder, position);
-
     }
 
     private void setPostImageData(MyViewHolder holder, int position) {

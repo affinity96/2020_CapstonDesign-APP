@@ -73,9 +73,10 @@ public class MainActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         userData = (UserData) intent.getExtras().get("user");
-        groupData = (GroupData) intent.getExtras().get("group");
 
         Toast.makeText(getApplicationContext(), userData.getUserName() + "님 로그인", Toast.LENGTH_LONG).show();
+        groupData = (GroupData) intent.getExtras().get("group");
+
 
         //tob navigation
         tb = findViewById(R.id.top_bar);
@@ -209,13 +210,13 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-//        if(!navView.getMenu().getItem(0).isChecked()){
+        if(!navView.getMenu().getItem(0).isChecked()){
             navView.getMenu().getItem(0).setChecked(true);
             getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new HomeFragment()).commitAllowingStateLoss();
-//        }
-//        else {
-//            this.finishAffinity();
-//        }
+        }
+        else {
+            this.finishAffinity();
+        }
     }
 
     private void getUserProfileImage(ImageView userProfile) {
