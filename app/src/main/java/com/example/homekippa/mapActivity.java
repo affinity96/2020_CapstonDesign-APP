@@ -81,8 +81,8 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
         button_walktest =findViewById(R.id.button_walktest);
         groupData = (GroupData) getIntent().getExtras().get("groupData");
 
-
-
+        //마커 생성
+        marker = new MapPOIItem();
         // mapview에 kakaoMap 연동해서 올리기
         mapView =new MapView(this);
         mapViewContainer = (ViewGroup) findViewById(R.id.map_view);
@@ -138,8 +138,7 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                //마커 생성
-                marker = new MapPOIItem();
+                mapView.removeAllPOIItems();
                 //마커 초기화
                 markerCount = 0;
                 // 다른 그룹 위치 판별하기
