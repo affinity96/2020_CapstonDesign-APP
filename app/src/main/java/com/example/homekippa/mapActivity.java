@@ -57,6 +57,8 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
     private LinearLayout linearLayout_infor;
     private TextView textView_walkDistance;
     private TextView textView_walkTime;
+    private Button button_walktest;
+
 //    private Button button_remove;
     private long startTime;
     private long endTime;
@@ -76,6 +78,7 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
 //        button_remove = findViewById(R.id.button_remove);
         textView_walkDistance = findViewById(R.id.textView_walkDistance);
         textView_walkTime = findViewById(R.id.textView_walkTime);
+        button_walktest =findViewById(R.id.button_walktest);
         groupData = (GroupData) getIntent().getExtras().get("groupData");
 
 
@@ -224,6 +227,15 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
                 //위도 경도 초기화
                 latitude_arrayList = new ArrayList<>();
                 longitude_arrayList = new ArrayList<>();
+
+            }
+        });
+
+        button_walktest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), mapTestActivity.class);
+                startActivity(intent);
 
             }
         });
