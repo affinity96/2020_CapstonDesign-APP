@@ -483,6 +483,7 @@ public class YesGroup extends Fragment {
         try {
             File tempFile = new File(storage, fileName);
             tempFile.createNewFile();
+
             FileOutputStream out = new FileOutputStream(tempFile);
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
             // 스트림 사용후 닫아줍니다.
