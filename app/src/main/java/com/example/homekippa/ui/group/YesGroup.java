@@ -351,7 +351,6 @@ public class YesGroup extends Fragment {
                         ListDailyWorkAdapter dailyWorkAdapter = new ListDailyWorkAdapter(dailyWorkList);
                         listView.setAdapter(dailyWorkAdapter);
                     }
-
                 }
             }
 

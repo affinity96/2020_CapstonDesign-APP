@@ -8,6 +8,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -56,6 +57,8 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
     private LinearLayout linearLayout_infor;
     private TextView textView_walkDistance;
     private TextView textView_walkTime;
+    private Button button_walktest;
+
 //    private Button button_remove;
     private long startTime;
     private long endTime;
@@ -75,10 +78,11 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
 //        button_remove = findViewById(R.id.button_remove);
         textView_walkDistance = findViewById(R.id.textView_walkDistance);
         textView_walkTime = findViewById(R.id.textView_walkTime);
+        button_walktest =findViewById(R.id.button_walktest);
         groupData = (GroupData) getIntent().getExtras().get("groupData");
 
-
-
+        //마커 생성
+        marker = new MapPOIItem();
         // mapview에 kakaoMap 연동해서 올리기
         mapView =new MapView(this);
         mapViewContainer = (ViewGroup) findViewById(R.id.map_view);
@@ -105,8 +109,15 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
         // 줌 아웃
         mapView.zoomOut(true);
 
-        //마커 생성
-        marker = new MapPOIItem();
+        mapView.setOnTouchListener(new View.OnTouchListener(){
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return true;
+            }
+        });
+
+
 
 
         //firebase 백엔드 사용해서 위도 경도 저장
@@ -127,6 +138,7 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                mapView.removeAllPOIItems();
                 //마커 초기화
                 markerCount = 0;
                 // 다른 그룹 위치 판별하기
@@ -218,6 +230,15 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
             }
         });
 
+        button_walktest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), mapTestActivity.class);
+                startActivity(intent);
+
+            }
+        });
+
 
 
     }
@@ -242,6 +263,7 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
     public void walkingOtherGroup(Double latitude, Double longitude){
         Log.d("database_read","here");
         MapPoint walkingMapPoint = MapPoint.mapPointWithGeoCoord(latitude,longitude);
+
         marker.setItemName("otherGroup");
         marker.setTag(markerCount);
         marker.setMapPoint(walkingMapPoint);
