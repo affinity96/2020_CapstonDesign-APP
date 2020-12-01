@@ -1,5 +1,6 @@
 package com.example.homekippa;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
@@ -11,8 +12,11 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.homekippa.network.RetrofitClient;
 import com.example.homekippa.network.ServiceApi;
+import com.example.homekippa.ui.group.YesGroup;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -23,9 +27,12 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ListPostImageAdapter extends RecyclerView.Adapter<ListPostImageAdapter.MyViewHolder> {
-    private ArrayList<SingleItemPostImage> postImage_Items ;
+    private ArrayList<SingleItemPostImage> postImage_Items;
 
     private ServiceApi service;
+    private Cache cache;
+
+    private Context context;
 
     public ListPostImageAdapter(ArrayList<SingleItemPostImage> postImageItems) {
         this.postImage_Items = postImageItems;
@@ -36,6 +43,8 @@ public class ListPostImageAdapter extends RecyclerView.Adapter<ListPostImageAdap
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         service = RetrofitClient.getClient().create(ServiceApi.class);
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.listitem_postimage, parent, false);
+        cache = new Cache(parent.getContext());
+        context = parent.getContext();
         return new MyViewHolder(itemView);
     }
 
@@ -50,36 +59,49 @@ public class ListPostImageAdapter extends RecyclerView.Adapter<ListPostImageAdap
 //            holder.postImage.setVisibility(View.GONE);
 //        }
 //        else{
-            getPostImage(holder, postImage.getPostImage());
+        getPostImage(holder, postImage.getPostImage());
 //        }
     }
 
     private void getPostImage(MyViewHolder holder, String url) {
         Log.d("url", url);
-        service.getProfileImage(url).enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                String TAG = "ListPostImageAdapter";
-                if (response.isSuccessful()) {
+        String[] w = url.split("/");
+        String key = w[w.length - 1];
 
-                    Log.d(TAG, "server contacted and has file");
-                    InputStream is = response.body().byteStream();
-                    Bitmap bitmap = BitmapFactory.decodeStream(is);
+        Bitmap bit = cache.getBitmapFromCacheDir(key);
+        if (bit != null) {
+            holder.postImage.setImageBitmap(bit);
+        } else {
+//            ImageLoadTask task = new ImageLoadTask(url, holder.postImage, context, true);
+//            task.execute();
+            ImageTask task = new ImageTask(url, holder.postImage, context, false);
+            task.getImage();
+//            service.getProfileImage(url).enqueue(new Callback<ResponseBody>() {
+//                @Override
+//                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+//                    String TAG = "ListPostImageAdapter";
+//                    if (response.isSuccessful()) {
+//                        Log.d(TAG, "server contacted and has file");
+//                        InputStream is = response.body().byteStream();
+//                        Bitmap bitmap = BitmapFactory.decodeStream(is);
+//                        if (bitmap != null) {
+//                            holder.postImage.setImageBitmap(bitmap);
+//                            cache.saveBitmapToJpeg(bitmap, key);
+//                        }
+//                    } else {
+//                        Log.d(TAG, "server contact failed");
+//                    }
+//                }
+//
+//                @Override
+//                public void onFailure(Call<ResponseBody> call, Throwable t) {
+////                Toast.makeText(YesGroup.this, "그룹생성 에러 발생", Toast.LENGTH_SHORT).show();
+////              Log.e("createGroup error",t.getMessage());
+//                    t.printStackTrace();
+//                }
+//            });
+        }
 
-                    holder.postImage.setImageBitmap(bitmap);
-
-                } else {
-                    Log.d(TAG, "server contact failed");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-//                Toast.makeText(YesGroup.this, "그룹생성 에러 발생", Toast.LENGTH_SHORT).show();
-//              Log.e("createGroup error",t.getMessage());
-                t.printStackTrace();
-            }
-        });
     }
 
     @Override
