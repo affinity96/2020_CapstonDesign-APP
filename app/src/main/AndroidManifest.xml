@@ -70,6 +70,7 @@
         <activity android:name=".ui.searchAddress.searchAddress" />
         <activity android:name=".mapActivity" />
         <activity android:name=".AddPetDesActivity" />
+        <activity android:name=".mapTestActivity"/>
 
 
         <!--    Firebase 푸시 알림-->
