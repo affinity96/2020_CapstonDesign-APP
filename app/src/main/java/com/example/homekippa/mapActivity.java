@@ -71,6 +71,8 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
     private int markerCount;
 
 
+
+
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected  void onCreate(Bundle savedInstanceState) {
@@ -138,6 +140,7 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
         mDatabase = database.getReference("walk");
         mDatabase.child("walking_group").child(String.valueOf(groupData.getId()));
         mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("groupName").setValue(groupData.getName());
+        mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("groupTag").setValue(groupData.getName()+groupData.getTag());
         mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("userName").setValue(userData.getUserName());
         mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("userImage").setValue(userData.getUserImage());
         mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("petName").setValue(petName);
@@ -146,15 +149,10 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
 
 
 
-
-
-
-
-
-
         mDatabase.child("walking_group").child(String.valueOf(15));
         mDatabase.child("walking_group").child(String.valueOf(15)).child("groupName").setValue("초롱이네");
         mDatabase.child("walking_group").child(String.valueOf(15)).child("userName").setValue("초롱");
+        mDatabase.child("walking_group").child(String.valueOf(15)).child("groupTag").setValue("초롱이네123");
         mDatabase.child("walking_group").child(String.valueOf(15)).child("userImage").setValue("drawable");
         mDatabase.child("walking_group").child(String.valueOf(15)).child("address").setValue("우만동");
         mDatabase.child("walking_group").child(String.valueOf(15)).child("latitude").setValue(37.27897262573242);
@@ -163,16 +161,17 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
         mDatabase.child("walking_group").child(String.valueOf(15)).child("petGender").setValue("암컷");
         mDatabase.child("walking_group").child(String.valueOf(15)).child("petSpecies").setValue("말티즈");
 
-        mDatabase.child("walking_group").child(String.valueOf(16));
-        mDatabase.child("walking_group").child(String.valueOf(16)).child("groupName").setValue("검둥이네");
-        mDatabase.child("walking_group").child(String.valueOf(16)).child("userName").setValue("검둥");
-        mDatabase.child("walking_group").child(String.valueOf(16)).child("userImage").setValue("drawable/");
-        mDatabase.child("walking_group").child(String.valueOf(16)).child("address").setValue("우만2동");
-        mDatabase.child("walking_group").child(String.valueOf(16)).child("latitude").setValue(37.28105163574219);
-        mDatabase.child("walking_group").child(String.valueOf(16)).child("longitude").setValue(127.04118347167969);
-        mDatabase.child("walking_group").child(String.valueOf(16)).child("petName").setValue("검둥이");
-        mDatabase.child("walking_group").child(String.valueOf(16)).child("petGender").setValue("암컷");
-        mDatabase.child("walking_group").child(String.valueOf(16)).child("petSpecies").setValue("푸들");
+        mDatabase.child("walking_group").child(String.valueOf(64));
+        mDatabase.child("walking_group").child(String.valueOf(64)).child("groupName").setValue("검둥이네");
+        mDatabase.child("walking_group").child(String.valueOf(64)).child("groupTag").setValue("검둥이네124");
+        mDatabase.child("walking_group").child(String.valueOf(64)).child("userName").setValue("검둥");
+        mDatabase.child("walking_group").child(String.valueOf(64)).child("userImage").setValue("drawable/");
+        mDatabase.child("walking_group").child(String.valueOf(64)).child("address").setValue("우만동");
+        mDatabase.child("walking_group").child(String.valueOf(64)).child("latitude").setValue(37.28105163574221);
+        mDatabase.child("walking_group").child(String.valueOf(64)).child("longitude").setValue(127.04118347167969);
+        mDatabase.child("walking_group").child(String.valueOf(64)).child("petName").setValue("검둥이");
+        mDatabase.child("walking_group").child(String.valueOf(64)).child("petGender").setValue("암컷");
+        mDatabase.child("walking_group").child(String.valueOf(64)).child("petSpecies").setValue("푸들");
 
 
 
@@ -193,7 +192,7 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
                         if (otherAddress.equals(currentAddress)) {
                             Log.d("database_read","address");
                             //다른 그룹 위치 띄우기
-                            walkingOtherGroup(GroupMapData.child("latitude").getValue(Double.class), GroupMapData.child("longitude").getValue(Double.class), GroupMapData.child("groupName").getValue(String.class));
+                            walkingOtherGroup(GroupMapData.child("latitude").getValue(Double.class), GroupMapData.child("longitude").getValue(Double.class), GroupMapData.child("groupTag").getValue(String.class));
                         }
                     }
                 }
@@ -301,12 +300,12 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
     }
     // 산책 중인 다른 그룹 마커로 표시
 
-    public void walkingOtherGroup(Double latitude, Double longitude, String groupName){
+    public void walkingOtherGroup(Double latitude, Double longitude, String groupTag){
 
-        Log.d("database_read","here");
+
         MapPoint walkingMapPoint = MapPoint.mapPointWithGeoCoord(latitude,longitude);
 
-        marker.setItemName(groupName);
+        marker.setItemName(groupTag);
         marker.setTag(markerCount);
         marker.setMapPoint(walkingMapPoint);
         // 기본으로 제공하는 BluePin 마커 모양.
@@ -337,27 +336,46 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
     // POI 건들
     @Override
     public void onPOIItemSelected(MapView mapView, MapPOIItem mapPOIItem) {
-
-
-
     }
     //그 위의 말풍선을 누르면 나오는 부뷴
     @Override
     public void onCalloutBalloonOfPOIItemTouched(MapView mapView, MapPOIItem mapPOIItem) {
-        Log.d("mapPOIItem", String.valueOf(mapPOIItem));
+        Log.d("mapPOIItem", mapPOIItem.getItemName());
+
+        String selectedGroupTag = mapPOIItem.getItemName();
 
         View dialogView = getLayoutInflater().inflate(R.layout.dialog_group, null);
         final TextView petNameTextView = (TextView) dialogView.findViewById(R.id.textView_groupPetName);
         final TextView petGenderTextView = (TextView) dialogView.findViewById(R.id.textView_groupPetGender);
         final TextView petSpeciesTextView = (TextView) dialogView.findViewById(R.id.textView_groupPetSpecies);
-
-//        petNameTextView.setText();
-
-
+        final TextView userNameTextView = (TextView) dialogView.findViewById(R.id.textView_groupUserName);
+        final TextView groupNameTextView = (TextView) dialogView.findViewById(R.id.textView_selectedgroupName);
 
 
+        mDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot SelectedGroupData : dataSnapshot.child("walking_group").getChildren()) {
+                    String checkGroupId = SelectedGroupData.getKey();
+                    String checkGroupTag = SelectedGroupData.child("groupTag").getValue(String.class);
 
+                    //체크된 그룹
+                    if (selectedGroupTag.equals(checkGroupTag)) {
+                        petNameTextView.setText(SelectedGroupData.child("petGender").getValue(String.class));
+                        petGenderTextView.setText(SelectedGroupData.child("petName").getValue(String.class));
+                        petSpeciesTextView.setText(SelectedGroupData.child("petSpecies").getValue(String.class));
+                        userNameTextView.setText(SelectedGroupData.child("userName").getValue(String.class));
+                        groupNameTextView.setText(SelectedGroupData.child("groupName").getValue(String.class));
+                    }
+                }
+            }
 
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.d("database_read_error", "Failed to read value.", error.toException());
+            }
+        });
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setView(dialogView);
@@ -365,6 +383,12 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
             public void onClick(DialogInterface dialog, int pos)
             {
                 Log.d("dialog","here");
+            }
+        });
+        builder.setNegativeButton("채팅", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Log.d("dialog","채팅채팅");
             }
         });
 

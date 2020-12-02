@@ -5,10 +5,35 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
+    <LinearLayout
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/kippaBlue"
+            >
+
+            <TextView
+                android:id="@+id/toolbar_logIn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="산책"
+                android:textColor="#ffffff"
+                android:textSize="20dp" />
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/layout_mapview"
-        android:layout_weight="24"
+        android:layout_weight="28"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         >
@@ -68,55 +93,4 @@
         </LinearLayout>
 
     </LinearLayout>
-
-<!--    <LinearLayout-->
-<!--        android:id="@+id/linearLayout_otherGroupInformation"-->
-<!--        android:layout_weight="1"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:orientation="vertical">-->
-
-<!--        <LinearLayout-->
-<!--            android:id="@+id/linearLayout_othergroupUp"-->
-<!--            android:layout_weight="1"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:orientation="horizontal">-->
-
-<!--            <TextView-->
-<!--                android:id="@+id/textView_otherGroupName"-->
-<!--                android:layout_weight="1"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="match_parent"/>-->
-<!--            <TextView-->
-<!--                android:layout_weight="1"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="match_parent"-->
-<!--                android:text="펫이름 :"-->
-<!--                android:-->
-
-<!--            <TextView-->
-<!--                android:id="@+id/textView_otherGroupPetName"-->
-<!--                android:layout_weight="1"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="match_parent"/>-->
-
-
-<!--        </LinearLayout>-->
-<!--        <LinearLayout-->
-<!--            android:id="@+id/linearLayout_othergroupBottom"-->
-<!--            android:layout_weight="1"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:orientation="horizontal">-->
-
-
-<!--        </LinearLayout>-->
-
-
-
-
-<!--    </LinearLayout>-->
-
-
 </LinearLayout>
