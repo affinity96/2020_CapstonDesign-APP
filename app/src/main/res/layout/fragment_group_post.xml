@@ -53,6 +53,7 @@
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:background="@drawable/round_button2"
+            android:visibility="visible"
             android:text="글쓰기"
             android:textSize="11dp"/>
 

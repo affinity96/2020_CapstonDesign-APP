@@ -20,10 +20,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.homekippa.AddPostActivity;
-import com.example.homekippa.Cache;
-import com.example.homekippa.ImageTask;
 import com.example.homekippa.ListPostAdapter;
 import com.example.homekippa.MainActivity;
 import com.example.homekippa.R;
@@ -55,7 +52,7 @@ public class GroupPost extends Fragment {
     private ServiceApi service;
     private UserData userData;
     private GroupData groupData;
-    private boolean myGroup;
+    private boolean myGroup = true;
 
     private ViewGroup root;
     private String mParam1;
@@ -93,7 +90,7 @@ public class GroupPost extends Fragment {
     }
 
     @Override
-    public void onStart(){
+    public void onStart() {
         super.onStart();
 
     }
@@ -135,63 +132,52 @@ public class GroupPost extends Fragment {
 //        setPostListView(listView_posts);
 
 
-
         button_Add_Post = root.findViewById(R.id.button_Add_Post);
-        if(!myGroup){
+        if (!myGroup) {
             button_Add_Post.setVisibility(View.INVISIBLE);
+        } else {
+            button_Add_Post.setVisibility(View.VISIBLE);
+            button_Add_Post.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getActivity(), AddPostActivity.class);
+                    intent.putExtra("userData", userData);
+                    intent.putExtra("groupData", groupData);
+                    startActivity(intent);
+                }
+            });
+
         }
-        button_Add_Post.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), AddPostActivity.class);
-                intent.putExtra("userData", userData);
-                intent.putExtra("groupData", groupData);
-                startActivity(intent);
-            }
-        });
 
         return root;
     }
 
     private void getGroupProfileImage(String url, CircleImageView imageView) {
         Log.d("url", url);
-        String[] w = url.split("/");
-        String key = w[w.length - 1];
+        service.getProfileImage(url).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                String TAG = "YesGroup";
+                if (response.isSuccessful()) {
 
-        Cache cache = new Cache(getContext());
-        Bitmap bit = cache.getBitmapFromCacheDir(key);
-        if (bit != null) {
-            Glide.with(this).load(bit).diskCacheStrategy(DiskCacheStrategy.NONE).circleCrop().into(imageView);
-        } else {
-//            ImageLoadTask task = new ImageLoadTask(url, imageView, getContext(), false);
-//            task.execute();
-            ImageTask task = new ImageTask(url, imageView, getContext(), false);
-            task.getImage();
-        }
-//        service.getProfileImage(url).enqueue(new Callback<ResponseBody>() {
-//            @Override
-//            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-//                String TAG = "YesGroup";
-//                if (response.isSuccessful()) {
-//
-//                    Log.d(TAG, "server contacted and has file");
-//                    InputStream is = response.body().byteStream();
-//                    Bitmap bitmap = BitmapFactory.decodeStream(is);
-//
-//                    Glide.with(GroupPost.this).load(bitmap).circleCrop().into(imageView);
-//
-//                } else {
-//                    Log.d(TAG, "server contact failed");
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<ResponseBody> call, Throwable t) {
-////                Toast.makeText(YesGroup.this, "그룹생성 에러 발생", Toast.LENGTH_SHORT).show();
-////              Log.e("createGroup error",t.getMessage());
-//                t.printStackTrace();
-//            }
-//        });
+                    Log.d(TAG, "server contacted and has file");
+                    InputStream is = response.body().byteStream();
+                    Bitmap bitmap = BitmapFactory.decodeStream(is);
+
+                    Glide.with(GroupPost.this).load(bitmap).circleCrop().into(imageView);
+
+                } else {
+                    Log.d(TAG, "server contact failed");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+//                Toast.makeText(YesGroup.this, "그룹생성 에러 발생", Toast.LENGTH_SHORT).show();
+//              Log.e("createGroup error",t.getMessage());
+                t.printStackTrace();
+            }
+        });
     }
 
     private void setGroupView() {
