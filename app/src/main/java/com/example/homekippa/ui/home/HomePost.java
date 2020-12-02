@@ -142,8 +142,6 @@ public class HomePost extends Fragment {
         pLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         listView.setLayoutManager(pLayoutManager);
         listView.setItemAnimator(new DefaultItemAnimator());
-
-
     }
 
     private void setImageData() {

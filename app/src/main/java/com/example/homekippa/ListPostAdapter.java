@@ -328,7 +328,7 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
     private void setHomeViewModel(MyViewHolder holder, int position) {
 
         postViewModel = new ViewModelProvider((ViewModelStoreOwner) context).get(PostViewModel.class);
-        if(postViewModel.getPostList().getValue().size()>0){
+        if(postViewModel.getPostList().getValue()!=null){
             postViewModel.getPostList().observe((LifecycleOwner) context, new Observer<List<SingleItemPost>>() {
                 @Override
                 public void onChanged(List<SingleItemPost> singleItemPosts) {
