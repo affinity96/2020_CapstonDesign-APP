@@ -14,6 +14,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.example.homekippa.Cache;
+import com.example.homekippa.ImageLoadTask;
+import com.example.homekippa.ImageTask;
 import com.example.homekippa.R;
 import com.example.homekippa.SingleItemComment;
 import com.example.homekippa.data.CommentData;
@@ -40,6 +44,7 @@ public class ListCommentAdapter extends RecyclerView.Adapter<ListCommentAdapter.
     private ArrayList<CommentData> commentData;
 
     private ServiceApi service;
+    private Cache cache;
 
     public ListCommentAdapter(Context context, ArrayList<SingleItemComment> postCommentItems, ArrayList<CommentData> commentData) {
         this.context = context;
@@ -52,7 +57,7 @@ public class ListCommentAdapter extends RecyclerView.Adapter<ListCommentAdapter.
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.listitem_comment, parent, false);
         service = RetrofitClient.getClient().create(ServiceApi.class);
-
+        cache = new Cache(context);
         return new MyViewHolder(itemView);
     }
 
@@ -103,32 +108,46 @@ public class ListCommentAdapter extends RecyclerView.Adapter<ListCommentAdapter.
     }
 
     private void getProfileImage(MyViewHolder holder, String url) {
-        Log.d("url", url);
-        service.getProfileImage(url).enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                String TAG = "ListCommentAdapter";
-                if (response.isSuccessful()) {
 
-                    Log.d(TAG, "server contacted and has file");
-                    InputStream is = response.body().byteStream();
-                    Bitmap bitmap = BitmapFactory.decodeStream(is);
+        String[] w = url.split("/");
+        String key = w[w.length - 1];
 
-                    Glide.with(context).load(bitmap).circleCrop().into(holder.profile);
-                    holder.profile.setImageBitmap(bitmap);
-
-                } else {
-                    Log.d(TAG, "server contact failed");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-//                Toast.makeText(YesGroup.this, "그룹생성 에러 발생", Toast.LENGTH_SHORT).show();
-//              Log.e("createGroup error",t.getMessage());
-                t.printStackTrace();
-            }
-        });
+        Bitmap bit = cache.getBitmapFromCacheDir(key);
+        if (bit != null) {
+            Glide.with(context).load(bit).diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true).circleCrop().into(holder.profile);
+        } else {
+//            ImageLoadTask task = new ImageLoadTask(url, holder.profile, context, false);
+//            task.execute();
+            ImageTask task = new ImageTask(url, holder.profile, context, false);
+            task.getImage();
+//            service.getProfileImage(url).enqueue(new Callback<ResponseBody>() {
+//                @Override
+//                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+//                    String TAG = "ListCommentAdapter";
+//                    if (response.isSuccessful()) {
+//                        Log.d(TAG, "server contacted and has file");
+//                        InputStream is = response.body().byteStream();
+//                        Bitmap bitmap = BitmapFactory.decodeStream(is);
+//
+//                        if(bitmap!=null){
+//
+//                        }
+//                        Glide.with(context).load(bitmap).diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true).circleCrop().into(holder.profile);
+////                        holder.profile.setImageBitmap(bitmap);
+//
+//                    } else {
+//                        Log.d(TAG, "server contact failed");
+//                    }
+//                }
+//
+//                @Override
+//                public void onFailure(Call<ResponseBody> call, Throwable t) {
+////                Toast.makeText(YesGroup.this, "그룹생성 에러 발생", Toast.LENGTH_SHORT).show();
+////              Log.e("createGroup error",t.getMessage());
+//                    t.printStackTrace();
+//                }
+//            });
+        }
     }
 
     @Override

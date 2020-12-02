@@ -7,7 +7,7 @@
     android:background="@drawable/border_gray"
     android:clickable="true"
     android:orientation="horizontal"
-    android:padding="10dp">
+    android:padding="5dp">
 
     <RelativeLayout
         android:id="@+id/relativeLayout_profile"
@@ -60,10 +60,10 @@
 
         <TextView
             android:id="@+id/textView_PostTitle"
-            android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="3dp"
+            android:layout_weight="1"
             android:lines="1"
             android:text="햇살 좋은 날~🌻"
             android:textColor="#000000"
@@ -72,66 +72,69 @@
 
         <TextView
             android:id="@+id/textView_PostContent"
-            android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textView_PostTitle"
             android:layout_margin="3dp"
+            android:layout_weight="1"
             android:lines="1"
             android:text="기분 좋은 강아지들 행복:) "
             android:textSize="12dp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/listview_PostImages"
-            android:layout_weight="3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textView_PostContent" />
+            android:layout_below="@+id/textView_PostContent"
+            android:layout_weight="3" />
 
         <LinearLayout
-            android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            >
+            android:layout_weight="1"
+            android:orientation="horizontal">
 
             <Button
                 android:id="@+id/imageView_PostLiked"
-                android:layout_weight="1"
                 android:layout_width="22dp"
                 android:layout_height="22dp"
-                android:layout_margin="3dp"
                 android:layout_gravity="center"
+                android:layout_margin="3dp"
+                android:layout_weight="1"
                 android:background="@drawable/like_selector"
                 android:clickable="true"
                 android:focusable="true" />
+
             <TextView
                 android:id="@+id/textView_PostLikedNum"
                 style="@style/BlackText"
-                android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="12"
+                android:layout_margin="3dp"
+                android:layout_weight="1"
+                android:text="0"
                 android:textSize="17sp" />
+
             <ImageView
                 android:id="@+id/imageView_PostComment"
-                android:layout_weight="1"
                 android:layout_width="22dp"
                 android:layout_height="22dp"
-                android:layout_margin="3dp"
                 android:layout_gravity="center"
+                android:layout_margin="3dp"
+                android:layout_weight="1"
                 android:clickable="true"
                 app:srcCompat="@drawable/ic_insert_comment_24px" />
 
             <TextView
                 android:id="@+id/textView_PostCommentNum"
                 style="@style/BlackText"
-                android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="3"
+                android:layout_margin="3dp"
+                android:layout_weight="1"
+                android:text="0"
                 android:textSize="17sp" />
 
             <TextView
