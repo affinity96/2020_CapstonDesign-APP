@@ -52,7 +52,7 @@ public class GroupPost extends Fragment {
     private ServiceApi service;
     private UserData userData;
     private GroupData groupData;
-    private boolean myGroup;
+    private boolean myGroup = true;
 
     private ViewGroup root;
     private String mParam1;
@@ -136,16 +136,19 @@ public class GroupPost extends Fragment {
         button_Add_Post = root.findViewById(R.id.button_Add_Post);
         if(!myGroup){
             button_Add_Post.setVisibility(View.INVISIBLE);
+        }else{
+            button_Add_Post.setVisibility(View.VISIBLE);
+            button_Add_Post.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getActivity(), AddPostActivity.class);
+                    intent.putExtra("userData", userData);
+                    intent.putExtra("groupData", groupData);
+                    startActivity(intent);
+                }
+            });
+
         }
-        button_Add_Post.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), AddPostActivity.class);
-                intent.putExtra("userData", userData);
-                intent.putExtra("groupData", groupData);
-                startActivity(intent);
-            }
-        });
 
         return root;
     }
