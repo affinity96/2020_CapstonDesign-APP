@@ -166,38 +166,6 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
         mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("petSpecies").setValue(petSpecies);
         mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("petImage").setValue(petImageUrl);
 
-
-
-        mDatabase.child("walking_group").child(String.valueOf(15));
-        mDatabase.child("walking_group").child(String.valueOf(15)).child("groupName").setValue("초롱이네");
-        mDatabase.child("walking_group").child(String.valueOf(15)).child("userName").setValue("초롱");
-        mDatabase.child("walking_group").child(String.valueOf(15)).child("groupTag").setValue("초롱이네123");
-        mDatabase.child("walking_group").child(String.valueOf(15)).child("userImage").setValue(userData.getUserImage());
-        mDatabase.child("walking_group").child(String.valueOf(15)).child("address").setValue("우만동");
-        mDatabase.child("walking_group").child(String.valueOf(15)).child("latitude").setValue(37.27897262573242);
-        mDatabase.child("walking_group").child(String.valueOf(15)).child("longitude").setValue(127.04090118408203);
-        mDatabase.child("walking_group").child(String.valueOf(15)).child("petName").setValue("흰둥이");
-        mDatabase.child("walking_group").child(String.valueOf(15)).child("petGender").setValue("암컷");
-        mDatabase.child("walking_group").child(String.valueOf(15)).child("petSpecies").setValue("말티즈");
-        mDatabase.child("walking_group").child(String.valueOf(15)).child("petImage").setValue(petImageUrl);
-
-        mDatabase.child("walking_group").child(String.valueOf(65));
-        mDatabase.child("walking_group").child(String.valueOf(65)).child("groupName").setValue("검둥이네");
-        mDatabase.child("walking_group").child(String.valueOf(65)).child("groupTag").setValue("검둥이네125");
-        mDatabase.child("walking_group").child(String.valueOf(65)).child("userName").setValue("검둥");
-        mDatabase.child("walking_group").child(String.valueOf(65)).child("userImage").setValue(userData.getUserImage());
-        mDatabase.child("walking_group").child(String.valueOf(65)).child("address").setValue("우만2동");
-        mDatabase.child("walking_group").child(String.valueOf(16)).child("latitude").setValue(37.27897262573242);
-        mDatabase.child("walking_group").child(String.valueOf(16)).child("longitude").setValue(127.04090118408203);
-        mDatabase.child("walking_group").child(String.valueOf(65)).child("petName").setValue("검둥이");
-        mDatabase.child("walking_group").child(String.valueOf(65)).child("petGender").setValue("암컷");
-        mDatabase.child("walking_group").child(String.valueOf(65)).child("petSpecies").setValue("푸들");
-        mDatabase.child("walking_group").child(String.valueOf(65)).child("petImage").setValue(petImageUrl);
-
-
-
-
-
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
