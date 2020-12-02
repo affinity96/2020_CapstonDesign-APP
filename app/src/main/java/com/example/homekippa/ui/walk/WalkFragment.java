@@ -4,6 +4,8 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationManager;
@@ -17,6 +19,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
@@ -26,6 +29,8 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.homekippa.AddPetDesActivity;
 import com.example.homekippa.MainActivity;
 import com.example.homekippa.R;
@@ -43,9 +48,15 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import net.daum.mf.map.api.MapPoint;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -162,6 +173,58 @@ public class WalkFragment extends Fragment {
             }
         });
     }
+    private void getPetProfileImage(ListPetAdapter.MyViewHolder holder, String url) {
+        String[] w = url.split("/");
+        String key = w[w.length - 1];
+
+        Bitmap bit = getBitmapFromCacheDir(key);
+        if (bit != null) {
+            Glide.with(WalkFragment.this).load(bit).diskCacheStrategy(DiskCacheStrategy.NONE).circleCrop().into(holder.petImage);
+        } else {
+            service.getProfileImage(url).enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    String TAG = "YesGroup";
+                    if (response.isSuccessful()) {
+                        InputStream is = response.body().byteStream();
+                        Bitmap bitmap = BitmapFactory.decodeStream(is);
+                        Glide.with(WalkFragment.this).load(bitmap).diskCacheStrategy(DiskCacheStrategy.NONE).circleCrop().into(holder.petImage);
+                        saveBitmapToJpeg(bitmap, key);
+                    } else {
+                        Log.d(TAG, "server contact failed");
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    Toast.makeText(getContext(), "펫 사진 에러", Toast.LENGTH_SHORT).show();
+                    Log.e("createGroup error", t.getMessage());
+                    t.printStackTrace();
+                }
+            });
+        }
+    }
+
+    private void saveBitmapToJpeg(Bitmap bitmap, String name) {
+        //내부저장소 캐시 경로를 받아옵니다.
+        File storage = (getContext()).getCacheDir();
+        //저장할 파일 이름
+        String fileName = name;
+
+        try {
+            File tempFile = new File(storage, fileName);
+            tempFile.createNewFile();
+
+            FileOutputStream out = new FileOutputStream(tempFile);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
+            // 스트림 사용후 닫아줍니다.
+            out.close();
+        } catch (FileNotFoundException e) {
+            Log.e("Yes", "FileNotFoundException : " + e.getMessage());
+        } catch (IOException e) {
+            Log.e("Yes", "IOException : " + e.getMessage());
+        }
+    }
 
     class ListPetAdapter extends RecyclerView.Adapter<ListPetAdapter.MyViewHolder> {
         private ArrayList<SingleItemPet> pet_Items;
@@ -194,6 +257,7 @@ public class WalkFragment extends Fragment {
         private void setPetData(ListPetAdapter.MyViewHolder holder, int position) {
             SingleItemPet selectedPet = pet_Items.get(position);
             holder.petName.setText(selectedPet.getName());
+            getPetProfileImage(holder, selectedPet.getImage());
 //            Glide.with(getActivity()).load(R.drawable.simplelogo).circleCrop().into(holder.petImage);
 //            holder.petImage.setImageResource(R.drawable.simplelogo);
 
@@ -239,6 +303,25 @@ public class WalkFragment extends Fragment {
 
             }
         }
+    }
+
+    private Bitmap getBitmapFromCacheDir(String key) {
+        String found = null;
+        Bitmap bitmap = null;
+        File file = new File(getContext().getCacheDir().toString());
+        File[] files = file.listFiles();
+
+        for (File tempFile : files) {
+            //blackJin 이 들어가 있는 파일명을 찾습니다.
+            if (tempFile.getName().contains(key)) {
+                found = (tempFile.getName());
+                String path = getContext().getCacheDir() + "/" + found;
+                //파일경로로부터 비트맵을 생성합니다.
+                bitmap = BitmapFactory.decodeFile(path);
+            }
+        }
+        //blackJins 배열에 있는 파일 경로 중 하나를 랜덤으로 불러옵니다.
+        return bitmap;
     }
 
 
