@@ -30,6 +30,7 @@ import com.example.homekippa.AddPetDesActivity;
 import com.example.homekippa.MainActivity;
 import com.example.homekippa.R;
 import com.example.homekippa.data.GroupData;
+import com.example.homekippa.data.UserData;
 import com.example.homekippa.data.WeatheLocationResponse;
 import com.example.homekippa.data.WeatherLocationData;
 import com.example.homekippa.mapActivity;
@@ -39,6 +40,8 @@ import com.example.homekippa.ui.group.SingleItemPet;
 import com.example.homekippa.ui.group.YesGroup;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import net.daum.mf.map.api.MapPoint;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +64,11 @@ public class WalkFragment extends Fragment {
 
     private ArrayList<SingleItemPet> petList = new ArrayList<>();
     private int petId;
+    private String petName;
+    private String petGender;
+    private String petSpecies;
     private GroupData groupData;
+    private UserData userData;
     private int selectedPosition = 0;
 
     private Drawable drawable;
@@ -90,12 +97,7 @@ public class WalkFragment extends Fragment {
         button_startWalk = root.findViewById(R.id.button_startWalk);
         listView_walk_pets = root.findViewById(R.id.listview_walk_pets);
         groupData = ((MainActivity) getActivity()).getGroupData();
-        Log.d("groupData", String.valueOf(groupData.getId()));
-
-
-        //Firebase연동 -> mapActivity로 이
-
-
+        userData = ((MainActivity) getActivity()).getUserData();
 
         userLocation =getMyLocation();
         setPetListView(listView_walk_pets);
@@ -112,13 +114,17 @@ public class WalkFragment extends Fragment {
 
         weatherLocation(new WeatherLocationData(lat, lon));
 
-// 펫 id하고 userID를 넘겨준다.
+        // 펫 id하고 userID를 넘겨준다.
         button_startWalk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 Intent intent = new Intent(getActivity(), mapActivity.class);
                 intent.putExtra("groupData", groupData);
+                intent.putExtra("userData", userData);
+                intent.putExtra("petName",petName);
+                intent.putExtra("petSpecies",petSpecies);
+                intent.putExtra("petGender",petGender);
                 startActivity(intent);
             }
         });
@@ -199,6 +205,17 @@ public class WalkFragment extends Fragment {
                     selectedPosition = position;
                     notifyDataSetChanged();
                     petId = petList.get(position).getId();
+                    petName = petList.get(position).getName();
+                    petSpecies = petList.get(position).getSpecies();
+                    int petgender = petList.get(position).getGender();
+
+                    if(petgender == 0){
+                        petGender = "암컷";
+
+                    }else{
+                        petGender = "수컷";
+
+                    }
                 }
             });
 
