@@ -122,6 +122,7 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
     private void setPostData(MyViewHolder holder, int position) throws ParseException {
         SingleItemPost post;
         GroupData group;
+
         if (isgroup) {
             post = groupViewModel.getPostList().getValue().get(position);
             group = groupData.get(0);
@@ -129,6 +130,7 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
             post = postViewModel.getPostList().getValue().get(position);
             group = groupData.get(position);
         }
+
 
         if (isgroup) {
             holder.postLikedNum.setText(String.valueOf(groupViewModel.getPostList().getValue().get(position).getLikeNum()));
@@ -139,7 +141,7 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
         holder.postContent.setText(post.getContent());
         holder.postCommentNum.setText(String.valueOf(post.getCommentNum()));
         holder.postGroupName.setText(group.getName());
-        holder.postGroupAddress.setText(group.getAddress());
+        holder.postGroupAddress.setText(group.getArea());
 
         if (post.getImage() == null) {
             holder.recyclerView_postImages.setVisibility(View.GONE);
