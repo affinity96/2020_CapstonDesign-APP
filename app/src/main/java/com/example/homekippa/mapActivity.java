@@ -3,6 +3,8 @@ package com.example.homekippa;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
@@ -12,14 +14,21 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.homekippa.data.GroupData;
 import com.example.homekippa.data.UserData;
+import com.example.homekippa.network.RetrofitClient;
+import com.example.homekippa.network.ServiceApi;
 import com.example.homekippa.ui.group.PetViewModel;
+import com.example.homekippa.ui.walk.WalkFragment;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -33,9 +42,18 @@ import net.daum.mf.map.api.MapPointBounds;
 import net.daum.mf.map.api.MapPolyline;
 import net.daum.mf.map.api.MapView;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class mapActivity extends AppCompatActivity implements MapView.MapViewEventListener, MapView.POIItemEventListener, MapView.CurrentLocationEventListener{
@@ -64,8 +82,10 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
     private String petName;
     private String petGender;
     private String petSpecies;
+    private String petImageUrl;
     private GroupData groupData;
     private UserData userData;
+    private ServiceApi service;
     private DatabaseReference mDatabase;
     private MapPOIItem marker;
     private int markerCount;
@@ -89,12 +109,10 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
         petName =  (String) getIntent().getExtras().get("petName");
         petGender =  (String) getIntent().getExtras().get("petGender");
         petSpecies =  (String) getIntent().getExtras().get("petSpecies");
+        petImageUrl = (String) getIntent().getExtras().get("petImageUrl");
+        service = RetrofitClient.getClient().create(ServiceApi.class);
 
         Log.d("userData",userData.getUserName());
-
-
-
-
 
         //마커 생성
         marker = new MapPOIItem();
@@ -146,6 +164,7 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
         mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("petName").setValue(petName);
         mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("petGender").setValue(petGender);
         mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("petSpecies").setValue(petSpecies);
+        mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("petImage").setValue(petImageUrl);
 
 
 
@@ -160,6 +179,7 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
         mDatabase.child("walking_group").child(String.valueOf(15)).child("petName").setValue("흰둥이");
         mDatabase.child("walking_group").child(String.valueOf(15)).child("petGender").setValue("암컷");
         mDatabase.child("walking_group").child(String.valueOf(15)).child("petSpecies").setValue("말티즈");
+        mDatabase.child("walking_group").child(String.valueOf(15)).child("petImage").setValue(petImageUrl);
 
         mDatabase.child("walking_group").child(String.valueOf(64));
         mDatabase.child("walking_group").child(String.valueOf(64)).child("groupName").setValue("검둥이네");
@@ -172,6 +192,8 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
         mDatabase.child("walking_group").child(String.valueOf(64)).child("petName").setValue("검둥이");
         mDatabase.child("walking_group").child(String.valueOf(64)).child("petGender").setValue("암컷");
         mDatabase.child("walking_group").child(String.valueOf(64)).child("petSpecies").setValue("푸들");
+        mDatabase.child("walking_group").child(String.valueOf(64)).child("petImage").setValue(petImageUrl);
+        mDatabase.child("walking_group").child(String.valueOf(16)).child("petImage").setValue(petImageUrl);
 
 
 
@@ -269,18 +291,6 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
 
             }
         });
-
-//        button_walktest.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(getApplicationContext(), mapTestActivity.class);
-//                startActivity(intent);
-//
-//            }
-//        });
-
-
-
     }
 
     public double distanceSum(ArrayList<Double> longitude_arrayList, ArrayList<Double> latitude_arrayList){
@@ -333,6 +343,79 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
         return dis;
     }
 
+    private void getPetProfileImage(String url, ImageView imageView) {
+        String[] w = url.split("/");
+        String key = w[w.length - 1];
+
+        Bitmap bit = getBitmapFromCacheDir(key);
+        if (bit != null) {
+            Glide.with(mapActivity.this).load(bit).diskCacheStrategy(DiskCacheStrategy.NONE).circleCrop().into(imageView);
+        } else {
+            service.getProfileImage(url).enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    String TAG = "YesGroup";
+                    if (response.isSuccessful()) {
+                        InputStream is = response.body().byteStream();
+                        Bitmap bitmap = BitmapFactory.decodeStream(is);
+                        Glide.with(mapActivity.this).load(bitmap).diskCacheStrategy(DiskCacheStrategy.NONE).circleCrop().into(imageView);
+                        saveBitmapToJpeg(bitmap, key);
+                    } else {
+                        Log.d(TAG, "server contact failed");
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    Log.e("createGroup error", t.getMessage());
+                    t.printStackTrace();
+                }
+            });
+        }
+    }
+    private void saveBitmapToJpeg(Bitmap bitmap, String name) {
+        //내부저장소 캐시 경로를 받아옵니다.
+        File storage = getCacheDir();
+        //저장할 파일 이름
+        String fileName = name;
+
+        try {
+            File tempFile = new File(storage, fileName);
+            tempFile.createNewFile();
+
+            FileOutputStream out = new FileOutputStream(tempFile);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
+            // 스트림 사용후 닫아줍니다.
+            out.close();
+        } catch (FileNotFoundException e) {
+            Log.e("Yes", "FileNotFoundException : " + e.getMessage());
+        } catch (IOException e) {
+            Log.e("Yes", "IOException : " + e.getMessage());
+        }
+    }
+    private Bitmap getBitmapFromCacheDir(String key) {
+        String found = null;
+        Bitmap bitmap = null;
+        File file = new File(getCacheDir().toString());
+        File[] files = file.listFiles();
+
+        for (File tempFile : files) {
+            //blackJin 이 들어가 있는 파일명을 찾습니다.
+            if (tempFile.getName().contains(key)) {
+                found = (tempFile.getName());
+                String path = getCacheDir() + "/" + found;
+                //파일경로로부터 비트맵을 생성합니다.
+                bitmap = BitmapFactory.decodeFile(path);
+            }
+        }
+        //blackJins 배열에 있는 파일 경로 중 하나를 랜덤으로 불러옵니다.
+        return bitmap;
+    }
+
+
+
+
+
     // POI 건들
     @Override
     public void onPOIItemSelected(MapView mapView, MapPOIItem mapPOIItem) {
@@ -350,13 +433,13 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
         final TextView petSpeciesTextView = (TextView) dialogView.findViewById(R.id.textView_groupPetSpecies);
         final TextView userNameTextView = (TextView) dialogView.findViewById(R.id.textView_groupUserName);
         final TextView groupNameTextView = (TextView) dialogView.findViewById(R.id.textView_selectedgroupName);
+        final ImageView petImageView = (ImageView) dialogView.findViewById(R.id.imageView_groupPetImage);
 
 
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot SelectedGroupData : dataSnapshot.child("walking_group").getChildren()) {
-                    String checkGroupId = SelectedGroupData.getKey();
                     String checkGroupTag = SelectedGroupData.child("groupTag").getValue(String.class);
 
                     //체크된 그룹
@@ -366,6 +449,7 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
                         petSpeciesTextView.setText(SelectedGroupData.child("petSpecies").getValue(String.class));
                         userNameTextView.setText(SelectedGroupData.child("userName").getValue(String.class));
                         groupNameTextView.setText(SelectedGroupData.child("groupName").getValue(String.class));
+                        getPetProfileImage(SelectedGroupData.child("petImage").getValue(String.class), petImageView);
                     }
                 }
             }

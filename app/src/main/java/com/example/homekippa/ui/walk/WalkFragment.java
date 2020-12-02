@@ -78,6 +78,7 @@ public class WalkFragment extends Fragment {
     private String petName;
     private String petGender;
     private String petSpecies;
+    private String petImageUrl= "";
     private GroupData groupData;
     private UserData userData;
     private int selectedPosition = 0;
@@ -129,6 +130,24 @@ public class WalkFragment extends Fragment {
         button_startWalk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(petImageUrl.equals("")){
+
+                    petId = petList.get(0).getId();
+                    petName = petList.get(0).getName();
+                    petSpecies = petList.get(0).getSpecies();
+                    petImageUrl = petList.get(0).getImage();
+                    int petgender = petList.get(0).getGender();
+
+                    if(petgender == 0){
+                        petGender = "암컷";
+
+                    }else{
+                        petGender = "수컷";
+
+                    }
+                }
+
+
 
                 Intent intent = new Intent(getActivity(), mapActivity.class);
                 intent.putExtra("groupData", groupData);
@@ -136,6 +155,7 @@ public class WalkFragment extends Fragment {
                 intent.putExtra("petName",petName);
                 intent.putExtra("petSpecies",petSpecies);
                 intent.putExtra("petGender",petGender);
+                intent.putExtra("petImageUrl", petImageUrl);
                 startActivity(intent);
             }
         });
@@ -260,17 +280,15 @@ public class WalkFragment extends Fragment {
             getPetProfileImage(holder, selectedPet.getImage());
 //            Glide.with(getActivity()).load(R.drawable.simplelogo).circleCrop().into(holder.petImage);
 //            holder.petImage.setImageResource(R.drawable.simplelogo);
-
-
             holder.pet.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
-
                     selectedPosition = position;
                     notifyDataSetChanged();
                     petId = petList.get(position).getId();
                     petName = petList.get(position).getName();
                     petSpecies = petList.get(position).getSpecies();
+                    petImageUrl = petList.get(position).getImage();
                     int petgender = petList.get(position).getGender();
 
                     if(petgender == 0){
