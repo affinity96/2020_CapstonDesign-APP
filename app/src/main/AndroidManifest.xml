@@ -71,8 +71,9 @@
             android:windowSoftInputMode="adjustResize" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".ui.searchAddress.searchAddress" />
-        <activity android:name=".mapActivity" />
+        <activity android:name=".MapActivity" />
         <activity android:name=".AddPetDesActivity" />
+        <activity android:name=".SettingActivity"/>
 
 
         <!--    Firebase 푸시 알림-->
