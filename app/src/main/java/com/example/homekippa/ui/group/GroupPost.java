@@ -73,7 +73,6 @@ public class GroupPost extends Fragment {
         // Required empty public constructor
     }
 
-
     public static GroupPost newInstance(String param1, String param2) {
         GroupPost fragment = new GroupPost();
         Bundle args = new Bundle();
@@ -90,7 +89,7 @@ public class GroupPost extends Fragment {
     }
 
     @Override
-    public void onStart(){
+    public void onStart() {
         super.onStart();
 
     }
@@ -132,11 +131,10 @@ public class GroupPost extends Fragment {
 //        setPostListView(listView_posts);
 
 
-
         button_Add_Post = root.findViewById(R.id.button_Add_Post);
-        if(!myGroup){
+        if (!myGroup) {
             button_Add_Post.setVisibility(View.INVISIBLE);
-        }else{
+        } else {
             button_Add_Post.setVisibility(View.VISIBLE);
             button_Add_Post.setOnClickListener(new View.OnClickListener() {
                 @Override
