@@ -6,82 +6,148 @@
     android:layout_height="match_parent"
     tools:context=".AddPostActivity">
 
-
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@color/kippaBlue"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints">
-
-        <TextView
-            android:id="@+id/toolbar_addPost"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="글쓰기"
-            android:textColor="#ffffff"
-            android:textSize="20dp" />
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
-
-        <Button
-            android:id="@+id/button_CompletePost"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:background="@android:color/transparent"
-            android:text="완료"
-            android:textColor="#ffffff"
-            android:textSize="20dp" />
-
-    </androidx.appcompat.widget.Toolbar>
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <EditText
-            android:id="@+id/editText_addPostTitle"
-            style="@style/BlackText"
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/border_gray"
-            android:drawableLeft="@drawable/ic_pets_24px"
-            android:drawablePadding="10dp"
-            android:hint="제목을 입력하세요 "
-            android:padding="20dp"
-            android:textSize="16sp" />
-
-        <EditText
-            android:id="@+id/editText_postContent"
-            style="@style/BlackText"
-            android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:background="@drawable/border_gray"
-            android:gravity="top|left"
-            android:hint="반려동물과의 추억을 다른 사람들과 함께 공유해 보세요"
-            android:padding="20dp"
-            android:textSize="15sp"
+            android:background="@color/kippaBlue"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints">
 
-        <ImageButton
-            android:id="@+id/button_Add_Post_Img"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_margin="10dp"
-            android:background="@drawable/border_gray"
-            app:layout_constraintHorizontal_bias="0.03"
-            app:srcCompat="@drawable/ic_photo_24px" />
+            <TextView
+                android:id="@+id/toolbar_addPost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="글쓰기"
+                android:textColor="#ffffff"
+                android:textSize="20dp" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/button_CompletePost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:background="@android:color/transparent"
+                android:text="완료"
+                android:textColor="#ffffff"
+                android:textSize="20dp" />
+
+        </androidx.appcompat.widget.Toolbar>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+            <EditText
+                android:id="@+id/editText_addPostTitle"
+                style="@style/BlackText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border_gray"
+                android:drawableLeft="@drawable/ic_pets_24px"
+                android:drawablePadding="10dp"
+                android:hint="제목을 입력하세요 "
+                android:padding="15dp"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/editText_postContent"
+                style="@style/BlackText"
+                android:layout_width="match_parent"
+                android:layout_height="175dp"
+                android:background="@drawable/border_gray"
+                android:gravity="top|left"
+                android:hint="반려동물과의 추억을 다른 사람들과 함께 공유해 보세요"
+                android:padding="20dp"
+                android:textSize="15sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/frameLayout_post"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:visibility="invisible">
+
+            <androidx.cardview.widget.CardView
+                android:layout_margin="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="9dp">
+
+                <ImageView
+                    android:id="@+id/post_image"
+                    android:layout_width="93dp"
+                    android:layout_height="93dp" />
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:translationX="93dp"
+                android:translationY="3dp"
+                app:cardCornerRadius="10dp">
+
+                <ImageButton
+                    android:id="@+id/button_cancel_post_image"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="top"
+                    android:background="@android:color/transparent"
+                    app:srcCompat="@drawable/ic_cancel_24px" />
+
+            </androidx.cardview.widget.CardView>
+
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@drawable/border_gray">
+
+            <ImageButton
+                android:id="@+id/button_Add_Post_Img"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_margin="10dp"
+                android:background="@android:color/transparent"
+                app:srcCompat="@drawable/ic_photo_24px" />
+
+        </LinearLayout>
+
+
     </LinearLayout>
 
 
