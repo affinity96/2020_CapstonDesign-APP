@@ -337,11 +337,9 @@ public class AddPetDesActivity extends AppCompatActivity {
                     if (result.getCode() == 200) {
                         setResult(RESULT_OK);
                         finish();
-
                     } else {
                         setResult(RESULT_OK);
                         finish();
-
                     }
                 }
 

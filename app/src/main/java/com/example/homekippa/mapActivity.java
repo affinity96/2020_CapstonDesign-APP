@@ -69,6 +69,7 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
     private MapView mapView;
     private ViewGroup mapViewContainer;
     private Button button_stopMap;
+    private Button button_finishMap;
     private LinearLayout linearLayout_infor;
     private TextView textView_walkDistance;
     private TextView textView_walkTime;
@@ -97,6 +98,7 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
         button_stopMap =findViewById(R.id.button_stopMap);
+        button_finishMap = findViewById(R.id.button_finishMap);
         linearLayout_infor = findViewById(R.id.layout_infor);
 //        button_remove = findViewById(R.id.button_remove);
         textView_walkDistance = findViewById(R.id.textView_walkDistance);
@@ -108,6 +110,7 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
         petGender =  (String) getIntent().getExtras().get("petGender");
         petSpecies =  (String) getIntent().getExtras().get("petSpecies");
         petImageUrl = (String) getIntent().getExtras().get("petImageUrl");
+
         service = RetrofitClient.getClient().create(ServiceApi.class);
 
         Log.d("userData",userData.getUserName());
@@ -215,6 +218,7 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
         button_stopMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                button_stopMap.setVisibility(View.GONE);
 //                mapView.setOnTouchListener(new View.OnTouchListener(){
 //                    @Override
 //                    public boolean onTouch(View v, MotionEvent event) {
@@ -255,6 +259,13 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
                 latitude_arrayList = new ArrayList<>();
                 longitude_arrayList = new ArrayList<>();
 
+            }
+        });
+
+        button_finishMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }
