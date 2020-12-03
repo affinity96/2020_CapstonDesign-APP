@@ -195,7 +195,7 @@ public class YesGroup extends Fragment {
         tv_groupName.setText(groupData.getName());
         tv_groupIntro.setText(groupData.getIntroduction());
 
-        Log.d("group", groupData.getBackground());
+//        Log.d("group", groupData.getBackground());
         getImage(groupData.getImage(), imageView_groupProfile, true);
         getImage(groupData.getBackground(), imageView_groupCover, false);
         setPetListView(listView_pets);
@@ -390,7 +390,6 @@ public class YesGroup extends Fragment {
         });
     }
 
-<<<<<<< HEAD
         @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
@@ -462,7 +461,8 @@ public class YesGroup extends Fragment {
     }
 
     private void getImage(String url, ImageView imageView, boolean isprofile) {
-        loading.loading(getContext());
+        MainActivity main = (MainActivity)getActivity();
+        main.LoadingStart();
         String[] w = url.split("/");
         String key = w[w.length - 1];
 
@@ -480,7 +480,7 @@ public class YesGroup extends Fragment {
             ImageTask task = new ImageTask(url, imageView, getContext(), false);
             task.getImage();
         }
-        loading.loadingEnd();
+        main.LoadingEnd();
     }
 
     private void setPetListView(RecyclerView listView) {
