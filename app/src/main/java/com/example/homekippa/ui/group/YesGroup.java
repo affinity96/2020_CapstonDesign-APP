@@ -101,6 +101,7 @@ public class YesGroup extends Fragment {
     private TextView textView_followerNum;
     private LinearLayout ll_follower;
     private LinearLayout ll_following;
+    private ImageView imageView_groupCover;
 
     private ArrayList<SingleItemPet> petList = new ArrayList<>();
 
@@ -170,6 +171,7 @@ public class YesGroup extends Fragment {
         listView_pets = root.findViewById(R.id.listview_pets);
         listView_dailyWorks = root.findViewById(R.id.listview_dailywork);
         imageView_groupProfile = root.findViewById(R.id.ImageView_groupProfile);
+        imageView_groupCover = root.findViewById(R.id.ImageView_groupCover);
         textView_followerNum = root.findViewById(R.id.textView__followerNum);
         textView_followingNum = root.findViewById(R.id.textView__followingNum);
         ll_follower = root.findViewById(R.id.linearLayout_follower);
@@ -177,7 +179,10 @@ public class YesGroup extends Fragment {
 
         tv_groupName.setText(groupData.getName());
         tv_groupIntro.setText(groupData.getIntroduction());
-        getImage(groupData.getImage(), imageView_groupProfile);
+
+        Log.d("group", groupData.getBackground());
+        getImage(groupData.getImage(), imageView_groupProfile, true);
+        getImage(groupData.getBackground(), imageView_groupCover, false);
         setPetListView(listView_pets);
 
         if (!myGroup) {
@@ -361,14 +366,19 @@ public class YesGroup extends Fragment {
         });
     }
 
-    private void getImage(String url, CircleImageView imageView) {
+    private void getImage(String url, ImageView imageView, boolean isprofile) {
         loading.loading(getContext());
         String[] w = url.split("/");
         String key = w[w.length - 1];
 
         Bitmap bit = cache.getBitmapFromCacheDir(key);
         if (bit != null) {
-            Glide.with(YesGroup.this).load(bit).diskCacheStrategy(DiskCacheStrategy.NONE).circleCrop().into(imageView);
+            if(isprofile){
+                Glide.with(YesGroup.this).load(bit).diskCacheStrategy(DiskCacheStrategy.NONE).circleCrop().into(imageView);
+            }else {
+                Glide.with(YesGroup.this).load(bit).diskCacheStrategy(DiskCacheStrategy.NONE).into(imageView);
+            }
+
         } else {
 //            ImageLoadTask task = new ImageLoadTask(url, imageView, getContext(), false);
 //            task.execute();
@@ -574,7 +584,7 @@ public class YesGroup extends Fragment {
             SingleItemPet selectedPet = pet_Items.get(position);
             holder.petName.setText(selectedPet.getName());
 
-            getImage(selectedPet.getImage(), (CircleImageView) holder.petImage);
+            getImage(selectedPet.getImage(), (CircleImageView) holder.petImage, true);
             holder.pet.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
