@@ -368,9 +368,8 @@ public class MainActivity extends AppCompatActivity {
 
                 //좌측 메뉴에서 item 선택시 - To Do
                 if (id == R.id.menu_item1) {
-                    Intent intent = new Intent(getActivity(), MapActivity.class);
-
-
+                    Intent intent = new Intent(getApplicationContext(), CreateDailyWorkActivity.class);
+                    startActivity(intent);
                 } else if (id == R.id.menu_item2) {
                     Toast.makeText(getApplicationContext(), title + " 선택됨", Toast.LENGTH_SHORT).show();
                 }else if (id == R.id.menu_item3) {
