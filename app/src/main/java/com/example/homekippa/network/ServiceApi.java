@@ -24,6 +24,7 @@ import com.example.homekippa.data.LikeData;
 import com.example.homekippa.data.LikeResponse;
 import com.example.homekippa.data.NotiData;
 import com.example.homekippa.data.PostResponse;
+import com.example.homekippa.data.SetGroupCoverDefaultResponse;
 import com.example.homekippa.data.SignUpData;
 import com.example.homekippa.data.SignUpResponse;
 import com.example.homekippa.data.UidRespense;
@@ -63,6 +64,9 @@ public interface ServiceApi {
 
     @GET("/group/image")
     Call<ResponseBody> getProfileImage(@Query("apiName") String apiName);
+
+    @POST("/group/reset/cover")
+    Call<SetGroupCoverDefaultResponse> setGroupCoverDefault(@Query("groupId") int groupId);
 
     @Multipart
     @POST("/group/add/cover")

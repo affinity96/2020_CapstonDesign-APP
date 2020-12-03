@@ -9,17 +9,17 @@ public class GroupData implements Parcelable {
     private final String image;
     private final String address;
     private final String introduction;
-    private final String background;
+    private final String cover;
     private final int tag;
     private final String area;
 
-    public GroupData(int id, String name, String image, String address, String introduction, String background, int tag, String area) {
+    public GroupData(int id, String name, String image, String address, String introduction, String cover, int tag, String area) {
         this.id = id;
         this.name = name;
         this.image = image;
         this.address = address;
         this.introduction = introduction;
-        this.background = background;
+        this.cover = cover;
         this.tag = tag;
         this.area = area;
     }
@@ -35,7 +35,7 @@ public class GroupData implements Parcelable {
         this.image = parcel.readString();
         this.address = parcel.readString();
         this.introduction = parcel.readString();
-        this.background = parcel.readString();
+        this.cover = parcel.readString();
         this.tag = parcel.readInt();
         this.area = parcel.readString();
     }
@@ -59,7 +59,7 @@ public class GroupData implements Parcelable {
         parcel.writeString(this.image);
         parcel.writeString(this.address);
         parcel.writeString(this.introduction);
-        parcel.writeString(this.background);
+        parcel.writeString(this.cover);
         parcel.writeInt(this.tag);
         parcel.writeString(this.area);
     }
@@ -85,8 +85,8 @@ public class GroupData implements Parcelable {
         return introduction;
     }
 
-    public String getBackground() {
-        return background;
+    public String getCover() {
+        return cover;
     }
 
     public int getTag() {
