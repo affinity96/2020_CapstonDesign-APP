@@ -195,7 +195,6 @@ public class YesGroup extends Fragment {
         tv_groupName.setText(groupData.getName());
         tv_groupIntro.setText(groupData.getIntroduction());
 
-        Log.d("group", groupData.getBackground());
         getImage(groupData.getImage(), imageView_groupProfile, true);
         getImage(groupData.getBackground(), imageView_groupCover, false);
         setPetListView(listView_pets);
@@ -390,8 +389,7 @@ public class YesGroup extends Fragment {
         });
     }
 
-<<<<<<< HEAD
-        @Override
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
         if (resultCode != RESULT_OK) {
@@ -468,16 +466,16 @@ public class YesGroup extends Fragment {
 
         Bitmap bit = cache.getBitmapFromCacheDir(key);
         if (bit != null) {
-            if(isprofile){
+            if (isprofile) {
                 Glide.with(YesGroup.this).load(bit).diskCacheStrategy(DiskCacheStrategy.NONE).circleCrop().into(imageView);
-            }else {
+            } else {
                 Glide.with(YesGroup.this).load(bit).diskCacheStrategy(DiskCacheStrategy.NONE).into(imageView);
             }
 
         } else {
 //            ImageLoadTask task = new ImageLoadTask(url, imageView, getContext(), false);
 //            task.execute();
-            ImageTask task = new ImageTask(url, imageView, getContext(), false);
+            ImageTask task = new ImageTask(url, imageView, getContext(), !isprofile);
             task.getImage();
         }
         loading.loadingEnd();
