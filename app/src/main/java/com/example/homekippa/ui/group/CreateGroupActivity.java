@@ -1,25 +1,19 @@
 package com.example.homekippa.ui.group;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.FileProvider;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.PopupMenu;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,12 +27,8 @@ import com.example.homekippa.ui.searchAddress.searchAddress;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.Map;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -55,31 +45,32 @@ public class CreateGroupActivity extends AppCompatActivity {
     public CreateGroupActivity() {
     }
 
+    public static Context context_CreateGroupActivity;
     private static final String TAG = "createGroup";
 
     private EditText editText_groupName;
     private EditText editText_introduce;
     private Button button_createGroup;
+    private ImageButton image_button_camera;
     private TextView moveToSearchAddress;
     private ImageView imageView_profileImage;
     private EditText editText_detailAddress;
     private FirebaseAuth mAuth;
     private ServiceApi service;
 
-    private File tempFile;
+    public File tempFile;
 
     private Boolean isPermission = true;
-
-    private static final int PICK_FROM_ALBUM = 1;
-    private static final int PICK_FROM_CAMERA = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_group);
+        context_CreateGroupActivity = this;
         editText_groupName = findViewById(R.id.editText_groupName);
         editText_introduce = findViewById(R.id.editText_introduce);
         button_createGroup = findViewById(R.id.button_createGroup);
+        image_button_camera = findViewById(R.id.image_button_camera);
         moveToSearchAddress = findViewById(R.id.moveToSearchAddress);
         mAuth = FirebaseAuth.getInstance();
         service = RetrofitClient.getClient().create(ServiceApi.class);
@@ -90,38 +81,25 @@ public class CreateGroupActivity extends AppCompatActivity {
 
         // 권한 요청
         tedPermission();
-        Log.d("마ㅏㅏㅏㅏㅏ", "밖임");
         imageView_profileImage.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
-                Log.d("사ㅏㅏㅏㅏㅏ", "절반성공");
-                PopupMenu popup = new PopupMenu(getApplicationContext(), view);
-                getMenuInflater().inflate(R.menu.selete_image_menu, popup.getMenu());
-                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        Log.d("바ㅏㅏㅏㅏㅏ", "성공");
-                        switch (item.getItemId()){
-                            case R.id.menu_default:
-                                break;
-                            case R.id.menu_album:
-                                // 권한 허용에 동의하지 않았을 경우 토스트를 띄웁니다.
-                                if(isPermission) goToAlbum();
-                                else Toast.makeText(view.getContext(), getResources().getString(R.string.permission_2), Toast.LENGTH_LONG).show();
-                                break;
-                            case R.id.menu_camera:
-                                // 권한 허용에 동의하지 않았을 경우 토스트를 띄웁니다.
-                                if(isPermission) takePhoto();
-                                else Toast.makeText(view.getContext(), getResources().getString(R.string.permission_2), Toast.LENGTH_LONG).show();
-                                break;
-                            default:
-                                break;
-                        }
-                        return false;
-                    }
-                });
+                Intent intent = new Intent(view.getContext(), PopupSeleteGroupImage.class);
+                intent.putExtra("isPermission", isPermission);
+                startActivityForResult(intent, 1);
 
-                popup.show();
+            }
+        });
+
+        image_button_camera.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), PopupSeleteGroupImage.class);
+                intent.putExtra("isPermission", isPermission);
+                startActivityForResult(intent, 1);
+
             }
         });
 
@@ -177,69 +155,6 @@ public class CreateGroupActivity extends AppCompatActivity {
         });
     }
 
-    /**
-     *  앨범에서 이미지 가져오기
-     */
-    public void goToAlbum() {
-
-        Intent intent = new Intent(Intent.ACTION_PICK);
-        intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
-        startActivityForResult(intent, PICK_FROM_ALBUM);
-    }
-
-    /**
-     *  카메라에서 이미지 가져오기
-     */
-    public void takePhoto() {
-
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
-        try {
-            tempFile = createImageFile();
-        } catch (IOException e) {
-            Toast.makeText(this, "이미지 처리 오류! 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
-            finish();
-            e.printStackTrace();
-        }
-        if (tempFile != null) {
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-
-                Uri photoUri = FileProvider.getUriForFile(this,
-                        "com.example.homekippa.provider", tempFile);
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
-                startActivityForResult(intent, PICK_FROM_CAMERA);
-
-            } else {
-                Uri photoUri = Uri.fromFile(tempFile);
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
-                startActivityForResult(intent, PICK_FROM_CAMERA);
-            }
-        }
-    }
-
-    /**
-     *  폴더 및 파일 만들기
-     */
-    public File createImageFile() throws IOException {
-
-        // 이미지 파일 이름 ( Happytogedog_{시간}_ )
-        String timeStamp = new SimpleDateFormat("HHmmss").format(new Date());
-        String imageFileName = "Happytogedog_" + timeStamp;
-
-        // 이미지가 저장될 폴더 이름 ( Happytogedog )
-        File storageDir = new File(Environment.getExternalStorageDirectory() + "/Happytogedog/");
-        if (!storageDir.exists()) storageDir.mkdirs();
-
-        // 파일 생성
-        File image = File.createTempFile(imageFileName, ".jpg", storageDir);
-        Log.d(TAG, "createImageFile : " + image.getAbsolutePath());
-
-        return image;
-    }
-
-    /**
-     *  tempFile 을 bitmap 으로 변환 후 ImageView 에 설정한다.
-     */
     private void setImage() {
 
         BitmapFactory.Options options = new BitmapFactory.Options();
@@ -247,13 +162,6 @@ public class CreateGroupActivity extends AppCompatActivity {
         Log.d(TAG, "setImage : " + tempFile.getAbsolutePath());
 
         imageView_profileImage.setImageBitmap(originalBm);
-
-        /**
-         *  tempFile 사용 후 null 처리를 해줘야 합니다.
-         *  (resultCode != RESULT_OK) 일 때 tempFile 을 삭제하기 때문에
-         *  기존에 데이터가 남아 있게 되면 원치 않은 삭제가 이뤄집니다.
-         */
-//        tempFile = null;
 
     }
 
@@ -284,72 +192,28 @@ public class CreateGroupActivity extends AppCompatActivity {
 
         @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        super.onActivityResult(requestCode, resultCode, intent);
-        if (resultCode != RESULT_OK) {
-//            Log.d("주소", "error");
-            Toast.makeText(this, "취소 되었습니다.", Toast.LENGTH_SHORT).show();
+            super.onActivityResult(requestCode, resultCode, intent);
+            if (resultCode != RESULT_OK) {
 
-            if(tempFile != null) {
-                if (tempFile.exists()) {
-                    if (tempFile.delete()) {
-                        Log.e(TAG, tempFile.getAbsolutePath() + " 삭제 성공");
-                        tempFile = null;
+                return;
+            } else {
+                if (requestCode == 0) {
+                    //수신성공 출력
+                    String result = intent.getStringExtra("address");
+                    moveToSearchAddress.setText(result);
+                } else if (requestCode == 1) {
+
+                    if (tempFile != null) {
+                        setImage();
+                    } else {
+                        imageView_profileImage.setImageResource(R.drawable.group_profile_default);
                     }
+
                 }
-            }
-
-            return;
-        } else {
-            if (requestCode == 0) {
-                //수신성공 출력
-                String result = intent.getStringExtra("address");
-                moveToSearchAddress.setText(result);
-            } else if (requestCode == PICK_FROM_ALBUM) {
-
-                Uri photoUri = intent.getData();
-                Log.d(TAG, "PICK_FROM_ALBUM photoUri : " + photoUri);
-
-                Cursor cursor = null;
-
-                try {
-
-                    /*
-                     *  Uri 스키마를
-                     *  content:/// 에서 file:/// 로  변경한다.
-                     */
-                    String[] proj = { MediaStore.Images.Media.DATA };
-
-                    assert photoUri != null;
-                    cursor = getContentResolver().query(photoUri, proj, null, null, null);
-
-                    assert cursor != null;
-                    int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-
-                    cursor.moveToFirst();
-
-                    tempFile = new File(cursor.getString(column_index));
-
-                    Log.d(TAG, "tempFile Uri : " + Uri.fromFile(tempFile));
-
-                } finally {
-                    if (cursor != null) {
-                        cursor.close();
-                    }
-                }
-
-                setImage();
-
-            } else if (requestCode == PICK_FROM_CAMERA) {
-
-                setImage();
-
             }
         }
-    }
 
-    private void
-
-    createGroup(String userId, String groupName, String groupAddress, String groupIntroduction, String area) {
+    private void createGroup(String userId, String groupName, String groupAddress, String groupIntroduction, String area) {
         Log.i("create", "create");
 
         if (tempFile != null) {
