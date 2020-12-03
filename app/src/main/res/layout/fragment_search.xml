@@ -7,9 +7,9 @@
     <SearchView
         android:id="@+id/searchView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:iconifiedByDefault="false"
-        android:queryHint="사용자, 그룹을 검색하세요"/>
+        android:queryHint="사용자, 그룹을 검색하세요" />
 
     <ListView
         android:id="@+id/search_listView"

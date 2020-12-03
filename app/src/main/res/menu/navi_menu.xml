@@ -3,32 +3,28 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/menu_item1"
-            android:icon="@drawable/ic_date_range_24px"
             style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-            android:title="일과 등록"/>
+            android:icon="@drawable/ic_dog_food"
+            android:title="일과 등록" />
         <item
             android:id="@+id/menu_item2"
-            android:icon="@drawable/ic_language_24px"
             style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-            android:title="게시물 작성"/>
+            android:icon="@drawable/ic_chat"
+            android:title="게시물 작성" />
         <item
             android:id="@+id/menu_item3"
-            android:icon="@drawable/ic_add_pet"
             style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-            android:title="펫 추가"/>
+            android:icon="@drawable/ic_dog"
+            android:title="펫 추가" />
         <item
             android:id="@+id/menu_item4"
-            android:icon="@drawable/settings"
             style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-            android:title="설정">
-
-
-        </item>
-
+            android:icon="@drawable/ic_settings"
+            android:title="설정" />
         <item
             android:id="@+id/menu_logout"
-            android:icon="@drawable/ic_launcher_foreground"
             style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-            android:title="로그아웃"/>
+            android:icon="@drawable/ic_logout"
+            android:title="로그아웃" />
     </group>
 </menu>

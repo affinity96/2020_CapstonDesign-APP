@@ -72,7 +72,7 @@ public class WalkFragment extends Fragment {
     private String petName;
     private String petGender;
     private String petSpecies;
-    private String petImageUrl= "";
+    private String petImageUrl = "";
     private GroupData groupData;
     private UserData userData;
     private int selectedPosition = 0;
@@ -85,8 +85,6 @@ public class WalkFragment extends Fragment {
     private ImageView imageView_weather;
     private Button button_startWalk;
     private RecyclerView listView_walk_pets;
-
-
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -105,14 +103,14 @@ public class WalkFragment extends Fragment {
         groupData = ((MainActivity) getActivity()).getGroupData();
         userData = ((MainActivity) getActivity()).getUserData();
 
-        userLocation =getMyLocation();
+        userLocation = getMyLocation();
         setPetListView(listView_walk_pets);
-        if( userLocation != null ) {
+        if (userLocation != null) {
             lat = userLocation.getLatitude();
             lon = userLocation.getLongitude();
             Log.d("weather_lat", String.valueOf(lat));
             Log.d("weather_lon", String.valueOf(lon));
-        }else {
+        } else {
             Log.d("weather_error", "날씨 에러");
         }
         // lat하고 lon의 값을 받아와서 weatherLocation을 통해 서버로 값을 보낸다.
@@ -124,7 +122,7 @@ public class WalkFragment extends Fragment {
         button_startWalk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(petImageUrl.equals("")){
+                if (petImageUrl.equals("")) {
 
                     petId = petList.get(0).getId();
                     petName = petList.get(0).getName();
@@ -132,23 +130,22 @@ public class WalkFragment extends Fragment {
                     petImageUrl = petList.get(0).getImage();
                     int petgender = petList.get(0).getGender();
 
-                    if(petgender == 0){
+                    if (petgender == 0) {
                         petGender = "암컷";
 
-                    }else{
+                    } else {
                         petGender = "수컷";
 
                     }
                 }
 
 
-
                 Intent intent = new Intent(getActivity(), MapActivity.class);
                 intent.putExtra("groupData", groupData);
                 intent.putExtra("userData", userData);
-                intent.putExtra("petName",petName);
-                intent.putExtra("petSpecies",petSpecies);
-                intent.putExtra("petGender",petGender);
+                intent.putExtra("petName", petName);
+                intent.putExtra("petSpecies", petSpecies);
+                intent.putExtra("petGender", petGender);
                 intent.putExtra("petImageUrl", petImageUrl);
                 startActivity(intent);
             }
@@ -156,6 +153,7 @@ public class WalkFragment extends Fragment {
 
         return root;
     }
+
     private void setPetListView(RecyclerView listView) {
 
         service.getPetsData(groupData.getId()).enqueue(new Callback<List<SingleItemPet>>() {
@@ -187,6 +185,7 @@ public class WalkFragment extends Fragment {
             }
         });
     }
+
     private void getPetProfileImage(ListPetAdapter.MyViewHolder holder, String url) {
         String[] w = url.split("/");
         String key = w[w.length - 1];
@@ -251,7 +250,7 @@ public class WalkFragment extends Fragment {
         @Override
         public ListPetAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.listitem_pet, parent, false);
-            List<View>itemViewList = new ArrayList<>();
+            List<View> itemViewList = new ArrayList<>();
             itemViewList.add(itemView);
             ListPetAdapter.MyViewHolder myViewHolder = new ListPetAdapter.MyViewHolder(itemView);
 
@@ -260,9 +259,9 @@ public class WalkFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(@NonNull ListPetAdapter.MyViewHolder holder, int position) {
-            if(selectedPosition == position){
+            if (selectedPosition == position) {
                 holder.pet.setBackgroundResource(R.drawable.round_button2);
-            }else{
+            } else {
                 holder.pet.setBackgroundResource(R.drawable.round_button);
             }
             setPetData(holder, position);
@@ -274,7 +273,7 @@ public class WalkFragment extends Fragment {
             getPetProfileImage(holder, selectedPet.getImage());
 //            Glide.with(getActivity()).load(R.drawable.simplelogo).circleCrop().into(holder.petImage);
 //            holder.petImage.setImageResource(R.drawable.simplelogo);
-            holder.pet.setOnClickListener(new View.OnClickListener(){
+            holder.pet.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     selectedPosition = position;
@@ -285,10 +284,10 @@ public class WalkFragment extends Fragment {
                     petImageUrl = petList.get(position).getImage();
                     int petgender = petList.get(position).getGender();
 
-                    if(petgender == 0){
+                    if (petgender == 0) {
                         petGender = "암컷";
 
-                    }else{
+                    } else {
                         petGender = "수컷";
 
                     }
@@ -337,14 +336,12 @@ public class WalkFragment extends Fragment {
     }
 
 
-
     private Location getMyLocation() {
         if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
             ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, this.REQUEST_CODE_LOCATION);
             getMyLocation(); //이건 써도되고 안써도 되지만, 전 권한 승인하면 즉시 위치값 받아오려고 썼습니다!
-        }
-        else {
+        } else {
             // 수동으로 위치 구하기
             String locationProvider = LocationManager.GPS_PROVIDER;
             currentLocation = locationManager.getLastKnownLocation(locationProvider);
@@ -357,75 +354,64 @@ public class WalkFragment extends Fragment {
     }
 
     private void weatherLocation(WeatherLocationData data) {
-        Log.i("weather_create","create");
+        Log.i("weather_create", "create");
         service.getWeatehrData(data).enqueue(new Callback<WeatheLocationResponse>() {
             @Override
             public void onResponse(Call<WeatheLocationResponse> call, Response<WeatheLocationResponse> response) {
                 WeatheLocationResponse result = response.body();
 
-                editText_temperature.setText(result.getCurrent_temperature());
+                editText_temperature.setText(result.getCurrent_temperature()+"º");
                 weather(result.getCurrent_weather());
-                if(result.getCode() == 200){
-                    Log.d("weather","server connect");
-                }else{
-                    Log.d("weather","server disconnect");
+                if (result.getCode() == 200) {
+                    Log.d("weather", "server connect");
+                } else {
+                    Log.d("weather", "server disconnect");
                 }
             }
+
             @Override
             public void onFailure(Call<WeatheLocationResponse> call, Throwable t) {
-                Log.d("weather_fail","server not response");
+                Log.d("weather_fail", "server not response");
                 t.printStackTrace();
             }
 
         });
     }
 
-    private void weather(String weather){
+    private void weather(String weather) {
         weather = weather.toLowerCase();
 
-        if(weather.equals("rain")){
+        if (weather.equals("rain")) {
             drawable = getResources().getDrawable(R.drawable.rain);
             imageView_weather.setImageDrawable(drawable);
             editText_weather.setText("비");
 
-        }
-        else  if(weather.equals("snow")){
+        } else if (weather.equals("snow")) {
             drawable = getResources().getDrawable(R.drawable.snow);
             imageView_weather.setImageDrawable(drawable);
             editText_weather.setText("눈");
-        }
-        else  if(weather.equals("thunderstorm")){
+        } else if (weather.equals("thunderstorm")) {
             drawable = getResources().getDrawable(R.drawable.thunderstorm);
             imageView_weather.setImageDrawable(drawable);
             editText_weather.setText("천둥번개");
-        }
-        else  if(weather.equals("drizzle")){
+        } else if (weather.equals("drizzle")) {
             drawable = getResources().getDrawable(R.drawable.drizzle);
             imageView_weather.setImageDrawable(drawable);
             editText_weather.setText("보슬보슬비");
-        }
-        else  if(weather.equals("clouds")){
+        } else if (weather.equals("clouds")) {
             drawable = getResources().getDrawable(R.drawable.cloud);
             imageView_weather.setImageDrawable(drawable);
             editText_weather.setText("구름");
-        }
-        else  if(weather.equals("clear")){
+        } else if (weather.equals("clear")) {
             drawable = getResources().getDrawable(R.drawable.clear);
             imageView_weather.setImageDrawable(drawable);
             editText_weather.setText("맑음");
-        }
-        else if(weather.equals("haze")){
+        } else if (weather.equals("haze")) {
             drawable = getResources().getDrawable(R.drawable.haze);
             imageView_weather.setImageDrawable(drawable);
             editText_weather.setText("안개");
         }
-
     }
-
-    //petList 받기
-
-
-
 }
 
 
