@@ -55,7 +55,6 @@
                     android:textSize="11dp"
                     android:visibility="invisible" />
 
-
                 <Button
                     android:id="@+id/button_Add_User"
                     android:layout_width="60dp"
