@@ -371,11 +371,14 @@ public class MainActivity extends AppCompatActivity {
                     Intent intent = new Intent(getApplicationContext(), CreateDailyWorkActivity.class);
                     startActivity(intent);
                 } else if (id == R.id.menu_item2) {
-                    Toast.makeText(getApplicationContext(), title + " 선택됨", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getApplicationContext(), AddPostActivity.class);
+                    startActivity(intent);
                 }else if (id == R.id.menu_item3) {
-                    Toast.makeText(getApplicationContext(), title + " 선택됨", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getApplicationContext(), AddPetActivity.class);
+                    startActivity(intent);
                 }else if (id == R.id.menu_item4) {
-                    Toast.makeText(getApplicationContext(), title + " 선택됨", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getApplicationContext(), CreateDailyWorkActivity.class);
+                    startActivity(intent);
                 } else if (id == R.id.menu_logout) {
                     Toast.makeText(getApplicationContext(), "로그아웃", Toast.LENGTH_SHORT).show();
                     mAuth.signOut();
