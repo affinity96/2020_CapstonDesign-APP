@@ -279,7 +279,7 @@ public class PostDetailActivity extends AppCompatActivity {
                     //TODO: Change the image of GROUP
                     for (int i = 0; i < comment_List.size(); i++) {
                         Log.d("comment", comment_List.get(i).getDate());
-                        SingleItemComment comment = new SingleItemComment(group_List.get(i).getImage(), group_List.get(i).getName(), user_List.get(i).getUserName(), group_List.get(i).getAddress(), comment_List.get(i).getContent());
+                        SingleItemComment comment = new SingleItemComment(group_List.get(i).getImage(), group_List.get(i).getName(), user_List.get(i).getUserName(), group_List.get(i).getArea(), comment_List.get(i).getContent());
                         comments.add(comment);
                     }
 

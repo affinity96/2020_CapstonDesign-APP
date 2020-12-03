@@ -2,17 +2,16 @@ package com.example.homekippa.ui.group;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -33,14 +32,22 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.homekippa.AddPetActivity;
+import com.example.homekippa.AddPetDesActivity;
+import com.example.homekippa.Cache;
 import com.example.homekippa.CreateDailyWorkActivity;
+import com.example.homekippa.ImageLoadTask;
+import com.example.homekippa.ImageTask;
+import com.example.homekippa.LoginActivity;
 import com.example.homekippa.MainActivity;
+import com.example.homekippa.PopupSeletePetImage;
 import com.example.homekippa.R;
+import com.example.homekippa.data.AddpetDesResponse;
 import com.example.homekippa.data.DoneReportsResponse;
 import com.example.homekippa.data.FollowData;
 import com.example.homekippa.data.FollowResponse;
 import com.example.homekippa.data.GroupData;
 import com.example.homekippa.data.GroupInviteData;
+import com.example.homekippa.data.UploadGroupCoverResponse;
 import com.example.homekippa.data.UserData;
 import com.example.homekippa.function.Loading;
 import com.example.homekippa.network.RetrofitClient;
@@ -56,10 +63,15 @@ import java.util.Calendar;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -67,6 +79,8 @@ import retrofit2.Response;
  * create an instance of this fragment.
  */
 public class YesGroup extends Fragment {
+    public static YesGroup context_YesGroup;
+    private static final String TAG = "YesGroup";
     private static final String ARG_PARAM1 = "object";
     private UserData userData;
     private GroupData groupData;
@@ -74,6 +88,7 @@ public class YesGroup extends Fragment {
     private int selectedPosition = 0;
     private int petId; // 나중에 버튼 누르면 현재의 펫 아이디가 바뀌어져 일과를 추가할때 함께 인텐트에 실어보냄
 
+    private Cache cache;
     private ServiceApi service;
     private ViewGroup root;
     final Loading loading = new Loading();
@@ -88,6 +103,7 @@ public class YesGroup extends Fragment {
     private RecyclerView listView_pets;
     private RecyclerView listView_dailyWorks;
     private CircleImageView imageView_groupProfile;
+    private ImageView imageView_groupCover;
     private Button button_addPet;
     private Button button_addUser;
     private Button button_join_group;
@@ -100,6 +116,8 @@ public class YesGroup extends Fragment {
 
     private ArrayList<SingleItemPet> petList = new ArrayList<>();
 
+    public File tempFile;
+    private Boolean isPermission = true;
 
     public static YesGroup newInstance() {
         return new YesGroup();
@@ -126,7 +144,9 @@ public class YesGroup extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        context_YesGroup = this;
 
+        cache = new Cache(getContext());
         service = RetrofitClient.getClient().create(ServiceApi.class);
         followViewModel = new ViewModelProvider(requireActivity()).get(FollowViewModel.class);
         groupViewModel = new ViewModelProvider(requireActivity()).get(GroupViewModel.class);
@@ -144,12 +164,14 @@ public class YesGroup extends Fragment {
 
     @Override
     public void onResume() {
+
         super.onResume();
-        setPetListView(listView_pets);
+//        setPetListView(listView_pets);
     }
 
     @Override
     public void onStart() {
+
         super.onStart();
 
         tv_groupName = root.findViewById(R.id.textView_groupName);
@@ -162,7 +184,9 @@ public class YesGroup extends Fragment {
         button_follow_group = root.findViewById(R.id.button_follow_group);
         listView_pets = root.findViewById(R.id.listview_pets);
         listView_dailyWorks = root.findViewById(R.id.listview_dailywork);
+        imageView_groupCover = root.findViewById(R.id.ImageView_groupCover);
         imageView_groupProfile = root.findViewById(R.id.ImageView_groupProfile);
+        imageView_groupCover = root.findViewById(R.id.ImageView_groupCover);
         textView_followerNum = root.findViewById(R.id.textView__followerNum);
         textView_followingNum = root.findViewById(R.id.textView__followingNum);
         ll_follower = root.findViewById(R.id.linearLayout_follower);
@@ -170,7 +194,10 @@ public class YesGroup extends Fragment {
 
         tv_groupName.setText(groupData.getName());
         tv_groupIntro.setText(groupData.getIntroduction());
-        getGroupProfileImage(groupData.getImage(), imageView_groupProfile);
+
+        Log.d("group", groupData.getBackground());
+        getImage(groupData.getImage(), imageView_groupProfile, true);
+        getImage(groupData.getBackground(), imageView_groupCover, false);
         setPetListView(listView_pets);
 
         if (!myGroup) {
@@ -195,6 +222,7 @@ public class YesGroup extends Fragment {
             textView_followerNum.setText(String.valueOf(followViewModel.getFollowerNum()));
             textView_followingNum.setText(String.valueOf(followViewModel.getFollowingNum()));
         }
+
 
         button_follow_group.setOnClickListener(new View.OnClickListener() {
             GroupData myG = ((MainActivity) getActivity()).getGroupData();
@@ -275,6 +303,15 @@ public class YesGroup extends Fragment {
             }
         });
 
+        button_changeGroupCover.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), PopupSeleteCover.class);
+                intent.putExtra("isPermission", isPermission);
+                startActivityForResult(intent, 1);
+            }
+        });
+
         button_Add_DW.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -312,6 +349,7 @@ public class YesGroup extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         root = (ViewGroup) inflater.inflate(R.layout.fragment_yes_group, container, false);
         return root;
     }
@@ -352,70 +390,97 @@ public class YesGroup extends Fragment {
         });
     }
 
-    private void getGroupProfileImage(String url, CircleImageView imageView) {
+<<<<<<< HEAD
+        @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+        if (resultCode != RESULT_OK) {
+            Toast.makeText(getContext(), "취소 되었습니다.", Toast.LENGTH_SHORT).show();
 
-        String[] w = url.split("/");
-        String key = w[w.length - 1];
-
-        Bitmap bit = getBitmapFromCacheDir(key);
-        if (bit != null) {
-            Glide.with(YesGroup.this).load(bit).diskCacheStrategy(DiskCacheStrategy.NONE).circleCrop().into(imageView);
-        } else {
-            service.getProfileImage(url).enqueue(new Callback<ResponseBody>() {
-                @Override
-                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                    String TAG = "YesGroup";
-                    if (response.isSuccessful()) {
-                        InputStream is = response.body().byteStream();
-                        Bitmap bitmap = BitmapFactory.decodeStream(is);
-                        Glide.with(YesGroup.this).load(bitmap).diskCacheStrategy(DiskCacheStrategy.NONE).circleCrop().into(imageView);
-
-                        saveBitmapToJpeg(bitmap, key);
-                    } else {
-                        Log.d(TAG, "server contact failed");
+            if (tempFile != null) {
+                if (tempFile.exists()) {
+                    if (tempFile.delete()) {
+                        Log.e(TAG, tempFile.getAbsolutePath() + " 삭제 성공");
+                        tempFile = null;
                     }
                 }
+            }
 
-                @Override
-                public void onFailure(Call<ResponseBody> call, Throwable t) {
-//                Toast.makeText(YesGroup.this, "그룹생성 에러 발생", Toast.LENGTH_SHORT).show();
-//              Log.e("createGroup error",t.getMessage());
-                    t.printStackTrace();
+            return;
+        } else {
+            if (requestCode == 1) {
+
+                if (tempFile != null) {
+                    setImage();
+                } else {
+                    imageView_groupCover.setImageResource(R.drawable.base_cover);
                 }
-            });
+
+            }
         }
     }
 
-    private void getPetProfileImage(ListPetAdapter.MyViewHolder holder, String url) {
+    private void setImage() {
+
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        Bitmap originalBm = BitmapFactory.decodeFile(tempFile.getAbsolutePath(), options);
+        Log.d(TAG, "setImage : " + tempFile.getAbsolutePath());
+
+        String str_groupId = String.valueOf(groupData.getId());
+
+        imageView_groupCover.setImageBitmap(originalBm);
+
+        RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), tempFile);
+        MultipartBody.Part uploadFile = MultipartBody.Part.createFormData("upload", tempFile.getName(), reqFile);
+
+        RequestBody id = RequestBody.create(MediaType.parse("text/plain"), str_groupId);
+
+        service.uploadGroupCover(id, uploadFile).enqueue(new Callback<UploadGroupCoverResponse>() {
+            @Override
+            public void onResponse(Call<UploadGroupCoverResponse> call, Response<UploadGroupCoverResponse> response) {
+                UploadGroupCoverResponse result = response.body();
+
+
+                Toast.makeText(getContext(), result.getMessage(), Toast.LENGTH_SHORT).show();
+                if (result.getCode() == 200) {
+
+                } else {
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UploadGroupCoverResponse> call, Throwable t) {
+
+                Toast.makeText(getContext(), "그룹 커버 등록 오류 발생", Toast.LENGTH_SHORT).show();
+                t.printStackTrace();
+
+
+            }
+        });
+
+    }
+
+    private void getImage(String url, ImageView imageView, boolean isprofile) {
+        loading.loading(getContext());
         String[] w = url.split("/");
         String key = w[w.length - 1];
 
-        Bitmap bit = getBitmapFromCacheDir(key);
+        Bitmap bit = cache.getBitmapFromCacheDir(key);
         if (bit != null) {
-            Glide.with(YesGroup.this).load(bit).diskCacheStrategy(DiskCacheStrategy.NONE).circleCrop().into(holder.petImage);
-        } else {
-            service.getProfileImage(url).enqueue(new Callback<ResponseBody>() {
-                @Override
-                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                    String TAG = "YesGroup";
-                    if (response.isSuccessful()) {
-                        InputStream is = response.body().byteStream();
-                        Bitmap bitmap = BitmapFactory.decodeStream(is);
-                        Glide.with(YesGroup.this).load(bitmap).diskCacheStrategy(DiskCacheStrategy.NONE).circleCrop().into(holder.petImage);
-                        saveBitmapToJpeg(bitmap, key);
-                    } else {
-                        Log.d(TAG, "server contact failed");
-                    }
-                }
+            if(isprofile){
+                Glide.with(YesGroup.this).load(bit).diskCacheStrategy(DiskCacheStrategy.NONE).circleCrop().into(imageView);
+            }else {
+                Glide.with(YesGroup.this).load(bit).diskCacheStrategy(DiskCacheStrategy.NONE).into(imageView);
+            }
 
-                @Override
-                public void onFailure(Call<ResponseBody> call, Throwable t) {
-                    Toast.makeText(getContext(), "펫 사진 에러", Toast.LENGTH_SHORT).show();
-                    Log.e("createGroup error", t.getMessage());
-                    t.printStackTrace();
-                }
-            });
+        } else {
+//            ImageLoadTask task = new ImageLoadTask(url, imageView, getContext(), false);
+//            task.execute();
+            ImageTask task = new ImageTask(url, imageView, getContext(), false);
+            task.getImage();
         }
+        loading.loadingEnd();
     }
 
     private void setPetListView(RecyclerView listView) {
@@ -452,47 +517,6 @@ public class YesGroup extends Fragment {
                 Log.e("반려동물 확인", t.getMessage());
             }
         });
-    }
-
-
-    private Bitmap getBitmapFromCacheDir(String key) {
-        String found = null;
-        Bitmap bitmap = null;
-        File file = new File(getContext().getCacheDir().toString());
-        File[] files = file.listFiles();
-
-        for (File tempFile : files) {
-            //blackJin 이 들어가 있는 파일명을 찾습니다.
-            if (tempFile.getName().contains(key)) {
-                found = (tempFile.getName());
-                String path = getContext().getCacheDir() + "/" + found;
-                //파일경로로부터 비트맵을 생성합니다.
-                bitmap = BitmapFactory.decodeFile(path);
-            }
-        }
-        //blackJins 배열에 있는 파일 경로 중 하나를 랜덤으로 불러옵니다.
-        return bitmap;
-    }
-
-    private void saveBitmapToJpeg(Bitmap bitmap, String name) {
-        //내부저장소 캐시 경로를 받아옵니다.
-        File storage = (getContext()).getCacheDir();
-        //저장할 파일 이름
-        String fileName = name;
-
-        try {
-            File tempFile = new File(storage, fileName);
-            tempFile.createNewFile();
-
-            FileOutputStream out = new FileOutputStream(tempFile);
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
-            // 스트림 사용후 닫아줍니다.
-            out.close();
-        } catch (FileNotFoundException e) {
-            Log.e("Yes", "FileNotFoundException : " + e.getMessage());
-        } catch (IOException e) {
-            Log.e("Yes", "IOException : " + e.getMessage());
-        }
     }
 
     class ListDailyWorkAdapter extends RecyclerView.Adapter<ListDailyWorkAdapter.MyViewHolder2> {
@@ -548,7 +572,6 @@ public class YesGroup extends Fragment {
                                         @Override
                                         public void onResponse(Call<DoneReportsResponse> call, Response<DoneReportsResponse> response) {
                                             Log.d("헤에", response.toString());
-
                                         }
 
                                         @Override
@@ -632,7 +655,7 @@ public class YesGroup extends Fragment {
         @NonNull
         @Override
         public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.listitem_pet, parent, false);
+            View itemView = LayoutInflater.from(getContext()).inflate(R.layout.listitem_pet, parent, false);
             List<View> itemViewList = new ArrayList<>();
             itemViewList.add(itemView);
             MyViewHolder myViewHolder = new MyViewHolder(itemView);
@@ -647,17 +670,19 @@ public class YesGroup extends Fragment {
             } else {
                 holder.pet.setBackgroundResource(R.drawable.round_button);
             }
+
             setPetData(holder, position);
+
         }
 
         private void setPetData(MyViewHolder holder, int position) {
             SingleItemPet selectedPet = pet_Items.get(position);
             holder.petName.setText(selectedPet.getName());
-            getPetProfileImage(holder, selectedPet.getImage());
+
+            getImage(selectedPet.getImage(), (CircleImageView) holder.petImage, true);
             holder.pet.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
                     selectedPosition = position;
                     notifyDataSetChanged();
                     setDailyWorkListView(listView_dailyWorks, selectedPet.getId());
@@ -681,11 +706,8 @@ public class YesGroup extends Fragment {
                 pet = (LinearLayout) view.findViewById(R.id.pet);
                 petName = (TextView) view.findViewById(R.id.listitem_PetName);
                 petImage = (ImageView) view.findViewById(R.id.listitem_PetImage);
-
             }
         }
-
-
     }
 
 
