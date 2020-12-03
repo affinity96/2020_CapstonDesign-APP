@@ -32,18 +32,22 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.homekippa.AddPetActivity;
+import com.example.homekippa.AddPetDesActivity;
 import com.example.homekippa.Cache;
 import com.example.homekippa.CreateDailyWorkActivity;
 import com.example.homekippa.ImageLoadTask;
 import com.example.homekippa.ImageTask;
 import com.example.homekippa.LoginActivity;
 import com.example.homekippa.MainActivity;
+import com.example.homekippa.PopupSeletePetImage;
 import com.example.homekippa.R;
+import com.example.homekippa.data.AddpetDesResponse;
 import com.example.homekippa.data.DoneReportsResponse;
 import com.example.homekippa.data.FollowData;
 import com.example.homekippa.data.FollowResponse;
 import com.example.homekippa.data.GroupData;
 import com.example.homekippa.data.GroupInviteData;
+import com.example.homekippa.data.UploadGroupCoverResponse;
 import com.example.homekippa.data.UserData;
 import com.example.homekippa.function.Loading;
 import com.example.homekippa.network.RetrofitClient;
@@ -59,10 +63,15 @@ import java.util.Calendar;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -70,6 +79,8 @@ import retrofit2.Response;
  * create an instance of this fragment.
  */
 public class YesGroup extends Fragment {
+    public static YesGroup context_YesGroup;
+    private static final String TAG = "YesGroup";
     private static final String ARG_PARAM1 = "object";
     private UserData userData;
     private GroupData groupData;
@@ -92,6 +103,7 @@ public class YesGroup extends Fragment {
     private RecyclerView listView_pets;
     private RecyclerView listView_dailyWorks;
     private CircleImageView imageView_groupProfile;
+    private ImageView imageView_groupCover;
     private Button button_addPet;
     private Button button_addUser;
     private Button button_join_group;
@@ -104,6 +116,8 @@ public class YesGroup extends Fragment {
 
     private ArrayList<SingleItemPet> petList = new ArrayList<>();
 
+    public File tempFile;
+    private Boolean isPermission = true;
 
     public static YesGroup newInstance() {
         return new YesGroup();
@@ -130,6 +144,7 @@ public class YesGroup extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        context_YesGroup = this;
 
         cache = new Cache(getContext());
         service = RetrofitClient.getClient().create(ServiceApi.class);
@@ -169,6 +184,7 @@ public class YesGroup extends Fragment {
         button_follow_group = root.findViewById(R.id.button_follow_group);
         listView_pets = root.findViewById(R.id.listview_pets);
         listView_dailyWorks = root.findViewById(R.id.listview_dailywork);
+        imageView_groupCover = root.findViewById(R.id.ImageView_groupCover);
         imageView_groupProfile = root.findViewById(R.id.ImageView_groupProfile);
         textView_followerNum = root.findViewById(R.id.textView__followerNum);
         textView_followingNum = root.findViewById(R.id.textView__followingNum);
@@ -283,6 +299,15 @@ public class YesGroup extends Fragment {
             }
         });
 
+        button_changeGroupCover.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), PopupSeleteCover.class);
+                intent.putExtra("isPermission", isPermission);
+                startActivityForResult(intent, 1);
+            }
+        });
+
         button_Add_DW.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -359,6 +384,76 @@ public class YesGroup extends Fragment {
                 Log.e("일과 확인 에러", t.getMessage());
             }
         });
+    }
+
+        @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+        if (resultCode != RESULT_OK) {
+            Toast.makeText(getContext(), "취소 되었습니다.", Toast.LENGTH_SHORT).show();
+
+            if (tempFile != null) {
+                if (tempFile.exists()) {
+                    if (tempFile.delete()) {
+                        Log.e(TAG, tempFile.getAbsolutePath() + " 삭제 성공");
+                        tempFile = null;
+                    }
+                }
+            }
+
+            return;
+        } else {
+            if (requestCode == 1) {
+
+                if (tempFile != null) {
+                    setImage();
+                } else {
+                    imageView_groupCover.setImageResource(R.drawable.base_cover);
+                }
+
+            }
+        }
+    }
+
+    private void setImage() {
+
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        Bitmap originalBm = BitmapFactory.decodeFile(tempFile.getAbsolutePath(), options);
+        Log.d(TAG, "setImage : " + tempFile.getAbsolutePath());
+
+        String str_groupId = String.valueOf(groupData.getId());
+
+        imageView_groupCover.setImageBitmap(originalBm);
+
+        RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), tempFile);
+        MultipartBody.Part uploadFile = MultipartBody.Part.createFormData("upload", tempFile.getName(), reqFile);
+
+        RequestBody id = RequestBody.create(MediaType.parse("text/plain"), str_groupId);
+
+        service.uploadGroupCover(id, uploadFile).enqueue(new Callback<UploadGroupCoverResponse>() {
+            @Override
+            public void onResponse(Call<UploadGroupCoverResponse> call, Response<UploadGroupCoverResponse> response) {
+                UploadGroupCoverResponse result = response.body();
+
+
+                Toast.makeText(getContext(), result.getMessage(), Toast.LENGTH_SHORT).show();
+                if (result.getCode() == 200) {
+
+                } else {
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UploadGroupCoverResponse> call, Throwable t) {
+
+                Toast.makeText(getContext(), "그룹 커버 등록 오류 발생", Toast.LENGTH_SHORT).show();
+                t.printStackTrace();
+
+
+            }
+        });
+
     }
 
     private void getImage(String url, CircleImageView imageView) {
