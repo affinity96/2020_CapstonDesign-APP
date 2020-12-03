@@ -66,16 +66,13 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
     private ArrayList<Double> longitude_arrayList = new ArrayList<>();
     private MapPolyline mapPolyLine = new MapPolyline();
 
-
     private MapView mapView;
     private ViewGroup mapViewContainer;
     private Button button_stopMap;
     private LinearLayout linearLayout_infor;
     private TextView textView_walkDistance;
     private TextView textView_walkTime;
-    private Button button_walktest;
 
-//    private Button button_remove;
     private long startTime;
     private long endTime;
     private long totalTime;
