@@ -47,6 +47,7 @@ import com.example.homekippa.data.FollowData;
 import com.example.homekippa.data.FollowResponse;
 import com.example.homekippa.data.GroupData;
 import com.example.homekippa.data.GroupInviteData;
+import com.example.homekippa.data.SetGroupCoverDefaultResponse;
 import com.example.homekippa.data.UploadGroupCoverResponse;
 import com.example.homekippa.data.UserData;
 import com.example.homekippa.function.Loading;
@@ -195,9 +196,9 @@ public class YesGroup extends Fragment {
         tv_groupName.setText(groupData.getName());
         tv_groupIntro.setText(groupData.getIntroduction());
 
-//        Log.d("group", groupData.getBackground());
+        Log.d("group", groupData.getCover());
         getImage(groupData.getImage(), imageView_groupProfile, true);
-        getImage(groupData.getBackground(), imageView_groupCover, false);
+        getImage(groupData.getCover(), imageView_groupCover, false);
         setPetListView(listView_pets);
 
         if (!myGroup) {
@@ -408,55 +409,70 @@ public class YesGroup extends Fragment {
             return;
         } else {
             if (requestCode == 1) {
-
-                if (tempFile != null) {
                     setImage();
-                } else {
-                    imageView_groupCover.setImageResource(R.drawable.base_cover);
-                }
-
             }
         }
     }
 
     private void setImage() {
+        if (tempFile != null) {
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            Bitmap originalBm = BitmapFactory.decodeFile(tempFile.getAbsolutePath(), options);
+            Log.d(TAG, "setImage : " + tempFile.getAbsolutePath());
 
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        Bitmap originalBm = BitmapFactory.decodeFile(tempFile.getAbsolutePath(), options);
-        Log.d(TAG, "setImage : " + tempFile.getAbsolutePath());
+            String str_groupId = String.valueOf(groupData.getId());
 
-        String str_groupId = String.valueOf(groupData.getId());
+            imageView_groupCover.setImageBitmap(originalBm);
 
-        imageView_groupCover.setImageBitmap(originalBm);
+            RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), tempFile);
+            MultipartBody.Part uploadFile = MultipartBody.Part.createFormData("upload", tempFile.getName(), reqFile);
 
-        RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), tempFile);
-        MultipartBody.Part uploadFile = MultipartBody.Part.createFormData("upload", tempFile.getName(), reqFile);
+            RequestBody id = RequestBody.create(MediaType.parse("text/plain"), str_groupId);
 
-        RequestBody id = RequestBody.create(MediaType.parse("text/plain"), str_groupId);
+            service.uploadGroupCover(id, uploadFile).enqueue(new Callback<UploadGroupCoverResponse>() {
+                @Override
+                public void onResponse(Call<UploadGroupCoverResponse> call, Response<UploadGroupCoverResponse> response) {
+                    UploadGroupCoverResponse result = response.body();
 
-        service.uploadGroupCover(id, uploadFile).enqueue(new Callback<UploadGroupCoverResponse>() {
-            @Override
-            public void onResponse(Call<UploadGroupCoverResponse> call, Response<UploadGroupCoverResponse> response) {
-                UploadGroupCoverResponse result = response.body();
+                    Toast.makeText(getContext(), result.getMessage(), Toast.LENGTH_SHORT).show();
+                    if (result.getCode() == 200) {
 
+                    } else {
 
-                Toast.makeText(getContext(), result.getMessage(), Toast.LENGTH_SHORT).show();
-                if (result.getCode() == 200) {
+                    }
+                }
 
-                } else {
+                @Override
+                public void onFailure(Call<UploadGroupCoverResponse> call, Throwable t) {
+                    Toast.makeText(getContext(), "그룹 커버 등록 오류 발생", Toast.LENGTH_SHORT).show();
+                    t.printStackTrace();
 
                 }
-            }
+            });
+        } else {
+            imageView_groupCover.setImageResource(R.drawable.base_cover);
 
-            @Override
-            public void onFailure(Call<UploadGroupCoverResponse> call, Throwable t) {
+            service.setGroupCoverDefault(groupData.getId()).enqueue(new Callback<SetGroupCoverDefaultResponse>() {
+                @Override
+                public void onResponse(Call<SetGroupCoverDefaultResponse> call, Response<SetGroupCoverDefaultResponse> response) {
+                    SetGroupCoverDefaultResponse result = response.body();
 
-                Toast.makeText(getContext(), "그룹 커버 등록 오류 발생", Toast.LENGTH_SHORT).show();
-                t.printStackTrace();
+                    Toast.makeText(getContext(), result.getMessage(), Toast.LENGTH_SHORT).show();
+                    if (result.getCode() == 200) {
 
+                    } else {
 
-            }
-        });
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<SetGroupCoverDefaultResponse> call, Throwable t) {
+                    Toast.makeText(getContext(), "그룹 커버 등록 오류 발생", Toast.LENGTH_SHORT).show();
+                    t.printStackTrace();
+
+                }
+            });
+        }
 
     }
 
