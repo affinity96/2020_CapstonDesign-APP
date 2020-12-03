@@ -61,6 +61,8 @@
         <activity android:name=".CreateDailyWorkActivity" />
         <activity android:name=".AddPostActivity" />
         <activity android:name=".ui.group.CreateGroupActivity" />
+        <activity android:name=".ui.group.PopupSeleteGroupImage" android:theme="@android:style/Theme.Dialog" />
+        <activity android:name=".PopupSeletePetImage" android:theme="@android:style/Theme.Dialog" />
         <activity android:name=".VerifyActivity" />
         <activity android:name=".SignUpActivity" />
         <activity android:name=".AddPetActivity" />
@@ -71,7 +73,6 @@
         <activity android:name=".ui.searchAddress.searchAddress" />
         <activity android:name=".mapActivity" />
         <activity android:name=".AddPetDesActivity" />
-        <activity android:name=".mapTestActivity"/>
 
 
         <!--    Firebase 푸시 알림-->
