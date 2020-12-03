@@ -492,7 +492,7 @@ public class YesGroup extends Fragment {
         } else {
 //            ImageLoadTask task = new ImageLoadTask(url, imageView, getContext(), false);
 //            task.execute();
-            ImageTask task = new ImageTask(url, imageView, getContext(), false);
+            ImageTask task = new ImageTask(url, imageView, getContext(), !isprofile);
             task.getImage();
         }
         loading.loadingEnd();
