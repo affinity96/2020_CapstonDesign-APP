@@ -17,7 +17,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -27,8 +26,6 @@ import com.example.homekippa.data.GroupData;
 import com.example.homekippa.data.UserData;
 import com.example.homekippa.network.RetrofitClient;
 import com.example.homekippa.network.ServiceApi;
-import com.example.homekippa.ui.group.PetViewModel;
-import com.example.homekippa.ui.walk.WalkFragment;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -56,7 +53,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class mapActivity extends AppCompatActivity implements MapView.MapViewEventListener, MapView.POIItemEventListener, MapView.CurrentLocationEventListener{
+public class MapActivity extends AppCompatActivity implements MapView.MapViewEventListener, MapView.POIItemEventListener, MapView.CurrentLocationEventListener{
 
 
     private static final int GPS_ENABLE_REQUEST_CODE = 2001;
@@ -299,7 +296,7 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
 
         Bitmap bit = getBitmapFromCacheDir(key);
         if (bit != null) {
-            Glide.with(mapActivity.this).load(bit).diskCacheStrategy(DiskCacheStrategy.NONE).circleCrop().into(imageView);
+            Glide.with(MapActivity.this).load(bit).diskCacheStrategy(DiskCacheStrategy.NONE).circleCrop().into(imageView);
         } else {
             service.getProfileImage(url).enqueue(new Callback<ResponseBody>() {
                 @Override
@@ -308,7 +305,7 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
                     if (response.isSuccessful()) {
                         InputStream is = response.body().byteStream();
                         Bitmap bitmap = BitmapFactory.decodeStream(is);
-                        Glide.with(mapActivity.this).load(bitmap).diskCacheStrategy(DiskCacheStrategy.NONE).circleCrop().into(imageView);
+                        Glide.with(MapActivity.this).load(bitmap).diskCacheStrategy(DiskCacheStrategy.NONE).circleCrop().into(imageView);
                         saveBitmapToJpeg(bitmap, key);
                     } else {
                         Log.d(TAG, "server contact failed");

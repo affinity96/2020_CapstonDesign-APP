@@ -361,13 +361,21 @@ public class MainActivity extends AppCompatActivity {
                 menuItem.setChecked(true);
                 leftDrawerLayout.closeDrawers();
 
+                Log.d("menuItem", String.valueOf(menuItem));
+
                 int id = menuItem.getItemId();
                 String title = menuItem.getTitle().toString();
 
                 //좌측 메뉴에서 item 선택시 - To Do
                 if (id == R.id.menu_item1) {
-                    Toast.makeText(getApplicationContext(), title + " 선택됨", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getActivity(), MapActivity.class);
+
+
                 } else if (id == R.id.menu_item2) {
+                    Toast.makeText(getApplicationContext(), title + " 선택됨", Toast.LENGTH_SHORT).show();
+                }else if (id == R.id.menu_item3) {
+                    Toast.makeText(getApplicationContext(), title + " 선택됨", Toast.LENGTH_SHORT).show();
+                }else if (id == R.id.menu_item4) {
                     Toast.makeText(getApplicationContext(), title + " 선택됨", Toast.LENGTH_SHORT).show();
                 } else if (id == R.id.menu_logout) {
                     Toast.makeText(getApplicationContext(), "로그아웃", Toast.LENGTH_SHORT).show();
