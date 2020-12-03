@@ -62,6 +62,7 @@
         <activity android:name=".AddPostActivity" />
         <activity android:name=".ui.group.CreateGroupActivity" />
         <activity android:name=".ui.group.PopupSeleteGroupImage" android:theme="@android:style/Theme.Dialog" />
+        <activity android:name=".ui.group.PopupSeleteCover" android:theme="@android:style/Theme.Dialog" />
         <activity android:name=".PopupSeletePetImage" android:theme="@android:style/Theme.Dialog" />
         <activity android:name=".VerifyActivity" />
         <activity android:name=".SignUpActivity" />
