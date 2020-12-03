@@ -1,22 +1,21 @@
 package com.example.homekippa;
 
-import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.net.Uri;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.FileProvider;
 import androidx.fragment.app.DialogFragment;
 import com.example.homekippa.data.AddPetDesData;
 import com.example.homekippa.data.AddpetDesResponse;
@@ -33,17 +32,14 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import com.gun0912.tedpermission.PermissionListener;
-import com.gun0912.tedpermission.TedPermission;
+import com.example.homekippa.ui.group.PopupSeleteGroupImage;
 
 import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 
 public class AddPetDesActivity extends AppCompatActivity {
+
+    public static Context context_AddPetDesActivity;
 
     private EditText editText_petName;
     private CheckBox checkbox_female;
@@ -57,8 +53,8 @@ public class AddPetDesActivity extends AppCompatActivity {
     private ServiceApi service;
     private GroupData groupData;
     private TextView textView_birthDay;
-    private Button button_gallery;
-    private Button button_camera;
+    private ImageView imageView_profileImage;
+    private ImageButton image_button_camera;
     private TextView textView_gender;
     private TextView textView_neutalization;
 
@@ -69,18 +65,15 @@ public class AddPetDesActivity extends AppCompatActivity {
     private String regNum;
 
     private static final String TAG = "addPetDes";
-    private File tempFile;
+    public File tempFile;
     private Boolean isPermission = true;
-
-    private static final int PICK_FROM_ALBUM = 1;
-    private static final int PICK_FROM_CAMERA = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_add_pet_des);
-
+        context_AddPetDesActivity = this;
 
         editText_petName = findViewById(R.id.editText_pet_name);
         checkbox_female = findViewById(R.id.checkbox_female);
@@ -91,33 +84,30 @@ public class AddPetDesActivity extends AppCompatActivity {
         textView_gender = findViewById(R.id.textView_pet_gender);
         textView_neutalization = findViewById(R.id.textview_pet_neutralization);
 
-
-
         button_petDesSave = findViewById(R.id.button_petDesSave);
         service = RetrofitClient.getClient().create(ServiceApi.class);
         groupData =(GroupData) getIntent().getExtras().get("groupData");
         textView_birthDay = findViewById(R.id.textView_birthday);
-        button_gallery = findViewById(R.id.button_gallery);
-        button_camera = findViewById(R.id.button_camera);
+        image_button_camera = findViewById(R.id.image_button_camera);
+        imageView_profileImage = findViewById(R.id.imageView_profileImage);
 
-        // 권한 요청
-//        tedPermission();
-
-        button_gallery.setOnClickListener(new View.OnClickListener() {
+        imageView_profileImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // 권한 허용에 동의하지 않았을 경우 토스트를 띄웁니다.
-                if(isPermission) goToAlbum();
-                else Toast.makeText(view.getContext(), getResources().getString(R.string.permission_2), Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(view.getContext(), PopupSeletePetImage.class);
+                intent.putExtra("isPermission", isPermission);
+                startActivityForResult(intent, 1);
+
             }
         });
 
-        button_camera.setOnClickListener(new View.OnClickListener() {
+        image_button_camera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // 권한 허용에 동의하지 않았을 경우 토스트를 띄웁니다.
-                if(isPermission)  takePhoto();
-                else Toast.makeText(view.getContext(), getResources().getString(R.string.permission_2), Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(view.getContext(), PopupSeletePetImage.class);
+                intent.putExtra("isPermission", isPermission);
+                startActivityForResult(intent, 1);
+
             }
         });
 
@@ -147,9 +137,6 @@ public class AddPetDesActivity extends AppCompatActivity {
                 checkbox_netralizationNo.setChecked(true);
             }
         }
-
-
-
 
         textView_birthDay.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -232,97 +219,12 @@ public class AddPetDesActivity extends AppCompatActivity {
 
     }
 
-    /**
-     *  앨범에서 이미지 가져오기
-     */
-    public void goToAlbum() {
-
-        Intent intent = new Intent(Intent.ACTION_PICK);
-        intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
-        startActivityForResult(intent, PICK_FROM_ALBUM);
-    }
-
-    /**
-     *  카메라에서 이미지 가져오기
-     */
-    public void takePhoto() {
-
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
-        try {
-            tempFile = createImageFile();
-        } catch (IOException e) {
-            Toast.makeText(this, "이미지 처리 오류! 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
-            finish();
-            e.printStackTrace();
-        }
-        if (tempFile != null) {
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-
-                Uri photoUri = FileProvider.getUriForFile(this,
-                        "com.example.homekippa.provider", tempFile);
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
-                startActivityForResult(intent, PICK_FROM_CAMERA);
-
-            } else {
-                Uri photoUri = Uri.fromFile(tempFile);
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
-                startActivityForResult(intent, PICK_FROM_CAMERA);
-            }
-        }
-    }
-
-    /**
-     *  폴더 및 파일 만들기
-     */
-    public File createImageFile() throws IOException {
-
-        // 이미지 파일 이름 ( Happytogedog_{시간}_ )
-        String timeStamp = new SimpleDateFormat("HHmmss").format(new Date());
-        String imageFileName = "Happytogedog_" + timeStamp;
-
-        // 이미지가 저장될 폴더 이름 ( Happytogedog )
-        File storageDir = new File(Environment.getExternalStorageDirectory() + "/Happytogedog/");
-        if (!storageDir.exists()) storageDir.mkdirs();
-
-        // 파일 생성
-        File image = File.createTempFile(imageFileName, ".jpg", storageDir);
-        Log.d(TAG, "createImageFile : " + image.getAbsolutePath());
-
-        return image;
-    }
-
-    /**
-     *  권한 설정
-     */
-    public void tedPermission() {
-        PermissionListener permissionListener = new PermissionListener() {
-            @Override
-            public void onPermissionGranted() {
-                // 권한 요청 성공
-
-            }
-
-            @Override
-            public void onPermissionDenied(ArrayList<String> deniedPermissions) {
-                // 권한 요청 실패
-            }
-        };
-
-        TedPermission.with(this)
-                .setPermissionListener(permissionListener)
-                .setRationaleMessage(getResources().getString(R.string.permission_2))
-                .setDeniedMessage(getResources().getString(R.string.permission_1))
-                .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA)
-                .check();
-    }
-
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
         if (resultCode != RESULT_OK) {
             Toast.makeText(this, "취소 되었습니다.", Toast.LENGTH_SHORT).show();
 
-            if(tempFile != null) {
+            if (tempFile != null) {
                 if (tempFile.exists()) {
                     if (tempFile.delete()) {
                         Log.e(TAG, tempFile.getAbsolutePath() + " 삭제 성공");
@@ -333,47 +235,26 @@ public class AddPetDesActivity extends AppCompatActivity {
 
             return;
         } else {
-            if (requestCode == PICK_FROM_ALBUM) {
+            if (requestCode == 1) {
 
-                Uri photoUri = intent.getData();
-                Log.d(TAG, "PICK_FROM_ALBUM photoUri : " + photoUri);
-
-                Cursor cursor = null;
-
-                try {
-
-                    /*
-                     *  Uri 스키마를
-                     *  content:/// 에서 file:/// 로  변경한다.
-                     */
-                    String[] proj = { MediaStore.Images.Media.DATA };
-
-                    assert photoUri != null;
-                    cursor = getContentResolver().query(photoUri, proj, null, null, null);
-
-                    assert cursor != null;
-                    int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-
-                    cursor.moveToFirst();
-
-                    tempFile = new File(cursor.getString(column_index));
-
-                    Log.d(TAG, "tempFile Uri : " + Uri.fromFile(tempFile));
-
-                } finally {
-                    if (cursor != null) {
-                        cursor.close();
-                    }
+                if (tempFile != null) {
+                    setImage();
+                } else {
+                    imageView_profileImage.setImageResource(R.drawable.pet_profile_default);
                 }
-
-//                setImage();
-
-            } else if (requestCode == PICK_FROM_CAMERA) {
-
-//                setImage();
 
             }
         }
+    }
+
+    private void setImage() {
+
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        Bitmap originalBm = BitmapFactory.decodeFile(tempFile.getAbsolutePath(), options);
+        Log.d(TAG, "setImage : " + tempFile.getAbsolutePath());
+
+        imageView_profileImage.setImageBitmap(originalBm);
+
     }
 
     private void datePicker(View view) {
