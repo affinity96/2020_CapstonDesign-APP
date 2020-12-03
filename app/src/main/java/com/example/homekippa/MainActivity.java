@@ -368,16 +368,17 @@ public class MainActivity extends AppCompatActivity {
 
                 //좌측 메뉴에서 item 선택시 - To Do
                 if (id == R.id.menu_item1) {
-                    Intent intent = new Intent(getApplicationContext(), CreateDailyWorkActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), AddPetActivity.class);
+                    Log.d("menuBar", String.valueOf(groupData.getId()));
+                    intent.putExtra("groupData", groupData);
                     startActivity(intent);
                 } else if (id == R.id.menu_item2) {
                     Intent intent = new Intent(getApplicationContext(), AddPostActivity.class);
+                    intent.putExtra("userData", userData);
+                    intent.putExtra("groupData", groupData);
                     startActivity(intent);
                 }else if (id == R.id.menu_item3) {
-                    Intent intent = new Intent(getApplicationContext(), AddPetActivity.class);
-                    startActivity(intent);
-                }else if (id == R.id.menu_item4) {
-                    Intent intent = new Intent(getApplicationContext(), CreateDailyWorkActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), SettingActivity.class);
                     startActivity(intent);
                 } else if (id == R.id.menu_logout) {
                     Toast.makeText(getApplicationContext(), "로그아웃", Toast.LENGTH_SHORT).show();
