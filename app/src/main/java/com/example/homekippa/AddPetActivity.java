@@ -122,7 +122,6 @@ public class AddPetActivity extends AppCompatActivity {
 
 
                 if(result.getCode() == 200){
-
                     finish();
                 }else{
                     finish();
