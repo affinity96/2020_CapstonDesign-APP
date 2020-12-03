@@ -98,6 +98,41 @@
             android:layout_gravity="center"
             android:inputType="phone" />
 
+        <LinearLayout
+            android:layout_width="370dp"
+            android:layout_height="37.3dp"
+            android:layout_margin="5dp"
+            android:layout_gravity="center"
+            android:weightSum="2"
+            android:orientation="horizontal">
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/checkbox_userGenderMan"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginRight="5dp"
+                android:text="남성"
+                android:textSize="6pt"
+                android:background="@drawable/shape"
+                android:gravity="center"
+                android:layout_gravity="center"
+                />
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/checkbox_s"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="여성"
+                android:textSize="6pt"
+                android:background="@drawable/shape"
+                android:gravity="center"
+                android:layout_gravity="center"
+                />
+        </LinearLayout>
+
+
         <TextView
             android:id="@+id/text_Birth"
             android:layout_width="370dp"
@@ -116,6 +151,7 @@
             android:layout_width="match_parent"
             android:layout_height="37.3dp"
             android:layout_marginLeft="13dp"
+            android:layout_marginRight="13dp"
             android:text="이용 약관 동의"/>
 
         <Button
