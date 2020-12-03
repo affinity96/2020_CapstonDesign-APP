@@ -17,7 +17,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -27,8 +26,6 @@ import com.example.homekippa.data.GroupData;
 import com.example.homekippa.data.UserData;
 import com.example.homekippa.network.RetrofitClient;
 import com.example.homekippa.network.ServiceApi;
-import com.example.homekippa.ui.group.PetViewModel;
-import com.example.homekippa.ui.walk.WalkFragment;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -56,7 +53,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class mapActivity extends AppCompatActivity implements MapView.MapViewEventListener, MapView.POIItemEventListener, MapView.CurrentLocationEventListener{
+public class MapActivity extends AppCompatActivity implements MapView.MapViewEventListener, MapView.POIItemEventListener, MapView.CurrentLocationEventListener{
 
 
     private static final int GPS_ENABLE_REQUEST_CODE = 2001;
@@ -166,34 +163,7 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
         mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("petSpecies").setValue(petSpecies);
         mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("petImage").setValue(petImageUrl);
 
-        mDatabase.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                mapView.removeAllPOIItems();
-                //마커 초기화
-                markerCount = 0;
-                // 다른 그룹 위치 판별하기
-                String currentAddress = dataSnapshot.child("walking_group").child(String.valueOf(groupData.getId())).child("address").getValue(String.class);
-                for (DataSnapshot GroupMapData : dataSnapshot.child("walking_group").getChildren()) {
-                    Log.d("mapP",GroupMapData.getKey());
-                    String otherGroup = GroupMapData.getKey();
-                    String otherAddress = GroupMapData.child("address").getValue(String.class);
-                    //자신 그룹은 제외 시킨다.
-                    if (!otherGroup.equals(String.valueOf(groupData.getId()))) {
-                        if (otherAddress.equals(currentAddress)) {
-                            Log.d("database_read","address");
-                            //다른 그룹 위치 띄우기
-                            walkingOtherGroup(GroupMapData.child("latitude").getValue(Double.class), GroupMapData.child("longitude").getValue(Double.class), GroupMapData.child("groupTag").getValue(String.class));
-                        }
-                    }
-                }
-            }
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.d("database_read_error", "Failed to read value.", error.toException());
-            }
-        });
+
 //setCustomCurrentLocationMarkerImage
         //-> 이를 사용해서 현 위치 아이콘을 custom 이미지 바꾸기 가능
 
@@ -326,7 +296,7 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
 
         Bitmap bit = getBitmapFromCacheDir(key);
         if (bit != null) {
-            Glide.with(mapActivity.this).load(bit).diskCacheStrategy(DiskCacheStrategy.NONE).circleCrop().into(imageView);
+            Glide.with(MapActivity.this).load(bit).diskCacheStrategy(DiskCacheStrategy.NONE).circleCrop().into(imageView);
         } else {
             service.getProfileImage(url).enqueue(new Callback<ResponseBody>() {
                 @Override
@@ -335,7 +305,7 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
                     if (response.isSuccessful()) {
                         InputStream is = response.body().byteStream();
                         Bitmap bitmap = BitmapFactory.decodeStream(is);
-                        Glide.with(mapActivity.this).load(bitmap).diskCacheStrategy(DiskCacheStrategy.NONE).circleCrop().into(imageView);
+                        Glide.with(MapActivity.this).load(bitmap).diskCacheStrategy(DiskCacheStrategy.NONE).circleCrop().into(imageView);
                         saveBitmapToJpeg(bitmap, key);
                     } else {
                         Log.d(TAG, "server contact failed");
@@ -475,23 +445,108 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
     int cycle = 0;
     @Override
     public void onCurrentLocationUpdate(MapView mapView, MapPoint currentLocation, float v) {
-        mapPointGeo = currentLocation.getMapPointGeoCoord();
-        mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("latitude").setValue(mapPointGeo.latitude);
-        mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("longitude").setValue(mapPointGeo.longitude);
-        Geocoder g = new Geocoder(this);
-        List<Address> address = null;
-        try{
-            address =g.getFromLocation(mapPointGeo.latitude, mapPointGeo.longitude,10);
-        }catch (IOException e){
-            e.printStackTrace();
-            Log.d("test","입출력오류");
-        }
 
-        mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("address").setValue(address.get(0).getThoroughfare());
-        latitude_arrayList.add(mapPointGeo.latitude);
-        longitude_arrayList.add(mapPointGeo.longitude);
-        mapPolyLine.addPoint(MapPoint.mapPointWithGeoCoord(mapPointGeo.latitude,mapPointGeo.longitude));
-        mapView.addPolyline(mapPolyLine);
+        if( cycle >2) {
+            mapPointGeo = currentLocation.getMapPointGeoCoord();
+            mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("latitude").setValue(mapPointGeo.latitude);
+            mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("longitude").setValue(mapPointGeo.longitude);
+            Geocoder g = new Geocoder(this);
+            List<Address> address = null;
+            try {
+                address = g.getFromLocation(mapPointGeo.latitude, mapPointGeo.longitude, 10);
+            } catch (IOException e) {
+                e.printStackTrace();
+                Log.d("test", "입출력오류");
+            }
+
+            mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("address").setValue(address.get(0).getThoroughfare());
+            latitude_arrayList.add(mapPointGeo.latitude);
+            longitude_arrayList.add(mapPointGeo.longitude);
+            mapPolyLine.addPoint(MapPoint.mapPointWithGeoCoord(mapPointGeo.latitude, mapPointGeo.longitude));
+            mapView.addPolyline(mapPolyLine);
+
+            mDatabase.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    mapView.removeAllPOIItems();
+                    //마커 초기화
+                    markerCount = 0;
+                    // 다른 그룹 위치 판별하기
+                    String currentAddress = dataSnapshot.child("walking_group").child(String.valueOf(groupData.getId())).child("address").getValue(String.class);
+                    for (DataSnapshot GroupMapData : dataSnapshot.child("walking_group").getChildren()) {
+                        Log.d("mapP",GroupMapData.getKey());
+                        String otherGroup = GroupMapData.getKey();
+                        String otherAddress = GroupMapData.child("address").getValue(String.class);
+                        //자신 그룹은 제외 시킨다.
+                        if (!otherGroup.equals(String.valueOf(groupData.getId()))) {
+                            if (otherAddress.equals(currentAddress)) {
+                                Log.d("database_read","address");
+                                //다른 그룹 위치 띄우기
+                                walkingOtherGroup(GroupMapData.child("latitude").getValue(Double.class), GroupMapData.child("longitude").getValue(Double.class), GroupMapData.child("groupTag").getValue(String.class));
+                            }
+                        }
+                    }
+                }
+                @Override
+                public void onCancelled(DatabaseError error) {
+                    // Failed to read value
+                    Log.d("database_read_error", "Failed to read value.", error.toException());
+                }
+            });
+
+            cycle = 1;
+        }else if(cycle == 0){
+            mapPointGeo = currentLocation.getMapPointGeoCoord();
+            mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("latitude").setValue(mapPointGeo.latitude);
+            mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("longitude").setValue(mapPointGeo.longitude);
+            Geocoder g = new Geocoder(this);
+            List<Address> address = null;
+            try {
+                address = g.getFromLocation(mapPointGeo.latitude, mapPointGeo.longitude, 10);
+            } catch (IOException e) {
+                e.printStackTrace();
+                Log.d("test", "입출력오류");
+            }
+
+            mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("address").setValue(address.get(0).getThoroughfare());
+            latitude_arrayList.add(mapPointGeo.latitude);
+            longitude_arrayList.add(mapPointGeo.longitude);
+            mapPolyLine.addPoint(MapPoint.mapPointWithGeoCoord(mapPointGeo.latitude, mapPointGeo.longitude));
+            mapView.addPolyline(mapPolyLine);
+
+            mDatabase.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    mapView.removeAllPOIItems();
+                    //마커 초기화
+                    markerCount = 0;
+                    // 다른 그룹 위치 판별하기
+                    String currentAddress = dataSnapshot.child("walking_group").child(String.valueOf(groupData.getId())).child("address").getValue(String.class);
+                    for (DataSnapshot GroupMapData : dataSnapshot.child("walking_group").getChildren()) {
+                        Log.d("mapP",GroupMapData.getKey());
+                        String otherGroup = GroupMapData.getKey();
+                        String otherAddress = GroupMapData.child("address").getValue(String.class);
+                        //자신 그룹은 제외 시킨다.
+                        if (!otherGroup.equals(String.valueOf(groupData.getId()))) {
+                            if (otherAddress.equals(currentAddress)) {
+                                Log.d("database_read","address");
+                                //다른 그룹 위치 띄우기
+                                walkingOtherGroup(GroupMapData.child("latitude").getValue(Double.class), GroupMapData.child("longitude").getValue(Double.class), GroupMapData.child("groupTag").getValue(String.class));
+                            }
+                        }
+                    }
+                }
+                @Override
+                public void onCancelled(DatabaseError error) {
+                    // Failed to read value
+                    Log.d("database_read_error", "Failed to read value.", error.toException());
+                }
+            });
+            cycle++;
+        }
+        else{
+            cycle++;
+        }
 
 
 
@@ -500,6 +555,8 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
 
 
     }
+
+
 
     @Override
     public void onCurrentLocationDeviceHeadingUpdate(MapView mapView, float v) {

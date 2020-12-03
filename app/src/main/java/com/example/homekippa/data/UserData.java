@@ -20,6 +20,8 @@ public class UserData implements Parcelable {
     private final String userPhone;
     @SerializedName("email")
     private final String userEmail;
+    @SerializedName("gender")
+    private final int userGender;
 
     public String getUserId() {
         return userId;
@@ -37,6 +39,8 @@ public class UserData implements Parcelable {
         return userImage;
     }
 
+    public int getUserGender(){ return userGender;}
+
     public String getUserBirth() {
         return userBirth;
     }
@@ -49,7 +53,7 @@ public class UserData implements Parcelable {
         return userEmail;
     }
 
-    public UserData(String userId, String userName, int groupId, String userImage, String userBirth, String userPhone, String userEmail) {
+    public UserData(String userId, String userName, int groupId, String userImage, String userBirth, String userPhone, String userEmail, int userGender) {
         this.userId = userId;
         this.userName = userName;
         this.groupId = groupId;
@@ -57,6 +61,7 @@ public class UserData implements Parcelable {
         this.userBirth = userBirth;
         this.userPhone = userPhone;
         this.userEmail = userEmail;
+        this.userGender =userGender;
     }
 
     @Override
@@ -72,6 +77,7 @@ public class UserData implements Parcelable {
         this.userBirth = parcel.readString();
         this.userPhone = parcel.readString();
         this.userEmail = parcel.readString();
+        this.userGender = parcel.readInt();
     }
 
     // create Parcelable
@@ -96,5 +102,6 @@ public class UserData implements Parcelable {
         parcel.writeString(this.userBirth);
         parcel.writeString(this.userPhone);
         parcel.writeString(this.userEmail);
+        parcel.writeInt(this.userGender);
     }
 }
