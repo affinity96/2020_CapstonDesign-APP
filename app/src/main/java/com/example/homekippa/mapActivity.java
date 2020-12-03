@@ -1,23 +1,34 @@
 package com.example.homekippa;
 
-import android.content.Intent;
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.homekippa.data.GroupData;
-import com.example.homekippa.ui.group.CreateGroupActivity;
+import com.example.homekippa.data.UserData;
+import com.example.homekippa.network.RetrofitClient;
+import com.example.homekippa.network.ServiceApi;
+import com.example.homekippa.ui.group.PetViewModel;
+import com.example.homekippa.ui.walk.WalkFragment;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -29,14 +40,20 @@ import net.daum.mf.map.api.MapPOIItem;
 import net.daum.mf.map.api.MapPoint;
 import net.daum.mf.map.api.MapPointBounds;
 import net.daum.mf.map.api.MapPolyline;
-import net.daum.mf.map.api.MapReverseGeoCoder;
 import net.daum.mf.map.api.MapView;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.Serializable;
-import java.lang.reflect.Array;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class mapActivity extends AppCompatActivity implements MapView.MapViewEventListener, MapView.POIItemEventListener, MapView.CurrentLocationEventListener{
@@ -56,16 +73,28 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
     private LinearLayout linearLayout_infor;
     private TextView textView_walkDistance;
     private TextView textView_walkTime;
+    private Button button_walktest;
+
 //    private Button button_remove;
     private long startTime;
     private long endTime;
     private long totalTime;
+    private String petName;
+    private String petGender;
+    private String petSpecies;
+    private String petImageUrl;
     private GroupData groupData;
+    private UserData userData;
+    private ServiceApi service;
     private DatabaseReference mDatabase;
-    private MapPOIItem marker;
+//    private MapPOIItem marker;
     private int markerCount;
+//    private ArrayList<MapPOIItem> marker = new ArrayList<>();
 
 
+
+
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected  void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,9 +104,18 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
 //        button_remove = findViewById(R.id.button_remove);
         textView_walkDistance = findViewById(R.id.textView_walkDistance);
         textView_walkTime = findViewById(R.id.textView_walkTime);
+//        button_walktest =findViewById(R.id.button_walktest);
         groupData = (GroupData) getIntent().getExtras().get("groupData");
+        userData = (UserData) getIntent().getExtras().get("userData");
+        petName =  (String) getIntent().getExtras().get("petName");
+        petGender =  (String) getIntent().getExtras().get("petGender");
+        petSpecies =  (String) getIntent().getExtras().get("petSpecies");
+        petImageUrl = (String) getIntent().getExtras().get("petImageUrl");
+        service = RetrofitClient.getClient().create(ServiceApi.class);
 
+        Log.d("userData",userData.getUserName());
 
+        //마커 생성
 
         // mapview에 kakaoMap 연동해서 올리기
         mapView =new MapView(this);
@@ -98,56 +136,54 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
         //gps로 현 위치 찍어줌
         mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithHeading);
         mapView.setShowCurrentLocationMarker(true);
-        mapView.setCurrentLocationRadius(10);
 
         // 줌 인
         mapView.zoomIn(true);
         // 줌 아웃
         mapView.zoomOut(true);
 
-        //마커 생성
-        marker = new MapPOIItem();
+//        mapView.setOnTouchListener(new View.OnTouchListener(){
+//
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                return true;
+//            }
+//        });
+
+
 
 
         //firebase 백엔드 사용해서 위도 경도 저장
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         mDatabase = database.getReference("walk");
         mDatabase.child("walking_group").child(String.valueOf(groupData.getId()));
+        mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("groupName").setValue(groupData.getName());
+        mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("groupTag").setValue(groupData.getName()+groupData.getTag());
+        mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("userName").setValue(userData.getUserName());
+        mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("userImage").setValue(userData.getUserImage());
+        mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("petName").setValue(petName);
+        mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("petGender").setValue(petGender);
+        mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("petSpecies").setValue(petSpecies);
+        mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("petImage").setValue(petImageUrl);
 
-
-        mDatabase.child("walking_group").child(String.valueOf(15));
-        mDatabase.child("walking_group").child(String.valueOf(15)).child("address").setValue("우만2동");
-        mDatabase.child("walking_group").child(String.valueOf(15)).child("latitude").setValue(37.27897262573242);
-        mDatabase.child("walking_group").child(String.valueOf(15)).child("longitude").setValue(127.04090118408203);
-
-        mDatabase.child("walking_group").child(String.valueOf(16));
-        mDatabase.child("walking_group").child(String.valueOf(16)).child("address").setValue("우만2동");
-        mDatabase.child("walking_group").child(String.valueOf(16)).child("latitude").setValue(37.28105163574219);
-        mDatabase.child("walking_group").child(String.valueOf(16)).child("longitude").setValue(127.04118347167969);
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                mapView.removeAllPOIItems();
                 //마커 초기화
                 markerCount = 0;
                 // 다른 그룹 위치 판별하기
                 String currentAddress = dataSnapshot.child("walking_group").child(String.valueOf(groupData.getId())).child("address").getValue(String.class);
                 for (DataSnapshot GroupMapData : dataSnapshot.child("walking_group").getChildren()) {
-                    Log.d("database_read", String.valueOf(GroupMapData));
+                    Log.d("mapP",GroupMapData.getKey());
                     String otherGroup = GroupMapData.getKey();
                     String otherAddress = GroupMapData.child("address").getValue(String.class);
-                    Double latitude = GroupMapData.child("latitude").getValue(Double.class);
-                    Double longitude = GroupMapData.child("longitude").getValue(Double.class);
-
-                    Log.d("database_read",otherAddress);
-                    Log.d("database_read", String.valueOf(latitude));
-                    Log.d("database_read", String.valueOf(longitude));
                     //자신 그룹은 제외 시킨다.
                     if (!otherGroup.equals(String.valueOf(groupData.getId()))) {
-                        Log.d("database_read","group");
                         if (otherAddress.equals(currentAddress)) {
                             Log.d("database_read","address");
                             //다른 그룹 위치 띄우기
-                            walkingOtherGroup(GroupMapData.child("latitude").getValue(Double.class), GroupMapData.child("longitude").getValue(Double.class));
+                            walkingOtherGroup(GroupMapData.child("latitude").getValue(Double.class), GroupMapData.child("longitude").getValue(Double.class), GroupMapData.child("groupTag").getValue(String.class));
                         }
                     }
                 }
@@ -178,10 +214,16 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
 //            }
 //        });
 
-
+        //여기에도 alertDialog로 바꾸기
         button_stopMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                mapView.setOnTouchListener(new View.OnTouchListener(){
+//                    @Override
+//                    public boolean onTouch(View v, MotionEvent event) {
+//                        return false;
+//                   }
+//                });
                 mapPolyLine.setLineColor(Color.argb(128, 255, 51, 0));
 
                 //addpoint를 사용해서 산책 로드를 이어준다.
@@ -195,6 +237,7 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
 
                 MapPointBounds mapPointBounds = new MapPointBounds(mapPolyLine.getMapPoints());
                 int padding = 100; // px
+
                 //mapView에 찍어준다.
                 mapView.moveCamera(CameraUpdateFactory.newMapPointBounds(mapPointBounds, padding));
 
@@ -217,9 +260,6 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
 
             }
         });
-
-
-
     }
 
     public double distanceSum(ArrayList<Double> longitude_arrayList, ArrayList<Double> latitude_arrayList){
@@ -239,11 +279,13 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
     }
     // 산책 중인 다른 그룹 마커로 표시
 
-    public void walkingOtherGroup(Double latitude, Double longitude){
-        Log.d("database_read","here");
+    public void walkingOtherGroup(Double latitude, Double longitude, String groupTag){
+        MapPOIItem marker = new MapPOIItem();
+
+
         MapPoint walkingMapPoint = MapPoint.mapPointWithGeoCoord(latitude,longitude);
-        marker.setItemName("otherGroup");
-        marker.setTag(markerCount);
+
+        marker.setItemName(groupTag);
         marker.setMapPoint(walkingMapPoint);
         // 기본으로 제공하는 BluePin 마커 모양.
         marker.setMarkerType(MapPOIItem.MarkerType.BluePin);
@@ -270,25 +312,154 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
         return dis;
     }
 
+    private void getProfileImage(String url, ImageView imageView) {
+        String[] w = url.split("/");
+        String key = w[w.length - 1];
+
+        Bitmap bit = getBitmapFromCacheDir(key);
+        if (bit != null) {
+            Glide.with(mapActivity.this).load(bit).diskCacheStrategy(DiskCacheStrategy.NONE).circleCrop().into(imageView);
+        } else {
+            service.getProfileImage(url).enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    String TAG = "YesGroup";
+                    if (response.isSuccessful()) {
+                        InputStream is = response.body().byteStream();
+                        Bitmap bitmap = BitmapFactory.decodeStream(is);
+                        Glide.with(mapActivity.this).load(bitmap).diskCacheStrategy(DiskCacheStrategy.NONE).circleCrop().into(imageView);
+                        saveBitmapToJpeg(bitmap, key);
+                    } else {
+                        Log.d(TAG, "server contact failed");
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    Log.e("createGroup error", t.getMessage());
+                    t.printStackTrace();
+                }
+            });
+        }
+    }
+    private void saveBitmapToJpeg(Bitmap bitmap, String name) {
+        //내부저장소 캐시 경로를 받아옵니다.
+        File storage = getCacheDir();
+        //저장할 파일 이름
+        String fileName = name;
+
+        try {
+            File tempFile = new File(storage, fileName);
+            tempFile.createNewFile();
+
+            FileOutputStream out = new FileOutputStream(tempFile);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
+            // 스트림 사용후 닫아줍니다.
+            out.close();
+        } catch (FileNotFoundException e) {
+            Log.e("Yes", "FileNotFoundException : " + e.getMessage());
+        } catch (IOException e) {
+            Log.e("Yes", "IOException : " + e.getMessage());
+        }
+    }
+    private Bitmap getBitmapFromCacheDir(String key) {
+        String found = null;
+        Bitmap bitmap = null;
+        File file = new File(getCacheDir().toString());
+        File[] files = file.listFiles();
+
+        for (File tempFile : files) {
+            //blackJin 이 들어가 있는 파일명을 찾습니다.
+            if (tempFile.getName().contains(key)) {
+                found = (tempFile.getName());
+                String path = getCacheDir() + "/" + found;
+                //파일경로로부터 비트맵을 생성합니다.
+                bitmap = BitmapFactory.decodeFile(path);
+            }
+        }
+        //blackJins 배열에 있는 파일 경로 중 하나를 랜덤으로 불러옵니다.
+        return bitmap;
+    }
+
+
     // POI 건들
     @Override
     public void onPOIItemSelected(MapView mapView, MapPOIItem mapPOIItem) {
+        Log.d("mapP","please"+mapPOIItem.getItemName());
 
     }
-
+    //그 위의 말풍선을 누르면 나오는 부뷴
     @Override
     public void onCalloutBalloonOfPOIItemTouched(MapView mapView, MapPOIItem mapPOIItem) {
+        Log.d("mapPOIItem", mapPOIItem.getItemName());
 
+        String selectedGroupTag = mapPOIItem.getItemName();
+
+        View dialogView = getLayoutInflater().inflate(R.layout.dialog_group, null);
+        final TextView petNameTextView = (TextView) dialogView.findViewById(R.id.textView_groupPetName);
+        final TextView petGenderTextView = (TextView) dialogView.findViewById(R.id.textView_groupPetGender);
+        final TextView petSpeciesTextView = (TextView) dialogView.findViewById(R.id.textView_groupPetSpecies);
+        final TextView userNameTextView = (TextView) dialogView.findViewById(R.id.textView_groupUserName);
+        final TextView groupNameTextView = (TextView) dialogView.findViewById(R.id.textView_selectedgroupName);
+        final ImageView petImageView = (ImageView) dialogView.findViewById(R.id.imageView_groupPetImage);
+        final ImageView userImageView = (ImageView) dialogView.findViewById(R.id.imageView_groupUserImage);
+
+
+        mDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot SelectedGroupData : dataSnapshot.child("walking_group").getChildren()) {
+                    String checkGroupTag = SelectedGroupData.child("groupTag").getValue(String.class);
+
+                    //체크된 그룹
+                    if (selectedGroupTag.equals(checkGroupTag)) {
+                        petNameTextView.setText(SelectedGroupData.child("petGender").getValue(String.class));
+                        petGenderTextView.setText(SelectedGroupData.child("petName").getValue(String.class));
+                        petSpeciesTextView.setText(SelectedGroupData.child("petSpecies").getValue(String.class));
+                        userNameTextView.setText(SelectedGroupData.child("userName").getValue(String.class));
+                        groupNameTextView.setText(SelectedGroupData.child("groupName").getValue(String.class));
+                        getProfileImage(SelectedGroupData.child("petImage").getValue(String.class), petImageView);
+                        getProfileImage(SelectedGroupData.child("userImage").getValue(String.class), userImageView);
+
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.d("database_read_error", "Failed to read value.", error.toException());
+            }
+        });
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setView(dialogView);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener(){
+            public void onClick(DialogInterface dialog, int pos)
+            {
+                Log.d("dialog","here");
+            }
+        });
+        builder.setNegativeButton("채팅", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Log.d("dialog","채팅채팅");
+            }
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
+
 
     @Override
     public void onCalloutBalloonOfPOIItemTouched(MapView mapView, MapPOIItem mapPOIItem, MapPOIItem.CalloutBalloonButtonType calloutBalloonButtonType) {
-
+        Log.d("mapP","here");
     }
 
+    //이거는 안 사용합니다.
     @Override
     public void onDraggablePOIItemMoved(MapView mapView, MapPOIItem mapPOIItem, MapPoint mapPoint) {
-
     }
 
     // 현재위치
@@ -297,26 +468,6 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
     @Override
     public void onCurrentLocationUpdate(MapView mapView, MapPoint currentLocation, float v) {
         mapPointGeo = currentLocation.getMapPointGeoCoord();
-
-//        if(cycle >1){
-//            cycle =0;
-//            mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("latitude").setValue(mapPointGeo.latitude);
-//            mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("longitude").setValue(mapPointGeo.longitude);
-//
-//            Geocoder g = new Geocoder(this);
-//            List<Address> address = null;
-//            try{
-//                address =g.getFromLocation(mapPointGeo.latitude, mapPointGeo.longitude,10);
-//            }catch (IOException e){
-//                e.printStackTrace();
-//                Log.d("test","입출력오류");
-//            }
-//
-//            mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("address").setValue(address.get(0).getThoroughfare());
-//
-//        }else{
-//            cycle++;
-//        }
         mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("latitude").setValue(mapPointGeo.latitude);
         mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("longitude").setValue(mapPointGeo.longitude);
         Geocoder g = new Geocoder(this);
@@ -329,6 +480,11 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
         }
 
         mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("address").setValue(address.get(0).getThoroughfare());
+        latitude_arrayList.add(mapPointGeo.latitude);
+        longitude_arrayList.add(mapPointGeo.longitude);
+        mapPolyLine.addPoint(MapPoint.mapPointWithGeoCoord(mapPointGeo.latitude,mapPointGeo.longitude));
+        mapView.addPolyline(mapPolyLine);
+
 
 
 
@@ -361,21 +517,15 @@ public class mapActivity extends AppCompatActivity implements MapView.MapViewEve
     //center point가 움직일 때마다 찍히는 메소드
     @Override
     public void onMapViewCenterPointMoved(MapView mapView, MapPoint mapPoint) {
-        mapPointGeo = mapPoint.getMapPointGeoCoord();
-        latitude_arrayList.add(mapPointGeo.latitude);
-        longitude_arrayList.add(mapPointGeo.longitude);
-        mapPolyLine.addPoint(MapPoint.mapPointWithGeoCoord(mapPointGeo.latitude,mapPointGeo.longitude));
-        mapView.addPolyline(mapPolyLine);
+//        mapPointGeo = mapPoint.getMapPointGeoCoord();
+//        latitude_arrayList.add(mapPointGeo.latitude);
+//        longitude_arrayList.add(mapPointGeo.longitude);
+//        mapPolyLine.addPoint(MapPoint.mapPointWithGeoCoord(mapPointGeo.latitude,mapPointGeo.longitude));
+//        mapView.addPolyline(mapPolyLine);
 
 //        MapPointBounds mapPointBounds = new MapPointBounds(mapPolyLine.getMapPoints());
         int padding = 100; // px
         //mapView에 찍어준다.
-//        mapView.moveCamera(CameraUpdateFactory.newMapPointBounds(mapPointBounds, padding));
-
-//        mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("latiatiude").setValue(mapPointGeo.latitude);
-//        mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("longitude").setValue(mapPointGeo.longitude);
-
-
 
         //위도 경도 찍
         Log.d("latitude", String.valueOf(mapPointGeo.latitude));

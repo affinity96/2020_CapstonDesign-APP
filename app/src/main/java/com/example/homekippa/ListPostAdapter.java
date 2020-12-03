@@ -24,8 +24,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.homekippa.ui.group.GroupFragment;
 import com.example.homekippa.ui.group.GroupViewModel;
+import com.example.homekippa.ui.group.YesGroup;
 import com.example.homekippa.ui.home.PostViewModel;
 import com.example.homekippa.ui.home.PostDetailActivity;
 import com.example.homekippa.data.GroupData;
@@ -59,6 +61,8 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
     private Context context;
     private boolean isgroup;
 
+    private Cache cache;
+
     Intent intent;
 
     private ServiceApi service;
@@ -84,6 +88,7 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.listitem_post, parent, false);
 
+        cache = new Cache(context);
         service = RetrofitClient.getClient().create(ServiceApi.class);
         userData = ((MainActivity) context).getUserData();
 
@@ -117,6 +122,7 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
     private void setPostData(MyViewHolder holder, int position) throws ParseException {
         SingleItemPost post;
         GroupData group;
+
         if (isgroup) {
             post = groupViewModel.getPostList().getValue().get(position);
             group = groupData.get(0);
@@ -124,6 +130,7 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
             post = postViewModel.getPostList().getValue().get(position);
             group = groupData.get(position);
         }
+
 
         if (isgroup) {
             holder.postLikedNum.setText(String.valueOf(groupViewModel.getPostList().getValue().get(position).getLikeNum()));
@@ -134,7 +141,7 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
         holder.postContent.setText(post.getContent());
         holder.postCommentNum.setText(String.valueOf(post.getCommentNum()));
         holder.postGroupName.setText(group.getName());
-        holder.postGroupAddress.setText(group.getAddress());
+        holder.postGroupAddress.setText(group.getArea());
 
         if (post.getImage() == null) {
             holder.recyclerView_postImages.setVisibility(View.GONE);
@@ -152,7 +159,6 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
 //        SimpleDateFormat fm = new SimpleDateFormat("yyyy-MM-dd");
 //        Date postdate = fm.parse(pd);
 //        holder.postDate.setText(String.valueOf(postdate));
-
 
     }
 
@@ -172,37 +178,45 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
 //        Log.d("date", String.valueOf(minute));
 
         String newdate = new SimpleDateFormat("yyyy-MM-dd").format(oldDate);
-        Log.d("date", String.valueOf(newdate));
-
 
         holder.postDate.setText(newdate);
     }
 
     private void getProfileImage(MyViewHolder holder, String url) {
-        Log.d("url", url);
-        service.getProfileImage(url).enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                String TAG = "ListPostAdapter";
-                if (response.isSuccessful()) {
+        String[] w = url.split("/");
+        String key = w[w.length - 1];
 
-                    Log.d(TAG, "server contacted and has file");
-                    InputStream is = response.body().byteStream();
-                    Bitmap bitmap = BitmapFactory.decodeStream(is);
-
-                    Glide.with(context).load(bitmap).circleCrop().into(holder.postGroupProfile);
-                    holder.postGroupProfile.setImageBitmap(bitmap);
-
-                } else {
-                    Log.d(TAG, "server contact failed");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                t.printStackTrace();
-            }
-        });
+        Bitmap bit = cache.getBitmapFromCacheDir(key);
+        if (bit != null) {
+            Glide.with(context).load(bit).circleCrop().into(holder.postGroupProfile);
+        } else {
+            ImageLoadTask task = new ImageLoadTask(url, holder.postGroupProfile, context, false);
+            task.execute();
+//            service.getProfileImage(url).enqueue(new Callback<ResponseBody>() {
+//                @Override
+//                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+//                    String TAG = "ListPostAdapter";
+//                    if (response.isSuccessful()) {
+//
+//                        Log.d(TAG, "server contacted and has file");
+//                        InputStream is = response.body().byteStream();
+//                        Bitmap bitmap = BitmapFactory.decodeStream(is);
+//                        if (bitmap != null) {
+//                            Glide.with(context).load(bitmap).circleCrop().into(holder.postGroupProfile);
+////                            holder.postGroupProfile.setImageBitmap(bitmap);
+//                            cache.saveBitmapToJpeg(bitmap, key);
+//                        }
+//                    } else {
+//                        Log.d(TAG, "server contact failed");
+//                    }
+//                }
+//
+//                @Override
+//                public void onFailure(Call<ResponseBody> call, Throwable t) {
+//                    t.printStackTrace();
+//                }
+//            });
+        }
     }
 
     private void setClickListenerOnHolder(MyViewHolder holder, int position) {
@@ -316,23 +330,26 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
     private void setHomeViewModel(MyViewHolder holder, int position) {
 
         postViewModel = new ViewModelProvider((ViewModelStoreOwner) context).get(PostViewModel.class);
-        postViewModel.getPostList().observe((LifecycleOwner) context, new Observer<List<SingleItemPost>>() {
-            @Override
-            public void onChanged(List<SingleItemPost> singleItemPosts) {
-                holder.postCommentNum.setText(String.valueOf(singleItemPosts.get(position).getCommentNum()));
-                holder.postLikedNum.setText(String.valueOf(singleItemPosts.get(position).getLikeNum()));
-                boolean isliked = postViewModel.getLikeCheck().getValue().get(position);
-                holder.postLikeImage.setActivated(isliked);
-            }
-        });
-        postViewModel.getLikeCheck().observe((LifecycleOwner) context, new Observer<List<Boolean>>() {
-            @Override
-            public void onChanged(List<Boolean> likecheck) {
-                holder.postLikedNum.setText(String.valueOf(postViewModel.getPostList().getValue().get(position).getLikeNum()));
-                boolean isliked = postViewModel.getLikeCheck().getValue().get(position);
-                holder.postLikeImage.setActivated(isliked);
-            }
-        });
+        if(postViewModel.getPostList().getValue()!=null){
+            postViewModel.getPostList().observe((LifecycleOwner) context, new Observer<List<SingleItemPost>>() {
+                @Override
+                public void onChanged(List<SingleItemPost> singleItemPosts) {
+                    holder.postCommentNum.setText(String.valueOf(singleItemPosts.get(position).getCommentNum()));
+                    holder.postLikedNum.setText(String.valueOf(singleItemPosts.get(position).getLikeNum()));
+                    boolean isliked = postViewModel.getLikeCheck().getValue().get(position);
+                    holder.postLikeImage.setActivated(isliked);
+                }
+            });
+            postViewModel.getLikeCheck().observe((LifecycleOwner) context, new Observer<List<Boolean>>() {
+                @Override
+                public void onChanged(List<Boolean> likecheck) {
+                    holder.postLikedNum.setText(String.valueOf(postViewModel.getPostList().getValue().get(position).getLikeNum()));
+                    boolean isliked = postViewModel.getLikeCheck().getValue().get(position);
+                    holder.postLikeImage.setActivated(isliked);
+                }
+            });
+        }
+
     }
 
     private void setGroupViewModel(MyViewHolder holder, int position) {

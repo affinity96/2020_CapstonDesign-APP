@@ -37,6 +37,7 @@ import java.util.Calendar;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
 import com.example.homekippa.function.Loading;
 
 public class SignUpActivity extends AppCompatActivity {
@@ -80,25 +81,19 @@ public class SignUpActivity extends AppCompatActivity {
                 final String birth = birth_login.getText().toString().trim();
                 final String name = name_login.getText().toString().trim();
 
-                if(email.isEmpty()){
+                if (email.isEmpty()) {
                     email_login.setError("생년월일을 입력하세요");
-                }
-                else if(phone.isEmpty()) {
+                } else if (phone.isEmpty()) {
                     phone_login.setError("PW를 입력하세요");
-                }
-                else if(pw.isEmpty()) {
+                } else if (pw.isEmpty()) {
                     pw_login.setError("PW를 입력하세요");
-                }
-                else if(birth.isEmpty()){
+                } else if (birth.isEmpty()) {
                     birth_login.setError("생년월일을 입력하세요");
-                }
-                else if(name.isEmpty()){
+                } else if (name.isEmpty()) {
                     name_login.setError("닉네임을 입력하세요");
-                }
-                else if(!checkbox_Agree.isChecked()){
+                } else if (!checkbox_Agree.isChecked()) {
                     checkbox_Agree.setError("이용약관에 동의해주세요");
-                }
-                else {
+                } else {
                     final Loading loading = new Loading();
                     loading.loading(SignUpActivity.this);
                     mAuth.createUserWithEmailAndPassword(email, pw).addOnCompleteListener(SignUpActivity.this, new OnCompleteListener<AuthResult>() {
@@ -114,7 +109,7 @@ public class SignUpActivity extends AppCompatActivity {
                                 user.sendEmailVerification().addOnCompleteListener(SignUpActivity.this, new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> verify_task) {
-                                        if(verify_task.isSuccessful()){
+                                        if (verify_task.isSuccessful()) {
                                             Intent intent = new Intent(SignUpActivity.this, VerifyActivity.class);
                                             intent.putExtra("user", user);
                                             startActivity(intent);
@@ -137,8 +132,8 @@ public class SignUpActivity extends AppCompatActivity {
         checkbox_Agree.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(checkbox_Agree.isChecked()){
-                    Toast.makeText(getApplicationContext(),"이용 약관에 동의하셨습니다", Toast.LENGTH_SHORT).show(); // 토스트 : 팝업으로 송출
+                if (checkbox_Agree.isChecked()) {
+                    Toast.makeText(getApplicationContext(), "이용 약관에 동의하셨습니다", Toast.LENGTH_SHORT).show(); // 토스트 : 팝업으로 송출
                 }
             }
         });
@@ -147,11 +142,11 @@ public class SignUpActivity extends AppCompatActivity {
 
     public void showDatePicker(View view) {
         DialogFragment newFragment = new DatePickerFragment();
-        newFragment.show(getSupportFragmentManager(),"datePicker");
+        newFragment.show(getSupportFragmentManager(), "datePicker");
     }
 
-    public void processDatePickerResult(int year, int month, int day){
-        String month_string = Integer.toString(month+1);
+    public void processDatePickerResult(int year, int month, int day) {
+        String month_string = Integer.toString(month + 1);
         String day_string = Integer.toString(day);
         String year_string = Integer.toString(year);
         String dateMessage = (year_string + "-" + month_string + "-" + day_string);
