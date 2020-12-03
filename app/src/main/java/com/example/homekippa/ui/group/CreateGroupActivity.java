@@ -228,20 +228,16 @@ public class CreateGroupActivity extends AppCompatActivity {
             RequestBody group_Introduction = RequestBody.create(MediaType.parse("text/plain"), groupIntroduction);
             data.put("groupIntroduction", group_Introduction);
             RequestBody group_Area = RequestBody.create(MediaType.parse("text/plain"), area);
-            Log.d("ㄱ,릅에어리아ㅏ",  area);
             data.put("area", group_Area);
 
             RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), tempFile);
             MultipartBody.Part uploadFile = MultipartBody.Part.createFormData("upload", tempFile.getName(), reqFile);
-            Log.d("마ㅏㅏㅏㅏㅏ", "밖임");
             service.groupCreateWithPhoto(data, uploadFile).enqueue(new Callback<CreateGroupResponse>() {
 
                 @Override
                 public void onResponse(Call<CreateGroupResponse> call, Response<CreateGroupResponse> response) {
                     CreateGroupResponse result = response.body();
-                    Log.d("사ㅏㅏㅏㅏㅏ", "절반성공");
                     if (result.getCode() == 200) {
-                        Log.d("바ㅏㅏㅏㅏㅏ", "성공");
 //                        finish();
                         Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -251,7 +247,6 @@ public class CreateGroupActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<CreateGroupResponse> call, Throwable t) {
-                    Log.d("아ㅏㅏㅏㅏㅏ", "실패");
                     Toast.makeText(CreateGroupActivity.this, "그룹생성 에러 발생", Toast.LENGTH_SHORT).show();
 //              Log.e("createGroup error",t.getMessage());
                     t.printStackTrace();

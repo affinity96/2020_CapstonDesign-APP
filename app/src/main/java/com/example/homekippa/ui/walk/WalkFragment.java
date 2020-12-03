@@ -31,22 +31,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.example.homekippa.AddPetDesActivity;
 import com.example.homekippa.MainActivity;
 import com.example.homekippa.R;
 import com.example.homekippa.data.GroupData;
 import com.example.homekippa.data.UserData;
 import com.example.homekippa.data.WeatheLocationResponse;
 import com.example.homekippa.data.WeatherLocationData;
-import com.example.homekippa.mapActivity;
+import com.example.homekippa.MapActivity;
 import com.example.homekippa.network.RetrofitClient;
 import com.example.homekippa.network.ServiceApi;
 import com.example.homekippa.ui.group.SingleItemPet;
-import com.example.homekippa.ui.group.YesGroup;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
-import net.daum.mf.map.api.MapPoint;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -149,7 +143,7 @@ public class WalkFragment extends Fragment {
 
 
 
-                Intent intent = new Intent(getActivity(), mapActivity.class);
+                Intent intent = new Intent(getActivity(), MapActivity.class);
                 intent.putExtra("groupData", groupData);
                 intent.putExtra("userData", userData);
                 intent.putExtra("petName",petName);
