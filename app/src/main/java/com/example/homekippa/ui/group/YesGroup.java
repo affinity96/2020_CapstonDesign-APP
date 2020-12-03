@@ -110,7 +110,6 @@ public class YesGroup extends Fragment {
     private Button button_join_group;
     private Button button_changeGroupCover;
     private Button button_follow_group;
-    private Button button_changeProfile;
     private TextView textView_followingNum;
     private TextView textView_followerNum;
     private LinearLayout ll_follower;
@@ -184,7 +183,6 @@ public class YesGroup extends Fragment {
         button_join_group = root.findViewById(R.id.button_join_group);
         button_changeGroupCover = root.findViewById(R.id.button_changeGroupCover);
         button_follow_group = root.findViewById(R.id.button_follow_group);
-        button_changeProfile = root.findViewById(R.id.button_changeProfile);
         listView_pets = root.findViewById(R.id.listview_pets);
         listView_dailyWorks = root.findViewById(R.id.listview_dailywork);
         imageView_groupCover = root.findViewById(R.id.ImageView_groupCover);
@@ -210,7 +208,6 @@ public class YesGroup extends Fragment {
             button_addPet.setVisibility(View.INVISIBLE);
             button_Add_DW.setVisibility(View.INVISIBLE);
             button_changeGroupCover.setVisibility(View.INVISIBLE);
-            button_changeProfile.setVisibility(View.INVISIBLE);
             boolean isfollowed = followViewModel.checkFollow(groupData.getId());
 
             if (isfollowed) {

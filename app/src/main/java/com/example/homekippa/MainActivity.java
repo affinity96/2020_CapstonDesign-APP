@@ -310,6 +310,8 @@ public class MainActivity extends AppCompatActivity {
     private BottomNavigationView navView;
     private ImageButton menuButton, chatButton;
 
+    final Loading loading = new Loading();
+
     private ArrayList<SingleItemPet> array_pets;
     private ListView listView_pets;
     private UserData userData;
@@ -504,9 +506,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
-
-    final Loading loading = new Loading();
 
     public void LoadingStart() {
         loading.loading(MainActivity.this);
