@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.Manifest;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -13,7 +15,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.homekippa.data.AddPostData;
@@ -45,6 +49,9 @@ public class AddPostActivity extends AppCompatActivity {
     private EditText editText_postContent;
     private Button button_CompletePost;
     private Editable postContent;
+    private FrameLayout frameLayout_post;
+    private ImageView post_image;
+    private ImageButton button_cancel_post_image;
     private ImageButton button_Add_Post_Img;
 
     private static final String TAG = "addPost";
@@ -62,6 +69,9 @@ public class AddPostActivity extends AppCompatActivity {
         editText_postContent = (EditText) this.findViewById(R.id.editText_postContent);
         button_CompletePost = (Button) this.findViewById(R.id.button_CompletePost);
         postContent = editText_postContent.getText();
+        frameLayout_post = (FrameLayout) this.findViewById(R.id.frameLayout_post);
+        post_image = (ImageView) this.findViewById(R.id.post_image);
+        button_cancel_post_image = (ImageButton) this.findViewById(R.id.button_cancel_post_image);
         button_Add_Post_Img = (ImageButton) this.findViewById(R.id.button_Add_Post_Img);
 
         Intent intent = getIntent();
@@ -71,18 +81,21 @@ public class AddPostActivity extends AppCompatActivity {
 
         Log.d("ted","tedPermission()");
 
-        // 권한 요청
-//        tedPermission();
-
-
-
         button_Add_Post_Img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // 권한 허용에 동의하지 않았을 경우 토스트를 띄웁니다.
                 if (isPermission) goToAlbum();
                 else
                     Toast.makeText(view.getContext(), getResources().getString(R.string.permission_2), Toast.LENGTH_LONG).show();
+            }
+        });
+
+        button_cancel_post_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                frameLayout_post.setVisibility(View.INVISIBLE);
+                post_image.setImageBitmap(null);
+                tempFile = null;
             }
         });
 
@@ -120,11 +133,6 @@ public class AddPostActivity extends AppCompatActivity {
                 Cursor cursor = null;
 
                 try {
-
-                    /*
-                     *  Uri 스키마를
-                     *  content:/// 에서 file:/// 로  변경한다.
-                     */
                     String[] proj = {MediaStore.Images.Media.DATA};
 
                     assert photoUri != null;
@@ -144,47 +152,27 @@ public class AddPostActivity extends AppCompatActivity {
                         cursor.close();
                     }
                 }
-
-//                setImage();
+                setImage();
 
             }
         }
     }
 
-    /**
-     * 앨범에서 이미지 가져오기
-     */
+    private void setImage() {
+        frameLayout_post.setVisibility(View.VISIBLE);
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        Bitmap originalBm = BitmapFactory.decodeFile(tempFile.getAbsolutePath(), options);
+        Log.d(TAG, "setImage : " + tempFile.getAbsolutePath());
+
+        post_image.setImageBitmap(originalBm);
+
+    }
+
     public void goToAlbum() {
 
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
         startActivityForResult(intent, PICK_FROM_ALBUM);
-    }
-
-    /**
-     * 권한 설정
-     */
-    public void tedPermission() {
-        Log.d("ted","here");
-        PermissionListener permissionListener = new PermissionListener() {
-            @Override
-            public void onPermissionGranted() {
-                // 권한 요청 성공
-
-            }
-
-            @Override
-            public void onPermissionDenied(ArrayList<String> deniedPermissions) {
-                // 권한 요청 실패
-            }
-        };
-
-        TedPermission.with(this)
-                .setPermissionListener(permissionListener)
-                .setRationaleMessage(getResources().getString(R.string.permission_2))
-                .setDeniedMessage(getResources().getString(R.string.permission_1))
-                .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA)
-                .check();
     }
 
     private void addPost(int groupId, String userId, String content, String title, String area) {

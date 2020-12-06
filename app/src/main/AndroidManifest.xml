@@ -58,7 +58,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".CreateDailyWorkActivity" />
-        <activity android:name=".AddPostActivity" />
+        <activity android:name=".AddPostActivity" android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".ui.group.CreateGroupActivity" />
         <activity android:name=".ui.group.PopupSeleteGroupImage" android:theme="@android:style/Theme.Dialog" />
         <activity android:name=".ui.group.PopupSeleteCover" android:theme="@android:style/Theme.Dialog" />

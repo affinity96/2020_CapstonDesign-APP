@@ -18,11 +18,15 @@ public class SignUpData {
     @SerializedName("userBirth")
     private String userBirth;
 
-    public SignUpData(String userId, String phone, String email, String name, String birth) {
+    @SerializedName("userGender")
+    private int userGender;
+
+    public SignUpData(String userId, String phone, String email, String name, String birth, int userGender) {
         this.userName = name;
         this.userId = userId;
         this.userPhone = phone;
         this.userEmail = email;
         this.userBirth = birth;
+        this.userGender = userGender;
     }
 }
