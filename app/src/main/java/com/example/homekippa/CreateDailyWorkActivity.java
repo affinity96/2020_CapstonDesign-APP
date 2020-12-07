@@ -48,7 +48,7 @@ public class CreateDailyWorkActivity extends AppCompatActivity {
     private GroupData groupData;
     private UserData userData;
     private ServiceApi service;
-    private int petId = 0;
+    private int petId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +66,7 @@ public class CreateDailyWorkActivity extends AppCompatActivity {
         UserData userData = (UserData) intent.getExtras().get("userData");
         GroupData groupData = (GroupData) intent.getExtras().get("groupData");
         petId = (int) intent.getExtras().get("petId");
-
+        Log.d("하제발좀돼라", String.format("%d",petId));
         dailyWorkName = editText_dailyWorkName.getText();
         dailyWorkDesc = editText_dailyWorkDesc.getText();
         dailyWorkTime = editText_dailyWorkTime.getText();

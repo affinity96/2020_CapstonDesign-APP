@@ -702,6 +702,7 @@ public class YesGroup extends Fragment {
                     notifyDataSetChanged();
                     setDailyWorkListView(listView_dailyWorks, selectedPet.getId());
                     petId = petList.get(position).getId();
+                    //Log.d("포지션이 안잡히나", String.format("%d, %d"))
                 }
             });
         }
