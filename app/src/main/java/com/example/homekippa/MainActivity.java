@@ -277,6 +277,7 @@ import androidx.fragment.app.Fragment;
 import com.bumptech.glide.Glide;
 import com.example.homekippa.data.GroupData;
 import com.example.homekippa.data.UserData;
+import com.example.homekippa.function.Loading;
 import com.example.homekippa.network.RetrofitClient;
 import com.example.homekippa.network.ServiceApi;
 import com.example.homekippa.ui.group.GroupFragment;
@@ -372,9 +373,9 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(intent);
                 } else if (id == R.id.menu_item2) {
                     Toast.makeText(getApplicationContext(), title + " 선택됨", Toast.LENGTH_SHORT).show();
-                }else if (id == R.id.menu_item3) {
+                } else if (id == R.id.menu_item3) {
                     Toast.makeText(getApplicationContext(), title + " 선택됨", Toast.LENGTH_SHORT).show();
-                }else if (id == R.id.menu_item4) {
+                } else if (id == R.id.menu_item4) {
                     Toast.makeText(getApplicationContext(), title + " 선택됨", Toast.LENGTH_SHORT).show();
                 } else if (id == R.id.menu_logout) {
                     Toast.makeText(getApplicationContext(), "로그아웃", Toast.LENGTH_SHORT).show();
@@ -426,7 +427,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
     public void setNavGroupData() {
         TextView username = (TextView) findViewById(R.id.nav_user_name);
         ImageView userProfile = (ImageView) findViewById(R.id.nav_user_image);
@@ -448,7 +448,7 @@ public class MainActivity extends AppCompatActivity {
         return this.userData;
     }
 
-    public void setUserData(UserData userData){
+    public void setUserData(UserData userData) {
         this.userData = userData;
     }
 
@@ -456,7 +456,7 @@ public class MainActivity extends AppCompatActivity {
         return this.groupData;
     }
 
-    public void setGroupData(GroupData groupData){
+    public void setGroupData(GroupData groupData) {
         this.groupData = groupData;
     }
 
@@ -466,11 +466,10 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if(!navView.getMenu().getItem(0).isChecked()){
+        if (!navView.getMenu().getItem(0).isChecked()) {
             navView.getMenu().getItem(0).setChecked(true);
             getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new HomeFragment()).commitAllowingStateLoss();
-        }
-        else {
+        } else {
             this.finishAffinity();
         }
     }
@@ -501,5 +500,15 @@ public class MainActivity extends AppCompatActivity {
                 t.printStackTrace();
             }
         });
+    }
+
+    final Loading loading = new Loading();
+
+    public void LoadingStart() {
+        loading.loading(MainActivity.this);
+    }
+
+    public void LoadingEnd() {
+        loading.loadingEnd();
     }
 }

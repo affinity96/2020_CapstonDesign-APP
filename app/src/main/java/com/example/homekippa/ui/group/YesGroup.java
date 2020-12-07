@@ -115,6 +115,7 @@ public class YesGroup extends Fragment {
     private TextView textView_followerNum;
     private LinearLayout ll_follower;
     private LinearLayout ll_following;
+    private MainActivity main;
 
     private ArrayList<SingleItemPet> petList = new ArrayList<>();
 
@@ -147,6 +148,7 @@ public class YesGroup extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context_YesGroup = this;
+        main = (MainActivity) getActivity();
 
         cache = new Cache(getContext());
         service = RetrofitClient.getClient().create(ServiceApi.class);
@@ -163,11 +165,10 @@ public class YesGroup extends Fragment {
         }
     }
 
-
     @Override
     public void onResume() {
-
         super.onResume();
+
         setPetListView(listView_pets);
     }
 
@@ -199,9 +200,11 @@ public class YesGroup extends Fragment {
         tv_groupIntro.setText(groupData.getIntroduction());
 
         Log.d("group", groupData.getCover());
+        main.LoadingStart();
         getImage(groupData.getImage(), imageView_groupProfile, true);
         getImage(groupData.getCover(), imageView_groupCover, false);
         setPetListView(listView_pets);
+        main.LoadingEnd();
 
         if (!myGroup) {
             button_join_group.setVisibility(View.VISIBLE);
