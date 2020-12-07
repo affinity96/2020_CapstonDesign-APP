@@ -200,11 +200,11 @@ public class YesGroup extends Fragment {
         tv_groupIntro.setText(groupData.getIntroduction());
 
         Log.d("group", groupData.getCover());
-        main.LoadingStart();
+
         getImage(groupData.getImage(), imageView_groupProfile, true);
         getImage(groupData.getCover(), imageView_groupCover, false);
         setPetListView(listView_pets);
-        main.LoadingEnd();
+//        main.LoadingEnd();
 
         if (!myGroup) {
             button_join_group.setVisibility(View.VISIBLE);
@@ -483,7 +483,7 @@ public class YesGroup extends Fragment {
     }
 
     private void getImage(String url, ImageView imageView, boolean isprofile) {
-        loading.loading(getContext());
+        main.LoadingStart();
         String[] w = url.split("/");
         String key = w[w.length - 1];
 
@@ -501,7 +501,7 @@ public class YesGroup extends Fragment {
             ImageTask task = new ImageTask(url, imageView, getContext(), !isprofile);
             task.getImage();
         }
-        loading.loadingEnd();
+        main.LoadingEnd();
     }
 
     private void setPetListView(RecyclerView listView) {
