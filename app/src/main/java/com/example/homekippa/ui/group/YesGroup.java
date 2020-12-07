@@ -204,7 +204,7 @@ public class YesGroup extends Fragment {
         getImage(groupData.getImage(), imageView_groupProfile, true);
         getImage(groupData.getCover(), imageView_groupCover, false);
         setPetListView(listView_pets);
-//        main.LoadingEnd();
+
 
         if (!myGroup) {
             button_join_group.setVisibility(View.VISIBLE);
@@ -490,7 +490,7 @@ public class YesGroup extends Fragment {
     }
 
     private void getImage(String url, ImageView imageView, boolean isprofile) {
-        main.LoadingStart();
+
         String[] w = url.split("/");
         String key = w[w.length - 1];
 
@@ -508,7 +508,7 @@ public class YesGroup extends Fragment {
             ImageTask task = new ImageTask(url, imageView, getContext(), !isprofile);
             task.getImage();
         }
-        main.LoadingEnd();
+
     }
 
     private void setPetListView(RecyclerView listView) {
@@ -527,6 +527,7 @@ public class YesGroup extends Fragment {
                         petList.addAll(pets);
 
                         setDailyWorkListView(listView_dailyWorks, pets.get(selectedPosition).getId());
+
                     }
 
                     ListPetAdapter petAdapter = new ListPetAdapter(petList);
@@ -536,6 +537,7 @@ public class YesGroup extends Fragment {
                     listView.setLayoutManager(pLayoutManager);
                     listView.setItemAnimator(new DefaultItemAnimator());
                     listView.setAdapter(petAdapter);
+
                 }
             }
 
@@ -697,6 +699,7 @@ public class YesGroup extends Fragment {
 
         @Override
         public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+            ((MainActivity)getActivity()).LoadingStart();
             if (selectedPosition == position) {
                 holder.pet.setBackgroundResource(R.drawable.round_button2);
             } else {
@@ -704,7 +707,7 @@ public class YesGroup extends Fragment {
             }
 
             setPetData(holder, position);
-
+            ((MainActivity)getActivity()).LoadingEnd();
         }
 
         private void setPetData(MyViewHolder holder, int position) {

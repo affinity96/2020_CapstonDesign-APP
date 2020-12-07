@@ -378,7 +378,7 @@ public class MainActivity extends AppCompatActivity {
                     intent.putExtra("userData", userData);
                     intent.putExtra("groupData", groupData);
                     startActivity(intent);
-                }else if (id == R.id.menu_item3) {
+                } else if (id == R.id.menu_item3) {
                     Intent intent = new Intent(getApplicationContext(), SettingActivity.class);
                     startActivity(intent);
                 } else if (id == R.id.menu_logout) {
@@ -429,7 +429,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
-
 
 
     public void setNavGroupData() {
