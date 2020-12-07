@@ -1,7 +1,5 @@
 package com.example.homekippa.ui.group;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
@@ -17,6 +15,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.homekippa.LoginActivity;
 import com.example.homekippa.R;
 import com.example.homekippa.data.CreateGroupData;
@@ -25,6 +25,8 @@ import com.example.homekippa.network.RetrofitClient;
 import com.example.homekippa.network.ServiceApi;
 import com.example.homekippa.ui.searchAddress.searchAddress;
 import com.google.firebase.auth.FirebaseAuth;
+import com.gun0912.tedpermission.PermissionListener;
+import com.gun0912.tedpermission.TedPermission;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -37,12 +39,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import com.gun0912.tedpermission.PermissionListener;
-import com.gun0912.tedpermission.TedPermission;
+public class ModifyGroupActivity extends AppCompatActivity {
 
-public class CreateGroupActivity extends AppCompatActivity {
-
-    public CreateGroupActivity() {
+    public ModifyGroupActivity() {
     }
 
     public static Context context_CreateGroupActivity;
@@ -165,6 +164,9 @@ public class CreateGroupActivity extends AppCompatActivity {
 
     }
 
+    /**
+     *  권한 설정
+     */
     public void tedPermission() {
         PermissionListener permissionListener = new PermissionListener() {
             @Override
@@ -244,7 +246,7 @@ public class CreateGroupActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<CreateGroupResponse> call, Throwable t) {
-                    Toast.makeText(CreateGroupActivity.this, "그룹생성 에러 발생", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ModifyGroupActivity.this, "그룹생성 에러 발생", Toast.LENGTH_SHORT).show();
 //              Log.e("createGroup error",t.getMessage());
                     t.printStackTrace();
                 }
@@ -270,7 +272,7 @@ public class CreateGroupActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<CreateGroupResponse> call, Throwable t) {
-                    Toast.makeText(CreateGroupActivity.this, "그룹생성 에러 발생", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ModifyGroupActivity.this, "그룹생성 에러 발생", Toast.LENGTH_SHORT).show();
 //              Log.e("createGroup error",t.getMessage());
                     t.printStackTrace();
                 }
