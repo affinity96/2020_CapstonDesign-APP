@@ -74,7 +74,7 @@ public class ListPostImageAdapter extends RecyclerView.Adapter<ListPostImageAdap
         } else {
 //            ImageLoadTask task = new ImageLoadTask(url, holder.postImage, context, true);
 //            task.execute();
-            ImageTask task = new ImageTask(url, holder.postImage, context, false);
+            ImageTask task = new ImageTask(url, holder.postImage, context, true);
             task.getImage();
 //            service.getProfileImage(url).enqueue(new Callback<ResponseBody>() {
 //                @Override
