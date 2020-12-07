@@ -230,6 +230,13 @@ public class YesGroup extends Fragment {
             textView_followingNum.setText(String.valueOf(followViewModel.getFollowingNum()));
         }
 
+        button_changeProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), MainActivity.class);
+                intent.putExtra("group", groupData);
+            }
+        });
 
         button_follow_group.setOnClickListener(new View.OnClickListener() {
             GroupData myG = ((MainActivity) getActivity()).getGroupData();

@@ -49,6 +49,10 @@ public class SignUpActivity extends AppCompatActivity {
     private EditText name_login;
     private ServiceApi service;
     private CheckBox checkbox_Agree;
+    private CheckBox checkbox_man;
+    private CheckBox checkbox_woman;
+
+    private int gender;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +67,8 @@ public class SignUpActivity extends AppCompatActivity {
         name_login = findViewById(R.id.editText_Name);
         mAuth = FirebaseAuth.getInstance();
         checkbox_Agree = findViewById(R.id.checkbox_Agree);
+        checkbox_man = findViewById(R.id.checkbox_userGenderMan);
+        checkbox_woman = findViewById(R.id.checkbox_usergenderWoman);
         service = RetrofitClient.getClient().create(ServiceApi.class);
 
         birth_login.setOnClickListener(new View.OnClickListener() {
@@ -81,6 +87,13 @@ public class SignUpActivity extends AppCompatActivity {
                 final String birth = birth_login.getText().toString().trim();
                 final String name = name_login.getText().toString().trim();
 
+
+                if(checkbox_man.isChecked()){
+                    gender = 1;
+                }else if(checkbox_woman.isChecked()){
+                    gender =0;
+                }
+
                 if (email.isEmpty()) {
                     email_login.setError("생년월일을 입력하세요");
                 } else if (phone.isEmpty()) {
@@ -93,6 +106,9 @@ public class SignUpActivity extends AppCompatActivity {
                     name_login.setError("닉네임을 입력하세요");
                 } else if (!checkbox_Agree.isChecked()) {
                     checkbox_Agree.setError("이용약관에 동의해주세요");
+                } else if(!checkbox_man.isChecked() && !checkbox_woman.isChecked()){
+                    checkbox_man.setError("성별을 선택하세요");
+                    checkbox_woman.setError("성별을 선택하세요");
                 } else {
                     final Loading loading = new Loading();
                     loading.loading(SignUpActivity.this);
@@ -103,7 +119,7 @@ public class SignUpActivity extends AppCompatActivity {
                                 // Sign in success, update UI with the signed-in user's information
                                 Log.d("회원 가입", "createUserWithEmail:success");
                                 final FirebaseUser user = mAuth.getCurrentUser();
-                                startSignUp(new SignUpData(user.getUid(), phone, email, name, birth));
+                                startSignUp(new SignUpData(user.getUid(), phone, email, name, birth, gender));
                                 loading.loadingEnd();
 
                                 user.sendEmailVerification().addOnCompleteListener(SignUpActivity.this, new OnCompleteListener<Void>() {
@@ -137,6 +153,20 @@ public class SignUpActivity extends AppCompatActivity {
                 }
             }
         });
+
+    }
+
+    public void onCheckboxClicked_UserGender(View v) {
+        switch (v.getId()){
+            case R.id.checkbox_userGenderMan:
+                checkbox_man.setChecked(true);
+                checkbox_woman.setChecked(false);
+                break;
+            case R.id.checkbox_usergenderWoman:
+                checkbox_man.setChecked(false);
+                checkbox_woman.setChecked(true);
+                break;
+        }
 
     }
 
