@@ -110,10 +110,12 @@ public class YesGroup extends Fragment {
     private Button button_join_group;
     private Button button_changeGroupCover;
     private Button button_follow_group;
+    private Button button_changeProfile;
     private TextView textView_followingNum;
     private TextView textView_followerNum;
     private LinearLayout ll_follower;
     private LinearLayout ll_following;
+    private MainActivity main;
 
     private ArrayList<SingleItemPet> petList = new ArrayList<>();
 
@@ -146,6 +148,7 @@ public class YesGroup extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context_YesGroup = this;
+        main = (MainActivity) getActivity();
 
         cache = new Cache(getContext());
         service = RetrofitClient.getClient().create(ServiceApi.class);
@@ -162,12 +165,11 @@ public class YesGroup extends Fragment {
         }
     }
 
-
     @Override
     public void onResume() {
-
         super.onResume();
-//        setPetListView(listView_pets);
+
+        setPetListView(listView_pets);
     }
 
     @Override
@@ -183,6 +185,7 @@ public class YesGroup extends Fragment {
         button_join_group = root.findViewById(R.id.button_join_group);
         button_changeGroupCover = root.findViewById(R.id.button_changeGroupCover);
         button_follow_group = root.findViewById(R.id.button_follow_group);
+        button_changeProfile = root.findViewById(R.id.button_changeProfile);
         listView_pets = root.findViewById(R.id.listview_pets);
         listView_dailyWorks = root.findViewById(R.id.listview_dailywork);
         imageView_groupCover = root.findViewById(R.id.ImageView_groupCover);
@@ -197,9 +200,11 @@ public class YesGroup extends Fragment {
         tv_groupIntro.setText(groupData.getIntroduction());
 
         Log.d("group", groupData.getCover());
+
         getImage(groupData.getImage(), imageView_groupProfile, true);
         getImage(groupData.getCover(), imageView_groupCover, false);
         setPetListView(listView_pets);
+//        main.LoadingEnd();
 
         if (!myGroup) {
             button_join_group.setVisibility(View.VISIBLE);
@@ -208,6 +213,7 @@ public class YesGroup extends Fragment {
             button_addPet.setVisibility(View.INVISIBLE);
             button_Add_DW.setVisibility(View.INVISIBLE);
             button_changeGroupCover.setVisibility(View.INVISIBLE);
+            button_changeProfile.setVisibility(View.INVISIBLE);
             boolean isfollowed = followViewModel.checkFollow(groupData.getId());
 
             if (isfollowed) {
@@ -398,7 +404,7 @@ public class YesGroup extends Fragment {
         });
     }
 
-        @Override
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
         if (resultCode != RESULT_OK) {
@@ -416,7 +422,7 @@ public class YesGroup extends Fragment {
             return;
         } else {
             if (requestCode == 1) {
-                    setImage();
+                setImage();
             }
         }
     }
@@ -484,16 +490,15 @@ public class YesGroup extends Fragment {
     }
 
     private void getImage(String url, ImageView imageView, boolean isprofile) {
-        MainActivity main = (MainActivity)getActivity();
         main.LoadingStart();
         String[] w = url.split("/");
         String key = w[w.length - 1];
 
         Bitmap bit = cache.getBitmapFromCacheDir(key);
         if (bit != null) {
-            if(isprofile){
+            if (isprofile) {
                 Glide.with(YesGroup.this).load(bit).diskCacheStrategy(DiskCacheStrategy.NONE).circleCrop().into(imageView);
-            }else {
+            } else {
                 Glide.with(YesGroup.this).load(bit).diskCacheStrategy(DiskCacheStrategy.NONE).into(imageView);
             }
 
@@ -575,6 +580,7 @@ public class YesGroup extends Fragment {
                 holder.workTime.setTextColor(Color.parseColor("#FFFFFF"));
                 holder.workAlarm.setTextColor(Color.parseColor("#FFFFFF"));
                 getUserProfileImage(holder.workPersonImage, dailyWork.getDone_user_image());
+                Log.d("userData", userData.getUserImage());
                 holder.workDone.setTextColor(Color.parseColor("#FFFFFF"));
 
             }
@@ -585,7 +591,9 @@ public class YesGroup extends Fragment {
                 @Override
                 public void onClick(View v) {
                     Log.d("여기왔어", "꺄륵");
+                    Log.d("userData", userData.getUserImage());
                     AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                    dailyWork.setDone_user_image(userData.getUserImage());
                     builder.setTitle("[ " + holder.workName.getText() + " ]" + " 일과를 수행하셨습니까?");
                     builder.setMessage("일과를 완료한 시각과 사용자님의 정보가 기록됩니다.");
                     builder.setPositiveButton("예",
@@ -607,6 +615,7 @@ public class YesGroup extends Fragment {
                                     Calendar currentTime = Calendar.getInstance();
                                     int hour24hrs = currentTime.get(Calendar.HOUR_OF_DAY);
                                     int minutes = currentTime.get(Calendar.MINUTE);
+                                    Log.d("daily", dailyWork.getDone_user_image());
 
                                     holder.workCheck.setBackgroundResource(R.drawable.round_button4);
                                     holder.workDone.setText(hour24hrs + ":" + minutes);
@@ -701,6 +710,7 @@ public class YesGroup extends Fragment {
         private void setPetData(MyViewHolder holder, int position) {
             SingleItemPet selectedPet = pet_Items.get(position);
             holder.petName.setText(selectedPet.getName());
+            petId = petList.get(position).getId();
 
             getImage(selectedPet.getImage(), (CircleImageView) holder.petImage, true);
             holder.pet.setOnClickListener(new View.OnClickListener() {
@@ -710,6 +720,7 @@ public class YesGroup extends Fragment {
                     notifyDataSetChanged();
                     setDailyWorkListView(listView_dailyWorks, selectedPet.getId());
                     petId = petList.get(position).getId();
+                    Log.d("pet", String.valueOf(petId));
                 }
             });
         }
@@ -748,7 +759,7 @@ public class YesGroup extends Fragment {
                     Glide.with(getActivity()).load(bitmap).circleCrop().into(userProfile);
 
                 } else {
-                    Log.d(TAG, "server contact failed");
+                    Log.d(TAG, "server profile contact failed");
                 }
             }
 
