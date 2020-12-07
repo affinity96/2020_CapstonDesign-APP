@@ -50,7 +50,7 @@ public class PostDetailActivity extends AppCompatActivity {
 
     private static final String TAG = "postDetail";
 
-    private PostViewModel postViewModel;
+    private FollowViewModel followViewModel;
     private GroupViewModel groupViewModel;
     private GroupData group;
     private UserData user;
@@ -117,7 +117,7 @@ public class PostDetailActivity extends AppCompatActivity {
                             setPostComment(recyclerView_postComments);
 
                             if (isgroup) GroupViewModel.increaseComment(postPosition);
-                            else PostViewModel.increaseComment(postPosition);
+                            else FollowViewModel.increaseComment(postPosition);
                             setPostDetail();
                         }
                     }
@@ -134,7 +134,7 @@ public class PostDetailActivity extends AppCompatActivity {
     }
 
     private void setPostDetail() {
-        postViewModel = new ViewModelProvider((ViewModelStoreOwner) this).get(PostViewModel.class);
+        followViewModel = new ViewModelProvider((ViewModelStoreOwner) this).get(FollowViewModel.class);
         groupViewModel = new ViewModelProvider((ViewModelStoreOwner) this).get(GroupViewModel.class);
 
         intent = getIntent();
@@ -146,9 +146,9 @@ public class PostDetailActivity extends AppCompatActivity {
 
         if (isgroup)
             post = (SingleItemPost) groupViewModel.getPostList().getValue().get(postPosition);
-        else post = (SingleItemPost) postViewModel.getPostList().getValue().get(postPosition);
+        else post = (SingleItemPost) followViewModel.getPostList().getValue().get(postPosition);
         if (isgroup) isliked = groupViewModel.getLikeCheck().getValue().get(postPosition);
-        else isliked = postViewModel.getLikeCheck().getValue().get(postPosition);
+        else isliked = followViewModel.getLikeCheck().getValue().get(postPosition);
 
         postGroupProfile = (ImageView) findViewById(R.id.imageView_DetailPostGroupProfile);
         postGroupName = (TextView) findViewById(R.id.textView__DetailPostGroupName);
@@ -172,8 +172,8 @@ public class PostDetailActivity extends AppCompatActivity {
             postLikeNum.setText(String.valueOf(groupViewModel.getPostList().getValue().get(postPosition).getLikeNum()));
             postCommentNum.setText(String.valueOf(groupViewModel.getPostList().getValue().get(postPosition).getCommentNum()));
         } else {
-            postLikeNum.setText(String.valueOf(postViewModel.getPostList().getValue().get(postPosition).getLikeNum()));
-            postCommentNum.setText(String.valueOf(postViewModel.getPostList().getValue().get(postPosition).getCommentNum()));
+            postLikeNum.setText(String.valueOf(followViewModel.getPostList().getValue().get(postPosition).getLikeNum()));
+            postCommentNum.setText(String.valueOf(followViewModel.getPostList().getValue().get(postPosition).getCommentNum()));
         }
 
         postLikedImage.setActivated(isliked);
@@ -203,11 +203,11 @@ public class PostDetailActivity extends AppCompatActivity {
                             } else {
                                 if (!v.isActivated()) {
                                     Log.d("like", "Increase");
-                                    PostViewModel.setLiveLikeNum(postPosition, 1);
-                                    PostViewModel.setLiveLikeCheck(postPosition, true);
+                                    FollowViewModel.setLiveLikeNum(postPosition, 1);
+                                    FollowViewModel.setLiveLikeCheck(postPosition, true);
                                 } else {
-                                    PostViewModel.setLiveLikeNum(postPosition, -1);
-                                    PostViewModel.setLiveLikeCheck(postPosition, false);
+                                    FollowViewModel.setLiveLikeNum(postPosition, -1);
+                                    FollowViewModel.setLiveLikeCheck(postPosition, false);
                                 }
                             }
                             setPostDetail();
