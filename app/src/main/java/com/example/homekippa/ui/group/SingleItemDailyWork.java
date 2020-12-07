@@ -129,4 +129,8 @@ public class SingleItemDailyWork implements Parcelable {
     public String getDone_user_image() {
         return done_user_image;
     }
+
+    public void setDone_user_image(String url){
+        this.done_user_image=url;
+    }
 }
