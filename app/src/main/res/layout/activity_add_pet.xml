@@ -1,100 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".AddPetActivity">
 
-    <include
-        layout="@layout/toolbar_top_bar"
-        android:id="@+id/top_bar"/>
-
-
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/toolbar_addpet"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="vertical"
-        >
-        <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginTop="50dp"
-            android:layout_marginBottom="40dp"
-            android:src="@drawable/simplelogo"/>
-        <TextView
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="등록번호를 통해 반려동물을 조회해보세요"
-            android:gravity="center"
-            android:textSize="20dp"
-            android:layout_marginBottom="20dp"/>
-        <TextView
+            android:layout_height="wrap_content"
+            android:background="@color/kippaBlue">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="반려동물 추가"
+                android:textColor="#ffffff"
+                android:textSize="20dp" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+        </androidx.appcompat.widget.Toolbar>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#5F6368"/>
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/toolbar"
+            android:orientation="vertical"
+            android:padding="15dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/editText_petReg_num"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:hint="🐶 등록번호를 통해 반려동물을 조회해보세요 🐶"
+                    android:inputType="number"
+                    android:textSize="15dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <Button
+                    android:id="@+id/button_petDes"
+                    android:layout_width="100dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="3dp"
+                    android:background="@drawable/round_button2"
+                    android:gravity="center"
+                    android:text="직접입력"
+                    android:textSize="13dp" />
+
+                <Button
+                    android:id="@+id/button_petReg"
+                    android:layout_width="100dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="3dp"
+                    android:background="@drawable/round_button2"
+                    android:gravity="center"
+                    android:text="반려동물 조회"
+                    android:textSize="13dp" />
 
 
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:orientation="horizontal"
-        >
-        <TextView
-            android:layout_weight="1"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:text="등록번호"
-            style="@style/BlackText"/>
-        <EditText
-            android:id="@+id/editText_petReg_num"
-            android:layout_weight="8"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:inputType="number"
-            android:hint="12345678" />
+            </LinearLayout>
+        </LinearLayout>
 
 
+    </RelativeLayout>
 
 
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/button_petReg"
-            android:layout_width="150dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:background="@drawable/round_button2"
-            android:gravity="center"
-            android:text="반려동물 조회"
-            />
-
-        <Button
-            android:id="@+id/button_petDes"
-            android:layout_width="150dp"
-            android:layout_height="40dp"
-            android:layout_gravity="center"
-            android:background="@drawable/round_button2"
-            android:layout_marginLeft="10dp"
-            android:gravity="center"
-            android:text="직접입력"
-             />
-
-    </LinearLayout>
-
-</LinearLayout>
+</RelativeLayout>

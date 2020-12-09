@@ -75,13 +75,11 @@ class HomeCollectionAdapter extends FragmentStateAdapter {
                 tab_ = "F";
                 Fragment fragment = new HomePost(tab_);
                 fragment.setArguments(args);
-                Log.d("Homepost", "It's Here");
                 return fragment;
             case 1:
                 tab_ = "L";
                 Fragment fragment1 = new HomePost(tab_);
                 fragment1.setArguments(args);
-                Log.d("Homepost", "It's Here");
                 return fragment1;
         }
         return null;
