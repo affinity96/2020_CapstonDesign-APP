@@ -162,4 +162,6 @@ public interface ServiceApi {
     @GET("/follow/getFollow")
     Call<GetFollowData> getFollow(@Query("groupId") int groupId);
 
+    @GET("/group/member")
+    Call<List<UserData>> getMemberData(@Query("groupId") int groupId);
 }
