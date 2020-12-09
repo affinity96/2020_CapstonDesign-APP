@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.nfc.Tag;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -113,9 +114,12 @@ public class YesGroup extends Fragment {
     private Button button_changeProfile;
     private TextView textView_followingNum;
     private TextView textView_followerNum;
+    private TextView textView_members;
     private LinearLayout ll_follower;
     private LinearLayout ll_following;
+    private CharSequence[] members;
     private MainActivity main;
+
 
     private ArrayList<SingleItemPet> petList = new ArrayList<>();
 
@@ -152,13 +156,13 @@ public class YesGroup extends Fragment {
 
         cache = new Cache(getContext());
         service = RetrofitClient.getClient().create(ServiceApi.class);
+
         followViewModel = new ViewModelProvider(requireActivity()).get(FollowViewModel.class);
         groupViewModel = new ViewModelProvider(requireActivity()).get(GroupViewModel.class);
 
         userData = ((MainActivity) getActivity()).getUserData();
         groupData = (GroupData) getArguments().get("groupData");
         myGroup = (boolean) getArguments().get("myGroup");
-
 
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
@@ -168,7 +172,6 @@ public class YesGroup extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-
         setPetListView(listView_pets);
     }
 
@@ -195,16 +198,14 @@ public class YesGroup extends Fragment {
         textView_followingNum = root.findViewById(R.id.textView__followingNum);
         ll_follower = root.findViewById(R.id.linearLayout_follower);
         ll_following = root.findViewById(R.id.linearLayout_following);
+        textView_members = root.findViewById(R.id.textView_groupMembers);
 
         tv_groupName.setText(groupData.getName());
         tv_groupIntro.setText(groupData.getIntroduction());
 
-        Log.d("group", groupData.getCover());
-
         getImage(groupData.getImage(), imageView_groupProfile, true);
         getImage(groupData.getCover(), imageView_groupCover, false);
         setPetListView(listView_pets);
-
 
         if (!myGroup) {
             button_join_group.setVisibility(View.VISIBLE);
@@ -230,6 +231,43 @@ public class YesGroup extends Fragment {
             textView_followingNum.setText(String.valueOf(followViewModel.getFollowingNum()));
         }
 
+        textView_members.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                service.getMemberData(groupData.getId()).enqueue(new Callback<List<UserData>>() {
+                    @Override
+                    public void onResponse(Call<List<UserData>> call, Response<List<UserData>> response) {
+                        if (response.isSuccessful()) {
+
+                            List<String> userNames = new ArrayList<>();
+                            for (UserData user : response.body()) {
+                                userNames.add(user.getUserName());
+                            }
+                            members = userNames.toArray(new CharSequence[userNames.size()]);
+                            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                            builder.setTitle("그룹원")
+                                    .setItems(members, new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            Toast.makeText(getContext(), members[which], Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                            AlertDialog alertDialog = builder.create();
+                            alertDialog.show();
+                        } else {
+                            Log.d("group", "did not success getting member data");
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<UserData>> call, Throwable t) {
+                        Log.e("group", t.getMessage());
+                    }
+                });
+
+
+            }
+        });
         button_changeProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -582,7 +620,7 @@ public class YesGroup extends Fragment {
                 holder.workTime.setTextColor(Color.parseColor("#FFFFFF"));
                 holder.workAlarm.setTextColor(Color.parseColor("#FFFFFF"));
                 getUserProfileImage(holder.workPersonImage, dailyWork.getDone_user_image());
-                Log.d("userData", userData.getUserImage());
+
                 holder.workDone.setTextColor(Color.parseColor("#FFFFFF"));
 
             }
@@ -665,7 +703,6 @@ public class YesGroup extends Fragment {
                 workCheck = (RelativeLayout) view.findViewById(R.id.work_Check);
                 workDone = (TextView) view.findViewById(R.id.textView_workDone);
 
-
                 workName.setOnClickListener(new View.OnClickListener() {
 
                     @Override
@@ -699,7 +736,7 @@ public class YesGroup extends Fragment {
 
         @Override
         public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-            ((MainActivity)getActivity()).LoadingStart();
+            ((MainActivity) getActivity()).LoadingStart();
             if (selectedPosition == position) {
                 holder.pet.setBackgroundResource(R.drawable.round_button2);
             } else {
@@ -707,7 +744,7 @@ public class YesGroup extends Fragment {
             }
 
             setPetData(holder, position);
-            ((MainActivity)getActivity()).LoadingEnd();
+            ((MainActivity) getActivity()).LoadingEnd();
         }
 
         private void setPetData(MyViewHolder holder, int position) {

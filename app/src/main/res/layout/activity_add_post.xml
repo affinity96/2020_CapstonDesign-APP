@@ -1,33 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AddPostActivity">
 
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/toolbar_addPost"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:orientation="vertical">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/kippaBlue"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             tools:ignore="MissingConstraints">
 
             <TextView
-                android:id="@+id/toolbar_addPost"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -53,10 +45,11 @@
         </androidx.appcompat.widget.Toolbar>
 
         <LinearLayout
+            android:id="@+id/linearLayout_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar">
+            android:layout_below="@+id/toolbar"
+            android:orientation="vertical">
 
             <EditText
                 android:id="@+id/editText_addPostTitle"
@@ -89,13 +82,14 @@
             android:id="@+id/frameLayout_post"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/linearLayout_title"
             android:layout_gravity="top"
             android:visibility="invisible">
 
             <androidx.cardview.widget.CardView
-                android:layout_margin="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="10dp"
                 app:cardCornerRadius="9dp">
 
                 <ImageView
@@ -134,22 +128,27 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:background="@drawable/border_gray">
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/border_gray"
+            android:orientation="horizontal">
 
-            <ImageButton
-                android:id="@+id/button_Add_Post_Img"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:layout_margin="10dp"
-                android:background="@android:color/transparent"
-                app:srcCompat="@drawable/ic_photo_24px" />
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="left">
 
+                <ImageButton
+                    android:id="@+id/button_Add_Post_Img"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_margin="10dp"
+                    android:background="@android:color/transparent"
+                    app:srcCompat="@drawable/ic_photo_24px" />
+            </LinearLayout>
         </LinearLayout>
-
-
-    </LinearLayout>
-
+    </RelativeLayout>
 
     <!--    <ImageView-->
     <!--        android:id="@+id/img_photo_post"-->
@@ -160,4 +159,4 @@
     <!--        app:layout_constraintTop_toBottomOf="@+id/button_Add_Post_Img"/>-->
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

@@ -94,7 +94,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="10dp"
                 android:layout_marginTop="100dp">
 
                 <ImageView
@@ -111,9 +111,10 @@
 
             </FrameLayout>
 
+
             <LinearLayout
                 android:id="@+id/linearlayout_proile"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/frameLayout_groupCover"
                 android:layout_alignParentRight="true"
@@ -121,16 +122,16 @@
                 android:orientation="horizontal">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="left"
+                    android:layout_weight="6"
                     android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/textView_groupName"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-
                         android:singleLine="true"
                         android:text="우만동 땡이가족"
                         android:textSize="13dp"
@@ -138,7 +139,7 @@
 
                     <TextView
                         android:id="@+id/textView_groupIntro"
-                        android:layout_width="fill_parent"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/textView_groupName"
                         android:layout_toRightOf="@+id/frameLayout_profile"
@@ -148,16 +149,18 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:gravity="center">
+                    android:layout_weight="5"
+                    android:gravity="center"
+                    android:padding="2dp">
 
                     <LinearLayout
                         android:id="@+id/linearLayout_following"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_weight="2"
                         android:orientation="vertical"
-                        android:padding="4dp"
                         android:visibility="invisible">
 
                         <TextView
@@ -180,14 +183,13 @@
                         android:id="@+id/linearLayout_follower"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_weight="2"
                         android:orientation="vertical"
-                        android:padding="4dp"
                         android:visibility="invisible">
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-
                             android:text="팔로워"
                             android:textSize="13sp"
                             android:textStyle="bold" />
@@ -200,6 +202,20 @@
                             android:text="0"
                             android:textSize="15sp" />
                     </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/textView_groupMembers"
+                        android:layout_width="30dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right|center"
+                        android:layout_margin="3dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/round_button5"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center"
+                        android:padding="3dp"
+                        android:text="🏡" />
                 </LinearLayout>
 
             </LinearLayout>
