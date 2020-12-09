@@ -15,9 +15,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,6 +43,9 @@ import com.example.homekippa.MapActivity;
 import com.example.homekippa.network.RetrofitClient;
 import com.example.homekippa.network.ServiceApi;
 import com.example.homekippa.ui.group.SingleItemPet;
+import com.google.android.material.button.MaterialButton;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -56,7 +61,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class WalkFragment extends Fragment {
+public class WalkFragment extends Fragment{
 
     private WalkViewModel walkViewModel;
     private Double lat;
@@ -80,11 +85,16 @@ public class WalkFragment extends Fragment {
     private Drawable drawable;
 
 
-    private EditText editText_temperature;
-    private EditText editText_weather;
+    private TextView textView_temperature;
+    private TextView textView_weather;
     private ImageView imageView_weather;
     private Button button_startWalk;
     private RecyclerView listView_walk_pets;
+    private CheckBox checkbox_wholeScope;
+    private CheckBox checkbox_followScope;
+    private CheckBox checkbox_closedScope;
+
+    private DatabaseReference mDatabase;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -95,11 +105,15 @@ public class WalkFragment extends Fragment {
         locationManager = (LocationManager) getContext().getSystemService(Context.LOCATION_SERVICE);
         service = RetrofitClient.getClient().create(ServiceApi.class);
 
-        editText_temperature = root.findViewById(R.id.editText_temperature);
-        editText_weather = root.findViewById(R.id.editText_weather);
+        textView_temperature = root.findViewById(R.id.textView_temperature);
+        textView_weather = root.findViewById(R.id.textView_weather);
         imageView_weather = root.findViewById(R.id.imageView_weather);
         button_startWalk = root.findViewById(R.id.button_startWalk);
         listView_walk_pets = root.findViewById(R.id.listview_walk_pets);
+        checkbox_closedScope = root.findViewById(R.id.checkbox_closedScope);
+        checkbox_followScope = root.findViewById(R.id.checkbox_followScope);
+        checkbox_wholeScope = root.findViewById(R.id.checkbox_wholeScope);
+
         groupData = ((MainActivity) getActivity()).getGroupData();
         userData = ((MainActivity) getActivity()).getUserData();
 
@@ -151,6 +165,47 @@ public class WalkFragment extends Fragment {
             }
         });
 
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        mDatabase = database.getReference("walk");
+        mDatabase.child("walking_group").child(String.valueOf(groupData.getId()));
+        mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("groupName").setValue(groupData.getName());
+        mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("groupTag").setValue(groupData.getName()+groupData.getTag());
+        mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("userName").setValue(userData.getUserName());
+        mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("userImage").setValue(userData.getUserImage());
+
+        checkbox_wholeScope.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("scope").setValue("wholeScope");
+                checkbox_wholeScope.setChecked(true);
+                checkbox_followScope.setChecked(false);
+                checkbox_closedScope.setChecked(false);
+
+            }
+        });
+
+        checkbox_followScope.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("scope").setValue("followScope");
+                checkbox_wholeScope.setChecked(false);
+                checkbox_followScope.setChecked(true);
+                checkbox_closedScope.setChecked(false);
+            }
+        });
+
+        checkbox_closedScope.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("scope").setValue("closedScope");
+                checkbox_wholeScope.setChecked(false);
+                checkbox_followScope.setChecked(false);
+                checkbox_closedScope.setChecked(true);
+            }
+        });
+
         return root;
     }
 
@@ -185,6 +240,8 @@ public class WalkFragment extends Fragment {
             }
         });
     }
+
+
 
     private void getPetProfileImage(ListPetAdapter.MyViewHolder holder, String url) {
         String[] w = url.split("/");
@@ -360,7 +417,7 @@ public class WalkFragment extends Fragment {
             public void onResponse(Call<WeatheLocationResponse> call, Response<WeatheLocationResponse> response) {
                 WeatheLocationResponse result = response.body();
 
-                editText_temperature.setText(result.getCurrent_temperature()+"º");
+                textView_temperature.setText(result.getCurrent_temperature()+"º");
                 weather(result.getCurrent_weather());
                 if (result.getCode() == 200) {
                     Log.d("weather", "server connect");
@@ -384,32 +441,32 @@ public class WalkFragment extends Fragment {
         if (weather.equals("rain")) {
             drawable = getResources().getDrawable(R.drawable.rain);
             imageView_weather.setImageDrawable(drawable);
-            editText_weather.setText("비");
+            textView_weather.setText("비");
 
         } else if (weather.equals("snow")) {
             drawable = getResources().getDrawable(R.drawable.snow);
             imageView_weather.setImageDrawable(drawable);
-            editText_weather.setText("눈");
+            textView_weather.setText("눈");
         } else if (weather.equals("thunderstorm")) {
             drawable = getResources().getDrawable(R.drawable.thunderstorm);
             imageView_weather.setImageDrawable(drawable);
-            editText_weather.setText("천둥번개");
+            textView_weather.setText("천둥번개");
         } else if (weather.equals("drizzle")) {
             drawable = getResources().getDrawable(R.drawable.drizzle);
             imageView_weather.setImageDrawable(drawable);
-            editText_weather.setText("보슬보슬비");
+            textView_weather.setText("보슬보슬비");
         } else if (weather.equals("clouds")) {
             drawable = getResources().getDrawable(R.drawable.cloud);
             imageView_weather.setImageDrawable(drawable);
-            editText_weather.setText("구름");
+            textView_weather.setText("구름");
         } else if (weather.equals("clear")) {
             drawable = getResources().getDrawable(R.drawable.clear);
             imageView_weather.setImageDrawable(drawable);
-            editText_weather.setText("맑음");
+            textView_weather.setText("맑음");
         } else if (weather.equals("haze")) {
             drawable = getResources().getDrawable(R.drawable.haze);
             imageView_weather.setImageDrawable(drawable);
-            editText_weather.setText("안개");
+            textView_weather.setText("안개");
         }
     }
 }

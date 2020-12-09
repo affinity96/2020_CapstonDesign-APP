@@ -12,6 +12,8 @@
         android:id="@+id/linearLayout_weatehr"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
         android:orientation="vertical">
 
         <LinearLayout
@@ -60,13 +62,14 @@
                         android:scaleType="fitCenter" />
                 </LinearLayout>
 
-                <EditText
-                    android:id="@+id/editText_weather"
+                <TextView
+                    android:id="@+id/textView_weather"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:layout_weight="2"
                     android:background="@null"
+                    android:textSize="18dp"
                     android:gravity="center" />
             </LinearLayout>
         </LinearLayout>
@@ -86,7 +89,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-
                 android:background="@drawable/round_button2"
                 android:gravity="center"
                 android:text="온도"
@@ -99,12 +101,13 @@
                 android:layout_marginRight="20dp"
                 android:layout_weight="4">
 
-                <EditText
-                    android:id="@+id/editText_temperature"
+                <TextView
+                    android:id="@+id/textView_temperature"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="4"
+                    android:textSize="18dp"
                     android:background="@null"
                     android:gravity="center" />
 
@@ -121,6 +124,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_weight="1"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
         android:orientation="vertical">
 
         <TextView
@@ -141,9 +146,87 @@
     </LinearLayout>
 
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:background="@drawable/dialog_group_pet"
+        android:layout_gravity="center">
+
+        <TextView
+            android:id="@+id/textView_pet_gender"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="공개범위"
+            android:textSize="18sp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            style="@style/BlackText"
+            />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:orientation="vertical"
+            android:layout_marginLeft="40dp"
+            android:gravity="center">
+
+            <CheckBox
+                android:id="@+id/checkbox_wholeScope"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:text="전체  공개"
+                android:layout_gravity="start"
+                android:gravity="center"
+                />
+            <CheckBox
+                android:id="@+id/checkbox_followScope"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:text="팔로우 공개"
+                android:layout_gravity="start"
+                android:gravity="center"
+                />
+            <CheckBox
+                android:id="@+id/checkbox_closedScope"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:text="비공개"
+                android:layout_gravity="start"
+                android:gravity="center"
+                />
+        </LinearLayout>
+
+
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="2">
+
+    </LinearLayout>
+
+
+    <LinearLayout
         android:id="@+id/linearlayout_startButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
         android:orientation="vertical">
 
         <Button

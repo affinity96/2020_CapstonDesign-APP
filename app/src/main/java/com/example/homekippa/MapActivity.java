@@ -138,6 +138,18 @@ public class MapActivity extends AppCompatActivity implements MapView.MapViewEve
         mapView.zoomIn(true);
         // 줌 아웃
         mapView.zoomOut(true);
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+
+        mDatabase = database.getReference("walk");
+        mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("petName").setValue(petName);
+        mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("petGender").setValue(petGender);
+        mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("petSpecies").setValue(petSpecies);
+        mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("petImage").setValue(petImageUrl);
+
+        mDatabase.child("walking_group").child(String.valueOf(15)).child("scope").setValue("wholeScope");
+        mDatabase.child("walking_group").child(String.valueOf(16)).child("scope").setValue("wholeScope");
+        mDatabase.child("walking_group").child(String.valueOf(64)).child("scope").setValue("followScope");
+        mDatabase.child("walking_group").child(String.valueOf(65)).child("scope").setValue("folloewScope");
 
 //        mapView.setOnTouchListener(new View.OnTouchListener(){
 //
@@ -151,17 +163,9 @@ public class MapActivity extends AppCompatActivity implements MapView.MapViewEve
 
 
         //firebase 백엔드 사용해서 위도 경도 저장
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        mDatabase = database.getReference("walk");
-        mDatabase.child("walking_group").child(String.valueOf(groupData.getId()));
-        mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("groupName").setValue(groupData.getName());
-        mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("groupTag").setValue(groupData.getName()+groupData.getTag());
-        mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("userName").setValue(userData.getUserName());
-        mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("userImage").setValue(userData.getUserImage());
-        mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("petName").setValue(petName);
-        mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("petGender").setValue(petGender);
-        mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("petSpecies").setValue(petSpecies);
-        mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("petImage").setValue(petImageUrl);
+
+
+
 
 
 //setCustomCurrentLocationMarkerImage
@@ -172,18 +176,6 @@ public class MapActivity extends AppCompatActivity implements MapView.MapViewEve
 
 
         // mark => ?
-
-
-        //재시작 버튼
-//        button_remove.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                mapView.removePolyline(mapPolyLine);
-//                mapPolyLine = new MapPolyline();
-//
-//            }
-//        });
-
         //여기에도 alertDialog로 바꾸기
         button_stopMap.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -231,7 +223,7 @@ public class MapActivity extends AppCompatActivity implements MapView.MapViewEve
 
             }
         });
-
+        // firebase에서 해당 group 삭제
         button_finishMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -473,18 +465,30 @@ public class MapActivity extends AppCompatActivity implements MapView.MapViewEve
                     markerCount = 0;
                     // 다른 그룹 위치 판별하기
                     String currentAddress = dataSnapshot.child("walking_group").child(String.valueOf(groupData.getId())).child("address").getValue(String.class);
+                    String groupScope = dataSnapshot.child("walking_group").child(String.valueOf(groupData.getId())).child("scope").getValue(String.class);
+
                     for (DataSnapshot GroupMapData : dataSnapshot.child("walking_group").getChildren()) {
                         Log.d("mapP",GroupMapData.getKey());
                         String otherGroup = GroupMapData.getKey();
                         String otherAddress = GroupMapData.child("address").getValue(String.class);
+                        String otherScope = GroupMapData.child("scope").getValue(String.class);
                         //자신 그룹은 제외 시킨다.
                         if (!otherGroup.equals(String.valueOf(groupData.getId()))) {
                             if (otherAddress.equals(currentAddress)) {
                                 Log.d("database_read","address");
                                 //다른 그룹 위치 띄우기
-                                walkingOtherGroup(GroupMapData.child("latitude").getValue(Double.class), GroupMapData.child("longitude").getValue(Double.class), GroupMapData.child("groupTag").getValue(String.class));
+                                if(otherScope.equals("wholeScope")){
+                                    Log.d("scope","here1");
+                                    walkingOtherGroup(GroupMapData.child("latitude").getValue(Double.class), GroupMapData.child("longitude").getValue(Double.class), GroupMapData.child("groupTag").getValue(String.class));
+                                }else if(otherScope.equals("followScope")){
+                                    Log.d("scope","here2");
+                                    // 팔로우 되어 있는 것만 보여주기
+                                    // 산책 시작화면에서 미리 데이터
+                                }
+
                             }
                         }
+
                     }
                 }
                 @Override
@@ -526,12 +530,21 @@ public class MapActivity extends AppCompatActivity implements MapView.MapViewEve
                         Log.d("mapP",GroupMapData.getKey());
                         String otherGroup = GroupMapData.getKey();
                         String otherAddress = GroupMapData.child("address").getValue(String.class);
+                        String otherScope = GroupMapData.child("scope").getValue(String.class);
                         //자신 그룹은 제외 시킨다.
                         if (!otherGroup.equals(String.valueOf(groupData.getId()))) {
                             if (otherAddress.equals(currentAddress)) {
                                 Log.d("database_read","address");
                                 //다른 그룹 위치 띄우기
-                                walkingOtherGroup(GroupMapData.child("latitude").getValue(Double.class), GroupMapData.child("longitude").getValue(Double.class), GroupMapData.child("groupTag").getValue(String.class));
+                                if(otherScope.equals("wholeScope")){
+                                    Log.d("scope","here1");
+                                    walkingOtherGroup(GroupMapData.child("latitude").getValue(Double.class), GroupMapData.child("longitude").getValue(Double.class), GroupMapData.child("groupTag").getValue(String.class));
+                                }else if(otherScope.equals("followScope")){
+                                    Log.d("scope","here2");
+                                    // 팔로우 되어 있는 것만 보여주기
+                                    // 산책 시작화면에서 미리 데이터
+                                }
+
                             }
                         }
                     }
