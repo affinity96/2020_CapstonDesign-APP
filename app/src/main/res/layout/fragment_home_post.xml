@@ -8,5 +8,15 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/listView_HomePost"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:id="@+id/empty_post"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:src="@drawable/no_posts"
+        android:visibility="gone" />
 </RelativeLayout>

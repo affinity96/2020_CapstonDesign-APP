@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -25,6 +26,7 @@ import com.example.homekippa.network.ServiceApi;
 import com.example.homekippa.ListPostAdapter;
 import com.example.homekippa.SingleItemPost;
 import com.example.homekippa.SingleItemPostImage;
+import com.example.homekippa.ui.group.YesGroup;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +51,7 @@ public class HomePost extends Fragment {
     private ArrayList<GroupData> groupList = new ArrayList<>();
     private List<List<LikeData>> likeList = new ArrayList<>();
     private RecyclerView listView_posts;
+    private ImageView empty_Img;
 
     private ListPostAdapter postAdapter;
     private FollowViewModel followViewModel;
@@ -100,6 +103,7 @@ public class HomePost extends Fragment {
 
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_home_post, container, false);
         listView_posts = root.findViewById(R.id.listView_HomePost);
+        empty_Img=root.findViewById(R.id.empty_post);
 
         if (!isGroupCreated()) {
             setPostListView(listView_posts);
@@ -148,13 +152,24 @@ public class HomePost extends Fragment {
 
     private void setPostAdapter(RecyclerView listView, ArrayList<Boolean> checkLikeList, ArrayList<SingleItemPost> list) {
         //Setting Sample Image Data
-        postAdapter = new ListPostAdapter(getActivity(), list, groupList, checkLikeList, false, tab_);
-        listView.setAdapter(postAdapter);
+        if (checkLikeList.isEmpty()) {
+            Log.d("home","noposts");
+            listView.setVisibility(View.GONE);
+            empty_Img.setVisibility(View.VISIBLE);
 
-        LinearLayoutManager pLayoutManager = new LinearLayoutManager(getActivity());
-        pLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        listView.setLayoutManager(pLayoutManager);
-        listView.setItemAnimator(new DefaultItemAnimator());
+
+        } else {
+            listView.setVisibility(View.VISIBLE);
+            empty_Img.setVisibility(View.GONE);
+            postAdapter = new ListPostAdapter(getActivity(), list, groupList, checkLikeList, false, tab_);
+            listView.setAdapter(postAdapter);
+
+            LinearLayoutManager pLayoutManager = new LinearLayoutManager(getActivity());
+            pLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+            listView.setLayoutManager(pLayoutManager);
+            listView.setItemAnimator(new DefaultItemAnimator());
+        }
+
     }
 
     private void setImageData() {
