@@ -1,5 +1,6 @@
 package com.example.homekippa.ui.home;
 
+import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -50,7 +51,8 @@ public class HomePost extends Fragment {
     private RecyclerView listView_posts;
 
     private ListPostAdapter postAdapter;
-    private PostViewModel postViewModel;
+    private FollowViewModel followViewModel;
+    private LocationViewModel locationViewModel;
 
     //TODO: get parameters deciding the fragment type: eg) post of followers or post of groups nearby
     public HomePost(String tab_) {
@@ -68,11 +70,19 @@ public class HomePost extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        setPostListView(listView_posts);
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         service = RetrofitClient.getClient().create(ServiceApi.class);
+        followViewModel = new ViewModelProvider(requireActivity()).get(FollowViewModel.class);
+        locationViewModel = new ViewModelProvider(requireActivity()).get(LocationViewModel.class);
 
-        if (!isGroupCreated()) {
+        if (isGroupCreated()) {
             groupData = ((MainActivity) getActivity()).getGroupData();
         }
         userData = ((MainActivity) getActivity()).getUserData();
@@ -99,26 +109,29 @@ public class HomePost extends Fragment {
 
 
     public void setPostListView(RecyclerView listView) {
-        Log.d("tab", tab_);
+
         service.getHomePost(groupData.getId(), tab_, groupData.getArea()).enqueue(new Callback<PostResponse>() {
             @Override
             public void onResponse(Call<PostResponse> call, Response<PostResponse> response) {
                 if (response.isSuccessful()) {
                     PostResponse wholePosts = response.body();
-                    Log.d("tab", wholePosts.getGroupData().toString());
-
-                    postViewModel = new ViewModelProvider(requireActivity()).get(PostViewModel.class);
 
                     postList = wholePosts.getPostData();
                     groupList = wholePosts.getGroupData();
                     likeList = wholePosts.getLikeData();
 
-                    setImageData();
                     ArrayList<Boolean> checkLikeList = setLikeData(likeList);
-                    postViewModel.getPostList().setValue(postList);
-                    postViewModel.getLikeCheck().setValue(checkLikeList);
+                    setImageData();
 
-                    setPostAdapter(listView, checkLikeList);
+                    if (tab_ == "F") {
+                        followViewModel.getPostList().setValue(postList);
+                        followViewModel.getLikeCheck().setValue(checkLikeList);
+                        setPostAdapter(listView, checkLikeList, (ArrayList<SingleItemPost>) followViewModel.getPostList().getValue());
+                    } else {
+                        locationViewModel.getPostList().setValue(postList);
+                        locationViewModel.getLikeCheck().setValue(checkLikeList);
+                        setPostAdapter(listView, checkLikeList, (ArrayList<SingleItemPost>) locationViewModel.getPostList().getValue());
+                    }
 
                 }
             }
@@ -133,9 +146,9 @@ public class HomePost extends Fragment {
     }
 
 
-    private void setPostAdapter(RecyclerView listView, ArrayList<Boolean> checkLikeList) {
+    private void setPostAdapter(RecyclerView listView, ArrayList<Boolean> checkLikeList, ArrayList<SingleItemPost> list) {
         //Setting Sample Image Data
-        postAdapter = new ListPostAdapter(getActivity(), (ArrayList<SingleItemPost>) postViewModel.getPostList().getValue(), groupList, checkLikeList, false);
+        postAdapter = new ListPostAdapter(getActivity(), list, groupList, checkLikeList, false, tab_);
         listView.setAdapter(postAdapter);
 
         LinearLayoutManager pLayoutManager = new LinearLayoutManager(getActivity());
@@ -171,6 +184,6 @@ public class HomePost extends Fragment {
     }
 
     public boolean isGroupCreated() {
-        return ((MainActivity) getActivity()).getGroupData() == null;
+        return ((MainActivity) getActivity()).getGroupData() != null;
     }
 }

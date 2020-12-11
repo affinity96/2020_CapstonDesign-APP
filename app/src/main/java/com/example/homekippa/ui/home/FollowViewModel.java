@@ -12,12 +12,12 @@ import com.example.homekippa.SingleItemPost;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PostViewModel extends ViewModel {
-    private ServiceApi service = RetrofitClient.getClient().create(ServiceApi.class);
+public class FollowViewModel extends ViewModel {
+
     public static MutableLiveData<List<SingleItemPost>> post = new MutableLiveData<>();
     public static MutableLiveData<List<Boolean>> likeCheck = new MutableLiveData<>();
 
-    public PostViewModel() {
+    public FollowViewModel() {
     }
 
     public MutableLiveData<List<SingleItemPost>> getPostList() {
