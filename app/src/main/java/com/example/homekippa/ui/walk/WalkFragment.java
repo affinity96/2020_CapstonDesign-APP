@@ -26,6 +26,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -35,13 +36,16 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.homekippa.MainActivity;
 import com.example.homekippa.R;
+import com.example.homekippa.data.GetFollowData;
 import com.example.homekippa.data.GroupData;
 import com.example.homekippa.data.UserData;
 import com.example.homekippa.data.WeatheLocationResponse;
 import com.example.homekippa.data.WeatherLocationData;
 import com.example.homekippa.MapActivity;
+import com.example.homekippa.function.Loading;
 import com.example.homekippa.network.RetrofitClient;
 import com.example.homekippa.network.ServiceApi;
+import com.example.homekippa.ui.group.FollowViewModel;
 import com.example.homekippa.ui.group.SingleItemPet;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.database.DatabaseReference;
@@ -73,6 +77,8 @@ public class WalkFragment extends Fragment{
     private static final int REQUEST_CODE_LOCATION = 2;
 
     private ArrayList<SingleItemPet> petList = new ArrayList<>();
+    private ArrayList followingArray = new ArrayList();
+
     private int petId;
     private String petName;
     private String petGender;
@@ -84,15 +90,16 @@ public class WalkFragment extends Fragment{
 
     private Drawable drawable;
 
-
     private TextView textView_temperature;
     private TextView textView_weather;
+    private TextView textView_scope;
     private ImageView imageView_weather;
     private Button button_startWalk;
     private RecyclerView listView_walk_pets;
     private CheckBox checkbox_wholeScope;
     private CheckBox checkbox_followScope;
     private CheckBox checkbox_closedScope;
+    private Intent intent;
 
     private DatabaseReference mDatabase;
 
@@ -113,9 +120,13 @@ public class WalkFragment extends Fragment{
         checkbox_closedScope = root.findViewById(R.id.checkbox_closedScope);
         checkbox_followScope = root.findViewById(R.id.checkbox_followScope);
         checkbox_wholeScope = root.findViewById(R.id.checkbox_wholeScope);
+        intent = new Intent(getActivity(), MapActivity.class);
+        textView_scope = root.findViewById(R.id.textView_scope);
 
         groupData = ((MainActivity) getActivity()).getGroupData();
         userData = ((MainActivity) getActivity()).getUserData();
+
+        getGroupData(userData.getGroupId());
 
         userLocation = getMyLocation();
         setPetListView(listView_walk_pets);
@@ -154,14 +165,17 @@ public class WalkFragment extends Fragment{
                 }
 
 
-                Intent intent = new Intent(getActivity(), MapActivity.class);
-                intent.putExtra("groupData", groupData);
-                intent.putExtra("userData", userData);
-                intent.putExtra("petName", petName);
-                intent.putExtra("petSpecies", petSpecies);
-                intent.putExtra("petGender", petGender);
-                intent.putExtra("petImageUrl", petImageUrl);
-                startActivity(intent);
+                if(checkbox_wholeScope.isChecked() == false && checkbox_followScope.isChecked() == false && checkbox_closedScope.isChecked() == false){
+                    textView_scope.setError("공개범위 선택해주세요");
+                }else{
+                    intent.putExtra("groupData", groupData);
+                    intent.putExtra("userData", userData);
+                    intent.putExtra("petName", petName);
+                    intent.putExtra("petSpecies", petSpecies);
+                    intent.putExtra("petGender", petGender);
+                    intent.putExtra("petImageUrl", petImageUrl);
+                    startActivity(intent);
+                }
             }
         });
 
@@ -181,6 +195,7 @@ public class WalkFragment extends Fragment{
                 checkbox_wholeScope.setChecked(true);
                 checkbox_followScope.setChecked(false);
                 checkbox_closedScope.setChecked(false);
+                intent.putExtra("scope","wholeScpe");
 
             }
         });
@@ -193,6 +208,8 @@ public class WalkFragment extends Fragment{
                 checkbox_wholeScope.setChecked(false);
                 checkbox_followScope.setChecked(true);
                 checkbox_closedScope.setChecked(false);
+                intent.putExtra("scope","followScope");
+                intent.putExtra("followingGroup",followingArray);
             }
         });
 
@@ -203,10 +220,49 @@ public class WalkFragment extends Fragment{
                 checkbox_wholeScope.setChecked(false);
                 checkbox_followScope.setChecked(false);
                 checkbox_closedScope.setChecked(true);
+                intent.putExtra("scope","closedScope");
             }
         });
 
+
+
         return root;
+    }
+
+    public void getGroupData(int ID) {
+
+        service.getGroupData(ID).enqueue(new Callback<GroupData>() {
+            @Override
+            public void onResponse(Call<GroupData> call, Response<GroupData> response) {
+                if (response.isSuccessful()) {
+                    Log.d("그룹 확인", "성공");
+                    groupData = response.body();
+                    service.getFollow(ID).enqueue(new Callback<GetFollowData>() {
+                        @Override
+                        public void onResponse(Call<GetFollowData> call, Response<GetFollowData> response) {
+                            if (response.isSuccessful()) {
+                                Log.d("follow", "successful");
+                                followingArray = (ArrayList) response.body().getFollowingList();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<GetFollowData> call, Throwable t) {
+                            Log.d("로그인", "에러");
+                            Log.e("로그인", t.getMessage());
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GroupData> call, Throwable t) {
+                Log.d("그룹 확인", "에러");
+                Log.e("그룹 확인", t.getMessage());
+            }
+        });
+
+
     }
 
     private void setPetListView(RecyclerView listView) {

@@ -56,8 +56,8 @@
                         android:layout_margin="10dp"
                         android:scaleType="fitCenter" />
 
-                    <EditText
-                        android:id="@+id/editText_weather"
+                    <TextView
+                        android:id="@+id/textView_weather"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -91,11 +91,12 @@
                     android:layout_gravity="center"
                     android:orientation="horizontal">
 
-                    <EditText
-                        android:id="@+id/editText_temperature"
+                    <TextView
+                        android:id="@+id/textView_temperature"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
+                        android:textSize="20sp"
                         android:background="@null"
                         android:gravity="center" />
                 </LinearLayout>
@@ -141,7 +142,7 @@
         android:layout_gravity="center">
 
         <TextView
-            android:id="@+id/textView_pet_gender"
+            android:id="@+id/textView_scope"
             android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -165,8 +166,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:textSize="18sp"
+                android:textSize="15sp"
                 android:text="전체  공개"
+                style="@style/GrayText"
                 android:layout_gravity="start"
                 android:gravity="center"
                 />
@@ -175,8 +177,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:textSize="18sp"
+                android:textSize="15sp"
                 android:text="팔로우 공개"
+                style="@style/GrayText"
                 android:layout_gravity="start"
                 android:gravity="center"
                 />
@@ -185,8 +188,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:textSize="18sp"
+                android:textSize="15sp"
                 android:text="비공개"
+                style="@style/GrayText"
                 android:layout_gravity="start"
                 android:gravity="center"
                 />

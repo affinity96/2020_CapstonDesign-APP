@@ -78,10 +78,12 @@ public class MapActivity extends AppCompatActivity implements MapView.MapViewEve
     private String petGender;
     private String petSpecies;
     private String petImageUrl;
+    private String groupLockScope;
     private GroupData groupData;
     private UserData userData;
     private ServiceApi service;
     private DatabaseReference mDatabase;
+    private ArrayList followingGroup = new ArrayList();
 //    private MapPOIItem marker;
     private int markerCount;
 //    private ArrayList<MapPOIItem> marker = new ArrayList<>();
@@ -108,9 +110,13 @@ public class MapActivity extends AppCompatActivity implements MapView.MapViewEve
         petSpecies =  (String) getIntent().getExtras().get("petSpecies");
         petImageUrl = (String) getIntent().getExtras().get("petImageUrl");
 
-        service = RetrofitClient.getClient().create(ServiceApi.class);
+        groupLockScope = (String) getIntent().getExtras().get("scope");
 
-        Log.d("userData",userData.getUserName());
+        if(groupLockScope.equals("followScope") ){
+            followingGroup = (ArrayList) getIntent().getExtras().get("followingGroup");
+        }
+
+        service = RetrofitClient.getClient().create(ServiceApi.class);
 
         //마커 생성
 
@@ -481,9 +487,15 @@ public class MapActivity extends AppCompatActivity implements MapView.MapViewEve
                                     Log.d("scope","here1");
                                     walkingOtherGroup(GroupMapData.child("latitude").getValue(Double.class), GroupMapData.child("longitude").getValue(Double.class), GroupMapData.child("groupTag").getValue(String.class));
                                 }else if(otherScope.equals("followScope")){
-                                    Log.d("scope","here2");
-                                    // 팔로우 되어 있는 것만 보여주기
-                                    // 산책 시작화면에서 미리 데이터
+                                    Log.d("follow", String.valueOf(followingGroup));
+
+                                    for(int i =0 ; i <followingGroup.size();i++){
+                                        Log.d("follow", String.valueOf(followingGroup.get(i)));
+                                        Log.d("follow",otherGroup);
+
+                                    }
+
+
                                 }
 
                             }
@@ -540,7 +552,14 @@ public class MapActivity extends AppCompatActivity implements MapView.MapViewEve
                                     Log.d("scope","here1");
                                     walkingOtherGroup(GroupMapData.child("latitude").getValue(Double.class), GroupMapData.child("longitude").getValue(Double.class), GroupMapData.child("groupTag").getValue(String.class));
                                 }else if(otherScope.equals("followScope")){
-                                    Log.d("scope","here2");
+                                    Log.d("follow","here");
+                                    Log.d("follow", String.valueOf(followingGroup));
+
+                                    for(int i =0 ; i <followingGroup.size();i++){
+                                        Log.d("follow", String.valueOf(followingGroup.get(i)));
+                                        Log.d("follow", otherGroup);
+
+                                    }
                                     // 팔로우 되어 있는 것만 보여주기
                                     // 산책 시작화면에서 미리 데이터
                                 }
