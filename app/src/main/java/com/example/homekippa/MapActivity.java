@@ -152,7 +152,7 @@ public class MapActivity extends AppCompatActivity implements MapView.MapViewEve
         mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("petSpecies").setValue(petSpecies);
         mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("petImage").setValue(petImageUrl);
 
-        mDatabase.child("walking_group").child(String.valueOf(15)).child("scope").setValue("wholeScope");
+        mDatabase.child("walking_group").child(String.valueOf(15)).child("scope").setValue("followScope");
         mDatabase.child("walking_group").child(String.valueOf(16)).child("scope").setValue("wholeScope");
         mDatabase.child("walking_group").child(String.valueOf(64)).child("scope").setValue("followScope");
         mDatabase.child("walking_group").child(String.valueOf(65)).child("scope").setValue("folloewScope");
@@ -487,17 +487,15 @@ public class MapActivity extends AppCompatActivity implements MapView.MapViewEve
                                     Log.d("scope","here1");
                                     walkingOtherGroup(GroupMapData.child("latitude").getValue(Double.class), GroupMapData.child("longitude").getValue(Double.class), GroupMapData.child("groupTag").getValue(String.class));
                                 }else if(otherScope.equals("followScope")){
-                                    Log.d("follow", String.valueOf(followingGroup));
-
+                                    Log.d("follow","here Follow");
                                     for(int i =0 ; i <followingGroup.size();i++){
-                                        Log.d("follow", String.valueOf(followingGroup.get(i)));
-                                        Log.d("follow",otherGroup);
-
+                                        Log.d("follow1",otherGroup);
+                                        Log.d("follow1", String.valueOf(followingGroup.get(i)));
+                                        if(otherGroup.equals(String.valueOf(followingGroup.get(i))))   {
+                                            walkingOtherGroup(GroupMapData.child("latitude").getValue(Double.class), GroupMapData.child("longitude").getValue(Double.class), GroupMapData.child("groupTag").getValue(String.class));
+                                        }
                                     }
-
-
                                 }
-
                             }
                         }
 
@@ -552,13 +550,13 @@ public class MapActivity extends AppCompatActivity implements MapView.MapViewEve
                                     Log.d("scope","here1");
                                     walkingOtherGroup(GroupMapData.child("latitude").getValue(Double.class), GroupMapData.child("longitude").getValue(Double.class), GroupMapData.child("groupTag").getValue(String.class));
                                 }else if(otherScope.equals("followScope")){
-                                    Log.d("follow","here");
-                                    Log.d("follow", String.valueOf(followingGroup));
-
+                                    Log.d("follow","here Follow");
                                     for(int i =0 ; i <followingGroup.size();i++){
-                                        Log.d("follow", String.valueOf(followingGroup.get(i)));
-                                        Log.d("follow", otherGroup);
-
+                                        Log.d("follow1",otherGroup);
+                                        Log.d("follow1", String.valueOf(followingGroup.get(i)));
+                                        if(otherGroup.equals(String.valueOf(followingGroup.get(i)))){
+                                            walkingOtherGroup(GroupMapData.child("latitude").getValue(Double.class), GroupMapData.child("longitude").getValue(Double.class), GroupMapData.child("groupTag").getValue(String.class));
+                                        }
                                     }
                                     // 팔로우 되어 있는 것만 보여주기
                                     // 산책 시작화면에서 미리 데이터
