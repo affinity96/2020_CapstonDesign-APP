@@ -628,6 +628,13 @@ public class YesGroup extends Fragment {
                                     holder.workDone.setTextColor(Color.parseColor("#FFFFFF"));
                                 }
                             });
+                    builder.setNeutralButton("일과 수정하기",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Toast.makeText(v.getContext(), "일과 수행 후 다시 눌러주세요!", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                    
                     builder.setNegativeButton("아니오",
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {

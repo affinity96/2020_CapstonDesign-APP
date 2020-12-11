@@ -2,10 +2,13 @@ package com.example.homekippa;
 
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LifecycleOwner;
@@ -25,6 +29,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.example.homekippa.data.DeletePostResponse;
+import com.example.homekippa.data.DoneReportsResponse;
 import com.example.homekippa.ui.group.GroupFragment;
 import com.example.homekippa.ui.group.GroupViewModel;
 import com.example.homekippa.ui.group.YesGroup;
@@ -41,6 +47,7 @@ import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -298,6 +305,72 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
                 });
             }
         });
+
+        holder.deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                builder.setTitle("해당 게시글을 삭제하시겠습니까?");
+
+
+                builder.setPositiveButton("예",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                SingleItemPost post = post_Items.get(position);
+                                int postId = post.getPostId();
+                                Log.d("재학아어딨어", String.format("%d", postId));
+                                service.deletePost(postId).enqueue(new Callback<DeletePostResponse>() {
+                                    @Override
+                                    public void onResponse(Call<DeletePostResponse> call, Response<DeletePostResponse> response) {
+                                        if (response.code() == 200) {
+                                            Log.d("포스트삭제", "success");
+                                            if (isgroup) {
+                                                setGroupViewModel(holder, position);
+                                                try {
+                                                    setPostData(holder, position);
+                                                } catch (ParseException e) {
+                                                    e.printStackTrace();
+                                                }
+                                            } else {
+                                                setHomeViewModel(holder, position);
+                                                try {
+                                                    setPostData(holder, position);
+                                                } catch (ParseException e) {
+                                                    e.printStackTrace();
+                                                }
+                                            }
+
+                                        }
+                                        Toast.makeText(v.getContext(), "게시글이 성공적으로 삭제되었습니다!", Toast.LENGTH_SHORT).show();
+
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<DeletePostResponse> call, Throwable t) {
+                                        Log.d("포스트삭제", "실패");
+                                        Toast.makeText(v.getContext(), "게시글 삭제 에러", Toast.LENGTH_SHORT).show();
+
+                                    }
+
+
+                                });
+
+
+                            }
+                        });
+                builder.setNegativeButton("아니오",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                Toast.makeText(v.getContext(), "삭제를 취소하셨습니다", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+                builder.show();
+
+
+
+            }
+        });
         holder.postGroupProfile.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -353,6 +426,7 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
     }
 
     private void setGroupViewModel(MyViewHolder holder, int position) {
+
         groupViewModel = new ViewModelProvider((ViewModelStoreOwner) context).get(GroupViewModel.class);
         groupViewModel.getPostList().observe((LifecycleOwner) context, new Observer<List<SingleItemPost>>() {
             @Override
@@ -420,6 +494,7 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
         ImageView postGroupProfile;
         Button postLikeImage;
         ImageView postCommentImage;
+        Button deleteButton;
 
         MyViewHolder(View view) {
             super(view);
@@ -434,6 +509,7 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
             recyclerView_postImages = (RecyclerView) view.findViewById(R.id.listview_PostImages);
             postLikeImage = (Button) view.findViewById(R.id.imageView_PostLiked);
             postCommentImage = (ImageView) view.findViewById(R.id.imageView_PostComment);
+            deleteButton = (Button) view.findViewById(R.id.button_Delete_Post);
         }
 
     }
