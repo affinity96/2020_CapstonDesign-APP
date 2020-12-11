@@ -380,9 +380,6 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(intent);
                 } else if (id == R.id.menu_item3) {
                     Intent intent = new Intent(getApplicationContext(), SettingActivity.class);
-                    startActivity(intent);
-                }else if (id == R.id.menu_item4) {
-                    Intent intent = new Intent(getApplicationContext(), SettingActivity.class);
                     intent.putExtra("userData", userData);
                     intent.putExtra("groupData", groupData);
                     startActivity(intent);

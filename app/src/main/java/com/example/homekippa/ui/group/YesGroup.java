@@ -36,6 +36,7 @@ import com.example.homekippa.AddPetActivity;
 import com.example.homekippa.AddPetDesActivity;
 import com.example.homekippa.Cache;
 import com.example.homekippa.CreateDailyWorkActivity;
+import com.example.homekippa.EditDailyWorkActivity;
 import com.example.homekippa.ImageLoadTask;
 import com.example.homekippa.ImageTask;
 import com.example.homekippa.LoginActivity;
@@ -671,7 +672,14 @@ public class YesGroup extends Fragment {
                     builder.setNeutralButton("일과 수정하기",
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
-                                    Toast.makeText(v.getContext(), "일과 수행 후 다시 눌러주세요!", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(getActivity().getApplicationContext(), EditDailyWorkActivity.class);
+                                    intent.putExtra("id",dailyWork.getId());
+                                    intent.putExtra("title",dailyWork.getTitle());
+                                    intent.putExtra("desc",dailyWork.getDesc());
+                                    intent.putExtra("time",dailyWork.getTime());
+                                    intent.putExtra("alarm",dailyWork.getAlarm());
+
+                                    startActivity(intent);
                                 }
                             });
                     

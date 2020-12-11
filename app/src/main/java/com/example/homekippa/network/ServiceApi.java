@@ -15,6 +15,8 @@ import com.example.homekippa.data.CreateGroupData;
 import com.example.homekippa.data.CreateGroupResponse;
 import com.example.homekippa.data.DeletePostResponse;
 import com.example.homekippa.data.DoneReportsResponse;
+import com.example.homekippa.data.EditDailyWorkData;
+import com.example.homekippa.data.EditDailyWorkResponse;
 import com.example.homekippa.data.ExitResponse;
 import com.example.homekippa.data.FollowData;
 import com.example.homekippa.data.FollowResponse;
@@ -112,6 +114,10 @@ public interface ServiceApi {
 
     @PUT("/pet/reports/done")
     Call<DoneReportsResponse> doneDailyWork(@Query("id") int id, @Query("done_user_id") String userId, @Query("done_user_image") String userImage);
+
+    @POST("/pet/reports/update")
+    Call<EditDailyWorkResponse> editDailyWork(@Body EditDailyWorkData data);
+
 
 //    @POST("/pet/add")
 //    Call<AddPetResponse> addPetReg(@Body AddPetData data);

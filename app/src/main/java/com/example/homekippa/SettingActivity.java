@@ -35,7 +35,7 @@ public class SettingActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(),ExitKippaActivity.class);
                 intent.putExtra("userData", userData);
-                startActivity(intent);
+                 startActivity(intent);
 
             }
         });
