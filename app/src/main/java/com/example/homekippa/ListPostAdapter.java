@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,11 +23,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.homekippa.ui.group.GroupFragment;
 import com.example.homekippa.ui.group.GroupViewModel;
-import com.example.homekippa.ui.group.YesGroup;
-import com.example.homekippa.ui.home.PostViewModel;
+import com.example.homekippa.ui.home.FollowViewModel;
+import com.example.homekippa.ui.home.LocationViewModel;
 import com.example.homekippa.ui.home.PostDetailActivity;
 import com.example.homekippa.data.GroupData;
 import com.example.homekippa.data.LikeData;
@@ -37,14 +35,13 @@ import com.example.homekippa.data.UserData;
 import com.example.homekippa.network.RetrofitClient;
 import com.example.homekippa.network.ServiceApi;
 
-import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -55,32 +52,36 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
     private ArrayList<Boolean> likeCheck = new ArrayList<>();
     private UserData userData;
 
-    private PostViewModel postViewModel;
+    private FollowViewModel followViewModel;
     private GroupViewModel groupViewModel;
+    private LocationViewModel locationViewModel;
 
-    private Context context;
     private boolean isgroup;
+    private String tab_;
 
     private Cache cache;
+    private Intent intent;
 
-    Intent intent;
 
+    private Context context;
     private ServiceApi service;
 
-    public ListPostAdapter(Context context, ArrayList<SingleItemPost> postItems, ArrayList<GroupData> groupData, ArrayList<Boolean> likeCheck, boolean isgroup) {
+    public ListPostAdapter(Context context, ArrayList<SingleItemPost> postItems, ArrayList<GroupData> groupData, ArrayList<Boolean> likeCheck, boolean isgroup, String tab_) {
         this.context = context;
         this.post_Items = postItems;
         this.groupData = groupData;
         this.likeCheck = likeCheck;
         this.isgroup = isgroup;
+        this.tab_ = tab_;
     }
 
-    public ListPostAdapter(Context context, ArrayList<SingleItemPost> postItems, GroupData groupData, ArrayList<Boolean> likeCheck, boolean isGroup) {
+    public ListPostAdapter(Context context, ArrayList<SingleItemPost> postItems, GroupData groupData, ArrayList<Boolean> likeCheck, boolean isGroup, String tab_) {
         this.context = context;
         this.post_Items = postItems;
         this.isgroup = isGroup;
         this.likeCheck = likeCheck;
         this.groupData.add(groupData);
+        this.tab_ = tab_;
     }
 
     @NonNull
@@ -92,8 +93,9 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
         service = RetrofitClient.getClient().create(ServiceApi.class);
         userData = ((MainActivity) context).getUserData();
 
-        postViewModel = new ViewModelProvider((ViewModelStoreOwner) context).get(PostViewModel.class);
+        followViewModel = new ViewModelProvider((ViewModelStoreOwner) context).get(FollowViewModel.class);
         groupViewModel = new ViewModelProvider((ViewModelStoreOwner) context).get(GroupViewModel.class);
+        locationViewModel = new ViewModelProvider((ViewModelStoreOwner) context).get(LocationViewModel.class);
 
         return new MyViewHolder(itemView);
     }
@@ -109,7 +111,10 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
                 e.printStackTrace();
             }
         } else {
-            setHomeViewModel(holder, position);
+            if (tab_.equals("F"))
+                setFollowViewModel(holder, position);
+            else
+                setLocationViewModel(holder, position);
             try {
                 setPostData(holder, position);
             } catch (ParseException e) {
@@ -126,40 +131,35 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
         if (isgroup) {
             post = groupViewModel.getPostList().getValue().get(position);
             group = groupData.get(0);
+            holder.postLikedNum.setText(String.valueOf(groupViewModel.getPostList().getValue().get(position).getLikeNum()));
+            setLikeImage(holder, position, groupViewModel.getLikeCheck().getValue().get(position));
         } else {
-            post = postViewModel.getPostList().getValue().get(position);
+            if (tab_.equals("F")) {
+                post = Objects.requireNonNull(followViewModel.getPostList().getValue()).get(position);
+                holder.postLikedNum.setText(String.valueOf(followViewModel.getPostList().getValue().get(position).getLikeNum()));
+                setLikeImage(holder, position, followViewModel.getLikeCheck().getValue().get(position));
+            } else {
+                post = Objects.requireNonNull(locationViewModel.getPostList().getValue()).get(position);
+                holder.postLikedNum.setText(String.valueOf(locationViewModel.getPostList().getValue().get(position).getLikeNum()));
+                setLikeImage(holder, position, locationViewModel.getLikeCheck().getValue().get(position));
+            }
             group = groupData.get(position);
         }
-
-
-        if (isgroup) {
-            holder.postLikedNum.setText(String.valueOf(groupViewModel.getPostList().getValue().get(position).getLikeNum()));
-        } else
-            holder.postLikedNum.setText(String.valueOf(postViewModel.getPostList().getValue().get(position).getLikeNum()));
 
         holder.postTitle.setText(post.getTitle());
         holder.postContent.setText(post.getContent());
         holder.postCommentNum.setText(String.valueOf(post.getCommentNum()));
         holder.postGroupName.setText(group.getName());
         holder.postGroupAddress.setText(group.getArea());
-
         if (post.getImage() == null) {
             holder.recyclerView_postImages.setVisibility(View.GONE);
         } else {
             setPostImageAdapter(holder, post.getGroupPostImage());
         }
         setPostDate(holder, position, post);
-
         getProfileImage(holder, group.getImage());
-        setLikeImage(holder, position);
-        setClickListenerOnHolder(holder, position);
 
-
-//        String pd = post.getDate();
-//        SimpleDateFormat fm = new SimpleDateFormat("yyyy-MM-dd");
-//        Date postdate = fm.parse(pd);
-//        holder.postDate.setText(String.valueOf(postdate));
-
+        setClickListenerOnHolder(holder, position, group, post);
     }
 
     private void setPostDate(MyViewHolder holder, int position, SingleItemPost post) throws ParseException {
@@ -169,14 +169,6 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
 
         Date oldDate = dateFormat.parse(olddate);
         long reqDateTime = oldDate.getTime();
-
-//        Date curDate = new Date();
-//        curDate = dateFormat.parse(dateFormat.format(curDate));
-//        long curDateTime = curDate.getTime();
-//
-//        long minute = (curDateTime - reqDateTime) / 60000;
-//        Log.d("date", String.valueOf(minute));
-
         String newdate = new SimpleDateFormat("yyyy-MM-dd").format(oldDate);
 
         holder.postDate.setText(newdate);
@@ -192,68 +184,21 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
         } else {
             ImageLoadTask task = new ImageLoadTask(url, holder.postGroupProfile, context, false);
             task.execute();
-//            service.getProfileImage(url).enqueue(new Callback<ResponseBody>() {
-//                @Override
-//                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-//                    String TAG = "ListPostAdapter";
-//                    if (response.isSuccessful()) {
-//
-//                        Log.d(TAG, "server contacted and has file");
-//                        InputStream is = response.body().byteStream();
-//                        Bitmap bitmap = BitmapFactory.decodeStream(is);
-//                        if (bitmap != null) {
-//                            Glide.with(context).load(bitmap).circleCrop().into(holder.postGroupProfile);
-////                            holder.postGroupProfile.setImageBitmap(bitmap);
-//                            cache.saveBitmapToJpeg(bitmap, key);
-//                        }
-//                    } else {
-//                        Log.d(TAG, "server contact failed");
-//                    }
-//                }
-//
-//                @Override
-//                public void onFailure(Call<ResponseBody> call, Throwable t) {
-//                    t.printStackTrace();
-//                }
-//            });
         }
     }
 
-    private void setClickListenerOnHolder(MyViewHolder holder, int position) {
-        SingleItemPost post;
-        GroupData group;
-        if (isgroup) {
-            post = groupViewModel.getPostList().getValue().get(position);
-            group = groupData.get(0);
-        } else {
-            post = postViewModel.getPostList().getValue().get(position);
-            group = groupData.get(position);
-        }
+    private void setClickListenerOnHolder(MyViewHolder holder, int position, GroupData group, SingleItemPost post) {
+
         holder.postCommentImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 intent = new Intent(context, PostDetailActivity.class);
-
-                SingleItemPost post;
-                if (isgroup) {
-                    post = groupViewModel.getPostList().getValue().get(position);
-                    GroupData group = setGroupData(position);
-                    intent.putExtra("post", post);
-                    intent.putExtra("group", group);
-                    intent.putExtra("user", userData);
-                    intent.putExtra("isliked", likeCheck.get(position));
-                    intent.putExtra("isgroup", isgroup);
-                    intent.putExtra("pos", position);
-                } else {
-                    post = postViewModel.getPostList().getValue().get(position);
-                    GroupData group = setGroupData(position);
-                    intent.putExtra("post", post);
-                    intent.putExtra("group", group);
-                    intent.putExtra("user", userData);
-                    intent.putExtra("isliked", likeCheck.get(position));
-                    intent.putExtra("isgroup", isgroup);
-                    intent.putExtra("pos", position);
-                }
+                intent.putExtra("post", post);
+                intent.putExtra("group", group);
+                intent.putExtra("user", userData);
+                intent.putExtra("isliked", likeCheck.get(position));
+                intent.putExtra("isgroup", isgroup);
+                intent.putExtra("pos", position);
                 ((Activity) context).startActivity(intent);
             }
         });
@@ -268,24 +213,29 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
                     @Override
                     public void onResponse(Call<LikeResponse> call, Response<LikeResponse> response) {
                         if (response.code() == 200) {
-                            Log.d("like", "success");
                             if (isgroup) {
                                 if (!v.isActivated()) {
-                                    Log.d("like", "Increase");
                                     GroupViewModel.setLiveLikeNum(position, 1);
                                     GroupViewModel.setLiveLikeCheck(position, true);
                                 } else {
                                     GroupViewModel.setLiveLikeNum(position, -1);
                                     GroupViewModel.setLiveLikeCheck(position, false);
                                 }
+                            } else if (tab_.equals("F")) {
+                                if (!v.isActivated()) {
+                                    FollowViewModel.setLiveLikeNum(position, 1);
+                                    FollowViewModel.setLiveLikeCheck(position, true);
+                                } else {
+                                    FollowViewModel.setLiveLikeNum(position, -1);
+                                    FollowViewModel.setLiveLikeCheck(position, false);
+                                }
                             } else {
                                 if (!v.isActivated()) {
-                                    Log.d("like", "Increase");
-                                    PostViewModel.setLiveLikeNum(position, 1);
-                                    PostViewModel.setLiveLikeCheck(position, true);
+                                    LocationViewModel.setLiveLikeNum(position, 1);
+                                    LocationViewModel.setLiveLikeCheck(position, true);
                                 } else {
-                                    PostViewModel.setLiveLikeNum(position, -1);
-                                    PostViewModel.setLiveLikeCheck(position, false);
+                                    LocationViewModel.setLiveLikeNum(position, -1);
+                                    LocationViewModel.setLiveLikeCheck(position, false);
                                 }
                             }
                         }
@@ -299,7 +249,6 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
             }
         });
         holder.postGroupProfile.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 int clicked_groupId = post.getGroupId();
@@ -323,37 +272,58 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
                 });
             }
         });
+        holder.postGroupName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int clicked_groupId = post.getGroupId();
+                service.getGroupData(clicked_groupId).enqueue(new Callback<GroupData>() {
+                    @Override
+                    public void onResponse(Call<GroupData> call, Response<GroupData> response) {
+                        GroupData groupData = response.body();
+                        if (groupData != null) {
+                            GroupFragment groupFragment = new GroupFragment();
+                            Bundle bundle = new Bundle();
+                            bundle.putParcelable("groupData", groupData);
+                            groupFragment.setArguments(bundle);
+                            ((MainActivity) context).changeFragment(groupFragment);
+                        }
+                    }
 
-
+                    @Override
+                    public void onFailure(Call<GroupData> call, Throwable t) {
+                        Log.d("ListPostAdapter", "fail");
+                    }
+                });
+            }
+        });
     }
 
-    private void setHomeViewModel(MyViewHolder holder, int position) {
+    private void setFollowViewModel(MyViewHolder holder, int position) {
 
-        postViewModel = new ViewModelProvider((ViewModelStoreOwner) context).get(PostViewModel.class);
-        if(postViewModel.getPostList().getValue()!=null){
-            postViewModel.getPostList().observe((LifecycleOwner) context, new Observer<List<SingleItemPost>>() {
+//        followViewModel = new ViewModelProvider((ViewModelStoreOwner) context).get(FollowViewModel.class);
+        if (followViewModel.getPostList().getValue() != null) {
+            followViewModel.getPostList().observe((LifecycleOwner) context, new Observer<List<SingleItemPost>>() {
                 @Override
                 public void onChanged(List<SingleItemPost> singleItemPosts) {
                     holder.postCommentNum.setText(String.valueOf(singleItemPosts.get(position).getCommentNum()));
                     holder.postLikedNum.setText(String.valueOf(singleItemPosts.get(position).getLikeNum()));
-                    boolean isliked = postViewModel.getLikeCheck().getValue().get(position);
+                    boolean isliked = followViewModel.getLikeCheck().getValue().get(position);
                     holder.postLikeImage.setActivated(isliked);
                 }
             });
-            postViewModel.getLikeCheck().observe((LifecycleOwner) context, new Observer<List<Boolean>>() {
+            followViewModel.getLikeCheck().observe((LifecycleOwner) context, new Observer<List<Boolean>>() {
                 @Override
                 public void onChanged(List<Boolean> likecheck) {
-                    holder.postLikedNum.setText(String.valueOf(postViewModel.getPostList().getValue().get(position).getLikeNum()));
-                    boolean isliked = postViewModel.getLikeCheck().getValue().get(position);
+                    holder.postLikedNum.setText(String.valueOf(followViewModel.getPostList().getValue().get(position).getLikeNum()));
+                    boolean isliked = followViewModel.getLikeCheck().getValue().get(position);
                     holder.postLikeImage.setActivated(isliked);
                 }
             });
         }
-
     }
 
     private void setGroupViewModel(MyViewHolder holder, int position) {
-        groupViewModel = new ViewModelProvider((ViewModelStoreOwner) context).get(GroupViewModel.class);
+//        groupViewModel = new ViewModelProvider((ViewModelStoreOwner) context).get(GroupViewModel.class);
         groupViewModel.getPostList().observe((LifecycleOwner) context, new Observer<List<SingleItemPost>>() {
             @Override
             public void onChanged(List<SingleItemPost> singleItemPosts) {
@@ -374,6 +344,28 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
         });
     }
 
+    private void setLocationViewModel(MyViewHolder holder, int position) {
+//        locationViewModel = new ViewModelProvider((ViewModelStoreOwner) context).get(LocationViewModel.class);
+        locationViewModel.getPostList().observe((LifecycleOwner) context, new Observer<List<SingleItemPost>>() {
+            @Override
+            public void onChanged(List<SingleItemPost> singleItemPosts) {
+                holder.postCommentNum.setText(String.valueOf(singleItemPosts.get(position).getCommentNum()));
+                holder.postLikedNum.setText(String.valueOf(singleItemPosts.get(position).getLikeNum()));
+
+                boolean isliked = locationViewModel.getLikeCheck().getValue().get(position);
+                holder.postLikeImage.setActivated(isliked);
+            }
+        });
+        locationViewModel.getLikeCheck().observe((LifecycleOwner) context, new Observer<List<Boolean>>() {
+            @Override
+            public void onChanged(List<Boolean> likecheck) {
+                holder.postLikedNum.setText(String.valueOf(locationViewModel.getPostList().getValue().get(position).getLikeNum()));
+                boolean isliked = locationViewModel.getLikeCheck().getValue().get(position);
+                holder.postLikeImage.setActivated(isliked);
+            }
+        });
+    }
+
     private GroupData setGroupData(int position) {
         GroupData group;
         if (isgroup) {
@@ -384,12 +376,7 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
         return group;
     }
 
-    private void setLikeImage(MyViewHolder holder, int position) {
-        boolean isliked;
-
-        if (isgroup) isliked = groupViewModel.getLikeCheck().getValue().get(position);
-        else isliked = postViewModel.getLikeCheck().getValue().get(position);
-
+    private void setLikeImage(MyViewHolder holder, int position, Boolean isliked) {
         holder.postLikeImage.setActivated(isliked);
     }
 

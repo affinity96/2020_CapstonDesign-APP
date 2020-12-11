@@ -226,7 +226,7 @@ public class GroupPost extends Fragment {
 
     private void setPostAdapter(RecyclerView listView, ArrayList<Boolean> checkLikeList) {
 
-        ListPostAdapter postAdapter = new ListPostAdapter(getActivity(), postList, groupData, checkLikeList, true);
+        ListPostAdapter postAdapter = new ListPostAdapter(getActivity(), postList, groupData, checkLikeList, true, "");
         listView.setAdapter(postAdapter);
 
         LinearLayoutManager pLayoutManager = new LinearLayoutManager(getActivity());
