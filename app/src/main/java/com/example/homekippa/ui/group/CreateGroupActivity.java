@@ -85,7 +85,7 @@ public class CreateGroupActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), PopupSeleteGroupImage.class);
+                Intent intent = new Intent(view.getContext(), PopupSelectGroupImage.class);
                 intent.putExtra("isPermission", isPermission);
                 startActivityForResult(intent, 1);
 
@@ -96,7 +96,7 @@ public class CreateGroupActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), PopupSeleteGroupImage.class);
+                Intent intent = new Intent(view.getContext(), PopupSelectGroupImage.class);
                 intent.putExtra("isPermission", isPermission);
                 startActivityForResult(intent, 1);
 

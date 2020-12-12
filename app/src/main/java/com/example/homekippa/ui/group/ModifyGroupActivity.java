@@ -1,6 +1,5 @@
 package com.example.homekippa.ui.group;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -8,33 +7,28 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.homekippa.LoginActivity;
+import com.bumptech.glide.Glide;
 import com.example.homekippa.R;
-import com.example.homekippa.data.CreateGroupData;
-import com.example.homekippa.data.CreateGroupResponse;
+import com.example.homekippa.data.GroupData;
+import com.example.homekippa.data.ModifyGroupResponse;
 import com.example.homekippa.network.RetrofitClient;
 import com.example.homekippa.network.ServiceApi;
-import com.example.homekippa.ui.searchAddress.searchAddress;
-import com.google.firebase.auth.FirebaseAuth;
-import com.gun0912.tedpermission.PermissionListener;
-import com.gun0912.tedpermission.TedPermission;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.io.InputStream;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -44,243 +38,199 @@ public class ModifyGroupActivity extends AppCompatActivity {
     public ModifyGroupActivity() {
     }
 
-    public static Context context_CreateGroupActivity;
-    private static final String TAG = "createGroup";
+    public static Context context_ModifyGroupActivity;
+    private static final String TAG = " ModifyGroup";
 
-    private EditText editText_groupName;
-    private EditText editText_introduce;
-    private Button button_createGroup;
-    private ImageButton image_button_camera;
-    private TextView moveToSearchAddress;
-    private ImageView imageView_profileImage;
-    private EditText editText_detailAddress;
-    private FirebaseAuth mAuth;
-    private ServiceApi service;
-
+    private GroupData groupData;
+    private CircleImageView imageView_modify_profile_Image;
+    private ImageButton image_modify_button_camera;
+    private LinearLayout LinearLayout_groupName_title;
+    private LinearLayout LinearLayout_groupIntro_title;
+    private LinearLayout LinearLayout_groupAddress_title;
+    private TextView textView_groupName;
+    private TextView textView_groupIntro;
+    private TextView textView_groupAddress;
     public File tempFile;
-
     private Boolean isPermission = true;
+    private ServiceApi service;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_group);
-        context_CreateGroupActivity = this;
-        editText_groupName = findViewById(R.id.editText_groupName);
-        editText_introduce = findViewById(R.id.editText_introduce);
-        button_createGroup = findViewById(R.id.button_createGroup);
-        image_button_camera = findViewById(R.id.image_button_camera);
-        moveToSearchAddress = findViewById(R.id.moveToSearchAddress);
-        mAuth = FirebaseAuth.getInstance();
+        setContentView(R.layout.activity_modify_group);
+        context_ModifyGroupActivity = this;
+        imageView_modify_profile_Image = findViewById(R.id.imageView_modify_profile_Image);
+        image_modify_button_camera = findViewById(R.id.image_modify_button_camera);
+        LinearLayout_groupName_title = findViewById(R.id.LinearLayout_groupName_title);
+        LinearLayout_groupIntro_title = findViewById(R.id.LinearLayout_groupIntro_title);
+        LinearLayout_groupAddress_title = findViewById(R.id.LinearLayout_groupAddress_title);
+        textView_groupName = findViewById(R.id.textView_groupName);
+        textView_groupIntro = findViewById(R.id.textView_groupIntro);
+        textView_groupAddress = findViewById(R.id.textView_groupAddress);
+        groupData = (GroupData)getIntent().getExtras().get("groupData");
         service = RetrofitClient.getClient().create(ServiceApi.class);
-        editText_detailAddress = findViewById(R.id.editText_detailAddress);
-        imageView_profileImage = findViewById(R.id.imageView_profileImage);
+    }
 
-        service = RetrofitClient.getClient().create(ServiceApi.class);
+    @Override
+    public void onStart() {
+        super.onStart();
+        getGroupProfileImage(groupData.getImage(), imageView_modify_profile_Image);
+        textView_groupName.setText(groupData.getName());
+        textView_groupIntro.setText(groupData.getIntroduction());
+        textView_groupAddress.setText(groupData.getAddress());
 
-        // 권한 요청
-        tedPermission();
-        imageView_profileImage.setOnClickListener(new View.OnClickListener() {
+        imageView_modify_profile_Image.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), PopupSeleteGroupImage.class);
+                Intent intent = new Intent(view.getContext(), PopupSelectGroupImageModify.class);
                 intent.putExtra("isPermission", isPermission);
                 startActivityForResult(intent, 1);
 
             }
         });
 
-        image_button_camera.setOnClickListener(new View.OnClickListener() {
+        image_modify_button_camera.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), PopupSeleteGroupImage.class);
+                Intent intent = new Intent(view.getContext(), PopupSelectGroupImageModify.class);
                 intent.putExtra("isPermission", isPermission);
                 startActivityForResult(intent, 1);
 
             }
         });
 
-        editText_groupName.setOnClickListener(new View.OnClickListener() {
+        LinearLayout_groupName_title.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                editText_groupName.setText("");
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), ModifyGroupNameActivity.class);
+                intent.putExtra("id", groupData.getId());
+                intent.putExtra("name", groupData.getName());
+                startActivity(intent);
             }
         });
 
-        editText_introduce.setOnClickListener(new View.OnClickListener() {
+        LinearLayout_groupIntro_title.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                editText_introduce.setText("");
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), ModifyGroupIntroActivity.class);
+                intent.putExtra("id", groupData.getId());
+                intent.putExtra("introduction", groupData.getIntroduction());
+                startActivity(intent);
             }
         });
 
-        moveToSearchAddress.setOnClickListener(new View.OnClickListener() {
+        LinearLayout_groupAddress_title.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), searchAddress.class);
-                startActivityForResult(intent, 0);
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), ModifyGroupAddressActivity.class);
+                intent.putExtra("id", groupData.getId());
+                startActivity(intent);
             }
         });
+    }
 
-        button_createGroup.setOnClickListener(new View.OnClickListener() {
+    private void getGroupProfileImage(String url, CircleImageView imageView) {
+        Log.d("url", url);
+        service.getProfileImage(url).enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onClick(View v) {
-                String groupName = editText_groupName.getText().toString();
-//                Log.d("creategroup", "here");
-                String userId = mAuth.getCurrentUser().getUid();
-                String groupIntroduction = editText_introduce.getText().toString();
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                String TAG = "ModifyGroupActivity";
+                if (response.isSuccessful()) {
 
-                final String tempAddress = moveToSearchAddress.getText().toString();
-                final String groupArea = tempAddress.substring(tempAddress.lastIndexOf("/")+1);
-                final String groupAddress = tempAddress.substring(0, tempAddress.lastIndexOf("/")) + editText_detailAddress.getText().toString();
+                    Log.d(TAG, "server contacted and has file");
+                    InputStream is = response.body().byteStream();
+                    Bitmap bitmap = BitmapFactory.decodeStream(is);
 
-                if (groupName.isEmpty()) {
-                    editText_groupName.setHint("GroupName을 입력하세요!");
-                } else if (groupAddress.isEmpty()) {
-                    moveToSearchAddress.setHint("주소를 입력하세요!");
-                } else if (groupIntroduction.isEmpty()) {
-                    editText_introduce.setHint("그룹 소개글을 써주세요!");
-                    editText_introduce.setText("소개글");
+                    Glide.with(ModifyGroupActivity.this).load(bitmap).circleCrop().into(imageView);
 
-                } else if (editText_detailAddress.getText().toString().isEmpty()){
-                    editText_detailAddress.setHint("상세주소 입력해주세요!");
                 } else {
-
-                    createGroup(userId, groupName, groupAddress, groupIntroduction, groupArea);
+                    Log.d(TAG, "server contact failed");
                 }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+//                Toast.makeText(YesGroup.this, "그룹생성 에러 발생", Toast.LENGTH_SHORT).show();
+//              Log.e("createGroup error",t.getMessage());
+                t.printStackTrace();
             }
         });
     }
 
     private void setImage() {
-
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        Bitmap originalBm = BitmapFactory.decodeFile(tempFile.getAbsolutePath(), options);
-        Log.d(TAG, "setImage : " + tempFile.getAbsolutePath());
-
-        imageView_profileImage.setImageBitmap(originalBm);
-
-    }
-
-    /**
-     *  권한 설정
-     */
-    public void tedPermission() {
-        PermissionListener permissionListener = new PermissionListener() {
-            @Override
-            public void onPermissionGranted() {
-                // 권한 요청 성공
-
-            }
-
-            @Override
-            public void onPermissionDenied(ArrayList<String> deniedPermissions) {
-                // 권한 요청 실패
-            }
-        };
-
-        TedPermission.with(this)
-                .setPermissionListener(permissionListener)
-                .setRationaleMessage(getResources().getString(R.string.permission_2))
-                .setDeniedMessage(getResources().getString(R.string.permission_1))
-                .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA)
-                .check();
-    }
-
-        @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
-            super.onActivityResult(requestCode, resultCode, intent);
-            if (resultCode != RESULT_OK) {
-
-                return;
-            } else {
-                if (requestCode == 0) {
-                    //수신성공 출력
-                    String result = intent.getStringExtra("address");
-                    moveToSearchAddress.setText(result);
-                } else if (requestCode == 1) {
-
-                    if (tempFile != null) {
-                        setImage();
-                    } else {
-                        imageView_profileImage.setImageResource(R.drawable.group_profile_default);
-                    }
-
-                }
-            }
-        }
-
-    private void createGroup(String userId, String groupName, String groupAddress, String groupIntroduction, String area) {
-        Log.i("create", "create");
-
         if (tempFile != null) {
-            HashMap<String, RequestBody> data = new HashMap<String, RequestBody>();
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            Bitmap originalBm = BitmapFactory.decodeFile(tempFile.getAbsolutePath(), options);
+            Log.d(TAG, "setImage : " + tempFile.getAbsolutePath());
 
-            RequestBody user_Id = RequestBody.create(MediaType.parse("text/plain"), userId);
-            data.put("userId", user_Id);
-            RequestBody group_Name = RequestBody.create(MediaType.parse("text/plain"), groupName);
-            data.put("groupName", group_Name);
-            RequestBody group_Address = RequestBody.create(MediaType.parse("text/plain"), groupAddress);
-            data.put("groupAddress", group_Address);
-            RequestBody group_Introduction = RequestBody.create(MediaType.parse("text/plain"), groupIntroduction);
-            data.put("groupIntroduction", group_Introduction);
-            RequestBody group_Area = RequestBody.create(MediaType.parse("text/plain"), area);
-            data.put("area", group_Area);
+            String str_groupId = String.valueOf(groupData.getId());
+
+            imageView_modify_profile_Image.setImageBitmap(originalBm);
 
             RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), tempFile);
             MultipartBody.Part uploadFile = MultipartBody.Part.createFormData("upload", tempFile.getName(), reqFile);
-            service.groupCreateWithPhoto(data, uploadFile).enqueue(new Callback<CreateGroupResponse>() {
 
+            RequestBody id = RequestBody.create(MediaType.parse("text/plain"), str_groupId);
+
+            service.modifyGroupProfileImage(id, uploadFile).enqueue(new Callback<ModifyGroupResponse>() {
                 @Override
-                public void onResponse(Call<CreateGroupResponse> call, Response<CreateGroupResponse> response) {
-                    CreateGroupResponse result = response.body();
+                public void onResponse(Call<ModifyGroupResponse> call, Response<ModifyGroupResponse> response) {
+                    ModifyGroupResponse result = response.body();
+
+                    Toast.makeText(ModifyGroupActivity.this, result.getMessage(), Toast.LENGTH_SHORT).show();
                     if (result.getCode() == 200) {
-//                        finish();
-                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(intent);
+
+                    } else {
+
                     }
                 }
 
                 @Override
-                public void onFailure(Call<CreateGroupResponse> call, Throwable t) {
-                    Toast.makeText(ModifyGroupActivity.this, "그룹생성 에러 발생", Toast.LENGTH_SHORT).show();
-//              Log.e("createGroup error",t.getMessage());
+                public void onFailure(Call<ModifyGroupResponse> call, Throwable t) {
+                    Toast.makeText(ModifyGroupActivity.this, "그룹 프로필 이미지 수정 오류 발생", Toast.LENGTH_SHORT).show();
                     t.printStackTrace();
+
                 }
             });
         } else {
-            CreateGroupData data = new CreateGroupData(userId, groupName, groupAddress, groupIntroduction, area);
+            imageView_modify_profile_Image.setImageResource(R.drawable.group_profile_default);
 
-            service.groupCreate(data).enqueue(new Callback<CreateGroupResponse>() {
-
+            service.setGroupProfileImageDefault(groupData.getId()).enqueue(new Callback<ModifyGroupResponse>() {
                 @Override
-                public void onResponse(Call<CreateGroupResponse> call, Response<CreateGroupResponse> response) {
-                    CreateGroupResponse result = response.body();
+                public void onResponse(Call<ModifyGroupResponse> call, Response<ModifyGroupResponse> response) {
+                    ModifyGroupResponse result = response.body();
 
+                    Toast.makeText(ModifyGroupActivity.this, result.getMessage(), Toast.LENGTH_SHORT).show();
                     if (result.getCode() == 200) {
 
-//                        finish();
+                    } else {
 
-                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(intent);
                     }
                 }
 
                 @Override
-                public void onFailure(Call<CreateGroupResponse> call, Throwable t) {
-                    Toast.makeText(ModifyGroupActivity.this, "그룹생성 에러 발생", Toast.LENGTH_SHORT).show();
-//              Log.e("createGroup error",t.getMessage());
+                public void onFailure(Call<ModifyGroupResponse> call, Throwable t) {
+                    Toast.makeText(ModifyGroupActivity.this, "그룹 프로필 이미지 수정 오류 발생", Toast.LENGTH_SHORT).show();
                     t.printStackTrace();
+
                 }
             });
         }
+
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+        if (resultCode != RESULT_OK) {
 
-
-
+            return;
+        } else {
+            if (requestCode == 1) {
+                    setImage();
+            }
+        }
+    }
 }

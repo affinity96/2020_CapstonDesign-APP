@@ -1,4 +1,4 @@
-package com.example.homekippa;
+package com.example.homekippa.ui.group;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -16,15 +16,15 @@ import android.widget.Toast;
 
 import androidx.core.content.FileProvider;
 
-import com.example.homekippa.ui.group.CreateGroupActivity;
+import com.example.homekippa.R;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class PopupSeletePetImage extends Activity {
-    private static final String TAG = "PopupSeletePetImage";
+public class PopupSelectGroupImageModify extends Activity {
+    private static final String TAG = "PopupSeleteGroupImage";
     private Button button_image_default;
     private Button button_image_album;
     private Button button_image_camera;
@@ -47,7 +47,7 @@ public class PopupSeletePetImage extends Activity {
         button_image_default.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((AddPetDesActivity)AddPetDesActivity.context_AddPetDesActivity).tempFile = null;
+                ((ModifyGroupActivity)ModifyGroupActivity.context_ModifyGroupActivity).tempFile = null;
                 setResult(RESULT_OK, intent);
                 finish();
             }
@@ -95,22 +95,22 @@ public class PopupSeletePetImage extends Activity {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
         try {
-            ((AddPetDesActivity)AddPetDesActivity.context_AddPetDesActivity).tempFile = createImageFile();
+            ((ModifyGroupActivity)ModifyGroupActivity.context_ModifyGroupActivity).tempFile = createImageFile();
         } catch (IOException e) {
             Toast.makeText(this, "이미지 처리 오류! 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
             finish();
             e.printStackTrace();
         }
-        if (((AddPetDesActivity)AddPetDesActivity.context_AddPetDesActivity).tempFile != null) {
+        if (((ModifyGroupActivity)ModifyGroupActivity.context_ModifyGroupActivity).tempFile != null) {
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
 
                 Uri photoUri = FileProvider.getUriForFile(this,
-                        "com.example.homekippa.provider", ((AddPetDesActivity)AddPetDesActivity.context_AddPetDesActivity).tempFile);
+                        "com.example.homekippa.provider", ((ModifyGroupActivity)ModifyGroupActivity.context_ModifyGroupActivity).tempFile);
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
                 startActivityForResult(intent, PICK_FROM_CAMERA);
 
             } else {
-                Uri photoUri = Uri.fromFile(((AddPetDesActivity)AddPetDesActivity.context_AddPetDesActivity).tempFile);
+                Uri photoUri = Uri.fromFile(((ModifyGroupActivity)ModifyGroupActivity.context_ModifyGroupActivity).tempFile);
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
                 startActivityForResult(intent, PICK_FROM_CAMERA);
             }
@@ -139,11 +139,11 @@ public class PopupSeletePetImage extends Activity {
         if (resultCode != RESULT_OK) {
             Toast.makeText(this, "취소 되었습니다.", Toast.LENGTH_SHORT).show();
 
-            if (((AddPetDesActivity)AddPetDesActivity.context_AddPetDesActivity).tempFile != null) {
-                if (((AddPetDesActivity)AddPetDesActivity.context_AddPetDesActivity).tempFile.exists()) {
-                    if (((AddPetDesActivity)AddPetDesActivity.context_AddPetDesActivity).tempFile.delete()) {
-                        Log.e(TAG, ((AddPetDesActivity)AddPetDesActivity.context_AddPetDesActivity).tempFile.getAbsolutePath() + " 삭제 성공");
-                        ((AddPetDesActivity)AddPetDesActivity.context_AddPetDesActivity).tempFile = null;
+            if (((ModifyGroupActivity)ModifyGroupActivity.context_ModifyGroupActivity).tempFile != null) {
+                if (((ModifyGroupActivity)ModifyGroupActivity.context_ModifyGroupActivity).tempFile.exists()) {
+                    if (((ModifyGroupActivity)ModifyGroupActivity.context_ModifyGroupActivity).tempFile.delete()) {
+                        Log.e(TAG, ((ModifyGroupActivity)ModifyGroupActivity.context_ModifyGroupActivity).tempFile.getAbsolutePath() + " 삭제 성공");
+                        ((ModifyGroupActivity)ModifyGroupActivity.context_ModifyGroupActivity).tempFile = null;
                     }
                 }
             }
@@ -169,9 +169,9 @@ public class PopupSeletePetImage extends Activity {
 
                     cursor.moveToFirst();
 
-                    ((AddPetDesActivity)AddPetDesActivity.context_AddPetDesActivity).tempFile = new File(cursor.getString(column_index));
+                    ((ModifyGroupActivity)ModifyGroupActivity.context_ModifyGroupActivity).tempFile = new File(cursor.getString(column_index));
 
-                    Log.d(TAG, "tempFile Uri : " + Uri.fromFile(((AddPetDesActivity)AddPetDesActivity.context_AddPetDesActivity).tempFile));
+                    Log.d(TAG, "tempFile Uri : " + Uri.fromFile(((ModifyGroupActivity)ModifyGroupActivity.context_ModifyGroupActivity).tempFile));
 
                 } finally {
                     if (cursor != null) {

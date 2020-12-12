@@ -2,7 +2,7 @@ package com.example.homekippa.data;
 
 import com.google.gson.annotations.SerializedName;
 
-public class SetGroupCoverDefaultResponse {
+public class ModifyPetResponse {
     @SerializedName("code")
     private int code;
 
