@@ -62,6 +62,13 @@
             android:name=".AddPostActivity"
             android:windowSoftInputMode="adjustResize" />
         <activity android:name=".ui.group.CreateGroupActivity" />
+        <activity android:name=".ui.group.ModifyGroupActivity" />
+        <activity android:name=".ui.group.ModifyGroupNameActivity" />
+        <activity android:name=".ui.group.ModifyGroupIntroActivity" />
+        <activity android:name=".ui.group.ModifyGroupAddressActivity" />
+        <activity
+            android:name=".ui.group.PopupSeleteGroupImageModify"
+            android:theme="@android:style/Theme.Dialog" />
         <activity
             android:name=".ui.group.PopupSeleteGroupImage"
             android:theme="@android:style/Theme.Dialog" />

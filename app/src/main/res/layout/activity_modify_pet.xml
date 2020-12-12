@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.group.ModifyGroupActivity">
+    tools:context=".ui.group.ModifyPetActivity">
 
     <RelativeLayout
-        android:id="@+id/toolbar_modifygroup"
+        android:id="@+id/toolbar_modifypet"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -22,7 +22,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="그룹 프로필 수정"
+                android:text="펫 프로필 수정"
                 android:textColor="#ffffff"
                 android:textSize="20dp" />
 
@@ -34,7 +34,7 @@
         </androidx.appcompat.widget.Toolbar>
 
         <LinearLayout
-            android:id="@+id/linearlayout_group_modify_info"
+            android:id="@+id/linearlayout_pet_modify_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/toolbar"
@@ -57,19 +57,19 @@
                 android:orientation="horizontal">
 
                 <FrameLayout
-                    android:id="@+id/frameLayout_group_modify_image"
+                    android:id="@+id/frameLayout_pet_modify_image"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
                     <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/imageView_modify_profile_Image"
+                        android:id="@+id/imageView_modifypet_Image"
                         android:layout_width="100dp"
                         android:layout_height="100dp"
                         android:layout_gravity="center"
-                        android:src="@drawable/group_profile_default" />
+                        android:src="@drawable/pet_profile_default" />
 
                     <ImageButton
-                        android:id="@+id/image_modify_button_camera"
+                        android:id="@+id/image_modifypet_button_camera"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="bottom|center"
@@ -82,7 +82,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/LinearLayout_groupName_title"
+                android:id="@+id/LinearLayout_petName_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="35dp"
@@ -92,7 +92,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="그룹명"
+                    android:text="이름"
                     android:textSize="15dp"/>
 
                 <View
@@ -102,17 +102,17 @@
                     />
 
                 <TextView
-                    android:id="@+id/textView_groupName"
+                    android:id="@+id/textView_petName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawableRight="@drawable/ic_navigate_next_24px"
                     android:drawablePadding="10dp"
-                    android:text="그룹이름 들어갈자리"
+                    android:text="이름 들어갈자리"
                     android:textSize="15dp"/>
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/LinearLayout_groupIntro_title"
+                android:id="@+id/LinearLayout_petSpecies_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -122,7 +122,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="소개글"
+                    android:text="종"
                     android:textSize="15dp"/>
 
                 <View
@@ -131,17 +131,17 @@
                     android:layout_weight="1"/>
 
                 <TextView
-                    android:id="@+id/textView_groupIntro"
+                    android:id="@+id/textView_petSpecies"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawableRight="@drawable/ic_navigate_next_24px"
                     android:drawablePadding="10dp"
-                    android:text="그룹소개 들어갈자리"
+                    android:text="종 들어갈자리"
                     android:textSize="15dp"/>
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/LinearLayout_groupAddress_title"
+                android:id="@+id/LinearLayout_petGender_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -151,7 +151,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="주소"
+                    android:text="성별"
                     android:textSize="15dp"/>
 
                 <View
@@ -160,12 +160,70 @@
                     android:layout_weight="1"/>
 
                 <TextView
-                    android:id="@+id/textView_groupAddress"
+                    android:id="@+id/textView_petGender"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawableRight="@drawable/ic_navigate_next_24px"
                     android:drawablePadding="10dp"
-                    android:text="그룹주소 들어갈자리"
+                    android:text="성별 들어갈자리"
+                    android:textSize="15dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/LinearLayout_petNeu_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="중성화 여부"
+                    android:textSize="15dp"/>
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"/>
+
+                <TextView
+                    android:id="@+id/textView_petNeu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableRight="@drawable/ic_navigate_next_24px"
+                    android:drawablePadding="10dp"
+                    android:text="중성화 여부 들어갈자리"
+                    android:textSize="15dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/LinearLayout_petBirth_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="생년월일"
+                    android:textSize="15dp"/>
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"/>
+
+                <TextView
+                    android:id="@+id/textView_petBirth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableRight="@drawable/ic_navigate_next_24px"
+                    android:drawablePadding="10dp"
+                    android:text="생년월일 들어갈자리"
                     android:textSize="15dp"/>
             </LinearLayout>
 

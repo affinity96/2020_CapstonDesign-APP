@@ -271,8 +271,9 @@ public class YesGroup extends Fragment {
         button_changeProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), MainActivity.class);
-                intent.putExtra("group", groupData);
+                Intent intent = new Intent(getContext(), ModifyGroupActivity.class);
+                intent.putExtra("groupData", groupData);
+                startActivity(intent);
             }
         });
 

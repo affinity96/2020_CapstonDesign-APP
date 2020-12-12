@@ -1,6 +1,5 @@
-package com.example.homekippa.ui.group;
+package com.example.homekippa;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -9,7 +8,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,16 +15,15 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
-import com.example.homekippa.MainActivity;
-import com.example.homekippa.R;
 import com.example.homekippa.data.GroupData;
 import com.example.homekippa.data.ModifyGroupProfileImageResponse;
-import com.example.homekippa.data.SetGroupCoverDefaultResponse;
 import com.example.homekippa.data.SetGroupProfileImageDefaultResponse;
-import com.example.homekippa.data.UploadGroupCoverResponse;
 import com.example.homekippa.network.RetrofitClient;
 import com.example.homekippa.network.ServiceApi;
-import com.example.homekippa.ui.searchAddress.searchAddress;
+import com.example.homekippa.ui.group.ModifyGroupAddressActivity;
+import com.example.homekippa.ui.group.ModifyGroupIntroActivity;
+import com.example.homekippa.ui.group.ModifyGroupNameActivity;
+import com.example.homekippa.ui.group.PopupSeleteGroupImageModify;
 
 import java.io.File;
 import java.io.InputStream;
@@ -40,9 +37,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ModifyGroupActivity extends AppCompatActivity {
+public class ModifyPetActivity extends AppCompatActivity {
 
-    public ModifyGroupActivity() {
+    public ModifyPetActivity() {
     }
 
     public static Context context_ModifyGroupActivity;
@@ -150,7 +147,7 @@ public class ModifyGroupActivity extends AppCompatActivity {
                     InputStream is = response.body().byteStream();
                     Bitmap bitmap = BitmapFactory.decodeStream(is);
 
-                    Glide.with(ModifyGroupActivity.this).load(bitmap).circleCrop().into(imageView);
+                    Glide.with(ModifyPetActivity.this).load(bitmap).circleCrop().into(imageView);
 
                 } else {
                     Log.d(TAG, "server contact failed");
@@ -186,7 +183,7 @@ public class ModifyGroupActivity extends AppCompatActivity {
                 public void onResponse(Call<ModifyGroupProfileImageResponse> call, Response<ModifyGroupProfileImageResponse> response) {
                     ModifyGroupProfileImageResponse result = response.body();
 
-                    Toast.makeText(ModifyGroupActivity.this, result.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ModifyPetActivity.this, result.getMessage(), Toast.LENGTH_SHORT).show();
                     if (result.getCode() == 200) {
 
                     } else {
@@ -196,7 +193,7 @@ public class ModifyGroupActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<ModifyGroupProfileImageResponse> call, Throwable t) {
-                    Toast.makeText(ModifyGroupActivity.this, "그룹 프로필 이미지 수정 오류 발생", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ModifyPetActivity.this, "그룹 프로필 이미지 수정 오류 발생", Toast.LENGTH_SHORT).show();
                     t.printStackTrace();
 
                 }
@@ -209,7 +206,7 @@ public class ModifyGroupActivity extends AppCompatActivity {
                 public void onResponse(Call<SetGroupProfileImageDefaultResponse> call, Response<SetGroupProfileImageDefaultResponse> response) {
                     SetGroupProfileImageDefaultResponse result = response.body();
 
-                    Toast.makeText(ModifyGroupActivity.this, result.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ModifyPetActivity.this, result.getMessage(), Toast.LENGTH_SHORT).show();
                     if (result.getCode() == 200) {
 
                     } else {
@@ -219,7 +216,7 @@ public class ModifyGroupActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<SetGroupProfileImageDefaultResponse> call, Throwable t) {
-                    Toast.makeText(ModifyGroupActivity.this, "그룹 프로필 이미지 수정 오류 발생", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ModifyPetActivity.this, "그룹 프로필 이미지 수정 오류 발생", Toast.LENGTH_SHORT).show();
                     t.printStackTrace();
 
                 }
