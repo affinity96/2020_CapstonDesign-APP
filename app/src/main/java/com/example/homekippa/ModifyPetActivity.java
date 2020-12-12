@@ -40,7 +40,13 @@ public class ModifyPetActivity extends AppCompatActivity {
     public static Context context_ModifyPetActivity;
     private static final String TAG = " ModifyPet";
 
-    private SingleItemPet selectedPet;
+    private int petId;
+    private String petName;
+    private String petSpecies;
+    private int petGender;
+    private String petImage;
+    private int petNeutrality;
+    private String petBirth;
     private CircleImageView imageView_modifypet_Image;
     private ImageButton image_modifypet_button_camera;
     private LinearLayout LinearLayout_petName_title;
@@ -63,7 +69,13 @@ public class ModifyPetActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modify_pet);
         context_ModifyPetActivity = this;
-        selectedPet = (SingleItemPet)getIntent().getExtras().get("selectedPet");
+        petId = getIntent().getIntExtra("petId",0);
+        petName = getIntent().getStringExtra("petName");
+        petSpecies = getIntent().getStringExtra("petSpecies");
+        petGender = getIntent().getIntExtra("petGender",0);
+        petImage = getIntent().getStringExtra("petImage");
+        petNeutrality = getIntent().getIntExtra("petNeutrality",0);
+        petBirth = getIntent().getStringExtra("petBirth");
         imageView_modifypet_Image = findViewById(R.id.imageView_modifypet_Image);
         image_modifypet_button_camera = findViewById(R.id.image_modifypet_button_camera);
         LinearLayout_petName_title = findViewById(R.id.LinearLayout_petName_title);
@@ -82,23 +94,23 @@ public class ModifyPetActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        getPetProfileImage(selectedPet.getImage(), imageView_modifypet_Image);
-        textView_petName.setText(selectedPet.getName());
-        textView_petSpecies.setText(selectedPet.getSpecies());
-        if(selectedPet.getGender() == 1) {
+        getPetProfileImage(petImage, imageView_modifypet_Image);
+        textView_petName.setText(petName);
+        textView_petSpecies.setText(petSpecies);
+        if(petGender == 1) {
             textView_petGender.setText("수컷");
         }
         else {
             textView_petGender.setText("암컷");
         }
-        if(selectedPet.getNeutrality() == 1) {
+        if(petNeutrality == 1) {
             textView_petNeu.setText("유");
         }
         else {
             textView_petNeu.setText("무");
         }
 
-        textView_petBirth.setText(selectedPet.getBirth().substring(0, 10));
+        textView_petBirth.setText(petBirth);
 
         imageView_modifypet_Image.setOnClickListener(new View.OnClickListener() {
 
@@ -126,8 +138,8 @@ public class ModifyPetActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), ModifyPetNameActivity.class);
-                intent.putExtra("id", selectedPet.getId());
-                intent.putExtra("name", selectedPet.getName());
+                intent.putExtra("id", petId);
+                intent.putExtra("name", petName);
                 startActivity(intent);
             }
         });
@@ -136,8 +148,8 @@ public class ModifyPetActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), ModifyPetSpeciesActivity.class);
-                intent.putExtra("id", selectedPet.getId());
-                intent.putExtra("species", selectedPet.getSpecies());
+                intent.putExtra("id", petId);
+                intent.putExtra("species", petSpecies);
                 startActivity(intent);
             }
         });
@@ -146,8 +158,8 @@ public class ModifyPetActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), ModifyPetGenderActivity.class);
-                intent.putExtra("id", selectedPet.getId());
-                intent.putExtra("gender", selectedPet.getGender());
+                intent.putExtra("id", petId);
+                intent.putExtra("gender", petGender);
                 startActivity(intent);
             }
         });
@@ -156,8 +168,8 @@ public class ModifyPetActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), ModifyPetNeuteringActivity.class);
-                intent.putExtra("id", selectedPet.getId());
-                intent.putExtra("neutrality", selectedPet.getNeutrality());
+                intent.putExtra("id", petId);
+                intent.putExtra("neutrality", petNeutrality);
                 startActivity(intent);
             }
         });
@@ -166,8 +178,8 @@ public class ModifyPetActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), ModifyPetBirthActivity.class);
-                intent.putExtra("id", selectedPet.getId());
-                intent.putExtra("birth", selectedPet.getBirth());
+                intent.putExtra("id", petId);
+                intent.putExtra("birth", petBirth);
                 startActivity(intent);
             }
         });
@@ -207,14 +219,14 @@ public class ModifyPetActivity extends AppCompatActivity {
             Bitmap originalBm = BitmapFactory.decodeFile(tempFile.getAbsolutePath(), options);
             Log.d(TAG, "setImage : " + tempFile.getAbsolutePath());
 
-            String str_groupId = String.valueOf(selectedPet.getId());
+            String str_petId = String.valueOf(petId);
 
             imageView_modifypet_Image.setImageBitmap(originalBm);
 
             RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), tempFile);
             MultipartBody.Part uploadFile = MultipartBody.Part.createFormData("upload", tempFile.getName(), reqFile);
 
-            RequestBody id = RequestBody.create(MediaType.parse("text/plain"), str_groupId);
+            RequestBody id = RequestBody.create(MediaType.parse("text/plain"), str_petId);
 
             service.modifyPetImage(id, uploadFile).enqueue(new Callback<ModifyPetResponse>() {
                 @Override
@@ -239,7 +251,7 @@ public class ModifyPetActivity extends AppCompatActivity {
         } else {
             imageView_modifypet_Image.setImageResource(R.drawable.pet_profile_default);
 
-            service.resetPetImage(selectedPet.getId()).enqueue(new Callback<ModifyPetResponse>() {
+            service.resetPetImage(petId).enqueue(new Callback<ModifyPetResponse>() {
                 @Override
                 public void onResponse(Call<ModifyPetResponse> call, Response<ModifyPetResponse> response) {
                     ModifyPetResponse result = response.body();

@@ -39,7 +39,7 @@ public class ModifyPetBirthActivity extends AppCompatActivity {
         textView_modify_birthday = findViewById(R.id.textView_modify_birthday);
         button_petbirth_next = findViewById(R.id.button_petbirth_next);
         String birth = getIntent().getStringExtra("birth");
-        textView_modify_birthday.setText(birth.substring(0, 10));
+        textView_modify_birthday.setText(birth);
         service = RetrofitClient.getClient().create(ServiceApi.class);
 
         textView_modify_birthday.setOnClickListener(new View.OnClickListener() {

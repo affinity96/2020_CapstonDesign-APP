@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,7 +31,7 @@ public class ModifyPetNeuteringActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_modify_pet_neutering);
+        setContentView(R.layout.activity_modify_pet_neutrality);
         checkbox_modify_yes = findViewById(R.id.checkbox_modify_yes);
         checkbox_modify_no = findViewById(R.id.checkbox_modify_no);
         button_petneutering_next = findViewById(R.id.button_petneutering_next);
