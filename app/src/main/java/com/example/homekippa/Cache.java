@@ -45,6 +45,27 @@ public class Cache {
             tempFile.createNewFile();
 
             FileOutputStream out = new FileOutputStream(tempFile);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 40, out);
+            // 스트림 사용후 닫아줍니다.
+            out.close();
+        } catch (FileNotFoundException e) {
+            Log.e("Yes", "FileNotFoundException : " + e.getMessage());
+        } catch (IOException e) {
+            Log.e("Yes", "IOException : " + e.getMessage());
+        }
+    }
+
+    public void saveBitmapToPNG(Bitmap bitmap, String name) {
+        //내부저장소 캐시 경로를 받아옵니다.
+        File storage = (context).getCacheDir();
+        //저장할 파일 이름
+        String fileName = name;
+
+        try {
+            File tempFile = new File(storage, fileName);
+            tempFile.createNewFile();
+
+            FileOutputStream out = new FileOutputStream(tempFile);
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
             // 스트림 사용후 닫아줍니다.
             out.close();
