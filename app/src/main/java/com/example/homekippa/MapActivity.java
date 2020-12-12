@@ -118,8 +118,8 @@ public class MapActivity extends AppCompatActivity implements MapView.MapViewEve
         service = RetrofitClient.getClient().create(ServiceApi.class);
 
         //마커 생성
-
         // mapview에 kakaoMap 연동해서 올리기
+
         mapView = new MapView(this);
         mapViewContainer = (ViewGroup) findViewById(R.id.map_view);
         mapViewContainer.addView(mapView);
@@ -225,6 +225,7 @@ public class MapActivity extends AppCompatActivity implements MapView.MapViewEve
         button_finishMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 finish();
             }
         });
