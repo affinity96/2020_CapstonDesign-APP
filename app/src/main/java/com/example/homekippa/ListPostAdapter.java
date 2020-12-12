@@ -335,7 +335,7 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
                 int size = groupViewModel.getPostList().getValue().size();
                 Log.d("group", String.valueOf(size));
                 Log.d("group", String.valueOf(position));
-                if (position<size) {
+                if (position < size) {
                     holder.postCommentNum.setText(String.valueOf(singleItemPosts.get(position).getCommentNum()));
                     holder.postLikedNum.setText(String.valueOf(singleItemPosts.get(position).getLikeNum()));
                     boolean isliked = groupViewModel.getLikeCheck().getValue().get(position);
@@ -348,7 +348,7 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
             public void onChanged(List<Boolean> likecheck) {
 
                 int size = groupViewModel.getLikeCheck().getValue().size();
-                if (position<size) {
+                if (position < size) {
                     holder.postLikedNum.setText(String.valueOf(groupViewModel.getPostList().getValue().get(position).getLikeNum()));
                     boolean isliked = groupViewModel.getLikeCheck().getValue().get(position);
                     holder.postLikeImage.setActivated(isliked);

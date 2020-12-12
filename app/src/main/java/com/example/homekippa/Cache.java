@@ -17,6 +17,10 @@ public class Cache {
         this.context = context;
     }
 
+    public Cache() {
+
+    }
+
     public Bitmap getBitmapFromCacheDir(String key) {
         String found = null;
         Bitmap bitmap = null;

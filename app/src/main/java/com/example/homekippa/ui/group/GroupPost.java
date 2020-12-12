@@ -71,6 +71,7 @@ public class GroupPost extends Fragment {
     private TextView textView_address;
     private ImageView imageView_PostProfile;
 
+    private MainActivity main;
     private GroupViewModel groupViewModel;
 
     public GroupPost() {
@@ -89,7 +90,12 @@ public class GroupPost extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        main = (MainActivity) getActivity();
+        main.LoadingStart();
+        Log.d("group", "loading start");
         setPostListView(listView_posts);
+        main.LoadingEnd();
+        Log.d("group", "loading end");
     }
 
     @Override
@@ -150,7 +156,7 @@ public class GroupPost extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         setGroupView();
-        setPostListView(listView_posts);
+//        setPostListView(listView_posts);
         button_Add_Post = root.findViewById(R.id.button_Add_Post);
         if (!myGroup) {
             Log.d("group", "not my group");

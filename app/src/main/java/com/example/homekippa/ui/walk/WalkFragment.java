@@ -66,7 +66,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class WalkFragment extends Fragment{
+public class WalkFragment extends Fragment {
 
     private WalkViewModel walkViewModel;
     private Double lat;
@@ -167,9 +167,9 @@ public class WalkFragment extends Fragment{
                 }
 
 
-                if(checkbox_wholeScope.isChecked() == false && checkbox_followScope.isChecked() == false && checkbox_closedScope.isChecked() == false){
+                if (checkbox_wholeScope.isChecked() == false && checkbox_followScope.isChecked() == false && checkbox_closedScope.isChecked() == false) {
                     textView_scope.setError("공개범위 선택해주세요");
-                }else{
+                } else {
                     intent.putExtra("groupData", groupData);
                     intent.putExtra("userData", userData);
                     intent.putExtra("petName", petName);
@@ -180,23 +180,23 @@ public class WalkFragment extends Fragment{
                 }
             }
         });
-        if(userData.getUserGender() == 1){
+        if (userData.getUserGender() == 1) {
             userGender = "남성";
-        }else{
+        } else {
             userGender = "여성";
         }
 
         int yearIndex = userData.getUserBirth().indexOf("-");
-        String birth = userData.getUserBirth().substring(0,yearIndex);
+        String birth = userData.getUserBirth().substring(0, yearIndex);
         Calendar cal = Calendar.getInstance();
         int nowYear = cal.get(Calendar.YEAR);
-        int userAge = (nowYear - Integer.parseInt(birth))+ 1;
+        int userAge = (nowYear - Integer.parseInt(birth)) + 1;
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         mDatabase = database.getReference("walk");
         mDatabase.child("walking_group").child(String.valueOf(groupData.getId()));
         mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("groupName").setValue(groupData.getName());
-        mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("groupTag").setValue(groupData.getName()+groupData.getTag());
+        mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("groupTag").setValue(groupData.getName() + groupData.getTag());
         mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("userName").setValue(userData.getUserName());
         mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("userImage").setValue(userData.getUserImage());
         mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("userGender").setValue(userGender);
@@ -206,26 +206,23 @@ public class WalkFragment extends Fragment{
         checkbox_wholeScope.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("scope").setValue("wholeScope");
                 checkbox_wholeScope.setChecked(true);
                 checkbox_followScope.setChecked(false);
                 checkbox_closedScope.setChecked(false);
-                intent.putExtra("scope","wholeScpe");
-
+//                intent.putExtra("scope", "wholeScpe");
             }
         });
 
         checkbox_followScope.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("scope").setValue("followScope");
                 checkbox_wholeScope.setChecked(false);
                 checkbox_followScope.setChecked(true);
                 checkbox_closedScope.setChecked(false);
-                intent.putExtra("scope","followScope");
-                intent.putExtra("followingGroup",followingArray);
+//                intent.putExtra("scope", "followScope");
+//                intent.putExtra("followingGroup", followingArray);
             }
         });
 
@@ -236,12 +233,9 @@ public class WalkFragment extends Fragment{
                 checkbox_wholeScope.setChecked(false);
                 checkbox_followScope.setChecked(false);
                 checkbox_closedScope.setChecked(true);
-                intent.putExtra("scope","closedScope");
+//                intent.putExtra("scope", "closedScope");
             }
         });
-
-
-
         return root;
     }
 
@@ -312,7 +306,6 @@ public class WalkFragment extends Fragment{
             }
         });
     }
-
 
 
     private void getPetProfileImage(ListPetAdapter.MyViewHolder holder, String url) {
@@ -489,7 +482,7 @@ public class WalkFragment extends Fragment{
             public void onResponse(Call<WeatheLocationResponse> call, Response<WeatheLocationResponse> response) {
                 WeatheLocationResponse result = response.body();
 
-                textView_temperature.setText(result.getCurrent_temperature()+"º");
+                textView_temperature.setText(result.getCurrent_temperature() + "º");
                 weather(result.getCurrent_weather());
                 if (result.getCode() == 200) {
                     Log.d("weather", "server connect");
