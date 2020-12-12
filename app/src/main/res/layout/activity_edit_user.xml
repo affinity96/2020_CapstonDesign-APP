@@ -5,12 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".EditUserActivity">
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="411dp"
         android:layout_height="wrap_content"
         android:background="@color/kippaBlue"
         tools:ignore="MissingConstraints">
+
         <TextView
             android:id="@+id/toolbar_editUser"
             android:layout_width="wrap_content"
@@ -24,77 +26,74 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:orientation="vertical">
 
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editText_email"
             android:layout_width="370dp"
             android:layout_height="37.3dp"
-            android:ems="10"
             android:layout_gravity="center"
-            android:hint="이메일"
-            android:paddingLeft="20dp"
-            android:textSize="6pt"
-            android:background="@drawable/shape"
             android:layout_margin="5dp"
-            android:inputType="textEmailAddress"
+            android:background="@drawable/shape"
+            android:ems="10"
             android:focusable="false"
-            />
-
+            android:hint="이메일"
+            android:inputType="textEmailAddress"
+            android:paddingLeft="20dp"
+            android:textSize="6pt" />
 
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editText_Name"
             android:layout_width="370dp"
             android:layout_height="37.3dp"
-            android:ems="10"
-            android:hint="닉네임"
-            android:paddingLeft="20dp"
-            android:textSize="6pt"
-            android:background="@drawable/shape"
             android:layout_gravity="center"
             android:layout_margin="5dp"
-            android:inputType="text"/>
+            android:background="@drawable/shape"
+            android:ems="10"
+            android:hint="닉네임"
+            android:inputType="text"
+            android:paddingLeft="20dp"
+            android:textSize="6pt" />
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editText_Phone"
             android:layout_width="370dp"
             android:layout_height="37.3dp"
+            android:layout_gravity="center"
             android:layout_margin="5dp"
+            android:background="@drawable/shape"
             android:ems="10"
             android:hint="전화번호"
+            android:inputType="phone"
             android:paddingLeft="20dp"
-            android:textSize="6pt"
-            android:background="@drawable/shape"
-            android:layout_gravity="center"
-            android:inputType="phone" />
+            android:textSize="6pt" />
 
 
         <TextView
             android:id="@+id/text_Birth"
             android:layout_width="370dp"
             android:layout_height="37.3dp"
-            android:ems="10"
-            android:textSize="6pt"
-            android:background="@drawable/shape"
             android:layout_gravity="center"
             android:layout_margin="5dp"
+            android:background="@drawable/shape"
+            android:ems="10"
             android:gravity="center_vertical"
+            android:hint="생년월일"
             android:paddingLeft="20dp"
-            android:hint="생년월일" />
-
+            android:textSize="6pt" />
 
 
         <Button
             android:id="@+id/button_SignUp"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="80dp"
-            android:gravity="center"
             android:layout_gravity="center"
+            android:layout_marginTop="80dp"
             android:background="@drawable/round_button2"
+            android:gravity="center"
             android:text="수정 완료" />
 
     </LinearLayout>
