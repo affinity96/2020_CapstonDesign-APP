@@ -449,7 +449,7 @@ public class YesGroup extends Fragment {
 
     }
 
-    @Override
+        @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
         if (resultCode != RESULT_OK) {
@@ -561,6 +561,9 @@ public class YesGroup extends Fragment {
                 if (response.isSuccessful()) {
                     Log.d("반려동물 확인", "성공");
                     List<SingleItemPet> pets = response.body();
+
+                    petViewModel = new ViewModelProvider(requireActivity()).get(PetViewModel.class);
+                    petViewModel.getPetList().setValue(pets);
 
                     if (!pets.isEmpty()) {
                         petList.clear();
@@ -818,8 +821,6 @@ public class YesGroup extends Fragment {
                     if (bitmap != null && getActivity() != null) {
                         Glide.with(getActivity()).load(bitmap).circleCrop().into(userProfile);
                     }
-
-
                 } else {
                     Log.d(TAG, "server profile contact failed");
                 }
