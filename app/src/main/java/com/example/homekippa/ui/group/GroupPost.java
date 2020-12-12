@@ -89,7 +89,7 @@ public class GroupPost extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-//        setPostListView(listView_posts);
+        setPostListView(listView_posts);
     }
 
     @Override
@@ -116,8 +116,6 @@ public class GroupPost extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
-
     }
 
     @Override
@@ -143,7 +141,7 @@ public class GroupPost extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
-        Log.d("group", "onStop");
+
         groupViewModel.getPostList().getValue().clear();
         groupViewModel.getPostList().removeObservers((LifecycleOwner) getContext());
     }
