@@ -23,7 +23,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class PopupSeleteGroupImageModify extends Activity {
+public class PopupSelectGroupImage extends Activity {
     private static final String TAG = "PopupSeleteGroupImage";
     private Button button_image_default;
     private Button button_image_album;
@@ -47,7 +47,7 @@ public class PopupSeleteGroupImageModify extends Activity {
         button_image_default.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((ModifyGroupActivity)ModifyGroupActivity.context_ModifyGroupActivity).tempFile = null;
+                ((CreateGroupActivity)CreateGroupActivity.context_CreateGroupActivity).tempFile = null;
                 setResult(RESULT_OK, intent);
                 finish();
             }
@@ -95,22 +95,22 @@ public class PopupSeleteGroupImageModify extends Activity {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
         try {
-            ((ModifyGroupActivity)ModifyGroupActivity.context_ModifyGroupActivity).tempFile = createImageFile();
+            ((CreateGroupActivity)CreateGroupActivity.context_CreateGroupActivity).tempFile = createImageFile();
         } catch (IOException e) {
             Toast.makeText(this, "이미지 처리 오류! 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
             finish();
             e.printStackTrace();
         }
-        if (((ModifyGroupActivity)ModifyGroupActivity.context_ModifyGroupActivity).tempFile != null) {
+        if (((CreateGroupActivity)CreateGroupActivity.context_CreateGroupActivity).tempFile != null) {
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
 
                 Uri photoUri = FileProvider.getUriForFile(this,
-                        "com.example.homekippa.provider", ((ModifyGroupActivity)ModifyGroupActivity.context_ModifyGroupActivity).tempFile);
+                        "com.example.homekippa.provider", ((CreateGroupActivity)CreateGroupActivity.context_CreateGroupActivity).tempFile);
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
                 startActivityForResult(intent, PICK_FROM_CAMERA);
 
             } else {
-                Uri photoUri = Uri.fromFile(((ModifyGroupActivity)ModifyGroupActivity.context_ModifyGroupActivity).tempFile);
+                Uri photoUri = Uri.fromFile(((CreateGroupActivity)CreateGroupActivity.context_CreateGroupActivity).tempFile);
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
                 startActivityForResult(intent, PICK_FROM_CAMERA);
             }
@@ -139,11 +139,11 @@ public class PopupSeleteGroupImageModify extends Activity {
         if (resultCode != RESULT_OK) {
             Toast.makeText(this, "취소 되었습니다.", Toast.LENGTH_SHORT).show();
 
-            if (((ModifyGroupActivity)ModifyGroupActivity.context_ModifyGroupActivity).tempFile != null) {
-                if (((ModifyGroupActivity)ModifyGroupActivity.context_ModifyGroupActivity).tempFile.exists()) {
-                    if (((ModifyGroupActivity)ModifyGroupActivity.context_ModifyGroupActivity).tempFile.delete()) {
-                        Log.e(TAG, ((ModifyGroupActivity)ModifyGroupActivity.context_ModifyGroupActivity).tempFile.getAbsolutePath() + " 삭제 성공");
-                        ((ModifyGroupActivity)ModifyGroupActivity.context_ModifyGroupActivity).tempFile = null;
+            if (((CreateGroupActivity)CreateGroupActivity.context_CreateGroupActivity).tempFile != null) {
+                if (((CreateGroupActivity)CreateGroupActivity.context_CreateGroupActivity).tempFile.exists()) {
+                    if (((CreateGroupActivity)CreateGroupActivity.context_CreateGroupActivity).tempFile.delete()) {
+                        Log.e(TAG, ((CreateGroupActivity)CreateGroupActivity.context_CreateGroupActivity).tempFile.getAbsolutePath() + " 삭제 성공");
+                        ((CreateGroupActivity)CreateGroupActivity.context_CreateGroupActivity).tempFile = null;
                     }
                 }
             }
@@ -169,9 +169,9 @@ public class PopupSeleteGroupImageModify extends Activity {
 
                     cursor.moveToFirst();
 
-                    ((ModifyGroupActivity)ModifyGroupActivity.context_ModifyGroupActivity).tempFile = new File(cursor.getString(column_index));
+                    ((CreateGroupActivity)CreateGroupActivity.context_CreateGroupActivity).tempFile = new File(cursor.getString(column_index));
 
-                    Log.d(TAG, "tempFile Uri : " + Uri.fromFile(((ModifyGroupActivity)ModifyGroupActivity.context_ModifyGroupActivity).tempFile));
+                    Log.d(TAG, "tempFile Uri : " + Uri.fromFile(((CreateGroupActivity)CreateGroupActivity.context_CreateGroupActivity).tempFile));
 
                 } finally {
                     if (cursor != null) {

@@ -1,6 +1,5 @@
 package com.example.homekippa.ui.group;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -9,7 +8,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,16 +15,11 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
-import com.example.homekippa.MainActivity;
 import com.example.homekippa.R;
 import com.example.homekippa.data.GroupData;
-import com.example.homekippa.data.ModifyGroupProfileImageResponse;
-import com.example.homekippa.data.SetGroupCoverDefaultResponse;
-import com.example.homekippa.data.SetGroupProfileImageDefaultResponse;
-import com.example.homekippa.data.UploadGroupCoverResponse;
+import com.example.homekippa.data.ModifyGroupResponse;
 import com.example.homekippa.network.RetrofitClient;
 import com.example.homekippa.network.ServiceApi;
-import com.example.homekippa.ui.searchAddress.searchAddress;
 
 import java.io.File;
 import java.io.InputStream;
@@ -90,7 +83,7 @@ public class ModifyGroupActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), PopupSeleteGroupImageModify.class);
+                Intent intent = new Intent(view.getContext(), PopupSelectGroupImageModify.class);
                 intent.putExtra("isPermission", isPermission);
                 startActivityForResult(intent, 1);
 
@@ -101,7 +94,7 @@ public class ModifyGroupActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), PopupSeleteGroupImageModify.class);
+                Intent intent = new Intent(view.getContext(), PopupSelectGroupImageModify.class);
                 intent.putExtra("isPermission", isPermission);
                 startActivityForResult(intent, 1);
 
@@ -114,7 +107,7 @@ public class ModifyGroupActivity extends AppCompatActivity {
                 Intent intent = new Intent(view.getContext(), ModifyGroupNameActivity.class);
                 intent.putExtra("id", groupData.getId());
                 intent.putExtra("name", groupData.getName());
-                startActivityForResult(intent, 2);
+                startActivity(intent);
             }
         });
 
@@ -124,7 +117,7 @@ public class ModifyGroupActivity extends AppCompatActivity {
                 Intent intent = new Intent(view.getContext(), ModifyGroupIntroActivity.class);
                 intent.putExtra("id", groupData.getId());
                 intent.putExtra("introduction", groupData.getIntroduction());
-                startActivityForResult(intent, 3);
+                startActivity(intent);
             }
         });
 
@@ -133,7 +126,7 @@ public class ModifyGroupActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), ModifyGroupAddressActivity.class);
                 intent.putExtra("id", groupData.getId());
-                startActivityForResult(intent, 4);
+                startActivity(intent);
             }
         });
     }
@@ -181,10 +174,10 @@ public class ModifyGroupActivity extends AppCompatActivity {
 
             RequestBody id = RequestBody.create(MediaType.parse("text/plain"), str_groupId);
 
-            service.modifyGroupProfileImage(id, uploadFile).enqueue(new Callback<ModifyGroupProfileImageResponse>() {
+            service.modifyGroupProfileImage(id, uploadFile).enqueue(new Callback<ModifyGroupResponse>() {
                 @Override
-                public void onResponse(Call<ModifyGroupProfileImageResponse> call, Response<ModifyGroupProfileImageResponse> response) {
-                    ModifyGroupProfileImageResponse result = response.body();
+                public void onResponse(Call<ModifyGroupResponse> call, Response<ModifyGroupResponse> response) {
+                    ModifyGroupResponse result = response.body();
 
                     Toast.makeText(ModifyGroupActivity.this, result.getMessage(), Toast.LENGTH_SHORT).show();
                     if (result.getCode() == 200) {
@@ -195,7 +188,7 @@ public class ModifyGroupActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onFailure(Call<ModifyGroupProfileImageResponse> call, Throwable t) {
+                public void onFailure(Call<ModifyGroupResponse> call, Throwable t) {
                     Toast.makeText(ModifyGroupActivity.this, "그룹 프로필 이미지 수정 오류 발생", Toast.LENGTH_SHORT).show();
                     t.printStackTrace();
 
@@ -204,10 +197,10 @@ public class ModifyGroupActivity extends AppCompatActivity {
         } else {
             imageView_modify_profile_Image.setImageResource(R.drawable.group_profile_default);
 
-            service.setGroupProfileImageDefault(groupData.getId()).enqueue(new Callback<SetGroupProfileImageDefaultResponse>() {
+            service.setGroupProfileImageDefault(groupData.getId()).enqueue(new Callback<ModifyGroupResponse>() {
                 @Override
-                public void onResponse(Call<SetGroupProfileImageDefaultResponse> call, Response<SetGroupProfileImageDefaultResponse> response) {
-                    SetGroupProfileImageDefaultResponse result = response.body();
+                public void onResponse(Call<ModifyGroupResponse> call, Response<ModifyGroupResponse> response) {
+                    ModifyGroupResponse result = response.body();
 
                     Toast.makeText(ModifyGroupActivity.this, result.getMessage(), Toast.LENGTH_SHORT).show();
                     if (result.getCode() == 200) {
@@ -218,7 +211,7 @@ public class ModifyGroupActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onFailure(Call<SetGroupProfileImageDefaultResponse> call, Throwable t) {
+                public void onFailure(Call<ModifyGroupResponse> call, Throwable t) {
                     Toast.makeText(ModifyGroupActivity.this, "그룹 프로필 이미지 수정 오류 발생", Toast.LENGTH_SHORT).show();
                     t.printStackTrace();
 
@@ -237,8 +230,6 @@ public class ModifyGroupActivity extends AppCompatActivity {
         } else {
             if (requestCode == 1) {
                     setImage();
-            } else {
-
             }
         }
     }

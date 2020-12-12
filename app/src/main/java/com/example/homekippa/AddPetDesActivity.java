@@ -32,8 +32,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import com.example.homekippa.ui.group.PopupSeleteGroupImage;
-
 import java.io.File;
 import java.util.HashMap;
 
@@ -94,7 +92,7 @@ public class AddPetDesActivity extends AppCompatActivity {
         imageView_profileImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), PopupSeletePetImage.class);
+                Intent intent = new Intent(view.getContext(), PopupSelectPetImage.class);
                 intent.putExtra("isPermission", isPermission);
                 startActivityForResult(intent, 1);
 
@@ -104,7 +102,7 @@ public class AddPetDesActivity extends AppCompatActivity {
         image_button_camera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), PopupSeletePetImage.class);
+                Intent intent = new Intent(view.getContext(), PopupSelectPetImage.class);
                 intent.putExtra("isPermission", isPermission);
                 startActivityForResult(intent, 1);
 

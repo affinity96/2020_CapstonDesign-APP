@@ -15,15 +15,10 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
-import com.example.homekippa.data.GroupData;
-import com.example.homekippa.data.ModifyGroupProfileImageResponse;
-import com.example.homekippa.data.SetGroupProfileImageDefaultResponse;
+import com.example.homekippa.data.ModifyPetResponse;
 import com.example.homekippa.network.RetrofitClient;
 import com.example.homekippa.network.ServiceApi;
-import com.example.homekippa.ui.group.ModifyGroupAddressActivity;
-import com.example.homekippa.ui.group.ModifyGroupIntroActivity;
-import com.example.homekippa.ui.group.ModifyGroupNameActivity;
-import com.example.homekippa.ui.group.PopupSeleteGroupImageModify;
+import com.example.homekippa.ui.group.SingleItemPet;
 
 import java.io.File;
 import java.io.InputStream;
@@ -42,105 +37,148 @@ public class ModifyPetActivity extends AppCompatActivity {
     public ModifyPetActivity() {
     }
 
-    public static Context context_ModifyGroupActivity;
-    private static final String TAG = " ModifyGroup";
+    public static Context context_ModifyPetActivity;
+    private static final String TAG = " ModifyPet";
 
-    private GroupData groupData;
-    private CircleImageView imageView_modify_profile_Image;
-    private ImageButton image_modify_button_camera;
-    private LinearLayout LinearLayout_groupName_title;
-    private LinearLayout LinearLayout_groupIntro_title;
-    private LinearLayout LinearLayout_groupAddress_title;
-    private TextView textView_groupName;
-    private TextView textView_groupIntro;
-    private TextView textView_groupAddress;
+    private SingleItemPet selectedPet;
+    private CircleImageView imageView_modifypet_Image;
+    private ImageButton image_modifypet_button_camera;
+    private LinearLayout LinearLayout_petName_title;
+    private LinearLayout LinearLayout_petSpecies_title;
+    private LinearLayout LinearLayout_petGender_title;
+    private LinearLayout LinearLayout_petNeu_title;
+    private LinearLayout LinearLayout_petBirth_title;
+    private TextView textView_petName;
+    private TextView textView_petSpecies;
+    private TextView textView_petGender;
+    private TextView textView_petNeu;
+    private TextView textView_petBirth;
     public File tempFile;
     private Boolean isPermission = true;
+
     private ServiceApi service;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_modify_group);
-        context_ModifyGroupActivity = this;
-        imageView_modify_profile_Image = findViewById(R.id.imageView_modify_profile_Image);
-        image_modify_button_camera = findViewById(R.id.image_modify_button_camera);
-        LinearLayout_groupName_title = findViewById(R.id.LinearLayout_groupName_title);
-        LinearLayout_groupIntro_title = findViewById(R.id.LinearLayout_groupIntro_title);
-        LinearLayout_groupAddress_title = findViewById(R.id.LinearLayout_groupAddress_title);
-        textView_groupName = findViewById(R.id.textView_groupName);
-        textView_groupIntro = findViewById(R.id.textView_groupIntro);
-        textView_groupAddress = findViewById(R.id.textView_groupAddress);
-        groupData = (GroupData)getIntent().getExtras().get("groupData");
+        setContentView(R.layout.activity_modify_pet);
+        context_ModifyPetActivity = this;
+        selectedPet = (SingleItemPet)getIntent().getExtras().get("selectedPet");
+        imageView_modifypet_Image = findViewById(R.id.imageView_modifypet_Image);
+        image_modifypet_button_camera = findViewById(R.id.image_modifypet_button_camera);
+        LinearLayout_petName_title = findViewById(R.id.LinearLayout_petName_title);
+        LinearLayout_petSpecies_title = findViewById(R.id.LinearLayout_petSpecies_title);
+        LinearLayout_petGender_title = findViewById(R.id.LinearLayout_petGender_title);
+        LinearLayout_petNeu_title = findViewById(R.id.LinearLayout_petNeu_title);
+        LinearLayout_petBirth_title = findViewById(R.id.LinearLayout_petBirth_title);
+        textView_petName = findViewById(R.id.textView_petName);
+        textView_petSpecies = findViewById(R.id.textView_petSpecies);
+        textView_petGender = findViewById(R.id.textView_petGender);
+        textView_petNeu = findViewById(R.id.textView_petNeu);
+        textView_petBirth = findViewById(R.id.textView_petBirth);
         service = RetrofitClient.getClient().create(ServiceApi.class);
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        getGroupProfileImage(groupData.getImage(), imageView_modify_profile_Image);
-        textView_groupName.setText(groupData.getName());
-        textView_groupIntro.setText(groupData.getIntroduction());
-        textView_groupAddress.setText(groupData.getAddress());
+        getPetProfileImage(selectedPet.getImage(), imageView_modifypet_Image);
+        textView_petName.setText(selectedPet.getName());
+        textView_petSpecies.setText(selectedPet.getSpecies());
+        if(selectedPet.getGender() == 1) {
+            textView_petGender.setText("수컷");
+        }
+        else {
+            textView_petGender.setText("암컷");
+        }
+        if(selectedPet.getNeutrality() == 1) {
+            textView_petNeu.setText("유");
+        }
+        else {
+            textView_petNeu.setText("무");
+        }
 
-        imageView_modify_profile_Image.setOnClickListener(new View.OnClickListener() {
+        textView_petBirth.setText(selectedPet.getBirth().substring(0, 10));
+
+        imageView_modifypet_Image.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), PopupSeleteGroupImageModify.class);
+                Intent intent = new Intent(view.getContext(), PopupSelectPetImageModify.class);
                 intent.putExtra("isPermission", isPermission);
                 startActivityForResult(intent, 1);
 
             }
         });
 
-        image_modify_button_camera.setOnClickListener(new View.OnClickListener() {
+        image_modifypet_button_camera.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), PopupSeleteGroupImageModify.class);
+                Intent intent = new Intent(view.getContext(), PopupSelectPetImageModify.class);
                 intent.putExtra("isPermission", isPermission);
                 startActivityForResult(intent, 1);
 
             }
         });
 
-        LinearLayout_groupName_title.setOnClickListener(new View.OnClickListener() {
+        LinearLayout_petName_title.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), ModifyGroupNameActivity.class);
-                intent.putExtra("id", groupData.getId());
-                intent.putExtra("name", groupData.getName());
-                startActivityForResult(intent, 2);
+                Intent intent = new Intent(view.getContext(), ModifyPetNameActivity.class);
+                intent.putExtra("id", selectedPet.getId());
+                intent.putExtra("name", selectedPet.getName());
+                startActivity(intent);
             }
         });
 
-        LinearLayout_groupIntro_title.setOnClickListener(new View.OnClickListener() {
+        LinearLayout_petSpecies_title.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), ModifyGroupIntroActivity.class);
-                intent.putExtra("id", groupData.getId());
-                intent.putExtra("introduction", groupData.getIntroduction());
-                startActivityForResult(intent, 3);
+                Intent intent = new Intent(view.getContext(), ModifyPetSpeciesActivity.class);
+                intent.putExtra("id", selectedPet.getId());
+                intent.putExtra("species", selectedPet.getSpecies());
+                startActivity(intent);
             }
         });
 
-        LinearLayout_groupAddress_title.setOnClickListener(new View.OnClickListener() {
+        LinearLayout_petGender_title.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), ModifyGroupAddressActivity.class);
-                intent.putExtra("id", groupData.getId());
-                startActivityForResult(intent, 4);
+                Intent intent = new Intent(view.getContext(), ModifyPetGenderActivity.class);
+                intent.putExtra("id", selectedPet.getId());
+                intent.putExtra("gender", selectedPet.getGender());
+                startActivity(intent);
+            }
+        });
+
+        LinearLayout_petNeu_title.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), ModifyPetNeuteringActivity.class);
+                intent.putExtra("id", selectedPet.getId());
+                intent.putExtra("neutrality", selectedPet.getNeutrality());
+                startActivity(intent);
+            }
+        });
+
+        LinearLayout_petBirth_title.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), ModifyPetBirthActivity.class);
+                intent.putExtra("id", selectedPet.getId());
+                intent.putExtra("birth", selectedPet.getBirth());
+                startActivity(intent);
             }
         });
     }
 
-    private void getGroupProfileImage(String url, CircleImageView imageView) {
+    private void getPetProfileImage(String url, CircleImageView imageView) {
         Log.d("url", url);
         service.getProfileImage(url).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                String TAG = "ModifyGroupActivity";
+                String TAG = "ModifyPetActivity";
                 if (response.isSuccessful()) {
 
                     Log.d(TAG, "server contacted and has file");
@@ -169,19 +207,19 @@ public class ModifyPetActivity extends AppCompatActivity {
             Bitmap originalBm = BitmapFactory.decodeFile(tempFile.getAbsolutePath(), options);
             Log.d(TAG, "setImage : " + tempFile.getAbsolutePath());
 
-            String str_groupId = String.valueOf(groupData.getId());
+            String str_groupId = String.valueOf(selectedPet.getId());
 
-            imageView_modify_profile_Image.setImageBitmap(originalBm);
+            imageView_modifypet_Image.setImageBitmap(originalBm);
 
             RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), tempFile);
             MultipartBody.Part uploadFile = MultipartBody.Part.createFormData("upload", tempFile.getName(), reqFile);
 
             RequestBody id = RequestBody.create(MediaType.parse("text/plain"), str_groupId);
 
-            service.modifyGroupProfileImage(id, uploadFile).enqueue(new Callback<ModifyGroupProfileImageResponse>() {
+            service.modifyPetImage(id, uploadFile).enqueue(new Callback<ModifyPetResponse>() {
                 @Override
-                public void onResponse(Call<ModifyGroupProfileImageResponse> call, Response<ModifyGroupProfileImageResponse> response) {
-                    ModifyGroupProfileImageResponse result = response.body();
+                public void onResponse(Call<ModifyPetResponse> call, Response<ModifyPetResponse> response) {
+                    ModifyPetResponse result = response.body();
 
                     Toast.makeText(ModifyPetActivity.this, result.getMessage(), Toast.LENGTH_SHORT).show();
                     if (result.getCode() == 200) {
@@ -192,19 +230,19 @@ public class ModifyPetActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onFailure(Call<ModifyGroupProfileImageResponse> call, Throwable t) {
-                    Toast.makeText(ModifyPetActivity.this, "그룹 프로필 이미지 수정 오류 발생", Toast.LENGTH_SHORT).show();
+                public void onFailure(Call<ModifyPetResponse> call, Throwable t) {
+                    Toast.makeText(ModifyPetActivity.this, "펫 프로필 이미지 수정 오류 발생", Toast.LENGTH_SHORT).show();
                     t.printStackTrace();
 
                 }
             });
         } else {
-            imageView_modify_profile_Image.setImageResource(R.drawable.group_profile_default);
+            imageView_modifypet_Image.setImageResource(R.drawable.pet_profile_default);
 
-            service.setGroupProfileImageDefault(groupData.getId()).enqueue(new Callback<SetGroupProfileImageDefaultResponse>() {
+            service.resetPetImage(selectedPet.getId()).enqueue(new Callback<ModifyPetResponse>() {
                 @Override
-                public void onResponse(Call<SetGroupProfileImageDefaultResponse> call, Response<SetGroupProfileImageDefaultResponse> response) {
-                    SetGroupProfileImageDefaultResponse result = response.body();
+                public void onResponse(Call<ModifyPetResponse> call, Response<ModifyPetResponse> response) {
+                    ModifyPetResponse result = response.body();
 
                     Toast.makeText(ModifyPetActivity.this, result.getMessage(), Toast.LENGTH_SHORT).show();
                     if (result.getCode() == 200) {
@@ -215,8 +253,8 @@ public class ModifyPetActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onFailure(Call<SetGroupProfileImageDefaultResponse> call, Throwable t) {
-                    Toast.makeText(ModifyPetActivity.this, "그룹 프로필 이미지 수정 오류 발생", Toast.LENGTH_SHORT).show();
+                public void onFailure(Call<ModifyPetResponse> call, Throwable t) {
+                    Toast.makeText(ModifyPetActivity.this, "펫 프로필 이미지 수정 오류 발생", Toast.LENGTH_SHORT).show();
                     t.printStackTrace();
 
                 }

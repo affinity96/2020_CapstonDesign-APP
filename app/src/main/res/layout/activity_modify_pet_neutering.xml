@@ -76,7 +76,7 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:onClick="onCheckboxClicked_petGender"
+                    android:onClick="onCheckboxClicked_petNeutralization"
                     android:text="유"
                     />
 
@@ -87,7 +87,7 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:onClick="onCheckboxClicked_petGender"
+                    android:onClick="onCheckboxClicked_petNeutralization"
                     android:text="무" />
 
             </LinearLayout>

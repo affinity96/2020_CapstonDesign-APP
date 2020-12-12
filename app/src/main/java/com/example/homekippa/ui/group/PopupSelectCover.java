@@ -23,8 +23,8 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class PopupSeleteGroupImage extends Activity {
-    private static final String TAG = "PopupSeleteGroupImage";
+public class PopupSelectCover extends Activity {
+    private static final String TAG = "PopupSeleteCover";
     private Button button_image_default;
     private Button button_image_album;
     private Button button_image_camera;
@@ -47,7 +47,7 @@ public class PopupSeleteGroupImage extends Activity {
         button_image_default.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((CreateGroupActivity)CreateGroupActivity.context_CreateGroupActivity).tempFile = null;
+                ((YesGroup)YesGroup.context_YesGroup).tempFile = null;
                 setResult(RESULT_OK, intent);
                 finish();
             }
@@ -95,22 +95,22 @@ public class PopupSeleteGroupImage extends Activity {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
         try {
-            ((CreateGroupActivity)CreateGroupActivity.context_CreateGroupActivity).tempFile = createImageFile();
+            ((YesGroup)YesGroup.context_YesGroup).tempFile = createImageFile();
         } catch (IOException e) {
             Toast.makeText(this, "이미지 처리 오류! 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
             finish();
             e.printStackTrace();
         }
-        if (((CreateGroupActivity)CreateGroupActivity.context_CreateGroupActivity).tempFile != null) {
+        if (((YesGroup)YesGroup.context_YesGroup).tempFile != null) {
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
 
                 Uri photoUri = FileProvider.getUriForFile(this,
-                        "com.example.homekippa.provider", ((CreateGroupActivity)CreateGroupActivity.context_CreateGroupActivity).tempFile);
+                        "com.example.homekippa.provider", ((YesGroup)YesGroup.context_YesGroup).tempFile);
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
                 startActivityForResult(intent, PICK_FROM_CAMERA);
 
             } else {
-                Uri photoUri = Uri.fromFile(((CreateGroupActivity)CreateGroupActivity.context_CreateGroupActivity).tempFile);
+                Uri photoUri = Uri.fromFile(((YesGroup)YesGroup.context_YesGroup).tempFile);
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
                 startActivityForResult(intent, PICK_FROM_CAMERA);
             }
@@ -139,11 +139,11 @@ public class PopupSeleteGroupImage extends Activity {
         if (resultCode != RESULT_OK) {
             Toast.makeText(this, "취소 되었습니다.", Toast.LENGTH_SHORT).show();
 
-            if (((CreateGroupActivity)CreateGroupActivity.context_CreateGroupActivity).tempFile != null) {
-                if (((CreateGroupActivity)CreateGroupActivity.context_CreateGroupActivity).tempFile.exists()) {
-                    if (((CreateGroupActivity)CreateGroupActivity.context_CreateGroupActivity).tempFile.delete()) {
-                        Log.e(TAG, ((CreateGroupActivity)CreateGroupActivity.context_CreateGroupActivity).tempFile.getAbsolutePath() + " 삭제 성공");
-                        ((CreateGroupActivity)CreateGroupActivity.context_CreateGroupActivity).tempFile = null;
+            if (((YesGroup)YesGroup.context_YesGroup).tempFile != null) {
+                if (((YesGroup)YesGroup.context_YesGroup).tempFile.exists()) {
+                    if (((YesGroup)YesGroup.context_YesGroup).tempFile.delete()) {
+                        Log.e(TAG, ((YesGroup)YesGroup.context_YesGroup).tempFile.getAbsolutePath() + " 삭제 성공");
+                        ((YesGroup)YesGroup.context_YesGroup).tempFile = null;
                     }
                 }
             }
@@ -169,9 +169,9 @@ public class PopupSeleteGroupImage extends Activity {
 
                     cursor.moveToFirst();
 
-                    ((CreateGroupActivity)CreateGroupActivity.context_CreateGroupActivity).tempFile = new File(cursor.getString(column_index));
+                    ((YesGroup)YesGroup.context_YesGroup).tempFile = new File(cursor.getString(column_index));
 
-                    Log.d(TAG, "tempFile Uri : " + Uri.fromFile(((CreateGroupActivity)CreateGroupActivity.context_CreateGroupActivity).tempFile));
+                    Log.d(TAG, "tempFile Uri : " + Uri.fromFile(((YesGroup)YesGroup.context_YesGroup).tempFile));
 
                 } finally {
                     if (cursor != null) {
