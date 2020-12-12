@@ -364,7 +364,13 @@ public class YesGroup extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), ModifyPetActivity.class);
-                intent.putExtra("petId", petId);
+                intent.putExtra("petId", petList.get(selectedPosition).getId());
+                intent.putExtra("petName", petList.get(selectedPosition).getName());
+                intent.putExtra("petSpecies", petList.get(selectedPosition).getSpecies());
+                intent.putExtra("petGender", petList.get(selectedPosition).getGender());
+                intent.putExtra("petImage", petList.get(selectedPosition).getImage());
+                intent.putExtra("petNeutrality", petList.get(selectedPosition).getNeutrality());
+                intent.putExtra("petBirth", petList.get(selectedPosition).getBirth());
                 startActivity(intent);
             }
         });
