@@ -31,6 +31,8 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.homekippa.AddPetActivity;
 import com.example.homekippa.Cache;
 import com.example.homekippa.CreateDailyWorkActivity;
+import com.example.homekippa.EditDailyWorkActivity;
+import com.example.homekippa.ImageLoadTask;
 import com.example.homekippa.ImageTask;
 import com.example.homekippa.MainActivity;
 import com.example.homekippa.R;
@@ -156,8 +158,10 @@ public class YesGroup extends Fragment {
 
     }
 
+
     @Override
     public void onResume() {
+
         super.onResume();
         setPetListView(listView_pets);
     }
@@ -432,7 +436,7 @@ public class YesGroup extends Fragment {
 
     }
 
-    @Override
+        @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
         if (resultCode != RESULT_OK) {
@@ -450,7 +454,7 @@ public class YesGroup extends Fragment {
             return;
         } else {
             if (requestCode == 1) {
-                setImage();
+                    setImage();
             }
         }
     }
@@ -607,8 +611,7 @@ public class YesGroup extends Fragment {
                 holder.workName.setTextColor(Color.parseColor("#FFFFFF"));
                 holder.workTime.setTextColor(Color.parseColor("#FFFFFF"));
                 holder.workAlarm.setTextColor(Color.parseColor("#FFFFFF"));
-                getImage(dailyWork.getDone_user_image(), holder.workPersonImage, true);
-//                getUserProfileImage(holder.workPersonImage, dailyWork.getDone_user_image());
+                getUserProfileImage(holder.workPersonImage, dailyWork.getDone_user_image());
 
                 holder.workDone.setTextColor(Color.parseColor("#FFFFFF"));
 
@@ -656,6 +659,20 @@ public class YesGroup extends Fragment {
                                     holder.workDone.setTextColor(Color.parseColor("#FFFFFF"));
                                 }
                             });
+                    builder.setNeutralButton("일과 수정하기",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Intent intent = new Intent(getActivity().getApplicationContext(), EditDailyWorkActivity.class);
+                                    intent.putExtra("id",dailyWork.getId());
+                                    intent.putExtra("title",dailyWork.getTitle());
+                                    intent.putExtra("desc",dailyWork.getDesc());
+                                    intent.putExtra("time",dailyWork.getTime());
+                                    intent.putExtra("alarm",dailyWork.getAlarm());
+
+                                    startActivity(intent);
+                                }
+                            });
+
                     builder.setNegativeButton("아니오",
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {

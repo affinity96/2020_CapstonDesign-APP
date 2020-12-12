@@ -380,6 +380,8 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(intent);
                 } else if (id == R.id.menu_item3) {
                     Intent intent = new Intent(getApplicationContext(), SettingActivity.class);
+                    intent.putExtra("userData", userData);
+                    intent.putExtra("groupData", groupData);
                     startActivity(intent);
                 } else if (id == R.id.menu_logout) {
                     Toast.makeText(getApplicationContext(), "로그아웃", Toast.LENGTH_SHORT).show();
