@@ -14,10 +14,12 @@ import android.text.Editable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.homekippa.data.AddPostData;
@@ -54,6 +56,12 @@ public class AddPostActivity extends AppCompatActivity {
     private ImageButton button_cancel_post_image;
     private ImageButton button_Add_Post_Img;
 
+    private CheckBox checkBox_closedScope;
+    private CheckBox checkBox_followScope;
+    private CheckBox checkBox_wholeScope;
+    private TextView textView_postScope;
+    private String scope;
+
     private static final String TAG = "addPost";
     private File tempFile;
     private Boolean isPermission = true;
@@ -73,6 +81,11 @@ public class AddPostActivity extends AppCompatActivity {
         post_image = (ImageView) this.findViewById(R.id.post_image);
         button_cancel_post_image = (ImageButton) this.findViewById(R.id.button_cancel_post_image);
         button_Add_Post_Img = (ImageButton) this.findViewById(R.id.button_Add_Post_Img);
+
+        checkBox_closedScope = this.findViewById(R.id.checkBox_closedScope);
+        checkBox_followScope = this.findViewById(R.id.checkBox_followScope);
+        checkBox_wholeScope = this.findViewById(R.id.checkBox_wholeScope);
+        textView_postScope = this.findViewById(R.id.textView_postScope);
 
         Intent intent = getIntent();
 
@@ -102,8 +115,11 @@ public class AddPostActivity extends AppCompatActivity {
         button_CompletePost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                addPost(groupData.getId(), userData.getUserId(), postContent.toString(), editText_postTitle.getText().toString(), groupData.getArea());
+                if(checkBox_wholeScope.isChecked() == false && checkBox_followScope.isChecked() == false && checkBox_closedScope.isChecked() == false){
+                    textView_postScope.setError("공개범위를 선택해주세요");
+                }else{
+                    addPost(groupData.getId(), userData.getUserId(), postContent.toString(), editText_postTitle.getText().toString(), groupData.getArea(), scope);
+                }
             }
         });
 
@@ -158,6 +174,34 @@ public class AddPostActivity extends AppCompatActivity {
         }
     }
 
+    public void onCheckboxClicked_scope(View v) {
+        switch (v.getId()){
+            case R.id.checkBox_wholeScope:
+                checkBox_wholeScope.setChecked(true);
+                checkBox_followScope.setChecked(false);
+                checkBox_closedScope.setChecked(false);
+                scope = "wholeScope";
+                break;
+
+
+            case R.id.checkBox_followScope:
+                checkBox_wholeScope.setChecked(false);
+                checkBox_followScope.setChecked(true);
+                checkBox_closedScope.setChecked(false);
+                scope = "followScope";
+                break;
+
+            case R.id.checkBox_closedScope:
+                checkBox_wholeScope.setChecked(true);
+                checkBox_followScope.setChecked(false);
+                checkBox_closedScope.setChecked(true);
+                scope = "closedScope";
+                break;
+
+        }
+
+    }
+
     private void setImage() {
         frameLayout_post.setVisibility(View.VISIBLE);
         BitmapFactory.Options options = new BitmapFactory.Options();
@@ -175,12 +219,11 @@ public class AddPostActivity extends AppCompatActivity {
         startActivityForResult(intent, PICK_FROM_ALBUM);
     }
 
-    private void addPost(int groupId, String userId, String content, String title, String area) {
+    private void addPost(int groupId, String userId, String content, String title, String area, String scope) {
 
         if (tempFile != null) {
             String str_groupId = String.valueOf(groupId);
             String str_area = String.valueOf(area);
-
             HashMap<String, RequestBody> data = new HashMap<String, RequestBody>();
 
             RequestBody group_Id = RequestBody.create(MediaType.parse("text/plain"), str_groupId);
@@ -193,6 +236,8 @@ public class AddPostActivity extends AppCompatActivity {
             data.put("content", Content);
             RequestBody area_ = RequestBody.create(MediaType.parse("text/plain"), str_area);
             data.put("area", area_);
+            RequestBody scope_ = RequestBody.create(MediaType.parse("text/plain"), scope);
+            data.put("scope", scope_);
             RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), tempFile);
             MultipartBody.Part uploadFile = MultipartBody.Part.createFormData("upload", tempFile.getName(), reqFile);
 
@@ -217,7 +262,7 @@ public class AddPostActivity extends AppCompatActivity {
                 }
             });
         } else {
-            AddPostData data = new AddPostData(groupId, userId, title, content, area);
+            AddPostData data = new AddPostData(groupId, userId, title, content, area, scope);
 
             service.addPost(data).enqueue(new Callback<AddPostResponse>() {
 

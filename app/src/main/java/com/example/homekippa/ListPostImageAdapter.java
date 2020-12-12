@@ -72,7 +72,7 @@ public class ListPostImageAdapter extends RecyclerView.Adapter<ListPostImageAdap
         if (bit != null) {
             holder.postImage.setImageBitmap(bit);
         } else {
-//            ImageLoadTask task = new ImageLoadTask(url, holder.postImage, context, true);
+
 //            task.execute();
             ImageTask task = new ImageTask(url, holder.postImage, context, true);
             task.getImage();

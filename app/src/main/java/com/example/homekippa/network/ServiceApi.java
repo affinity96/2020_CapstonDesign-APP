@@ -13,7 +13,13 @@ import com.example.homekippa.data.CreateDailyWorkData;
 import com.example.homekippa.data.CreateDailyWorkResponse;
 import com.example.homekippa.data.CreateGroupData;
 import com.example.homekippa.data.CreateGroupResponse;
+import com.example.homekippa.data.DeletePostResponse;
 import com.example.homekippa.data.DoneReportsResponse;
+import com.example.homekippa.data.EditDailyWorkData;
+import com.example.homekippa.data.EditDailyWorkResponse;
+import com.example.homekippa.data.EditUserData;
+import com.example.homekippa.data.EditUserResponse;
+import com.example.homekippa.data.ExitResponse;
 import com.example.homekippa.data.FollowData;
 import com.example.homekippa.data.FollowResponse;
 import com.example.homekippa.data.GetFollowData;
@@ -22,13 +28,13 @@ import com.example.homekippa.data.GroupInviteData;
 import com.example.homekippa.data.GroupPostResponse;
 import com.example.homekippa.data.LikeData;
 import com.example.homekippa.data.LikeResponse;
+import com.example.homekippa.data.ModifyGroupResponse;
+import com.example.homekippa.data.ModifyPetResponse;
 import com.example.homekippa.data.NotiData;
 import com.example.homekippa.data.PostResponse;
-import com.example.homekippa.data.SetGroupCoverDefaultResponse;
 import com.example.homekippa.data.SignUpData;
 import com.example.homekippa.data.SignUpResponse;
 import com.example.homekippa.data.UidRespense;
-import com.example.homekippa.data.UploadGroupCoverResponse;
 import com.example.homekippa.data.UserData;
 
 import com.example.homekippa.data.WeatherLocationData;
@@ -59,18 +65,40 @@ public interface ServiceApi {
     @POST("/user/add")
     Call<SignUpResponse> userSignUp(@Body SignUpData data);
 
+    @PUT("/user/delete")
+    Call<ExitResponse> userExit(@Query("userId") String userId);
+
+    @POST("/user/update")
+    Call<EditUserResponse> userEdit(@Body EditUserData data);
+
     @POST("/group/add")
     Call<CreateGroupResponse> groupCreate(@Body CreateGroupData data);
 
     @GET("/group/image")
     Call<ResponseBody> getProfileImage(@Query("apiName") String apiName);
 
+    @POST("/group/reset/photo")
+    Call<ModifyGroupResponse> setGroupProfileImageDefault(@Query("groupId") int groupId);
+
     @POST("/group/reset/cover")
-    Call<SetGroupCoverDefaultResponse> setGroupCoverDefault(@Query("groupId") int groupId);
+    Call<ModifyGroupResponse> setGroupCoverDefault(@Query("groupId") int groupId);
+
+    @Multipart
+    @POST("/group/modify/photo")
+    Call<ModifyGroupResponse> modifyGroupProfileImage(@Part("groupId") RequestBody id, @Part MultipartBody.Part image);
+
+    @POST("/group/modify/name")
+    Call<ModifyGroupResponse> modifyGroupName(@Query("groupId") int groupId, @Query("Name") String data);
+
+    @POST("/group/modify/intro")
+    Call<ModifyGroupResponse> modifyGroupIntro(@Query("groupId") int groupId ,@Query("Intro") String data);
+
+    @POST("/group/modify/Address")
+    Call<ModifyGroupResponse> modifyGroupAddress(@Query("groupId") int groupId, @Query("Address") String address, @Query("Area") String area);
 
     @Multipart
     @POST("/group/add/cover")
-    Call<UploadGroupCoverResponse> uploadGroupCover(@Part("groupId") RequestBody id, @Part MultipartBody.Part image);
+    Call<ModifyGroupResponse> uploadGroupCover(@Part("groupId") RequestBody id, @Part MultipartBody.Part image);
 
     @Multipart
     @POST("/group/add/photo")
@@ -86,6 +114,10 @@ public interface ServiceApi {
     @POST("/post/add")
     Call<AddPostResponse> addPost(@Body AddPostData data);
 
+    @PUT("/post/delete")
+    Call<DeletePostResponse> deletePost(@Query("postId") int postId);
+
+
     @POST("/pet/add")
     Call<AddPetResponse> addPetReg(@Body AddPetData data);
 
@@ -98,11 +130,37 @@ public interface ServiceApi {
     @GET("/pet")
     Call<List<SingleItemPet>> getPetsData(@Query("groupId") int groupId);
 
+    @Multipart
+    @POST("/pet/modify/photo")
+    Call<ModifyPetResponse> modifyPetImage(@Part("petId") RequestBody id, @Part MultipartBody.Part image);
+
+    @POST("/pet/reset/photo")
+    Call<ModifyPetResponse> resetPetImage(@Query("petId") int petId);
+
+    @POST("/pet/modify/name")
+    Call<ModifyPetResponse> modifyPetName(@Query("petId") int petId, @Query("name") String data);
+
+    @POST("/pet/modify/species")
+    Call<ModifyPetResponse> modifyPetSpecies(@Query("petId") int petId, @Query("species") String data);
+
+    @POST("/pet/modify/gender")
+    Call<ModifyPetResponse> modifyPetGender(@Query("petId") int petId, @Query("gender") String data);
+
+    @POST("/pet/modify/neutering")
+    Call<ModifyPetResponse> modifyPetNeutering(@Query("petId") int petId, @Query("neutering") String data);
+
+    @POST("/pet/modify/birth")
+    Call<ModifyPetResponse> modifyPetBirth(@Query("petId") int petId, @Query("birth") String data);
+
     @GET("/pet/reports")
     Call<List<SingleItemDailyWork>> getDailyWorkData(@Query("petId") int petId);
 
     @PUT("/pet/reports/done")
     Call<DoneReportsResponse> doneDailyWork(@Query("id") int id, @Query("done_user_id") String userId, @Query("done_user_image") String userImage);
+
+    @POST("/pet/reports/update")
+    Call<EditDailyWorkResponse> editDailyWork(@Body EditDailyWorkData data);
+
 
 //    @POST("/pet/add")
 //    Call<AddPetResponse> addPetReg(@Body AddPetData data);

@@ -100,6 +100,7 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
         return new MyViewHolder(itemView);
     }
 
+
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
@@ -107,6 +108,7 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
             setGroupViewModel(holder, position);
             try {
                 setPostData(holder, position);
+
             } catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -160,6 +162,7 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
         getProfileImage(holder, group.getImage());
 
         setClickListenerOnHolder(holder, position, group, post);
+//        setGroupViewModel(holder, position);
     }
 
     private void setPostDate(MyViewHolder holder, int position, SingleItemPost post) throws ParseException {
@@ -182,8 +185,9 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
         if (bit != null) {
             Glide.with(context).load(bit).circleCrop().into(holder.postGroupProfile);
         } else {
-            ImageLoadTask task = new ImageLoadTask(url, holder.postGroupProfile, context, false);
-            task.execute();
+            ImageTask task = new ImageTask(url, holder.postGroupProfile, context, false);
+            task.getImage();
+//            task.execute();
         }
     }
 
@@ -199,6 +203,7 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
                 intent.putExtra("isliked", likeCheck.get(position));
                 intent.putExtra("isgroup", isgroup);
                 intent.putExtra("pos", position);
+                intent.putExtra("tab_", tab_);
                 ((Activity) context).startActivity(intent);
             }
         });
@@ -327,19 +332,27 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
         groupViewModel.getPostList().observe((LifecycleOwner) context, new Observer<List<SingleItemPost>>() {
             @Override
             public void onChanged(List<SingleItemPost> singleItemPosts) {
-                holder.postCommentNum.setText(String.valueOf(singleItemPosts.get(position).getCommentNum()));
-                holder.postLikedNum.setText(String.valueOf(singleItemPosts.get(position).getLikeNum()));
-
-                boolean isliked = groupViewModel.getLikeCheck().getValue().get(position);
-                holder.postLikeImage.setActivated(isliked);
+                int size = groupViewModel.getPostList().getValue().size();
+                Log.d("group", String.valueOf(size));
+                Log.d("group", String.valueOf(position));
+                if (position<size) {
+                    holder.postCommentNum.setText(String.valueOf(singleItemPosts.get(position).getCommentNum()));
+                    holder.postLikedNum.setText(String.valueOf(singleItemPosts.get(position).getLikeNum()));
+                    boolean isliked = groupViewModel.getLikeCheck().getValue().get(position);
+                    holder.postLikeImage.setActivated(isliked);
+                }
             }
         });
         groupViewModel.getLikeCheck().observe((LifecycleOwner) context, new Observer<List<Boolean>>() {
             @Override
             public void onChanged(List<Boolean> likecheck) {
-                holder.postLikedNum.setText(String.valueOf(groupViewModel.getPostList().getValue().get(position).getLikeNum()));
-                boolean isliked = groupViewModel.getLikeCheck().getValue().get(position);
-                holder.postLikeImage.setActivated(isliked);
+
+                int size = groupViewModel.getLikeCheck().getValue().size();
+                if (position<size) {
+                    holder.postLikedNum.setText(String.valueOf(groupViewModel.getPostList().getValue().get(position).getLikeNum()));
+                    boolean isliked = groupViewModel.getLikeCheck().getValue().get(position);
+                    holder.postLikeImage.setActivated(isliked);
+                }
             }
         });
     }

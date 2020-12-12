@@ -103,14 +103,12 @@
                     android:layout_height="70dp"
                     android:background="@drawable/ic_brightness_1_white_18dp" />
 
-                <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                <ImageView xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/ImageView_groupProfile"
                     android:layout_width="70dp"
-                    android:layout_height="70dp" />
-
-
+                    android:layout_height="70dp"
+                    android:background="@android:color/transparent" />
             </FrameLayout>
-
 
             <LinearLayout
                 android:id="@+id/linearlayout_proile"
@@ -277,4 +275,16 @@
         android:layout_margin="10dp"
         android:background="@drawable/round_button2"
         android:hint="+" />
+
+    <Button
+        android:id="@+id/button_modify_pet"
+        android:layout_width="80dp"
+        android:layout_height="30dp"
+        android:layout_alignParentBottom="true"
+
+        android:layout_gravity="left"
+        android:layout_margin="10dp"
+        android:background="@drawable/round_button2"
+        android:textSize="11dp"
+        android:text="펫 프로필 수정" />
 </RelativeLayout>

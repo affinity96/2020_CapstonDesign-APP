@@ -1,20 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.homekippa">
-
     <!-- 인터넷 퍼미션 -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
-
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
-
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-
-    <!-- 업로드 관련 퍼미션 -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" /> <!-- 업로드 관련 퍼미션 -->
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -33,16 +27,20 @@
         <activity android:name=".ChattingRoomActivity"></activity>
         <activity android:name=".ChatActivity" />
         <activity android:name=".ui.group.GroupInviteActivity" />
+        <activity android:name=".EditUserActivity"></activity>
+        <activity android:name=".EditDailyWorkActivity" />
 
         <service
             android:name=".pushAlarm.PushAlarmService"
             android:enabled="true"
             android:exported="true"
             android:stopWithTask="false">
-            <!--            <intent-filter>-->
-            <!--                <action android:name="com.google.firebase.MESSAGING_EVENT" />-->
-            <!--                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />-->
-            <!--            </intent-filter>-->
+
+            <!-- <intent-filter> -->
+            <!-- <action android:name="com.google.firebase.MESSAGING_EVENT" /> -->
+            <!-- <action android:name="com.google.firebase.INSTANCE_ID_EVENT" /> -->
+            <!-- </intent-filter> -->
+
         </service>
 
         <activity
@@ -62,14 +60,24 @@
             android:name=".AddPostActivity"
             android:windowSoftInputMode="adjustResize" />
         <activity android:name=".ui.group.CreateGroupActivity" />
+        <activity android:name=".ui.group.ModifyGroupActivity" />
+        <activity android:name=".ui.group.ModifyGroupNameActivity" />
+        <activity android:name=".ui.group.ModifyGroupIntroActivity" />
+        <activity android:name=".ui.group.ModifyGroupAddressActivity" />
         <activity
-            android:name=".ui.group.PopupSeleteGroupImage"
+            android:name=".ui.group.PopupSelectGroupImageModify"
             android:theme="@android:style/Theme.Dialog" />
         <activity
-            android:name=".ui.group.PopupSeleteCover"
+            android:name=".ui.group.PopupSelectGroupImage"
             android:theme="@android:style/Theme.Dialog" />
         <activity
-            android:name=".PopupSeletePetImage"
+            android:name=".ui.group.PopupSelectCover"
+            android:theme="@android:style/Theme.Dialog" />
+        <activity
+            android:name=".PopupSelectPetImage"
+            android:theme="@android:style/Theme.Dialog" />
+        <activity
+            android:name=".PopupSelectPetImageModify"
             android:theme="@android:style/Theme.Dialog" />
         <activity android:name=".VerifyActivity" />
         <activity android:name=".SignUpActivity" />
@@ -82,32 +90,32 @@
         <activity android:name=".MapActivity" />
         <activity android:name=".AddPetDesActivity" />
         <activity android:name=".SettingActivity" />
-
-
-        <!--    Firebase 푸시 알림-->
-
-        <!--        <meta-data-->
-        <!--            android:name="com.google.firebase.messaging.default_notification_icon"-->
-        <!--            android:resource="@drawable/simplelogo" />-->
-        <!--        <meta-data-->
-        <!--            android:name="com.google.firebase.messaging.default_notification_channel_id"-->
-        <!--            android:value="@string/default_notification_channel_id" />-->
-        <!--        -->
-        <!--        <meta-data-->
-        <!--            android:name="com.google.firebase.messaging.default_notification_color"-->
-        <!--            android:resource="@color/kippaYellow" />-->
-
+        <activity android:name=".ModifyPetActivity" />
+        <activity android:name=".ModifyPetNameActivity" />
+        <activity android:name=".ModifyPetSpeciesActivity" />
+        <activity android:name=".ModifyPetGenderActivity" />
+        <activity android:name=".ModifyPetNeuteringActivity" />
+        <activity android:name=".ModifyPetBirthActivity" />
+        <activity android:name=".ExitKippaActivity" />
+        <!-- Firebase 푸시 알림 -->
+        <!-- <meta-data -->
+        <!-- android:name="com.google.firebase.messaging.default_notification_icon" -->
+        <!-- android:resource="@drawable/simplelogo" /> -->
+        <!-- <meta-data -->
+        <!-- android:name="com.google.firebase.messaging.default_notification_channel_id" -->
+        <!-- android:value="@string/default_notification_channel_id" /> -->
+        <!--  -->
+        <!-- <meta-data -->
+        <!-- android:name="com.google.firebase.messaging.default_notification_color" -->
+        <!-- android:resource="@color/kippaYellow" /> -->
         <meta-data
             android:name="com.kakao.sdk.AppKey"
-            android:value="072eca373f972d14800828bcf8a8ab53" />
-
-        <!-- 사진 촬영을 위한 provide -->
+            android:value="072eca373f972d14800828bcf8a8ab53" /> <!-- 사진 촬영을 위한 provide -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.example.homekippa.provider"
             android:exported="false"
             android:grantUriPermissions="true">
-
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />

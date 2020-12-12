@@ -6,7 +6,9 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -17,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -52,7 +55,7 @@ public class GroupPost extends Fragment {
     private ServiceApi service;
     private UserData userData;
     private GroupData groupData;
-    private boolean myGroup = true;
+    private boolean myGroup;
 
     private ViewGroup root;
     private String mParam1;
@@ -63,9 +66,10 @@ public class GroupPost extends Fragment {
     private List<List<LikeData>> likeList = new ArrayList<>();
 
     private RecyclerView listView_posts;
+    private ImageView empty_post;
     private TextView textView_groupName;
     private TextView textView_address;
-    private CircleImageView imageView_PostProfile;
+    private ImageView imageView_PostProfile;
 
     private GroupViewModel groupViewModel;
 
@@ -100,7 +104,11 @@ public class GroupPost extends Fragment {
 
         service = RetrofitClient.getClient().create(ServiceApi.class);
         userData = ((MainActivity) getActivity()).getUserData();
-        groupData = ((MainActivity) getActivity()).getGroupData();
+        groupData = (GroupData) getArguments().get("groupData");
+
+
+        myGroup = (boolean) getArguments().get("myGroup");
+        Log.d("group", String.valueOf(myGroup));
 
         groupViewModel = new ViewModelProvider(requireActivity()).get(GroupViewModel.class);
 
@@ -108,10 +116,9 @@ public class GroupPost extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
-
     }
 
+    @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
     }
@@ -127,12 +134,26 @@ public class GroupPost extends Fragment {
         imageView_PostProfile = root.findViewById(R.id.imageView_GroupPostProfile);
         getGroupProfileImage(groupData.getImage(), imageView_PostProfile);
 
+
+        return root;
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        groupViewModel.getPostList().getValue().clear();
+        groupViewModel.getPostList().removeObservers((LifecycleOwner) getContext());
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         setGroupView();
-//        setPostListView(listView_posts);
-
-
+        setPostListView(listView_posts);
         button_Add_Post = root.findViewById(R.id.button_Add_Post);
         if (!myGroup) {
+            Log.d("group", "not my group");
             button_Add_Post.setVisibility(View.INVISIBLE);
         } else {
             button_Add_Post.setVisibility(View.VISIBLE);
@@ -147,24 +168,20 @@ public class GroupPost extends Fragment {
             });
 
         }
-
-        return root;
     }
 
-    private void getGroupProfileImage(String url, CircleImageView imageView) {
+    private void getGroupProfileImage(String url, ImageView imageView) {
         Log.d("url", url);
         service.getProfileImage(url).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 String TAG = "YesGroup";
                 if (response.isSuccessful()) {
-
                     Log.d(TAG, "server contacted and has file");
                     InputStream is = response.body().byteStream();
                     Bitmap bitmap = BitmapFactory.decodeStream(is);
-
-                    Glide.with(GroupPost.this).load(bitmap).circleCrop().into(imageView);
-
+                    if (bitmap != null && getActivity() != null)
+                        Glide.with(getActivity()).load(bitmap).circleCrop().into(imageView);
                 } else {
                     Log.d(TAG, "server contact failed");
                 }
@@ -203,7 +220,6 @@ public class GroupPost extends Fragment {
                     groupViewModel.getLikeCheck().setValue(checkLikeList);
 
                     setPostAdapter(listView, checkLikeList);
-
                 }
             }
 
@@ -226,18 +242,23 @@ public class GroupPost extends Fragment {
 
     private void setPostAdapter(RecyclerView listView, ArrayList<Boolean> checkLikeList) {
 
-        ListPostAdapter postAdapter = new ListPostAdapter(getActivity(), postList, groupData, checkLikeList, true, "");
-        listView.setAdapter(postAdapter);
+        if (checkLikeList.isEmpty()) {
+            listView.setVisibility(View.GONE);
+            empty_post.setVisibility(View.VISIBLE);
+        } else {
+            ListPostAdapter postAdapter = new ListPostAdapter(getActivity(), postList, groupData, checkLikeList, true, "");
+            listView.setAdapter(postAdapter);
 
-        LinearLayoutManager pLayoutManager = new LinearLayoutManager(getActivity());
-        pLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        listView.setLayoutManager(pLayoutManager);
-        listView.setItemAnimator(new DefaultItemAnimator());
-
+            LinearLayoutManager pLayoutManager = new LinearLayoutManager(getActivity());
+            pLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+            listView.setLayoutManager(pLayoutManager);
+            listView.setItemAnimator(new DefaultItemAnimator());
+        }
     }
 
     private ArrayList<Boolean> setLikeData(List<List<LikeData>> likeList) {
         ArrayList<Boolean> checkLike = new ArrayList<Boolean>();
+        Log.d("이것은대체..", userData.getUserId());
 
         int i = 0;
         for (List<LikeData> like : likeList) {

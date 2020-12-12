@@ -3,6 +3,7 @@ package com.example.homekippa.ui.home;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Location;
 import android.os.Bundle;
 import android.text.Editable;
 import android.util.Log;
@@ -52,12 +53,14 @@ public class PostDetailActivity extends AppCompatActivity {
 
     private FollowViewModel followViewModel;
     private GroupViewModel groupViewModel;
+    private LocationViewModel locationViewModel;
     private GroupData group;
     private UserData user;
     private Intent intent;
     private int postPosition;
     private boolean isliked;
     private boolean isgroup;
+    private String tab;
 
 
     private SingleItemPost post;
@@ -136,19 +139,8 @@ public class PostDetailActivity extends AppCompatActivity {
     private void setPostDetail() {
         followViewModel = new ViewModelProvider((ViewModelStoreOwner) this).get(FollowViewModel.class);
         groupViewModel = new ViewModelProvider((ViewModelStoreOwner) this).get(GroupViewModel.class);
+        locationViewModel = new ViewModelProvider((ViewModelStoreOwner) this).get(LocationViewModel.class);
 
-        intent = getIntent();
-
-        group = (GroupData) intent.getExtras().get("group");
-        user = (UserData) intent.getExtras().get("user");
-        postPosition = (int) intent.getExtras().get("pos");
-        isgroup = (Boolean) intent.getExtras().get("isgroup");
-
-        if (isgroup)
-            post = (SingleItemPost) groupViewModel.getPostList().getValue().get(postPosition);
-        else post = (SingleItemPost) followViewModel.getPostList().getValue().get(postPosition);
-        if (isgroup) isliked = groupViewModel.getLikeCheck().getValue().get(postPosition);
-        else isliked = followViewModel.getLikeCheck().getValue().get(postPosition);
 
         postGroupProfile = (ImageView) findViewById(R.id.imageView_DetailPostGroupProfile);
         postGroupName = (TextView) findViewById(R.id.textView__DetailPostGroupName);
@@ -160,22 +152,39 @@ public class PostDetailActivity extends AppCompatActivity {
         recyclerView_postImages = (RecyclerView) findViewById(R.id.listview_DetailPostImages);
         recyclerView_postComments = (RecyclerView) findViewById(R.id.listview_PostComments);
         postLikedImage = (Button) findViewById(R.id.imageView_DetailPostLiked);
+
+        intent = getIntent();
+
+        group = (GroupData) intent.getExtras().get("group");
+        user = (UserData) intent.getExtras().get("user");
+        postPosition = (int) intent.getExtras().get("pos");
+        isgroup = (Boolean) intent.getExtras().get("isgroup");
+        tab = (String) intent.getExtras().get("tab_");
+
+
+        if (isgroup) {
+            post = (SingleItemPost) groupViewModel.getPostList().getValue().get(postPosition);
+            isliked = groupViewModel.getLikeCheck().getValue().get(postPosition);
+            postLikeNum.setText(String.valueOf(groupViewModel.getPostList().getValue().get(postPosition).getLikeNum()));
+            postCommentNum.setText(String.valueOf(groupViewModel.getPostList().getValue().get(postPosition).getCommentNum()));
+        } else {
+            if (tab.equals("F")) {
+                post = (SingleItemPost) followViewModel.getPostList().getValue().get(postPosition);
+                isliked = followViewModel.getLikeCheck().getValue().get(postPosition);
+                postLikeNum.setText(String.valueOf(followViewModel.getPostList().getValue().get(postPosition).getLikeNum()));
+                postCommentNum.setText(String.valueOf(followViewModel.getPostList().getValue().get(postPosition).getCommentNum()));
+            } else {
+                post = (SingleItemPost) locationViewModel.getPostList().getValue().get(postPosition);
+                isliked = locationViewModel.getLikeCheck().getValue().get(postPosition);
+                postLikeNum.setText(String.valueOf(locationViewModel.getPostList().getValue().get(postPosition).getLikeNum()));
+                postCommentNum.setText(String.valueOf(locationViewModel.getPostList().getValue().get(postPosition).getCommentNum()));
+            }
+        }
         post_ImageList = post.getGroupPostImage();
-
-
         postGroupName.setText(group.getName());
         postGroupLocation.setText(group.getAddress());
         postTitle.setText(post.getTitle());
         postContent.setText(post.getContent());
-
-        if (isgroup) {
-            postLikeNum.setText(String.valueOf(groupViewModel.getPostList().getValue().get(postPosition).getLikeNum()));
-            postCommentNum.setText(String.valueOf(groupViewModel.getPostList().getValue().get(postPosition).getCommentNum()));
-        } else {
-            postLikeNum.setText(String.valueOf(followViewModel.getPostList().getValue().get(postPosition).getLikeNum()));
-            postCommentNum.setText(String.valueOf(followViewModel.getPostList().getValue().get(postPosition).getCommentNum()));
-        }
-
         postLikedImage.setActivated(isliked);
         getGroupProfileImage(group.getImage(), postGroupProfile);
 
@@ -193,21 +202,27 @@ public class PostDetailActivity extends AppCompatActivity {
                         if (response.code() == 200) {
                             if (isgroup) {
                                 if (!v.isActivated()) {
-                                    Log.d("like", "Increase");
                                     GroupViewModel.setLiveLikeNum(postPosition, 1);
                                     GroupViewModel.setLiveLikeCheck(postPosition, true);
                                 } else {
                                     GroupViewModel.setLiveLikeNum(postPosition, -1);
                                     GroupViewModel.setLiveLikeCheck(postPosition, false);
                                 }
-                            } else {
+                            } else if (tab.equals("F")) {
                                 if (!v.isActivated()) {
-                                    Log.d("like", "Increase");
                                     FollowViewModel.setLiveLikeNum(postPosition, 1);
                                     FollowViewModel.setLiveLikeCheck(postPosition, true);
                                 } else {
                                     FollowViewModel.setLiveLikeNum(postPosition, -1);
                                     FollowViewModel.setLiveLikeCheck(postPosition, false);
+                                }
+                            } else {
+                                if (!v.isActivated()) {
+                                    LocationViewModel.setLiveLikeNum(postPosition, 1);
+                                    LocationViewModel.setLiveLikeCheck(postPosition, true);
+                                } else {
+                                    LocationViewModel.setLiveLikeNum(postPosition, -1);
+                                    LocationViewModel.setLiveLikeCheck(postPosition, false);
                                 }
                             }
                             setPostDetail();

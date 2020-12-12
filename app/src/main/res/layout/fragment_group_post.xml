@@ -13,18 +13,18 @@
         android:background="@drawable/border"
         android:padding="20dp">
 
-        <de.hdodenhof.circleimageview.CircleImageView
+        <ImageView
             android:id="@+id/imageView_GroupPostProfile"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:src="@drawable/border" />
+            android:background="@android:color/transparent" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/imageView_GroupPostProfile"
             android:layout_toLeftOf="@+id/button_Add_Post"
+            android:layout_toRightOf="@+id/imageView_GroupPostProfile"
             android:orientation="vertical"
             android:padding="5dp">
 
@@ -50,12 +50,12 @@
             android:id="@+id/button_Add_Post"
             android:layout_width="50dp"
             android:layout_height="30dp"
-            android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
             android:background="@drawable/round_button2"
-            android:visibility="visible"
             android:text="글쓰기"
-            android:textSize="11dp"/>
+            android:textSize="11dp"
+            android:visibility="visible" />
 
 
     </RelativeLayout>
@@ -63,12 +63,21 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/relativeLayout_profile"
->
+        android:layout_below="@+id/relativeLayout_profile">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/listView_GroupPost"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+
+        <ImageView
+            android:id="@+id/empty_post"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:src="@drawable/no_posts"
+            android:visibility="gone" />
     </LinearLayout>
 </RelativeLayout>

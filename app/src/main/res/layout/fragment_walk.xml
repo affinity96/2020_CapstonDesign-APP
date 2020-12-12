@@ -56,8 +56,8 @@
                         android:layout_margin="10dp"
                         android:scaleType="fitCenter" />
 
-                    <EditText
-                        android:id="@+id/editText_weather"
+                    <TextView
+                        android:id="@+id/textView_weather"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -67,6 +67,7 @@
                 </LinearLayout>
             </LinearLayout>
 
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -74,6 +75,7 @@
                 android:orientation="vertical">
 
                 <TextView
+
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="top"
@@ -89,11 +91,12 @@
                     android:layout_gravity="center"
                     android:orientation="horizontal">
 
-                    <EditText
-                        android:id="@+id/editText_temperature"
+                    <TextView
+                        android:id="@+id/textView_temperature"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
+                        android:textSize="20sp"
                         android:background="@null"
                         android:gravity="center" />
                 </LinearLayout>
@@ -107,6 +110,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_weight="1"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
         android:orientation="vertical">
 
         <TextView
@@ -127,9 +132,85 @@
     </LinearLayout>
 
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:background="@drawable/dialog_group_pet"
+        android:layout_gravity="center">
+
+        <TextView
+            android:id="@+id/textView_scope"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="공개범위"
+            android:textSize="18sp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            style="@style/BlackText"
+            />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:orientation="vertical"
+            android:layout_marginLeft="40dp"
+            android:gravity="center">
+
+            <CheckBox
+                android:id="@+id/checkbox_wholeScope"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textSize="15sp"
+                android:text="전체  공개"
+                style="@style/GrayText"
+                android:layout_gravity="start"
+                android:gravity="center"
+                />
+            <CheckBox
+                android:id="@+id/checkbox_followScope"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textSize="15sp"
+                android:text="팔로우 공개"
+                style="@style/GrayText"
+                android:layout_gravity="start"
+                android:gravity="center"
+                />
+            <CheckBox
+                android:id="@+id/checkbox_closedScope"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textSize="15sp"
+                android:text="비공개"
+                style="@style/GrayText"
+                android:layout_gravity="start"
+                android:gravity="center"
+                />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="2">
+
+    </LinearLayout>
+
+
+    <LinearLayout
         android:id="@+id/linearlayout_startButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
         android:orientation="vertical">
 
         <Button
