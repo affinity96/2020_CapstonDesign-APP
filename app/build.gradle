@@ -93,4 +93,7 @@ dependencies {
 
     //ted permission
     implementation "gun0912.ted:tedpermission:2.1.0"
+
+    //Admob
+    implementation 'com.google.android.gms:play-services-ads:19.5.0'
 }
