@@ -37,7 +37,7 @@
             android:hint="이메일"
             android:paddingLeft="20dp"
             android:textSize="6pt"
-            android:background="@drawable/shape"
+            android:background="@android:color/darker_gray"
             android:layout_margin="5dp"
             android:inputType="textEmailAddress"
             android:focusable="false"
@@ -76,16 +76,14 @@
             android:id="@+id/text_Birth"
             android:layout_width="370dp"
             android:layout_height="37.3dp"
-            android:ems="10"
-            android:textSize="6pt"
-            android:background="@drawable/shape"
             android:layout_gravity="center"
             android:layout_margin="5dp"
+            android:background="@drawable/shape"
+            android:ems="10"
             android:gravity="center_vertical"
+            android:hint="생년월일"
             android:paddingLeft="20dp"
-            android:hint="생년월일" />
-
-
+            android:textSize="6pt" />
 
         <Button
             android:id="@+id/button_gotoEditUser"
