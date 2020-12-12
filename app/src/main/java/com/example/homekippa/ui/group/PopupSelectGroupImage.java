@@ -23,7 +23,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class PopupSeleteGroupImage extends Activity {
+public class PopupSelectGroupImage extends Activity {
     private static final String TAG = "PopupSeleteGroupImage";
     private Button button_image_default;
     private Button button_image_album;

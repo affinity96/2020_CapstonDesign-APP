@@ -152,10 +152,6 @@ public class MapActivity extends AppCompatActivity implements MapView.MapViewEve
         mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("petSpecies").setValue(petSpecies);
         mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("petImage").setValue(petImageUrl);
 
-        mDatabase.child("walking_group").child(String.valueOf(15)).child("scope").setValue("followScope");
-        mDatabase.child("walking_group").child(String.valueOf(16)).child("scope").setValue("wholeScope");
-        mDatabase.child("walking_group").child(String.valueOf(64)).child("scope").setValue("followScope");
-        mDatabase.child("walking_group").child(String.valueOf(65)).child("scope").setValue("folloewScope");
 
 //        mapView.setOnTouchListener(new View.OnTouchListener(){
 //
@@ -376,6 +372,8 @@ public class MapActivity extends AppCompatActivity implements MapView.MapViewEve
         final TextView petGenderTextView = (TextView) dialogView.findViewById(R.id.textView_groupPetGender);
         final TextView petSpeciesTextView = (TextView) dialogView.findViewById(R.id.textView_groupPetSpecies);
         final TextView userNameTextView = (TextView) dialogView.findViewById(R.id.textView_groupUserName);
+        final TextView userGenderTextView = (TextView) dialogView.findViewById(R.id.textView_groupUserGender);
+        final TextView userAgeTextView = (TextView) dialogView.findViewById(R.id.textView_groupUserAge);
         final TextView groupNameTextView = (TextView) dialogView.findViewById(R.id.textView_selectedgroupName);
         final ImageView petImageView = (ImageView) dialogView.findViewById(R.id.imageView_groupPetImage);
         final ImageView userImageView = (ImageView) dialogView.findViewById(R.id.imageView_groupUserImage);
@@ -393,6 +391,8 @@ public class MapActivity extends AppCompatActivity implements MapView.MapViewEve
                         petGenderTextView.setText(SelectedGroupData.child("petName").getValue(String.class));
                         petSpeciesTextView.setText(SelectedGroupData.child("petSpecies").getValue(String.class));
                         userNameTextView.setText(SelectedGroupData.child("userName").getValue(String.class));
+                        userAgeTextView.setText(SelectedGroupData.child("userAge").getValue(String.class));
+                        userGenderTextView.setText(SelectedGroupData.child("userGender").getValue(String.class));
                         groupNameTextView.setText(SelectedGroupData.child("groupName").getValue(String.class));
                         getProfileImage(SelectedGroupData.child("petImage").getValue(String.class), petImageView);
                         getProfileImage(SelectedGroupData.child("userImage").getValue(String.class), userImageView);

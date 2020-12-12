@@ -31,18 +31,18 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.homekippa.AddPetActivity;
 import com.example.homekippa.Cache;
 import com.example.homekippa.CreateDailyWorkActivity;
-import com.example.homekippa.EditDailyWorkActivity;
-import com.example.homekippa.ImageLoadTask;
 import com.example.homekippa.ImageTask;
 import com.example.homekippa.MainActivity;
+import com.example.homekippa.ModifyPetActivity;
+import com.example.homekippa.EditDailyWorkActivity;
+import com.example.homekippa.ImageLoadTask;
 import com.example.homekippa.R;
 import com.example.homekippa.data.DoneReportsResponse;
 import com.example.homekippa.data.FollowData;
 import com.example.homekippa.data.FollowResponse;
 import com.example.homekippa.data.GroupData;
 import com.example.homekippa.data.GroupInviteData;
-import com.example.homekippa.data.SetGroupCoverDefaultResponse;
-import com.example.homekippa.data.UploadGroupCoverResponse;
+import com.example.homekippa.data.ModifyGroupResponse;
 import com.example.homekippa.data.UserData;
 import com.example.homekippa.function.Loading;
 import com.example.homekippa.network.RetrofitClient;
@@ -92,6 +92,7 @@ public class YesGroup extends Fragment {
     private TextView tv_groupName;
     private TextView tv_groupIntro;
     private Button button_Add_DW;
+    private Button button_modify_pet;
     private RecyclerView listView_pets;
     private RecyclerView listView_dailyWorks;
     private CircleImageView imageView_groupProfile;
@@ -174,6 +175,7 @@ public class YesGroup extends Fragment {
         tv_groupName = root.findViewById(R.id.textView_groupName);
         tv_groupIntro = root.findViewById(R.id.textView_groupIntro);
         button_Add_DW = root.findViewById(R.id.button_Add_DW);
+        button_modify_pet = root.findViewById(R.id.button_modify_pet);
         button_addPet = root.findViewById(R.id.button_AddPet);
         button_addUser = root.findViewById(R.id.button_Add_User);
         button_join_group = root.findViewById(R.id.button_join_group);
@@ -204,6 +206,7 @@ public class YesGroup extends Fragment {
             button_addUser.setVisibility(View.INVISIBLE);
             button_addPet.setVisibility(View.INVISIBLE);
             button_Add_DW.setVisibility(View.INVISIBLE);
+            button_modify_pet.setVisibility(View.INVISIBLE);
             button_changeGroupCover.setVisibility(View.INVISIBLE);
             button_changeProfile.setVisibility(View.INVISIBLE);
             boolean isfollowed = followViewModel.checkFollow(groupData.getId());
@@ -263,8 +266,9 @@ public class YesGroup extends Fragment {
         button_changeProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), MainActivity.class);
-                intent.putExtra("group", groupData);
+                Intent intent = new Intent(getContext(), ModifyGroupActivity.class);
+                intent.putExtra("groupData", groupData);
+                startActivity(intent);
             }
         });
 
@@ -350,9 +354,18 @@ public class YesGroup extends Fragment {
         button_changeGroupCover.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), PopupSeleteCover.class);
+                Intent intent = new Intent(v.getContext(), PopupSelectCover.class);
                 intent.putExtra("isPermission", isPermission);
                 startActivityForResult(intent, 1);
+            }
+        });
+
+        button_modify_pet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), ModifyPetActivity.class);
+                intent.putExtra("petId", petId);
+                startActivity(intent);
             }
         });
 
@@ -472,10 +485,10 @@ public class YesGroup extends Fragment {
 
             RequestBody id = RequestBody.create(MediaType.parse("text/plain"), str_groupId);
 
-            service.uploadGroupCover(id, uploadFile).enqueue(new Callback<UploadGroupCoverResponse>() {
+            service.uploadGroupCover(id, uploadFile).enqueue(new Callback<ModifyGroupResponse>() {
                 @Override
-                public void onResponse(Call<UploadGroupCoverResponse> call, Response<UploadGroupCoverResponse> response) {
-                    UploadGroupCoverResponse result = response.body();
+                public void onResponse(Call<ModifyGroupResponse> call, Response<ModifyGroupResponse> response) {
+                    ModifyGroupResponse result = response.body();
 
                     Toast.makeText(getContext(), result.getMessage(), Toast.LENGTH_SHORT).show();
                     if (result.getCode() == 200) {
@@ -486,7 +499,7 @@ public class YesGroup extends Fragment {
                 }
 
                 @Override
-                public void onFailure(Call<UploadGroupCoverResponse> call, Throwable t) {
+                public void onFailure(Call<ModifyGroupResponse> call, Throwable t) {
                     Toast.makeText(getContext(), "그룹 커버 등록 오류 발생", Toast.LENGTH_SHORT).show();
                     t.printStackTrace();
 
@@ -495,10 +508,10 @@ public class YesGroup extends Fragment {
         } else {
             imageView_groupCover.setImageResource(R.drawable.base_cover);
 
-            service.setGroupCoverDefault(groupData.getId()).enqueue(new Callback<SetGroupCoverDefaultResponse>() {
+            service.setGroupCoverDefault(groupData.getId()).enqueue(new Callback<ModifyGroupResponse>() {
                 @Override
-                public void onResponse(Call<SetGroupCoverDefaultResponse> call, Response<SetGroupCoverDefaultResponse> response) {
-                    SetGroupCoverDefaultResponse result = response.body();
+                public void onResponse(Call<ModifyGroupResponse> call, Response<ModifyGroupResponse> response) {
+                    ModifyGroupResponse result = response.body();
 
                     Toast.makeText(getContext(), result.getMessage(), Toast.LENGTH_SHORT).show();
                     if (result.getCode() == 200) {
@@ -509,7 +522,7 @@ public class YesGroup extends Fragment {
                 }
 
                 @Override
-                public void onFailure(Call<SetGroupCoverDefaultResponse> call, Throwable t) {
+                public void onFailure(Call<ModifyGroupResponse> call, Throwable t) {
                     Toast.makeText(getContext(), "그룹 커버 등록 오류 발생", Toast.LENGTH_SHORT).show();
                     t.printStackTrace();
 

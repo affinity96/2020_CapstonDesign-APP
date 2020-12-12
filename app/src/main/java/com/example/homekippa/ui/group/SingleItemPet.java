@@ -1,6 +1,9 @@
 package com.example.homekippa.ui.group;
 
-public class SingleItemPet {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class SingleItemPet{
     private int id;
     private int group_id;
     private String name;
@@ -11,6 +14,19 @@ public class SingleItemPet {
     private int gender;
     private int neutrality;
     private int petImage;
+
+    public SingleItemPet(int id, int group_id, String name, String birth, String image, String species, String reg_num, int gender, int neutrality) {
+        this.id = id;
+        this.group_id = group_id;
+        this.name = name;
+        this.birth = birth;
+        this.image = image;
+        this.species = species;
+        this.reg_num = reg_num;
+        this.gender = gender;
+        this.neutrality = neutrality;
+//        this.petImage = petImage;
+    }
 
     public int getId() {
         return id;
@@ -51,18 +67,5 @@ public class SingleItemPet {
     public SingleItemPet(String name, int ImageID) {
         this.name = name;
         this.petImage = ImageID;
-    }
-
-    public SingleItemPet(int id, int group_id, String name, String birth, String image, String species, String reg_num, int gender, int neutrality) {
-        this.id = id;
-        this.group_id = group_id;
-        this.name = name;
-        this.birth = birth;
-        this.image = image;
-        this.species = species;
-        this.reg_num = reg_num;
-        this.gender = gender;
-        this.neutrality = neutrality;
-//        this.petImage = petImage;
     }
 }
