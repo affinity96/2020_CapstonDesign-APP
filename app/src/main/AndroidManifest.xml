@@ -1,20 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.homekippa">
-
     <!-- 인터넷 퍼미션 -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
-
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
-
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-
-    <!-- 업로드 관련 퍼미션 -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" /> <!-- 업로드 관련 퍼미션 -->
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -30,19 +24,20 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true">
-
-        <activity android:name=".ui.group.GroupInviteActivity"></activity>
-
+        <activity android:name=".EditDailyWorkActivity"></activity>
+        <activity android:name=".ui.group.GroupInviteActivity" />
 
         <service
             android:name=".pushAlarm.PushAlarmService"
             android:enabled="true"
             android:exported="true"
             android:stopWithTask="false">
-            <!--            <intent-filter>-->
-            <!--                <action android:name="com.google.firebase.MESSAGING_EVENT" />-->
-            <!--                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />-->
-            <!--            </intent-filter>-->
+
+            <!-- <intent-filter> -->
+            <!-- <action android:name="com.google.firebase.MESSAGING_EVENT" /> -->
+            <!-- <action android:name="com.google.firebase.INSTANCE_ID_EVENT" /> -->
+            <!-- </intent-filter> -->
+
         </service>
 
         <activity
@@ -95,31 +90,26 @@
         <activity android:name=".ModifyPetGenderActivity" />
         <activity android:name=".ModifyPetNeuteringActivity" />
         <activity android:name=".ModifyPetBirthActivity" />
-
-        <!--    Firebase 푸시 알림-->
-
-        <!--        <meta-data-->
-        <!--            android:name="com.google.firebase.messaging.default_notification_icon"-->
-        <!--            android:resource="@drawable/simplelogo" />-->
-        <!--        <meta-data-->
-        <!--            android:name="com.google.firebase.messaging.default_notification_channel_id"-->
-        <!--            android:value="@string/default_notification_channel_id" />-->
-        <!--        -->
-        <!--        <meta-data-->
-        <!--            android:name="com.google.firebase.messaging.default_notification_color"-->
-        <!--            android:resource="@color/kippaYellow" />-->
-
+        <activity android:name=".ExitKippaActivity" />
+        <!-- Firebase 푸시 알림 -->
+        <!-- <meta-data -->
+        <!-- android:name="com.google.firebase.messaging.default_notification_icon" -->
+        <!-- android:resource="@drawable/simplelogo" /> -->
+        <!-- <meta-data -->
+        <!-- android:name="com.google.firebase.messaging.default_notification_channel_id" -->
+        <!-- android:value="@string/default_notification_channel_id" /> -->
+        <!--  -->
+        <!-- <meta-data -->
+        <!-- android:name="com.google.firebase.messaging.default_notification_color" -->
+        <!-- android:resource="@color/kippaYellow" /> -->
         <meta-data
             android:name="com.kakao.sdk.AppKey"
-            android:value="072eca373f972d14800828bcf8a8ab53" />
-
-        <!-- 사진 촬영을 위한 provide -->
+            android:value="072eca373f972d14800828bcf8a8ab53" /> <!-- 사진 촬영을 위한 provide -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.example.homekippa.provider"
             android:exported="false"
             android:grantUriPermissions="true">
-
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />

@@ -13,7 +13,11 @@ import com.example.homekippa.data.CreateDailyWorkData;
 import com.example.homekippa.data.CreateDailyWorkResponse;
 import com.example.homekippa.data.CreateGroupData;
 import com.example.homekippa.data.CreateGroupResponse;
+import com.example.homekippa.data.DeletePostResponse;
 import com.example.homekippa.data.DoneReportsResponse;
+import com.example.homekippa.data.EditDailyWorkData;
+import com.example.homekippa.data.EditDailyWorkResponse;
+import com.example.homekippa.data.ExitResponse;
 import com.example.homekippa.data.FollowData;
 import com.example.homekippa.data.FollowResponse;
 import com.example.homekippa.data.GetFollowData;
@@ -59,6 +63,9 @@ public interface ServiceApi {
     @POST("/user/add")
     Call<SignUpResponse> userSignUp(@Body SignUpData data);
 
+    @PUT("/user/delete")
+    Call<ExitResponse> userExit(@Query("userId") String userId);
+
     @POST("/group/add")
     Call<CreateGroupResponse> groupCreate(@Body CreateGroupData data);
 
@@ -102,6 +109,10 @@ public interface ServiceApi {
     @POST("/post/add")
     Call<AddPostResponse> addPost(@Body AddPostData data);
 
+    @PUT("/post/delete")
+    Call<DeletePostResponse> deletePost(@Query("postId") int postId);
+
+
     @POST("/pet/add")
     Call<AddPetResponse> addPetReg(@Body AddPetData data);
 
@@ -141,6 +152,10 @@ public interface ServiceApi {
 
     @PUT("/pet/reports/done")
     Call<DoneReportsResponse> doneDailyWork(@Query("id") int id, @Query("done_user_id") String userId, @Query("done_user_image") String userImage);
+
+    @POST("/pet/reports/update")
+    Call<EditDailyWorkResponse> editDailyWork(@Body EditDailyWorkData data);
+
 
 //    @POST("/pet/add")
 //    Call<AddPetResponse> addPetReg(@Body AddPetData data);

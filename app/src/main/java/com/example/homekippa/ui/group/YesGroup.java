@@ -8,14 +8,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +19,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.homekippa.AddPetActivity;
@@ -35,6 +34,8 @@ import com.example.homekippa.CreateDailyWorkActivity;
 import com.example.homekippa.ImageTask;
 import com.example.homekippa.MainActivity;
 import com.example.homekippa.ModifyPetActivity;
+import com.example.homekippa.EditDailyWorkActivity;
+import com.example.homekippa.ImageLoadTask;
 import com.example.homekippa.R;
 import com.example.homekippa.data.DoneReportsResponse;
 import com.example.homekippa.data.FollowData;
@@ -110,23 +111,20 @@ public class YesGroup extends Fragment {
     private CharSequence[] members;
     private MainActivity main;
 
-
     private ArrayList<SingleItemPet> petList = new ArrayList<>();
 
     public File tempFile;
     private Boolean isPermission = true;
 
-    public static YesGroup newInstance() {
-        return new YesGroup();
-    }
-
-    Bitmap groupProfileBitmap;
-    Bitmap petProfileBitmap;
 
     private String mParam1;
 
     public YesGroup() {
         // Required empty public constructor
+    }
+
+    public static YesGroup newInstance() {
+        return new YesGroup();
     }
 
     // TODO: Rename and change types and number of parameters
@@ -140,6 +138,7 @@ public class YesGroup extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         context_YesGroup = this;
         main = (MainActivity) getActivity();
@@ -157,10 +156,13 @@ public class YesGroup extends Fragment {
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
         }
+
     }
+
 
     @Override
     public void onResume() {
+
         super.onResume();
         setPetListView(listView_pets);
     }
@@ -222,6 +224,7 @@ public class YesGroup extends Fragment {
             textView_followerNum.setText(String.valueOf(followViewModel.getFollowerNum()));
             textView_followingNum.setText(String.valueOf(followViewModel.getFollowingNum()));
         }
+
 
         textView_members.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -434,6 +437,7 @@ public class YesGroup extends Fragment {
                         ListDailyWorkAdapter dailyWorkAdapter = new ListDailyWorkAdapter(dailyWorkList);
                         listView.setAdapter(dailyWorkAdapter);
                     }
+
                 }
             }
 
@@ -442,9 +446,10 @@ public class YesGroup extends Fragment {
                 Log.e("일과 확인 에러", t.getMessage());
             }
         });
+
     }
 
-    @Override
+        @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
         if (resultCode != RESULT_OK) {
@@ -462,7 +467,7 @@ public class YesGroup extends Fragment {
             return;
         } else {
             if (requestCode == 1) {
-                setImage();
+                    setImage();
             }
         }
     }
@@ -471,8 +476,6 @@ public class YesGroup extends Fragment {
         if (tempFile != null) {
             BitmapFactory.Options options = new BitmapFactory.Options();
             Bitmap originalBm = BitmapFactory.decodeFile(tempFile.getAbsolutePath(), options);
-            Log.d(TAG, "setImage : " + tempFile.getAbsolutePath());
-
             String str_groupId = String.valueOf(groupData.getId());
 
             imageView_groupCover.setImageBitmap(originalBm);
@@ -664,10 +667,25 @@ public class YesGroup extends Fragment {
                                     holder.workName.setTextColor(Color.parseColor("#FFFFFF"));
                                     holder.workTime.setTextColor(Color.parseColor("#FFFFFF"));
                                     holder.workAlarm.setTextColor(Color.parseColor("#FFFFFF"));
-                                    getUserProfileImage(holder.workPersonImage, dailyWork.getDone_user_image());
+                                    getImage(dailyWork.getDone_user_image(),holder.workPersonImage, true );
+//                                    getUserProfileImage(holder.workPersonImage, dailyWork.getDone_user_image());
                                     holder.workDone.setTextColor(Color.parseColor("#FFFFFF"));
                                 }
                             });
+                    builder.setNeutralButton("일과 수정하기",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Intent intent = new Intent(getActivity().getApplicationContext(), EditDailyWorkActivity.class);
+                                    intent.putExtra("id",dailyWork.getId());
+                                    intent.putExtra("title",dailyWork.getTitle());
+                                    intent.putExtra("desc",dailyWork.getDesc());
+                                    intent.putExtra("time",dailyWork.getTime());
+                                    intent.putExtra("alarm",dailyWork.getAlarm());
+
+                                    startActivity(intent);
+                                }
+                            });
+
                     builder.setNegativeButton("아니오",
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
@@ -730,6 +748,8 @@ public class YesGroup extends Fragment {
         public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View itemView = LayoutInflater.from(getContext()).inflate(R.layout.listitem_pet, parent, false);
             List<View> itemViewList = new ArrayList<>();
+
+
             itemViewList.add(itemView);
             MyViewHolder myViewHolder = new MyViewHolder(itemView);
 
@@ -738,7 +758,8 @@ public class YesGroup extends Fragment {
 
         @Override
         public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-            ((MainActivity) getActivity()).LoadingStart();
+
+
             if (selectedPosition == position) {
                 holder.pet.setBackgroundResource(R.drawable.round_button2);
             } else {
@@ -746,14 +767,14 @@ public class YesGroup extends Fragment {
             }
 
             setPetData(holder, position);
-            ((MainActivity) getActivity()).LoadingEnd();
+
         }
 
         private void setPetData(MyViewHolder holder, int position) {
             SingleItemPet selectedPet = pet_Items.get(position);
             holder.petName.setText(selectedPet.getName());
             petId = petList.get(position).getId();
-
+            Log.d("pet", String.valueOf(selectedPet.getName()));
             getImage(selectedPet.getImage(), (CircleImageView) holder.petImage, true);
             holder.pet.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -765,6 +786,7 @@ public class YesGroup extends Fragment {
                     Log.d("pet", String.valueOf(petId));
                 }
             });
+
         }
 
         @Override
@@ -797,8 +819,10 @@ public class YesGroup extends Fragment {
                     Log.d(TAG, "server contacted and has file");
                     InputStream is = response.body().byteStream();
                     Bitmap bitmap = BitmapFactory.decodeStream(is);
+                    if (bitmap != null) {
+                        Glide.with(getActivity()).load(bitmap).circleCrop().into(userProfile);
+                    }
 
-                    Glide.with(getActivity()).load(bitmap).circleCrop().into(userProfile);
 
                 } else {
                     Log.d(TAG, "server profile contact failed");
