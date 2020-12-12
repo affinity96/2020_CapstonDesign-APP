@@ -57,14 +57,21 @@
             android:name=".AddPostActivity"
             android:windowSoftInputMode="adjustResize" />
         <activity android:name=".ui.group.CreateGroupActivity" />
+        <activity android:name=".ui.group.ModifyGroupActivity" />
+        <activity android:name=".ui.group.ModifyGroupNameActivity" />
+        <activity android:name=".ui.group.ModifyGroupIntroActivity" />
+        <activity android:name=".ui.group.ModifyGroupAddressActivity" />
         <activity
-            android:name=".ui.group.PopupSeleteGroupImage"
+            android:name=".ui.group.PopupSelectGroupImageModify"
             android:theme="@android:style/Theme.Dialog" />
         <activity
-            android:name=".ui.group.PopupSeleteCover"
+            android:name=".ui.group.PopupSelectGroupImage"
             android:theme="@android:style/Theme.Dialog" />
         <activity
-            android:name=".PopupSeletePetImage"
+            android:name=".ui.group.PopupSelectCover"
+            android:theme="@android:style/Theme.Dialog" />
+        <activity
+            android:name=".PopupSelectPetImage"
             android:theme="@android:style/Theme.Dialog" />
         <activity android:name=".VerifyActivity" />
         <activity android:name=".SignUpActivity" />
@@ -77,7 +84,14 @@
         <activity android:name=".MapActivity" />
         <activity android:name=".AddPetDesActivity" />
         <activity android:name=".SettingActivity" />
-        <activity android:name=".ExitKippaActivity" /> <!-- Firebase 푸시 알림 -->
+        <activity android:name=".ModifyPetActivity" />
+        <activity android:name=".ModifyPetNameActivity" />
+        <activity android:name=".ModifyPetSpeciesActivity" />
+        <activity android:name=".ModifyPetGenderActivity" />
+        <activity android:name=".ModifyPetNeuteringActivity" />
+        <activity android:name=".ModifyPetBirthActivity" />
+        <activity android:name=".ExitKippaActivity" />
+        <!-- Firebase 푸시 알림 -->
         <!-- <meta-data -->
         <!-- android:name="com.google.firebase.messaging.default_notification_icon" -->
         <!-- android:resource="@drawable/simplelogo" /> -->

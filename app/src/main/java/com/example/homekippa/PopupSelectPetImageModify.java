@@ -1,4 +1,4 @@
-package com.example.homekippa.ui.group;
+package com.example.homekippa;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -16,15 +16,13 @@ import android.widget.Toast;
 
 import androidx.core.content.FileProvider;
 
-import com.example.homekippa.R;
-
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class PopupSeleteCover extends Activity {
-    private static final String TAG = "PopupSeleteCover";
+public class PopupSelectPetImageModify extends Activity {
+    private static final String TAG = "PopupSeletePetImage";
     private Button button_image_default;
     private Button button_image_album;
     private Button button_image_camera;
@@ -47,7 +45,7 @@ public class PopupSeleteCover extends Activity {
         button_image_default.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((YesGroup)YesGroup.context_YesGroup).tempFile = null;
+                ((ModifyPetActivity)ModifyPetActivity.context_ModifyPetActivity).tempFile = null;
                 setResult(RESULT_OK, intent);
                 finish();
             }
@@ -95,22 +93,22 @@ public class PopupSeleteCover extends Activity {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
         try {
-            ((YesGroup)YesGroup.context_YesGroup).tempFile = createImageFile();
+            ((ModifyPetActivity)ModifyPetActivity.context_ModifyPetActivity).tempFile = createImageFile();
         } catch (IOException e) {
             Toast.makeText(this, "이미지 처리 오류! 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
             finish();
             e.printStackTrace();
         }
-        if (((YesGroup)YesGroup.context_YesGroup).tempFile != null) {
+        if (((ModifyPetActivity)ModifyPetActivity.context_ModifyPetActivity).tempFile != null) {
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
 
                 Uri photoUri = FileProvider.getUriForFile(this,
-                        "com.example.homekippa.provider", ((YesGroup)YesGroup.context_YesGroup).tempFile);
+                        "com.example.homekippa.provider", ((ModifyPetActivity)ModifyPetActivity.context_ModifyPetActivity).tempFile);
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
                 startActivityForResult(intent, PICK_FROM_CAMERA);
 
             } else {
-                Uri photoUri = Uri.fromFile(((YesGroup)YesGroup.context_YesGroup).tempFile);
+                Uri photoUri = Uri.fromFile(((ModifyPetActivity)ModifyPetActivity.context_ModifyPetActivity).tempFile);
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
                 startActivityForResult(intent, PICK_FROM_CAMERA);
             }
@@ -139,11 +137,11 @@ public class PopupSeleteCover extends Activity {
         if (resultCode != RESULT_OK) {
             Toast.makeText(this, "취소 되었습니다.", Toast.LENGTH_SHORT).show();
 
-            if (((YesGroup)YesGroup.context_YesGroup).tempFile != null) {
-                if (((YesGroup)YesGroup.context_YesGroup).tempFile.exists()) {
-                    if (((YesGroup)YesGroup.context_YesGroup).tempFile.delete()) {
-                        Log.e(TAG, ((YesGroup)YesGroup.context_YesGroup).tempFile.getAbsolutePath() + " 삭제 성공");
-                        ((YesGroup)YesGroup.context_YesGroup).tempFile = null;
+            if (((ModifyPetActivity)ModifyPetActivity.context_ModifyPetActivity).tempFile != null) {
+                if (((ModifyPetActivity)ModifyPetActivity.context_ModifyPetActivity).tempFile.exists()) {
+                    if (((ModifyPetActivity)ModifyPetActivity.context_ModifyPetActivity).tempFile.delete()) {
+                        Log.e(TAG, ((ModifyPetActivity)ModifyPetActivity.context_ModifyPetActivity).tempFile.getAbsolutePath() + " 삭제 성공");
+                        ((ModifyPetActivity)ModifyPetActivity.context_ModifyPetActivity).tempFile = null;
                     }
                 }
             }
@@ -169,9 +167,9 @@ public class PopupSeleteCover extends Activity {
 
                     cursor.moveToFirst();
 
-                    ((YesGroup)YesGroup.context_YesGroup).tempFile = new File(cursor.getString(column_index));
+                    ((ModifyPetActivity)ModifyPetActivity.context_ModifyPetActivity).tempFile = new File(cursor.getString(column_index));
 
-                    Log.d(TAG, "tempFile Uri : " + Uri.fromFile(((YesGroup)YesGroup.context_YesGroup).tempFile));
+                    Log.d(TAG, "tempFile Uri : " + Uri.fromFile(((ModifyPetActivity)ModifyPetActivity.context_ModifyPetActivity).tempFile));
 
                 } finally {
                     if (cursor != null) {

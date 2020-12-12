@@ -57,6 +57,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import okhttp3.ResponseBody;
@@ -100,6 +101,7 @@ public class WalkFragment extends Fragment{
     private CheckBox checkbox_followScope;
     private CheckBox checkbox_closedScope;
     private Intent intent;
+    private String userGender;
 
     private DatabaseReference mDatabase;
 
@@ -178,6 +180,17 @@ public class WalkFragment extends Fragment{
                 }
             }
         });
+        if(userData.getUserGender() == 1){
+            userGender = "남성";
+        }else{
+            userGender = "여성";
+        }
+
+        int yearIndex = userData.getUserBirth().indexOf("-");
+        String birth = userData.getUserBirth().substring(0,yearIndex);
+        Calendar cal = Calendar.getInstance();
+        int nowYear = cal.get(Calendar.YEAR);
+        int userAge = (nowYear - Integer.parseInt(birth))+ 1;
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         mDatabase = database.getReference("walk");
@@ -186,6 +199,9 @@ public class WalkFragment extends Fragment{
         mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("groupTag").setValue(groupData.getName()+groupData.getTag());
         mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("userName").setValue(userData.getUserName());
         mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("userImage").setValue(userData.getUserImage());
+        mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("userGender").setValue(userGender);
+        mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("userAge").setValue(userAge);
+
 
         checkbox_wholeScope.setOnClickListener(new View.OnClickListener() {
             @Override
