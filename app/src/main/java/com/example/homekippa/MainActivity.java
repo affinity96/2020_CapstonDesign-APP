@@ -312,11 +312,12 @@ public class MainActivity extends AppCompatActivity {
 
     private ArrayList<SingleItemPet> array_pets;
     private ListView listView_pets;
-    private UserData userData;
+    private static UserData userData;
     private GroupData groupData;
     private ServiceApi service;
     private ConstraintLayout main_naviheader;
 
+    private static TextView userName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -329,6 +330,7 @@ public class MainActivity extends AppCompatActivity {
 //
         Intent intent = getIntent();
         userData = (UserData) intent.getExtras().get("user");
+        Log.d("main create", userData.getUserName());
 //
         Toast.makeText(getApplicationContext(), userData.getUserName() + "님 로그인", Toast.LENGTH_LONG).show();
         groupData = (GroupData) intent.getExtras().get("group");
@@ -339,9 +341,13 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(tb);
         //좌측메뉴 버튼
         menuButton = findViewById(R.id.top_btn_menu);
+
         leftDrawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.top_nav_view);
         navView = findViewById(R.id.nav_view);
+
+        userName = (TextView) findViewById(R.id.nav_user_name);
+//        userName.setText(userData.getUserName());
 
 
         menuButton.setOnClickListener(new View.OnClickListener() {
@@ -349,6 +355,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //좌측메뉴 열기
                 setNavGroupData();
+                Log.d("main click nav", userData.getUserName());
                 leftDrawerLayout.openDrawer(navigationView);
             }
         });
@@ -431,18 +438,21 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+    @Override
+    public void onStart(){
+        super.onStart();
+    }
 
 
     public void setNavGroupData() {
-        TextView username = (TextView) findViewById(R.id.nav_user_name);
+        userName = (TextView) findViewById(R.id.nav_user_name);
         ImageView userProfile = (ImageView) findViewById(R.id.nav_user_image);
         getUserProfileImage(userProfile);
         TextView usergroup = (TextView) findViewById(R.id.nav_user_group);
-
-        username.setText(userData.getUserName() + "님");
+        Log.d("main create222222", userData.getUserName());
+        userName.setText(userData.getUserName() + "님");
         if (userData.getGroupId() != 0) {
             usergroup.setText(groupData.getName());
-
         }
     }
 
@@ -450,11 +460,12 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, fragment).commitAllowingStateLoss();
     }
 
-    public UserData getUserData() {
-        return this.userData;
+    public static UserData getUserData() {
+        return userData;
     }
 
     public void setUserData(UserData userData) {
+
         this.userData = userData;
     }
 

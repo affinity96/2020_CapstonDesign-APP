@@ -72,18 +72,7 @@
             android:inputType="phone" />
 
 
-        <TextView
-            android:id="@+id/text_Birth"
-            android:layout_width="370dp"
-            android:layout_height="37.3dp"
-            android:layout_gravity="center"
-            android:layout_margin="5dp"
-            android:background="@drawable/shape"
-            android:ems="10"
-            android:gravity="center_vertical"
-            android:hint="생년월일"
-            android:paddingLeft="20dp"
-            android:textSize="6pt" />
+
 
         <Button
             android:id="@+id/button_gotoEditUser"

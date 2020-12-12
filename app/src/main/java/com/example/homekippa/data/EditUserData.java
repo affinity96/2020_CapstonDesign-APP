@@ -13,14 +13,13 @@ public class EditUserData {
     private String phone;
 
 
-    @SerializedName("birth")
-    private String birth;
 
-    public  EditUserData(String id, String name, String phone, String birth){
+
+    public  EditUserData(String id, String name, String phone){
         this.id = id;
         this.name = name;
         this.phone = phone;
-        this.birth = birth;
+
     }
 
 }
