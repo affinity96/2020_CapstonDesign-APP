@@ -9,7 +9,7 @@
     android:padding="30dp"
     android:background="@color/kippaYellow">
 
-    <de.hdodenhof.circleimageview.CircleImageView
+    <ImageView
         android:id="@+id/nav_user_image"
         android:layout_width="100dp"
         android:layout_height="100dp"

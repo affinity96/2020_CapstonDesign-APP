@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".EditUserActivity">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="411dp"
+        android:layout_height="wrap_content"
+        android:background="@color/kippaBlue"
+        tools:ignore="MissingConstraints">
+        <TextView
+            android:id="@+id/toolbar_editUser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="회원 정보 수정 하기"
+            android:textColor="#ffffff"
+            android:textSize="20dp" />
+    </androidx.appcompat.widget.Toolbar>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center_vertical">
+
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editText_email"
+            android:layout_width="370dp"
+            android:layout_height="37.3dp"
+            android:ems="10"
+            android:layout_gravity="center"
+            android:hint="이메일"
+            android:paddingLeft="20dp"
+            android:textSize="6pt"
+            android:background="@drawable/shape"
+            android:layout_margin="5dp"
+            android:inputType="textEmailAddress"
+            android:focusable="false"
+            />
+
+
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editText_Name"
+            android:layout_width="370dp"
+            android:layout_height="37.3dp"
+            android:ems="10"
+            android:hint="닉네임"
+            android:paddingLeft="20dp"
+            android:textSize="6pt"
+            android:background="@drawable/shape"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            android:inputType="text"/>
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editText_Phone"
+            android:layout_width="370dp"
+            android:layout_height="37.3dp"
+            android:layout_margin="5dp"
+            android:ems="10"
+            android:hint="전화번호"
+            android:paddingLeft="20dp"
+            android:textSize="6pt"
+            android:background="@drawable/shape"
+            android:layout_gravity="center"
+            android:inputType="phone" />
+
+
+        <TextView
+            android:id="@+id/text_Birth"
+            android:layout_width="370dp"
+            android:layout_height="37.3dp"
+            android:ems="10"
+            android:textSize="6pt"
+            android:background="@drawable/shape"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="20dp"
+            android:hint="생년월일" />
+
+
+
+        <Button
+            android:id="@+id/button_SignUp"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="80dp"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:background="@drawable/round_button2"
+            android:text="수정 완료" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -13,11 +13,11 @@
 
         android:padding="10dp">
 
-        <de.hdodenhof.circleimageview.CircleImageView
+        <ImageView
             android:id="@+id/imageView_DetailPostGroupProfile"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:src="@drawable/border" />
+            android:background="@android:color/transparent" />
 
         <LinearLayout
             android:layout_width="wrap_content"

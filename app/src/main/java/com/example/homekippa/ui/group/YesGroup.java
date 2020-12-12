@@ -95,7 +95,7 @@ public class YesGroup extends Fragment {
     private Button button_modify_pet;
     private RecyclerView listView_pets;
     private RecyclerView listView_dailyWorks;
-    private CircleImageView imageView_groupProfile;
+    private ImageView imageView_groupProfile;
     private ImageView imageView_groupCover;
     private Button button_addPet;
     private Button button_addUser;
@@ -473,7 +473,7 @@ public class YesGroup extends Fragment {
             return;
         } else {
             if (requestCode == 1) {
-                    setImage();
+                setImage();
             }
         }
     }
@@ -577,16 +577,14 @@ public class YesGroup extends Fragment {
 
                         setDailyWorkListView(listView_dailyWorks, pets.get(selectedPosition).getId());
 
+                        ListPetAdapter petAdapter = new ListPetAdapter(petList);
+                        LinearLayoutManager pLayoutManager = new LinearLayoutManager(getActivity());
+                        pLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+                        listView.setLayoutManager(pLayoutManager);
+                        listView.setItemAnimator(new DefaultItemAnimator());
+                        listView.setAdapter(petAdapter);
+
                     }
-
-                    ListPetAdapter petAdapter = new ListPetAdapter(petList);
-
-                    LinearLayoutManager pLayoutManager = new LinearLayoutManager(getActivity());
-                    pLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-                    listView.setLayoutManager(pLayoutManager);
-                    listView.setItemAnimator(new DefaultItemAnimator());
-                    listView.setAdapter(petAdapter);
-
                 }
             }
 
@@ -673,7 +671,7 @@ public class YesGroup extends Fragment {
                                     holder.workName.setTextColor(Color.parseColor("#FFFFFF"));
                                     holder.workTime.setTextColor(Color.parseColor("#FFFFFF"));
                                     holder.workAlarm.setTextColor(Color.parseColor("#FFFFFF"));
-                                    getImage(dailyWork.getDone_user_image(),holder.workPersonImage, true );
+                                    getImage(dailyWork.getDone_user_image(), holder.workPersonImage, true);
 //                                    getUserProfileImage(holder.workPersonImage, dailyWork.getDone_user_image());
                                     holder.workDone.setTextColor(Color.parseColor("#FFFFFF"));
                                 }
@@ -682,11 +680,11 @@ public class YesGroup extends Fragment {
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     Intent intent = new Intent(getActivity().getApplicationContext(), EditDailyWorkActivity.class);
-                                    intent.putExtra("id",dailyWork.getId());
-                                    intent.putExtra("title",dailyWork.getTitle());
-                                    intent.putExtra("desc",dailyWork.getDesc());
-                                    intent.putExtra("time",dailyWork.getTime());
-                                    intent.putExtra("alarm",dailyWork.getAlarm());
+                                    intent.putExtra("id", dailyWork.getId());
+                                    intent.putExtra("title", dailyWork.getTitle());
+                                    intent.putExtra("desc", dailyWork.getDesc());
+                                    intent.putExtra("time", dailyWork.getTime());
+                                    intent.putExtra("alarm", dailyWork.getAlarm());
 
                                     startActivity(intent);
                                 }
@@ -752,12 +750,13 @@ public class YesGroup extends Fragment {
         @NonNull
         @Override
         public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View itemView = LayoutInflater.from(getContext()).inflate(R.layout.listitem_pet, parent, false);
-            List<View> itemViewList = new ArrayList<>();
+
+            View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.listitem_pet, parent, false);
+//            List<View> itemViewList = new ArrayList<>();
 
 
-            itemViewList.add(itemView);
-            MyViewHolder myViewHolder = new MyViewHolder(itemView);
+//            itemViewList.add(itemView);
+//            MyViewHolder myViewHolder = new MyViewHolder(itemView);
 
             return new MyViewHolder(itemView);
         }
@@ -781,7 +780,7 @@ public class YesGroup extends Fragment {
             holder.petName.setText(selectedPet.getName());
             petId = petList.get(position).getId();
             Log.d("pet", String.valueOf(selectedPet.getName()));
-            getImage(selectedPet.getImage(), (CircleImageView) holder.petImage, true);
+            getImage(selectedPet.getImage(), (ImageView) holder.petImage, true);
             holder.pet.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -825,11 +824,9 @@ public class YesGroup extends Fragment {
                     Log.d(TAG, "server contacted and has file");
                     InputStream is = response.body().byteStream();
                     Bitmap bitmap = BitmapFactory.decodeStream(is);
-                    if (bitmap != null) {
+                    if (bitmap != null && getActivity() != null) {
                         Glide.with(getActivity()).load(bitmap).circleCrop().into(userProfile);
                     }
-
-
                 } else {
                     Log.d(TAG, "server profile contact failed");
                 }

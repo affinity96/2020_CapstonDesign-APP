@@ -43,11 +43,9 @@ public class FollowViewModel extends ViewModel {
     }
 
     public Integer getFollowerNum() {
-        if(follower.getValue().size()!=0){
+
             return follower.getValue().size();
-        }else {
-            return 0;
-        }
+
 
     }
 

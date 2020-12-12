@@ -87,8 +87,6 @@ public class AddPostActivity extends AppCompatActivity {
         checkBox_wholeScope = this.findViewById(R.id.checkBox_wholeScope);
         textView_postScope = this.findViewById(R.id.textView_postScope);
 
-
-
         Intent intent = getIntent();
 
         UserData userData = (UserData) intent.getExtras().get("userData");
@@ -118,7 +116,7 @@ public class AddPostActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(checkBox_wholeScope.isChecked() == false && checkBox_followScope.isChecked() == false && checkBox_closedScope.isChecked() == false){
-                    textView_postScope.setError("공개범위 선택해주세요");
+                    textView_postScope.setError("공개범위를 선택해주세요");
                 }else{
                     addPost(groupData.getId(), userData.getUserId(), postContent.toString(), editText_postTitle.getText().toString(), groupData.getArea(), scope);
                 }
@@ -226,7 +224,6 @@ public class AddPostActivity extends AppCompatActivity {
         if (tempFile != null) {
             String str_groupId = String.valueOf(groupId);
             String str_area = String.valueOf(area);
-
             HashMap<String, RequestBody> data = new HashMap<String, RequestBody>();
 
             RequestBody group_Id = RequestBody.create(MediaType.parse("text/plain"), str_groupId);
@@ -239,7 +236,7 @@ public class AddPostActivity extends AppCompatActivity {
             data.put("content", Content);
             RequestBody area_ = RequestBody.create(MediaType.parse("text/plain"), str_area);
             data.put("area", area_);
-            RequestBody scope_ = RequestBody.create(MediaType.parse("text/plain"), str_area);
+            RequestBody scope_ = RequestBody.create(MediaType.parse("text/plain"), scope);
             data.put("scope", scope_);
             RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), tempFile);
             MultipartBody.Part uploadFile = MultipartBody.Part.createFormData("upload", tempFile.getName(), reqFile);
