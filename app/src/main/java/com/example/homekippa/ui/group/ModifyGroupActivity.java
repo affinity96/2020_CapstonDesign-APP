@@ -211,7 +211,6 @@ public class ModifyGroupActivity extends AppCompatActivity {
                             }
                         });
 
-
                     } else {
 
                     }
