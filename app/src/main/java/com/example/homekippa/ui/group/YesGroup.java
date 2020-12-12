@@ -32,6 +32,7 @@ import com.example.homekippa.AddPetActivity;
 import com.example.homekippa.Cache;
 import com.example.homekippa.CreateDailyWorkActivity;
 import com.example.homekippa.ImageTask;
+import com.example.homekippa.LoginActivity;
 import com.example.homekippa.MainActivity;
 import com.example.homekippa.ModifyPetActivity;
 import com.example.homekippa.EditDailyWorkActivity;
@@ -40,6 +41,7 @@ import com.example.homekippa.R;
 import com.example.homekippa.data.DoneReportsResponse;
 import com.example.homekippa.data.FollowData;
 import com.example.homekippa.data.FollowResponse;
+import com.example.homekippa.data.GetFollowData;
 import com.example.homekippa.data.GroupData;
 import com.example.homekippa.data.GroupInviteData;
 import com.example.homekippa.data.ModifyGroupResponse;
@@ -143,6 +145,7 @@ public class YesGroup extends Fragment {
         context_YesGroup = this;
         main = (MainActivity) getActivity();
 
+        Log.d("yes", "oncreage");
         cache = new Cache(getContext());
         service = RetrofitClient.getClient().create(ServiceApi.class);
 
@@ -156,7 +159,6 @@ public class YesGroup extends Fragment {
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
         }
-
     }
 
 
@@ -164,17 +166,37 @@ public class YesGroup extends Fragment {
     public void onResume() {
 
         super.onResume();
+        Log.d("yes", "onresume");
+//        if (myGroup) {
+//            groupData = ((MainActivity) getActivity()).getGroupData();
+//        }
+//        getImage(groupData.getImage(), imageView_groupProfile, true);
+//        getImage(groupData.getCover(), imageView_groupCover, false);
         setPetListView(listView_pets);
 
-        getImage(groupData.getImage(), imageView_groupProfile, true);
-        getImage(groupData.getCover(), imageView_groupCover, false);
     }
 
     @Override
     public void onStart() {
 
         super.onStart();
+        Log.d("yes", "onstart");
+        if (myGroup) {
+            groupData = ((MainActivity) getActivity()).getGroupData();
+            Log.d("yes profile_createview", groupData.getImage());
+        }
 
+        getImage(groupData.getImage(), imageView_groupProfile, true);
+        getImage(groupData.getCover(), imageView_groupCover, false);
+        setPetListView(listView_pets);
+
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+
+        root = (ViewGroup) inflater.inflate(R.layout.fragment_yes_group, container, false);
         tv_groupName = root.findViewById(R.id.textView_groupName);
         tv_groupIntro = root.findViewById(R.id.textView_groupIntro);
         button_Add_DW = root.findViewById(R.id.button_Add_DW);
@@ -198,10 +220,14 @@ public class YesGroup extends Fragment {
 
         tv_groupName.setText(groupData.getName());
         tv_groupIntro.setText(groupData.getIntroduction());
-
-        getImage(groupData.getImage(), imageView_groupProfile, true);
-        getImage(groupData.getCover(), imageView_groupCover, false);
-        setPetListView(listView_pets);
+//        if (myGroup) {
+//            groupData = ((MainActivity) getActivity()).getGroupData();
+//            Log.d("yes profile_createview", groupData.getImage());
+//        }
+//
+//        getImage(groupData.getImage(), imageView_groupProfile, true);
+//        getImage(groupData.getCover(), imageView_groupCover, false);
+//        setPetListView(listView_pets);
 
         if (!myGroup) {
             button_join_group.setVisibility(View.VISIBLE);
@@ -410,13 +436,7 @@ public class YesGroup extends Fragment {
             }
         });
 
-    }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
-        root = (ViewGroup) inflater.inflate(R.layout.fragment_yes_group, container, false);
         return root;
     }
 
@@ -458,7 +478,7 @@ public class YesGroup extends Fragment {
 
     }
 
-        @Override
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
         if (resultCode != RESULT_OK) {
@@ -487,7 +507,6 @@ public class YesGroup extends Fragment {
             Bitmap originalBm = BitmapFactory.decodeFile(tempFile.getAbsolutePath(), options);
             String str_groupId = String.valueOf(groupData.getId());
 
-            imageView_groupCover.setImageBitmap(originalBm);
 
             RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), tempFile);
             MultipartBody.Part uploadFile = MultipartBody.Part.createFormData("upload", tempFile.getName(), reqFile);
@@ -501,7 +520,21 @@ public class YesGroup extends Fragment {
 
                     Toast.makeText(getContext(), result.getMessage(), Toast.LENGTH_SHORT).show();
                     if (result.getCode() == 200) {
+                        service.getGroupData(MainActivity.getGroupData().getId()).enqueue(new Callback<GroupData>() {
+                            @Override
+                            public void onResponse(Call<GroupData> call, Response<GroupData> response) {
+                                GroupData group = response.body();
+                                main.setGroupData(group);
+                                Log.d("yes modify", group.getImage());
+                                imageView_groupCover.setImageBitmap(originalBm);
+                                cache.saveBitmapToJpeg(originalBm, group.getCover());
+                            }
 
+                            @Override
+                            public void onFailure(Call<GroupData> call, Throwable t) {
+
+                            }
+                        });
                     } else {
 
                     }
@@ -511,12 +544,9 @@ public class YesGroup extends Fragment {
                 public void onFailure(Call<ModifyGroupResponse> call, Throwable t) {
                     Toast.makeText(getContext(), "그룹 커버 등록 오류 발생", Toast.LENGTH_SHORT).show();
                     t.printStackTrace();
-
                 }
             });
         } else {
-            imageView_groupCover.setImageResource(R.drawable.base_cover);
-
             service.setGroupCoverDefault(groupData.getId()).enqueue(new Callback<ModifyGroupResponse>() {
                 @Override
                 public void onResponse(Call<ModifyGroupResponse> call, Response<ModifyGroupResponse> response) {
@@ -524,7 +554,20 @@ public class YesGroup extends Fragment {
 
                     Toast.makeText(getContext(), result.getMessage(), Toast.LENGTH_SHORT).show();
                     if (result.getCode() == 200) {
+                        service.getGroupData(MainActivity.getGroupData().getId()).enqueue(new Callback<GroupData>() {
+                            @Override
+                            public void onResponse(Call<GroupData> call, Response<GroupData> response) {
+                                GroupData group = response.body();
+                                main.setGroupData(group);
+                                Log.d("yes modify", group.getImage());
+                                imageView_groupCover.setImageResource(R.drawable.base_cover);
+                            }
 
+                            @Override
+                            public void onFailure(Call<GroupData> call, Throwable t) {
+
+                            }
+                        });
                     } else {
 
                     }

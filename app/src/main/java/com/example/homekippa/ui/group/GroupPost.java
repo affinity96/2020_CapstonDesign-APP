@@ -72,6 +72,7 @@ public class GroupPost extends Fragment {
     private TextView textView_address;
     private ImageView imageView_PostProfile;
 
+    private MainActivity main;
     private GroupViewModel groupViewModel;
 
     public GroupPost() {
