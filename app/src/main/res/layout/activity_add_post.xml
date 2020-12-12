@@ -128,74 +128,64 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/linearLayou_postScope"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/linearLayout_title"
-            android:orientation="horizontal"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/dialog_group_pet"
-            android:layout_gravity="center">
+<!--        <LinearLayout-->
+<!--            android:id="@+id/linearLayou_postScope"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_below="@id/linearLayout_title"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:layout_marginBottom="10dp"-->
+<!--            android:background="@drawable/dialog_group_pet"-->
+<!--            android:layout_gravity="center">-->
 
-            <TextView
-                android:id="@+id/textView_postScope"
-                android:layout_weight="1"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="공개범위"
-                android:textSize="18sp"
-                android:layout_gravity="center"
-                android:gravity="center"
-                style="@style/BlackText"
-                />
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="3"
-                android:orientation="vertical"
-                android:layout_marginLeft="40dp"
-                android:gravity="center">
 
-                <CheckBox
-                    android:id="@+id/checkBox_wholeScope"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:textSize="15sp"
-                    android:text="전체  공개"
-                    style="@style/GrayText"
-                    android:onClick="onCheckboxClicked_scope"
-                    android:layout_gravity="start"
-                    android:gravity="center"
-                    />
-                <CheckBox
-                    android:id="@+id/checkBox_followScope"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:textSize="15sp"
-                    android:text="팔로우 공개"
-                    style="@style/GrayText"
-                    android:onClick="onCheckboxClicked_scope"
-                    android:layout_gravity="start"
-                    android:gravity="center"
-                    />
-                <CheckBox
-                    android:id="@+id/checkBox_closedScope"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:textSize="15sp"
-                    android:text="비공개"
-                    style="@style/GrayText"
-                    android:onClick="onCheckboxClicked_scope"
-                    android:layout_gravity="start"
-                    android:gravity="center"
-                    />
-            </LinearLayout>
-        </LinearLayout>
+<!--            <LinearLayout-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:layout_weight="3"-->
+<!--                android:orientation="vertical"-->
+<!--                android:layout_marginLeft="40dp"-->
+<!--                android:gravity="center">-->
+
+<!--                <CheckBox-->
+<!--                    android:id="@+id/checkBox_wholeScope"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:textSize="15sp"-->
+<!--                    android:text="전체  공개"-->
+<!--                    style="@style/GrayText"-->
+<!--                    android:onClick="onCheckboxClicked_scope"-->
+<!--                    android:layout_gravity="start"-->
+<!--                    android:gravity="center"-->
+<!--                    />-->
+<!--                <CheckBox-->
+<!--                    android:id="@+id/checkBox_followScope"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:textSize="15sp"-->
+<!--                    android:text="팔로우 공개"-->
+<!--                    style="@style/GrayText"-->
+<!--                    android:onClick="onCheckboxClicked_scope"-->
+<!--                    android:layout_gravity="start"-->
+<!--                    android:gravity="center"-->
+<!--                    />-->
+<!--                <CheckBox-->
+<!--                    android:id="@+id/checkBox_closedScope"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:textSize="15sp"-->
+<!--                    android:text="비공개"-->
+<!--                    style="@style/GrayText"-->
+<!--                    android:onClick="onCheckboxClicked_scope"-->
+<!--                    android:layout_gravity="start"-->
+<!--                    android:gravity="center"-->
+<!--                    />-->
+<!--            </LinearLayout>-->
+<!--        </LinearLayout>-->
 
         <LinearLayout
             android:id="@+id/bottom_image"
@@ -220,6 +210,30 @@
                     android:layout_margin="10dp"
                     android:background="@android:color/transparent"
                     app:srcCompat="@drawable/ic_photo_24px" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:layout_gravity="center"
+                android:orientation="horizontal"
+                android:gravity="right">
+                <TextView
+                    android:id="@+id/textView_postScope"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="공개범위"
+                    android:textSize="18sp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    style="@style/BlackText"
+                    />
+
+
+
 
             </LinearLayout>
         </LinearLayout>
