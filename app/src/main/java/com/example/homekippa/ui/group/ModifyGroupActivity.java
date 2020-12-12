@@ -15,6 +15,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.example.homekippa.Cache;
+import com.example.homekippa.MainActivity;
 import com.example.homekippa.R;
 import com.example.homekippa.data.GroupData;
 import com.example.homekippa.data.ModifyGroupResponse;
@@ -41,6 +43,7 @@ public class ModifyGroupActivity extends AppCompatActivity {
     public static Context context_ModifyGroupActivity;
     private static final String TAG = " ModifyGroup";
 
+    private Cache cache;
     private GroupData groupData;
     private CircleImageView imageView_modify_profile_Image;
     private ImageButton image_modify_button_camera;
@@ -54,10 +57,17 @@ public class ModifyGroupActivity extends AppCompatActivity {
     private Boolean isPermission = true;
     private ServiceApi service;
 
+    private MainActivity main;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modify_group);
+
+        main = new MainActivity();
+        service = RetrofitClient.getClient().create(ServiceApi.class);
+
+        cache = new Cache(getApplicationContext());
         context_ModifyGroupActivity = this;
         imageView_modify_profile_Image = findViewById(R.id.imageView_modify_profile_Image);
         image_modify_button_camera = findViewById(R.id.image_modify_button_camera);
@@ -67,14 +77,17 @@ public class ModifyGroupActivity extends AppCompatActivity {
         textView_groupName = findViewById(R.id.textView_groupName);
         textView_groupIntro = findViewById(R.id.textView_groupIntro);
         textView_groupAddress = findViewById(R.id.textView_groupAddress);
-        groupData = (GroupData)getIntent().getExtras().get("groupData");
-        service = RetrofitClient.getClient().create(ServiceApi.class);
+
+        groupData = MainActivity.getGroupData();
+        Log.d("yes modify onstart", groupData.getImage());
+        getGroupProfileImage(groupData.getImage(), imageView_modify_profile_Image);
+
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        getGroupProfileImage(groupData.getImage(), imageView_modify_profile_Image);
+
         textView_groupName.setText(groupData.getName());
         textView_groupIntro.setText(groupData.getIntroduction());
         textView_groupAddress.setText(groupData.getAddress());
@@ -142,9 +155,9 @@ public class ModifyGroupActivity extends AppCompatActivity {
                     Log.d(TAG, "server contacted and has file");
                     InputStream is = response.body().byteStream();
                     Bitmap bitmap = BitmapFactory.decodeStream(is);
-
-                    Glide.with(ModifyGroupActivity.this).load(bitmap).circleCrop().into(imageView);
-
+                    if (bitmap != null) {
+                        Glide.with(ModifyGroupActivity.this).load(bitmap).circleCrop().into(imageView);
+                    }
                 } else {
                     Log.d(TAG, "server contact failed");
                 }
@@ -181,6 +194,23 @@ public class ModifyGroupActivity extends AppCompatActivity {
 
                     Toast.makeText(ModifyGroupActivity.this, result.getMessage(), Toast.LENGTH_SHORT).show();
                     if (result.getCode() == 200) {
+                        Log.d("yes modify", "?");
+                        service.getGroupData(MainActivity.getGroupData().getId()).enqueue(new Callback<GroupData>() {
+                            @Override
+                            public void onResponse(Call<GroupData> call, Response<GroupData> response) {
+                                GroupData group = response.body();
+                                main.setGroupData(group);
+                                Log.d("yes modify", group.getImage());
+                                cache.saveBitmapToJpeg(originalBm, group.getImage());
+                                imageView_modify_profile_Image.setImageBitmap(originalBm);
+                            }
+
+                            @Override
+                            public void onFailure(Call<GroupData> call, Throwable t) {
+
+                            }
+                        });
+
 
                     } else {
 
@@ -195,7 +225,6 @@ public class ModifyGroupActivity extends AppCompatActivity {
                 }
             });
         } else {
-            imageView_modify_profile_Image.setImageResource(R.drawable.group_profile_default);
 
             service.setGroupProfileImageDefault(groupData.getId()).enqueue(new Callback<ModifyGroupResponse>() {
                 @Override
@@ -204,7 +233,22 @@ public class ModifyGroupActivity extends AppCompatActivity {
 
                     Toast.makeText(ModifyGroupActivity.this, result.getMessage(), Toast.LENGTH_SHORT).show();
                     if (result.getCode() == 200) {
+                        service.getGroupData(MainActivity.getGroupData().getId()).enqueue(new Callback<GroupData>() {
+                            @Override
+                            public void onResponse(Call<GroupData> call, Response<GroupData> response) {
+                                GroupData group = response.body();
+                                main.setGroupData(group);
+                                Log.d("yes modify", group.getImage());
 
+                                imageView_modify_profile_Image.setImageResource(R.drawable.group_profile_default);
+
+                            }
+
+                            @Override
+                            public void onFailure(Call<GroupData> call, Throwable t) {
+
+                            }
+                        });
                     } else {
 
                     }
@@ -225,11 +269,11 @@ public class ModifyGroupActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
         if (resultCode != RESULT_OK) {
-
             return;
         } else {
             if (requestCode == 1) {
-                    setImage();
+
+                setImage();
             }
         }
     }
