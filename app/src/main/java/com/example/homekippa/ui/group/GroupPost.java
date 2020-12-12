@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -90,12 +91,7 @@ public class GroupPost extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        main = (MainActivity) getActivity();
-        main.LoadingStart();
-        Log.d("group", "loading start");
-        setPostListView(listView_posts);
-        main.LoadingEnd();
-        Log.d("group", "loading end");
+//        setPostListView(listView_posts);
     }
 
     @Override
@@ -156,7 +152,7 @@ public class GroupPost extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         setGroupView();
-//        setPostListView(listView_posts);
+        setPostListView(listView_posts);
         button_Add_Post = root.findViewById(R.id.button_Add_Post);
         if (!myGroup) {
             Log.d("group", "not my group");
@@ -172,7 +168,6 @@ public class GroupPost extends Fragment {
                     startActivity(intent);
                 }
             });
-
         }
     }
 
@@ -253,12 +248,22 @@ public class GroupPost extends Fragment {
             empty_post.setVisibility(View.VISIBLE);
         } else {
             ListPostAdapter postAdapter = new ListPostAdapter(getActivity(), postList, groupData, checkLikeList, true, "");
+            postAdapter.setOnItemClickListener(new ListPostAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick() {
+                    setPostListView(listView_posts);
+                }
+
+            });
+
             listView.setAdapter(postAdapter);
 
             LinearLayoutManager pLayoutManager = new LinearLayoutManager(getActivity());
             pLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
             listView.setLayoutManager(pLayoutManager);
             listView.setItemAnimator(new DefaultItemAnimator());
+
+
         }
     }
 

@@ -2,7 +2,9 @@ package com.example.homekippa;
 
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -13,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LifecycleOwner;
@@ -23,6 +26,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.homekippa.data.DeletePostResponse;
 import com.example.homekippa.ui.group.GroupFragment;
 import com.example.homekippa.ui.group.GroupViewModel;
 import com.example.homekippa.ui.home.FollowViewModel;
@@ -34,6 +38,7 @@ import com.example.homekippa.data.LikeResponse;
 import com.example.homekippa.data.UserData;
 import com.example.homekippa.network.RetrofitClient;
 import com.example.homekippa.network.ServiceApi;
+import com.example.homekippa.ui.notifications.ListNotiAdapter;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -61,10 +66,18 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
 
     private Cache cache;
     private Intent intent;
-
-
     private Context context;
     private ServiceApi service;
+
+    private ListPostAdapter.OnItemClickListener mListener = null;
+
+    public interface OnItemClickListener {
+        void onItemClick();
+    }
+
+    public void setOnItemClickListener(ListPostAdapter.OnItemClickListener listener) {
+        this.mListener = listener;
+    }
 
     public ListPostAdapter(Context context, ArrayList<SingleItemPost> postItems, ArrayList<GroupData> groupData, ArrayList<Boolean> likeCheck, boolean isgroup, String tab_) {
         this.context = context;
@@ -113,6 +126,7 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
                 e.printStackTrace();
             }
         } else {
+            holder.button_DeletePost.setVisibility(View.INVISIBLE);
             if (tab_.equals("F"))
                 setFollowViewModel(holder, position);
             else
@@ -253,6 +267,70 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
                 });
             }
         });
+
+        holder.button_DeletePost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                builder.setTitle("해당 게시글을 삭제하시겠습니까?");
+
+
+                builder.setPositiveButton("예",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                SingleItemPost post = post_Items.get(position);
+                                int postId = post.getPostId();
+                                Log.d("재학아어딨어", String.format("%d", postId));
+                                service.deletePost(postId).enqueue(new Callback<DeletePostResponse>() {
+                                    @Override
+                                    public void onResponse(Call<DeletePostResponse> call, Response<DeletePostResponse> response) {
+                                        if (response.code() == 200) {
+                                            Log.d("포스트삭제", "success");
+//                                            groupViewModel.deletePost(position);
+                                            if(mListener!=null){
+                                                mListener.onItemClick();
+                                            }
+//                                            if (isgroup) {
+//                                                setGroupViewModel(holder, position);
+//                                                try {
+//                                                    setPostData(holder, position);
+//                                                } catch (ParseException e) {
+//                                                    e.printStackTrace();
+//                                                }
+//                                            }
+                                            Toast.makeText(v.getContext(), "게시글이 성공적으로 삭제되었습니다!", Toast.LENGTH_SHORT).show();
+
+                                        }
+
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<DeletePostResponse> call, Throwable t) {
+                                        Log.d("포스트삭제", "실패");
+                                        Toast.makeText(v.getContext(), "게시글 삭제 에러", Toast.LENGTH_SHORT).show();
+
+                                    }
+
+
+                                });
+
+
+                            }
+                        });
+                builder.setNegativeButton("아니오",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                Toast.makeText(v.getContext(), "삭제를 취소하셨습니다", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+                builder.show();
+
+
+            }
+        });
+
+
         holder.postGroupProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -419,6 +497,7 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
 
         ImageView postGroupProfile;
         Button postLikeImage;
+        Button button_DeletePost;
         ImageView postCommentImage;
 
         MyViewHolder(View view) {
@@ -434,6 +513,7 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
             recyclerView_postImages = (RecyclerView) view.findViewById(R.id.listview_PostImages);
             postLikeImage = (Button) view.findViewById(R.id.imageView_PostLiked);
             postCommentImage = (ImageView) view.findViewById(R.id.imageView_PostComment);
+            button_DeletePost = (Button) view.findViewById(R.id.button_Delete_Post);
         }
 
     }

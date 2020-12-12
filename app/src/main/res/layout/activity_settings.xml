@@ -35,7 +35,7 @@
 
 
         <Button
-            android:id="@+id/button_UpdateUser"
+            android:id="@+id/button_EditUser"
             android:layout_width="370dp"
             android:layout_height="50dp"
             android:ems="10"

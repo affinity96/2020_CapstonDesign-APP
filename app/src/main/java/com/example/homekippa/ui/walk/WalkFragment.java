@@ -206,34 +206,42 @@ public class WalkFragment extends Fragment {
         checkbox_wholeScope.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("scope1","scope1");
+
                 mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("scope").setValue("wholeScope");
                 checkbox_wholeScope.setChecked(true);
                 checkbox_followScope.setChecked(false);
                 checkbox_closedScope.setChecked(false);
-//                intent.putExtra("scope", "wholeScpe");
+                intent.putExtra("scope", "wholeScpe");
             }
         });
 
         checkbox_followScope.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                Log.d("scope2","scope2");
+
                 mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("scope").setValue("followScope");
                 checkbox_wholeScope.setChecked(false);
                 checkbox_followScope.setChecked(true);
                 checkbox_closedScope.setChecked(false);
-//                intent.putExtra("scope", "followScope");
-//                intent.putExtra("followingGroup", followingArray);
+                intent.putExtra("scope", "followScope");
+                intent.putExtra("followingGroup", followingArray);
             }
         });
 
         checkbox_closedScope.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("scope3","scope3");
+
                 mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("scope").setValue("closedScope");
                 checkbox_wholeScope.setChecked(false);
                 checkbox_followScope.setChecked(false);
                 checkbox_closedScope.setChecked(true);
-//                intent.putExtra("scope", "closedScope");
+                intent.putExtra("scope","closedScope");
+
             }
         });
         return root;

@@ -1,6 +1,7 @@
 package com.example.homekippa;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
@@ -151,6 +152,9 @@ public class MapActivity extends AppCompatActivity implements MapView.MapViewEve
         mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("petImage").setValue(petImageUrl);
 
 
+
+
+
 //        mapView.setOnTouchListener(new View.OnTouchListener(){
 //
 //            @Override
@@ -281,6 +285,11 @@ public class MapActivity extends AppCompatActivity implements MapView.MapViewEve
         String key = w[w.length - 1];
 
         Bitmap bit = getBitmapFromCacheDir(key);
+
+        Activity activity = MapActivity.this;
+        if(activity.isFinishing())
+            return;
+
         if (bit != null && MapActivity.this != null) {
             Glide.with(MapActivity.this).load(bit).diskCacheStrategy(DiskCacheStrategy.NONE).circleCrop().into(imageView);
         } else {

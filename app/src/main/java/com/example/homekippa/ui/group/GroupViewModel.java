@@ -66,4 +66,15 @@ public class GroupViewModel extends ViewModel {
         likecheck.set(pos, val);
         likeCheck.setValue(likecheck);
     }
+
+    public static void deletePost(int pos) {
+        List<SingleItemPost> posts = new ArrayList<>();
+        posts.addAll(post.getValue());
+        List<Boolean> likecheck = new ArrayList<>();
+        likecheck.addAll(likeCheck.getValue());
+        posts.remove(pos);
+        likecheck.remove(pos);
+        post.setValue(posts);
+        likeCheck.setValue(likecheck);
+    }
 }
