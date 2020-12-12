@@ -59,7 +59,7 @@ public class ImageTask {
                         InputStream is = response.body().byteStream();
                         Bitmap b = BitmapFactory.decodeStream(is);
                         bitmap = b;
-                        if (bitmap != null) {
+                        if (bitmap != null && context != null) {
                             Log.d("bitmap", bitmap.toString());
                             if (ispost) {
                                 imageView.setImageBitmap(bitmap);

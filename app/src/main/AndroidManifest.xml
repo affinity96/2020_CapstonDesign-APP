@@ -24,7 +24,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".EditDailyWorkActivity"></activity>
+        <activity android:name=".EditUserActivity"></activity>
+        <activity android:name=".EditDailyWorkActivity" />
         <activity android:name=".ui.group.GroupInviteActivity" />
 
         <service
@@ -72,6 +73,9 @@
             android:theme="@android:style/Theme.Dialog" />
         <activity
             android:name=".PopupSelectPetImage"
+            android:theme="@android:style/Theme.Dialog" />
+        <activity
+            android:name=".PopupSelectPetImageModify"
             android:theme="@android:style/Theme.Dialog" />
         <activity android:name=".VerifyActivity" />
         <activity android:name=".SignUpActivity" />

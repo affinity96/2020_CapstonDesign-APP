@@ -113,40 +113,11 @@ public class ListCommentAdapter extends RecyclerView.Adapter<ListCommentAdapter.
         String key = w[w.length - 1];
 
         Bitmap bit = cache.getBitmapFromCacheDir(key);
-        if (bit != null) {
+        if (bit != null && context!=null) {
             Glide.with(context).load(bit).diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true).circleCrop().into(holder.profile);
         } else {
-//            ImageLoadTask task = new ImageLoadTask(url, holder.profile, context, false);
-//            task.execute();
             ImageTask task = new ImageTask(url, holder.profile, context, false);
             task.getImage();
-//            service.getProfileImage(url).enqueue(new Callback<ResponseBody>() {
-//                @Override
-//                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-//                    String TAG = "ListCommentAdapter";
-//                    if (response.isSuccessful()) {
-//                        Log.d(TAG, "server contacted and has file");
-//                        InputStream is = response.body().byteStream();
-//                        Bitmap bitmap = BitmapFactory.decodeStream(is);
-//
-//                        if(bitmap!=null){
-//
-//                        }
-//                        Glide.with(context).load(bitmap).diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true).circleCrop().into(holder.profile);
-////                        holder.profile.setImageBitmap(bitmap);
-//
-//                    } else {
-//                        Log.d(TAG, "server contact failed");
-//                    }
-//                }
-//
-//                @Override
-//                public void onFailure(Call<ResponseBody> call, Throwable t) {
-////                Toast.makeText(YesGroup.this, "그룹생성 에러 발생", Toast.LENGTH_SHORT).show();
-////              Log.e("createGroup error",t.getMessage());
-//                    t.printStackTrace();
-//                }
-//            });
         }
     }
 
@@ -181,7 +152,6 @@ public class ListCommentAdapter extends RecyclerView.Adapter<ListCommentAdapter.
                 @Override
                 public void onClick(View v) {
                     Log.d("comment", String.valueOf(commentData.get(2).getPost_id()));
-
 
                     service.deleteComment(commentData.get(getAdapterPosition()).getId()).enqueue(new Callback<CommentResponse>() {
                         @Override
