@@ -1,6 +1,7 @@
 package com.example.homekippa;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
@@ -53,7 +54,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class MapActivity extends AppCompatActivity implements MapView.MapViewEventListener, MapView.POIItemEventListener, MapView.CurrentLocationEventListener{
+public class MapActivity extends AppCompatActivity implements MapView.MapViewEventListener, MapView.POIItemEventListener, MapView.CurrentLocationEventListener {
 
 
     private static final int GPS_ENABLE_REQUEST_CODE = 2001;
@@ -84,19 +85,17 @@ public class MapActivity extends AppCompatActivity implements MapView.MapViewEve
     private ServiceApi service;
     private DatabaseReference mDatabase;
     private ArrayList followingGroup = new ArrayList();
-//    private MapPOIItem marker;
+    //    private MapPOIItem marker;
     private int markerCount;
 //    private ArrayList<MapPOIItem> marker = new ArrayList<>();
 
 
-
-
     @SuppressLint("ClickableViewAccessibility")
     @Override
-    protected  void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
-        button_stopMap =findViewById(R.id.button_stopMap);
+        button_stopMap = findViewById(R.id.button_stopMap);
         button_finishMap = findViewById(R.id.button_finishMap);
         linearLayout_infor = findViewById(R.id.layout_infor);
 //        button_remove = findViewById(R.id.button_remove);
@@ -105,14 +104,14 @@ public class MapActivity extends AppCompatActivity implements MapView.MapViewEve
 //        button_walktest =findViewById(R.id.button_walktest);
         groupData = (GroupData) getIntent().getExtras().get("groupData");
         userData = (UserData) getIntent().getExtras().get("userData");
-        petName =  (String) getIntent().getExtras().get("petName");
-        petGender =  (String) getIntent().getExtras().get("petGender");
-        petSpecies =  (String) getIntent().getExtras().get("petSpecies");
+        petName = (String) getIntent().getExtras().get("petName");
+        petGender = (String) getIntent().getExtras().get("petGender");
+        petSpecies = (String) getIntent().getExtras().get("petSpecies");
         petImageUrl = (String) getIntent().getExtras().get("petImageUrl");
 
         groupLockScope = (String) getIntent().getExtras().get("scope");
 
-        if(groupLockScope.equals("followScope") ){
+        if (groupLockScope.equals("followScope")) {
             followingGroup = (ArrayList) getIntent().getExtras().get("followingGroup");
         }
 
@@ -121,7 +120,7 @@ public class MapActivity extends AppCompatActivity implements MapView.MapViewEve
         //마커 생성
 
         // mapview에 kakaoMap 연동해서 올리기
-        mapView =new MapView(this);
+        mapView = new MapView(this);
         mapViewContainer = (ViewGroup) findViewById(R.id.map_view);
         mapViewContainer.addView(mapView);
         mapView.setMapViewEventListener(this);
@@ -153,6 +152,9 @@ public class MapActivity extends AppCompatActivity implements MapView.MapViewEve
         mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("petImage").setValue(petImageUrl);
 
 
+
+
+
 //        mapView.setOnTouchListener(new View.OnTouchListener(){
 //
 //            @Override
@@ -162,19 +164,13 @@ public class MapActivity extends AppCompatActivity implements MapView.MapViewEve
 //        });
 
 
-
-
         //firebase 백엔드 사용해서 위도 경도 저장
-
-
-
 
 
 //setCustomCurrentLocationMarkerImage
         //-> 이를 사용해서 현 위치 아이콘을 custom 이미지 바꾸기 가능
 
         //거리와 시간을 팝업 창처럼 띄우기?? 이렇게 할까?
-
 
 
         // mark => ?
@@ -210,15 +206,15 @@ public class MapActivity extends AppCompatActivity implements MapView.MapViewEve
                 linearLayout_infor.setVisibility(View.VISIBLE);
 
                 //거리 넣기
-                double distanceTotal = Math.round((distanceSum(longitude_arrayList, latitude_arrayList)*100)/100);
+                double distanceTotal = Math.round((distanceSum(longitude_arrayList, latitude_arrayList) * 100) / 100);
                 textView_walkDistance.setText(String.valueOf(distanceTotal));
 
 
                 //시간 넣기
                 endTime = System.currentTimeMillis();
-                totalTime = (endTime - startTime)/1000;
+                totalTime = (endTime - startTime) / 1000;
                 textView_walkTime.setText(String.valueOf(totalTime));
-                startTime =System.currentTimeMillis();
+                startTime = System.currentTimeMillis();
                 //위도 경도 초기화
                 latitude_arrayList = new ArrayList<>();
                 longitude_arrayList = new ArrayList<>();
@@ -234,28 +230,28 @@ public class MapActivity extends AppCompatActivity implements MapView.MapViewEve
         });
     }
 
-    public double distanceSum(ArrayList<Double> longitude_arrayList, ArrayList<Double> latitude_arrayList){
+    public double distanceSum(ArrayList<Double> longitude_arrayList, ArrayList<Double> latitude_arrayList) {
 
         double disSum = 0.0;
 
-        for (int l = 0 ; l < longitude_arrayList.size();l++) {
+        for (int l = 0; l < longitude_arrayList.size(); l++) {
             //마지막 list에 아무것도 없을 시 끝내기
-            if((l+1) == longitude_arrayList.size()){
+            if ((l + 1) == longitude_arrayList.size()) {
                 break;
             }
             //distanceLocation에 넣어준다.
-            disSum += distanceLocation(longitude_arrayList.get(l),latitude_arrayList.get(l),longitude_arrayList.get(l+1),latitude_arrayList.get(l+1));
+            disSum += distanceLocation(longitude_arrayList.get(l), latitude_arrayList.get(l), longitude_arrayList.get(l + 1), latitude_arrayList.get(l + 1));
         }
 
         return disSum;
     }
     // 산책 중인 다른 그룹 마커로 표시
 
-    public void walkingOtherGroup(Double latitude, Double longitude, String groupTag){
+    public void walkingOtherGroup(Double latitude, Double longitude, String groupTag) {
         MapPOIItem marker = new MapPOIItem();
 
 
-        MapPoint walkingMapPoint = MapPoint.mapPointWithGeoCoord(latitude,longitude);
+        MapPoint walkingMapPoint = MapPoint.mapPointWithGeoCoord(latitude, longitude);
 
         marker.setItemName(groupTag);
         marker.setMapPoint(walkingMapPoint);
@@ -268,7 +264,7 @@ public class MapActivity extends AppCompatActivity implements MapView.MapViewEve
 
     }
 
-    public double distanceLocation(double locationA_long, double locationA_lati, double locationB_long, double locationB_lati){
+    public double distanceLocation(double locationA_long, double locationA_lati, double locationB_long, double locationB_lati) {
 
         double dis;
 
@@ -289,7 +285,12 @@ public class MapActivity extends AppCompatActivity implements MapView.MapViewEve
         String key = w[w.length - 1];
 
         Bitmap bit = getBitmapFromCacheDir(key);
-        if (bit != null) {
+
+        Activity activity = MapActivity.this;
+        if(activity.isFinishing())
+            return;
+
+        if (bit != null && MapActivity.this != null) {
             Glide.with(MapActivity.this).load(bit).diskCacheStrategy(DiskCacheStrategy.NONE).circleCrop().into(imageView);
         } else {
             service.getProfileImage(url).enqueue(new Callback<ResponseBody>() {
@@ -314,6 +315,7 @@ public class MapActivity extends AppCompatActivity implements MapView.MapViewEve
             });
         }
     }
+
     private void saveBitmapToJpeg(Bitmap bitmap, String name) {
         //내부저장소 캐시 경로를 받아옵니다.
         File storage = getCacheDir();
@@ -334,6 +336,7 @@ public class MapActivity extends AppCompatActivity implements MapView.MapViewEve
             Log.e("Yes", "IOException : " + e.getMessage());
         }
     }
+
     private Bitmap getBitmapFromCacheDir(String key) {
         String found = null;
         Bitmap bitmap = null;
@@ -357,9 +360,10 @@ public class MapActivity extends AppCompatActivity implements MapView.MapViewEve
     // POI 건들
     @Override
     public void onPOIItemSelected(MapView mapView, MapPOIItem mapPOIItem) {
-        Log.d("mapP","please"+mapPOIItem.getItemName());
+        Log.d("mapP", "please" + mapPOIItem.getItemName());
 
     }
+
     //그 위의 말풍선을 누르면 나오는 부뷴
     @Override
     public void onCalloutBalloonOfPOIItemTouched(MapView mapView, MapPOIItem mapPOIItem) {
@@ -410,16 +414,15 @@ public class MapActivity extends AppCompatActivity implements MapView.MapViewEve
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setView(dialogView);
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener(){
-            public void onClick(DialogInterface dialog, int pos)
-            {
-                Log.d("dialog","here");
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int pos) {
+                Log.d("dialog", "here");
             }
         });
         builder.setNegativeButton("채팅", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Log.d("dialog","채팅채팅");
+                Log.d("dialog", "채팅채팅");
             }
         });
 
@@ -430,7 +433,7 @@ public class MapActivity extends AppCompatActivity implements MapView.MapViewEve
 
     @Override
     public void onCalloutBalloonOfPOIItemTouched(MapView mapView, MapPOIItem mapPOIItem, MapPOIItem.CalloutBalloonButtonType calloutBalloonButtonType) {
-        Log.d("mapP","here");
+        Log.d("mapP", "here");
     }
 
     //이거는 안 사용합니다.
@@ -441,10 +444,11 @@ public class MapActivity extends AppCompatActivity implements MapView.MapViewEve
     // 현재위치
     //현재위치 업데이트
     int cycle = 0;
+
     @Override
     public void onCurrentLocationUpdate(MapView mapView, MapPoint currentLocation, float v) {
 
-        if( cycle >2) {
+        if (cycle > 2) {
             mapPointGeo = currentLocation.getMapPointGeoCoord();
             mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("latitude").setValue(mapPointGeo.latitude);
             mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("longitude").setValue(mapPointGeo.longitude);
@@ -474,24 +478,24 @@ public class MapActivity extends AppCompatActivity implements MapView.MapViewEve
                     String groupScope = dataSnapshot.child("walking_group").child(String.valueOf(groupData.getId())).child("scope").getValue(String.class);
 
                     for (DataSnapshot GroupMapData : dataSnapshot.child("walking_group").getChildren()) {
-                        Log.d("mapP",GroupMapData.getKey());
+                        Log.d("mapP", GroupMapData.getKey());
                         String otherGroup = GroupMapData.getKey();
                         String otherAddress = GroupMapData.child("address").getValue(String.class);
                         String otherScope = GroupMapData.child("scope").getValue(String.class);
                         //자신 그룹은 제외 시킨다.
                         if (!otherGroup.equals(String.valueOf(groupData.getId()))) {
                             if (otherAddress.equals(currentAddress)) {
-                                Log.d("database_read","address");
+                                Log.d("database_read", "address");
                                 //다른 그룹 위치 띄우기
-                                if(otherScope.equals("wholeScope")){
-                                    Log.d("scope","here1");
+                                if (otherScope.equals("wholeScope")) {
+                                    Log.d("scope", "here1");
                                     walkingOtherGroup(GroupMapData.child("latitude").getValue(Double.class), GroupMapData.child("longitude").getValue(Double.class), GroupMapData.child("groupTag").getValue(String.class));
-                                }else if(otherScope.equals("followScope")){
-                                    Log.d("follow","here Follow");
-                                    for(int i =0 ; i <followingGroup.size();i++){
-                                        Log.d("follow1",otherGroup);
+                                } else if (otherScope.equals("followScope")) {
+                                    Log.d("follow", "here Follow");
+                                    for (int i = 0; i < followingGroup.size(); i++) {
+                                        Log.d("follow1", otherGroup);
                                         Log.d("follow1", String.valueOf(followingGroup.get(i)));
-                                        if(otherGroup.equals(String.valueOf(followingGroup.get(i))))   {
+                                        if (otherGroup.equals(String.valueOf(followingGroup.get(i)))) {
                                             walkingOtherGroup(GroupMapData.child("latitude").getValue(Double.class), GroupMapData.child("longitude").getValue(Double.class), GroupMapData.child("groupTag").getValue(String.class));
                                         }
                                     }
@@ -501,6 +505,7 @@ public class MapActivity extends AppCompatActivity implements MapView.MapViewEve
 
                     }
                 }
+
                 @Override
                 public void onCancelled(DatabaseError error) {
                     // Failed to read value
@@ -509,7 +514,7 @@ public class MapActivity extends AppCompatActivity implements MapView.MapViewEve
             });
 
             cycle = 1;
-        }else if(cycle == 0){
+        } else if (cycle == 0) {
             mapPointGeo = currentLocation.getMapPointGeoCoord();
             mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("latitude").setValue(mapPointGeo.latitude);
             mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("longitude").setValue(mapPointGeo.longitude);
@@ -537,24 +542,24 @@ public class MapActivity extends AppCompatActivity implements MapView.MapViewEve
                     // 다른 그룹 위치 판별하기
                     String currentAddress = dataSnapshot.child("walking_group").child(String.valueOf(groupData.getId())).child("address").getValue(String.class);
                     for (DataSnapshot GroupMapData : dataSnapshot.child("walking_group").getChildren()) {
-                        Log.d("mapP",GroupMapData.getKey());
+                        Log.d("mapP", GroupMapData.getKey());
                         String otherGroup = GroupMapData.getKey();
                         String otherAddress = GroupMapData.child("address").getValue(String.class);
                         String otherScope = GroupMapData.child("scope").getValue(String.class);
                         //자신 그룹은 제외 시킨다.
                         if (!otherGroup.equals(String.valueOf(groupData.getId()))) {
                             if (otherAddress.equals(currentAddress)) {
-                                Log.d("database_read","address");
+                                Log.d("database_read", "address");
                                 //다른 그룹 위치 띄우기
-                                if(otherScope.equals("wholeScope")){
-                                    Log.d("scope","here1");
+                                if (otherScope.equals("wholeScope")) {
+                                    Log.d("scope", "here1");
                                     walkingOtherGroup(GroupMapData.child("latitude").getValue(Double.class), GroupMapData.child("longitude").getValue(Double.class), GroupMapData.child("groupTag").getValue(String.class));
-                                }else if(otherScope.equals("followScope")){
-                                    Log.d("follow","here Follow");
-                                    for(int i =0 ; i <followingGroup.size();i++){
-                                        Log.d("follow1",otherGroup);
+                                } else if (otherScope.equals("followScope")) {
+                                    Log.d("follow", "here Follow");
+                                    for (int i = 0; i < followingGroup.size(); i++) {
+                                        Log.d("follow1", otherGroup);
                                         Log.d("follow1", String.valueOf(followingGroup.get(i)));
-                                        if(otherGroup.equals(String.valueOf(followingGroup.get(i)))){
+                                        if (otherGroup.equals(String.valueOf(followingGroup.get(i)))) {
                                             walkingOtherGroup(GroupMapData.child("latitude").getValue(Double.class), GroupMapData.child("longitude").getValue(Double.class), GroupMapData.child("groupTag").getValue(String.class));
                                         }
                                     }
@@ -566,6 +571,7 @@ public class MapActivity extends AppCompatActivity implements MapView.MapViewEve
                         }
                     }
                 }
+
                 @Override
                 public void onCancelled(DatabaseError error) {
                     // Failed to read value
@@ -573,19 +579,15 @@ public class MapActivity extends AppCompatActivity implements MapView.MapViewEve
                 }
             });
             cycle++;
-        }
-        else{
+        } else {
             cycle++;
         }
-
-
 
 
         Log.d("cycleCount", String.valueOf(cycle));
 
 
     }
-
 
 
     @Override

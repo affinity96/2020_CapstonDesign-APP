@@ -21,12 +21,14 @@ import retrofit2.Response;
 public class SettingActivity extends AppCompatActivity {
     private UserData userData;
     private Button button_ExitKippa;
+    private Button button_EditUser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
         button_ExitKippa = findViewById(R.id.button_ExitKippa);
+        button_EditUser = findViewById(R.id.button_EditUser);
         Intent intent = getIntent();
         UserData userData = (UserData) intent.getExtras().get("userData");
 
@@ -36,6 +38,16 @@ public class SettingActivity extends AppCompatActivity {
                 Intent intent = new Intent(view.getContext(),ExitKippaActivity.class);
                 intent.putExtra("userData", userData);
                  startActivity(intent);
+
+            }
+        });
+
+        button_EditUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(),EditUserActivity.class);
+                intent.putExtra("userData", userData);
+                startActivity(intent);
 
             }
         });

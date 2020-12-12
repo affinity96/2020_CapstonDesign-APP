@@ -325,7 +325,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<SingleItemPet> array_pets;
     private ListView listView_pets;
     private UserData userData;
-    private GroupData groupData;
+    private static GroupData groupData;
     private ServiceApi service;
     private ConstraintLayout main_naviheader;
 
@@ -494,8 +494,8 @@ public class MainActivity extends AppCompatActivity {
         this.userData = userData;
     }
 
-    public GroupData getGroupData() {
-        return this.groupData;
+    public static GroupData getGroupData() {
+        return groupData;
     }
 
     public void setGroupData(GroupData groupData) {
