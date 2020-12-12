@@ -84,7 +84,7 @@
             android:id="@+id/frameLayout_post"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/linearLayou_postScope"
+            android:layout_below="@+id/linearLayout_title"
             android:layout_marginBottom="10dp"
             android:layout_gravity="top"
             android:visibility="gone">
