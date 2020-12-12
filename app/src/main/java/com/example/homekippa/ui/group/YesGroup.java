@@ -820,10 +820,8 @@ public class YesGroup extends Fragment {
                     InputStream is = response.body().byteStream();
                     Bitmap bitmap = BitmapFactory.decodeStream(is);
                     if (bitmap != null) {
-                        Glide.with(getActivity()).load(bitmap).circleCrop().into(userProfile);
+                        Glide.with(getContext()).load(bitmap).circleCrop().into(userProfile);
                     }
-
-
                 } else {
                     Log.d(TAG, "server profile contact failed");
                 }
