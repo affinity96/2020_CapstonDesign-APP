@@ -165,6 +165,9 @@ public class YesGroup extends Fragment {
 
         super.onResume();
         setPetListView(listView_pets);
+
+        getImage(groupData.getImage(), imageView_groupProfile, true);
+        getImage(groupData.getCover(), imageView_groupCover, false);
     }
 
     @Override
