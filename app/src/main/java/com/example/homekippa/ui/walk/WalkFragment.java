@@ -206,6 +206,7 @@ public class WalkFragment extends Fragment{
         checkbox_wholeScope.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("scope1","scope1");
 
                 mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("scope").setValue("wholeScope");
                 checkbox_wholeScope.setChecked(true);
@@ -220,6 +221,8 @@ public class WalkFragment extends Fragment{
             @Override
             public void onClick(View v) {
 
+                Log.d("scope2","scope2");
+
                 mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("scope").setValue("followScope");
                 checkbox_wholeScope.setChecked(false);
                 checkbox_followScope.setChecked(true);
@@ -232,11 +235,14 @@ public class WalkFragment extends Fragment{
         checkbox_closedScope.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("scope3","scope3");
+
                 mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("scope").setValue("closedScope");
                 checkbox_wholeScope.setChecked(false);
                 checkbox_followScope.setChecked(false);
                 checkbox_closedScope.setChecked(true);
                 intent.putExtra("scope","closedScope");
+
             }
         });
 
