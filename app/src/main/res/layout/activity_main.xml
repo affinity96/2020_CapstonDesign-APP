@@ -52,6 +52,16 @@
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/main_naviheader"
-        app:menu="@menu/navi_menu" />
+        app:menu="@menu/navi_menu">
+
+        <com.google.android.ads.nativetemplates.TemplateView
+            android:id="@+id/main_ad_template"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            app:gnt_template_type="@layout/gnt_medium_template_view"/>
+
+    </com.google.android.material.navigation.NavigationView>
+
 
 </androidx.drawerlayout.widget.DrawerLayout>

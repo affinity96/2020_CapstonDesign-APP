@@ -96,4 +96,5 @@ dependencies {
 
     //Admob
     implementation 'com.google.android.gms:play-services-ads:19.5.0'
+    implementation project(':nativetemplates')
 }
