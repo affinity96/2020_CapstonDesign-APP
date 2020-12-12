@@ -54,7 +54,6 @@ public class ImageLoadTask extends AsyncTask<Void, Void, Bitmap> {
     @Override
     protected Bitmap doInBackground(Void... voids) {
 
-        Log.d("bitmap", "1");
         try {
             String[] w = url.split("/");
             String key = w[w.length - 1];

@@ -69,7 +69,7 @@ public class GroupPost extends Fragment {
     private ImageView empty_post;
     private TextView textView_groupName;
     private TextView textView_address;
-    private CircleImageView imageView_PostProfile;
+    private ImageView imageView_PostProfile;
 
     private GroupViewModel groupViewModel;
 
@@ -89,7 +89,7 @@ public class GroupPost extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-//        setPostListView(listView_posts);
+        setPostListView(listView_posts);
     }
 
     @Override
@@ -116,11 +116,9 @@ public class GroupPost extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
-
     }
 
-@Override
+    @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
     }
@@ -143,7 +141,7 @@ public class GroupPost extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
-        Log.d("group", "onStop");
+
         groupViewModel.getPostList().getValue().clear();
         groupViewModel.getPostList().removeObservers((LifecycleOwner) getContext());
     }
@@ -172,20 +170,18 @@ public class GroupPost extends Fragment {
         }
     }
 
-    private void getGroupProfileImage(String url, CircleImageView imageView) {
+    private void getGroupProfileImage(String url, ImageView imageView) {
         Log.d("url", url);
         service.getProfileImage(url).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 String TAG = "YesGroup";
                 if (response.isSuccessful()) {
-
                     Log.d(TAG, "server contacted and has file");
                     InputStream is = response.body().byteStream();
                     Bitmap bitmap = BitmapFactory.decodeStream(is);
-
-                    Glide.with(GroupPost.this).load(bitmap).circleCrop().into(imageView);
-
+                    if (bitmap != null && getActivity() != null)
+                        Glide.with(getActivity()).load(bitmap).circleCrop().into(imageView);
                 } else {
                     Log.d(TAG, "server contact failed");
                 }
@@ -262,6 +258,7 @@ public class GroupPost extends Fragment {
 
     private ArrayList<Boolean> setLikeData(List<List<LikeData>> likeList) {
         ArrayList<Boolean> checkLike = new ArrayList<Boolean>();
+        Log.d("이것은대체..", userData.getUserId());
 
         int i = 0;
         for (List<LikeData> like : likeList) {
