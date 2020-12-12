@@ -120,7 +120,7 @@ public class GroupPost extends Fragment {
 
     }
 
-@Override
+    @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
     }
@@ -183,9 +183,8 @@ public class GroupPost extends Fragment {
                     Log.d(TAG, "server contacted and has file");
                     InputStream is = response.body().byteStream();
                     Bitmap bitmap = BitmapFactory.decodeStream(is);
-
-                    Glide.with(GroupPost.this).load(bitmap).circleCrop().into(imageView);
-
+                    if (bitmap != null && getActivity() != null)
+                        Glide.with(getActivity()).load(bitmap).circleCrop().into(imageView);
                 } else {
                     Log.d(TAG, "server contact failed");
                 }

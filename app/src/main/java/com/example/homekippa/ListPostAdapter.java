@@ -202,6 +202,7 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
                 intent.putExtra("isliked", likeCheck.get(position));
                 intent.putExtra("isgroup", isgroup);
                 intent.putExtra("pos", position);
+                intent.putExtra("tab_", tab_);
                 ((Activity) context).startActivity(intent);
             }
         });

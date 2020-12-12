@@ -436,7 +436,7 @@ public class YesGroup extends Fragment {
 
     }
 
-        @Override
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
         if (resultCode != RESULT_OK) {
@@ -454,7 +454,7 @@ public class YesGroup extends Fragment {
             return;
         } else {
             if (requestCode == 1) {
-                    setImage();
+                setImage();
             }
         }
     }
@@ -549,8 +549,7 @@ public class YesGroup extends Fragment {
                     Log.d("반려동물 확인", "성공");
                     List<SingleItemPet> pets = response.body();
 
-                    petViewModel = new ViewModelProvider(requireActivity()).get(PetViewModel.class);
-                    petViewModel.getPetList().setValue(pets);
+
 
                     if (!pets.isEmpty()) {
                         petList.clear();
@@ -654,7 +653,7 @@ public class YesGroup extends Fragment {
                                     holder.workName.setTextColor(Color.parseColor("#FFFFFF"));
                                     holder.workTime.setTextColor(Color.parseColor("#FFFFFF"));
                                     holder.workAlarm.setTextColor(Color.parseColor("#FFFFFF"));
-                                    getImage(dailyWork.getDone_user_image(),holder.workPersonImage, true );
+                                    getImage(dailyWork.getDone_user_image(), holder.workPersonImage, true);
 //                                    getUserProfileImage(holder.workPersonImage, dailyWork.getDone_user_image());
                                     holder.workDone.setTextColor(Color.parseColor("#FFFFFF"));
                                 }
@@ -663,11 +662,11 @@ public class YesGroup extends Fragment {
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     Intent intent = new Intent(getActivity().getApplicationContext(), EditDailyWorkActivity.class);
-                                    intent.putExtra("id",dailyWork.getId());
-                                    intent.putExtra("title",dailyWork.getTitle());
-                                    intent.putExtra("desc",dailyWork.getDesc());
-                                    intent.putExtra("time",dailyWork.getTime());
-                                    intent.putExtra("alarm",dailyWork.getAlarm());
+                                    intent.putExtra("id", dailyWork.getId());
+                                    intent.putExtra("title", dailyWork.getTitle());
+                                    intent.putExtra("desc", dailyWork.getDesc());
+                                    intent.putExtra("time", dailyWork.getTime());
+                                    intent.putExtra("alarm", dailyWork.getAlarm());
 
                                     startActivity(intent);
                                 }
@@ -733,12 +732,13 @@ public class YesGroup extends Fragment {
         @NonNull
         @Override
         public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
             View itemView = LayoutInflater.from(getContext()).inflate(R.layout.listitem_pet, parent, false);
-            List<View> itemViewList = new ArrayList<>();
+//            List<View> itemViewList = new ArrayList<>();
 
 
-            itemViewList.add(itemView);
-            MyViewHolder myViewHolder = new MyViewHolder(itemView);
+//            itemViewList.add(itemView);
+//            MyViewHolder myViewHolder = new MyViewHolder(itemView);
 
             return new MyViewHolder(itemView);
         }
@@ -806,7 +806,7 @@ public class YesGroup extends Fragment {
                     Log.d(TAG, "server contacted and has file");
                     InputStream is = response.body().byteStream();
                     Bitmap bitmap = BitmapFactory.decodeStream(is);
-                    if (bitmap != null) {
+                    if (bitmap != null && getActivity() != null) {
                         Glide.with(getActivity()).load(bitmap).circleCrop().into(userProfile);
                     }
 
