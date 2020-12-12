@@ -17,6 +17,8 @@ import com.example.homekippa.data.DeletePostResponse;
 import com.example.homekippa.data.DoneReportsResponse;
 import com.example.homekippa.data.EditDailyWorkData;
 import com.example.homekippa.data.EditDailyWorkResponse;
+import com.example.homekippa.data.EditUserData;
+import com.example.homekippa.data.EditUserResponse;
 import com.example.homekippa.data.ExitResponse;
 import com.example.homekippa.data.FollowData;
 import com.example.homekippa.data.FollowResponse;
@@ -65,6 +67,9 @@ public interface ServiceApi {
 
     @PUT("/user/delete")
     Call<ExitResponse> userExit(@Query("userId") String userId);
+
+    @POST("/user/update")
+    Call<EditUserResponse> userEdit(@Body EditUserData data);
 
     @POST("/group/add")
     Call<CreateGroupResponse> groupCreate(@Body CreateGroupData data);
