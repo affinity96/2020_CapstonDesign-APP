@@ -118,7 +118,7 @@ public class AddPostActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(checkBox_wholeScope.isChecked() == false && checkBox_followScope.isChecked() == false && checkBox_closedScope.isChecked() == false){
-                    textView_postScope.setError("공개범위 선택해주세요");
+                    textView_postScope.setError("공개범위를 선택해주세요");
                 }else{
                     addPost(groupData.getId(), userData.getUserId(), postContent.toString(), editText_postTitle.getText().toString(), groupData.getArea(), scope);
                 }

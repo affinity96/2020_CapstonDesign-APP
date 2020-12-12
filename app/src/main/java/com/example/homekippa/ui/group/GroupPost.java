@@ -69,7 +69,7 @@ public class GroupPost extends Fragment {
     private ImageView empty_post;
     private TextView textView_groupName;
     private TextView textView_address;
-    private CircleImageView imageView_PostProfile;
+    private ImageView imageView_PostProfile;
 
     private GroupViewModel groupViewModel;
 
@@ -172,14 +172,13 @@ public class GroupPost extends Fragment {
         }
     }
 
-    private void getGroupProfileImage(String url, CircleImageView imageView) {
+    private void getGroupProfileImage(String url, ImageView imageView) {
         Log.d("url", url);
         service.getProfileImage(url).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 String TAG = "YesGroup";
                 if (response.isSuccessful()) {
-
                     Log.d(TAG, "server contacted and has file");
                     InputStream is = response.body().byteStream();
                     Bitmap bitmap = BitmapFactory.decodeStream(is);
@@ -261,6 +260,7 @@ public class GroupPost extends Fragment {
 
     private ArrayList<Boolean> setLikeData(List<List<LikeData>> likeList) {
         ArrayList<Boolean> checkLike = new ArrayList<Boolean>();
+        Log.d("이것은대체..", userData.getUserId());
 
         int i = 0;
         for (List<LikeData> like : likeList) {

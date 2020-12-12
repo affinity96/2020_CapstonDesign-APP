@@ -185,8 +185,9 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
         if (bit != null) {
             Glide.with(context).load(bit).circleCrop().into(holder.postGroupProfile);
         } else {
-            ImageLoadTask task = new ImageLoadTask(url, holder.postGroupProfile, context, false);
-            task.execute();
+            ImageTask task = new ImageTask(url, holder.postGroupProfile, context, false);
+            task.getImage();
+//            task.execute();
         }
     }
 

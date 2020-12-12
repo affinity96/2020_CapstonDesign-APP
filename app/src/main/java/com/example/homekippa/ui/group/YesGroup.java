@@ -94,7 +94,7 @@ public class YesGroup extends Fragment {
     private Button button_Add_DW;
     private RecyclerView listView_pets;
     private RecyclerView listView_dailyWorks;
-    private CircleImageView imageView_groupProfile;
+    private ImageView imageView_groupProfile;
     private ImageView imageView_groupCover;
     private Button button_addPet;
     private Button button_addUser;
@@ -549,24 +549,20 @@ public class YesGroup extends Fragment {
                     Log.d("반려동물 확인", "성공");
                     List<SingleItemPet> pets = response.body();
 
-
-
                     if (!pets.isEmpty()) {
                         petList.clear();
                         petList.addAll(pets);
 
                         setDailyWorkListView(listView_dailyWorks, pets.get(selectedPosition).getId());
 
+                        ListPetAdapter petAdapter = new ListPetAdapter(petList);
+                        LinearLayoutManager pLayoutManager = new LinearLayoutManager(getActivity());
+                        pLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+                        listView.setLayoutManager(pLayoutManager);
+                        listView.setItemAnimator(new DefaultItemAnimator());
+                        listView.setAdapter(petAdapter);
+
                     }
-
-                    ListPetAdapter petAdapter = new ListPetAdapter(petList);
-
-                    LinearLayoutManager pLayoutManager = new LinearLayoutManager(getActivity());
-                    pLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-                    listView.setLayoutManager(pLayoutManager);
-                    listView.setItemAnimator(new DefaultItemAnimator());
-                    listView.setAdapter(petAdapter);
-
                 }
             }
 
@@ -733,7 +729,7 @@ public class YesGroup extends Fragment {
         @Override
         public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-            View itemView = LayoutInflater.from(getContext()).inflate(R.layout.listitem_pet, parent, false);
+            View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.listitem_pet, parent, false);
 //            List<View> itemViewList = new ArrayList<>();
 
 
@@ -762,7 +758,7 @@ public class YesGroup extends Fragment {
             holder.petName.setText(selectedPet.getName());
             petId = petList.get(position).getId();
             Log.d("pet", String.valueOf(selectedPet.getName()));
-            getImage(selectedPet.getImage(), (CircleImageView) holder.petImage, true);
+            getImage(selectedPet.getImage(), (ImageView) holder.petImage, true);
             holder.pet.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
