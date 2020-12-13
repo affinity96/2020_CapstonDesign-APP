@@ -121,8 +121,8 @@ public class WalkFragment extends Fragment {
         intent = new Intent(getActivity(), MapActivity.class);
 
 
-        groupData = ((MainActivity) getActivity()).getGroupData();
-        userData = ((MainActivity) getActivity()).getUserData();
+        userData =((MainActivity) MainActivity.context_main).getUserData();
+        groupData = ((MainActivity) MainActivity.context_main).getGroupData();
 
         if (groupData != null) {
             getGroupData(userData.getGroupId());
@@ -289,8 +289,6 @@ public class WalkFragment extends Fragment {
                             listView.setAdapter(petAdapter);
                         }else{
                             petEmptyCheck= String.valueOf(pets.isEmpty());
-
-
                         }
                     }
                 }
