@@ -39,8 +39,6 @@ public class GroupFollowViewModel extends ViewModel {
     public Integer getFollowerNum() {
 
         return follower.getValue().size();
-
-
     }
 
     public void cancelFollowing(int id) {

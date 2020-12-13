@@ -250,6 +250,7 @@
 
 package com.example.homekippa;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -315,10 +316,12 @@ public class MainActivity extends AppCompatActivity {
 
     final Loading loading = new Loading();
 
+    public static Context context_main;
+
     private ArrayList<SingleItemPet> array_pets;
     private ListView listView_pets;
-    private static UserData userData;
-    private static GroupData groupData;
+    private UserData userData;
+    private GroupData groupData;
     private ServiceApi service;
     private ConstraintLayout main_naviheader;
 
@@ -329,6 +332,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        context_main = this;
+
         mAuth = FirebaseAuth.getInstance();
         service = RetrofitClient.getClient().create(ServiceApi.class);
         curUser = mAuth.getCurrentUser();
@@ -336,7 +341,7 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = getIntent();
         userData = (UserData) intent.getExtras().get("user");
 
-       //Log.d("main create", userData.getUserName());
+//        Log.d("main create", userData.getUserName());
 //
         Toast.makeText(getApplicationContext(), userData.getUserName() + "님 로그인", Toast.LENGTH_LONG).show();
         groupData = (GroupData) intent.getExtras().get("group");
@@ -480,8 +485,8 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, fragment).commitAllowingStateLoss();
     }
 
-    public static UserData getUserData() {
-        return userData;
+    public UserData getUserData() {
+        return this.userData;
     }
 
     public void setUserData(UserData userData) {
@@ -489,12 +494,12 @@ public class MainActivity extends AppCompatActivity {
         this.userData = userData;
     }
 
-    public static GroupData getGroupData() {
+    public GroupData getGroupData() {
         return groupData;
     }
 
-    public static void setGroupData(GroupData groupData) {
-        groupData = groupData;
+    public void setGroupData(GroupData groupData) {
+        this.groupData = groupData;
     }
 
     public BottomNavigationView getNavView() {

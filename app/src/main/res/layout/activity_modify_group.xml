@@ -34,7 +34,7 @@
         </androidx.appcompat.widget.Toolbar>
 
         <LinearLayout
-            android:id="@+id/linearlayout_group_modify_info"
+            android:id="@+id/linearlayout_group_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/toolbar"
@@ -93,6 +93,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="그룹명"
+                    android:layout_gravity="center"
                     android:textSize="15dp"/>
 
                 <View
@@ -123,6 +124,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="소개글"
+                    android:layout_gravity="center"
                     android:textSize="15dp"/>
 
                 <View
@@ -152,6 +154,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="주소"
+                    android:layout_gravity="center"
                     android:textSize="15dp"/>
 
                 <View
