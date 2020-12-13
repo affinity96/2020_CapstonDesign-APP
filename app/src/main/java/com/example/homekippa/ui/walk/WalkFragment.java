@@ -287,8 +287,10 @@ public class WalkFragment extends Fragment {
                             listView.setLayoutManager(pLayoutManager);
                             listView.setItemAnimator(new DefaultItemAnimator());
                             listView.setAdapter(petAdapter);
-                        } else {
-                            petEmptyCheck = String.valueOf(pets.isEmpty());
+                            petEmptyCheck = "false";
+                        }else{
+                            petEmptyCheck= String.valueOf(pets.isEmpty());
+                            Log.d("here",petEmptyCheck);
                         }
                     }
                 }
