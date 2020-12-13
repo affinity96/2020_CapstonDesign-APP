@@ -175,18 +175,19 @@ public class YesGroup extends Fragment {
 
 
         //그룹이 없을 경우
-        if (userData.getGroupId() == 0 ) {
+        if (userData.getGroupId() == 0) {
             service.checkInvite(new GroupInviteData(groupData, null, userData)).enqueue(new Callback<GroupSelectResponse>() {
                 @Override
                 public void onResponse(Call<GroupSelectResponse> call, Response<GroupSelectResponse> response) {
                     checkInvite = response.body().getResult();
-                    Log.d("check",checkInvite);
-                    if(checkInvite.equals("true")){
+                    Log.d("check", checkInvite);
+                    if (checkInvite.equals("true")) {
                         button_join_group.setVisibility(View.VISIBLE);
-                    }else{
+                    } else {
                         button_join_group.setVisibility(View.GONE);
                     }
                 }
+
                 @Override
                 public void onFailure(Call<GroupSelectResponse> call, Throwable t) {
 
@@ -342,8 +343,8 @@ public class YesGroup extends Fragment {
                             service.getGroupData(userData.getGroupId()).enqueue(new Callback<GroupData>() {
                                 @Override
                                 public void onResponse(Call<GroupData> call, Response<GroupData> response) {
-                                    if(response.isSuccessful()){
-                                        groupData=response.body();
+                                    if (response.isSuccessful()) {
+                                        groupData = response.body();
                                         ((MainActivity) MainActivity.context_main).setGroupData(groupData);
                                         service.getFollow(groupData.getId()).enqueue(new Callback<GetFollowData>() {
                                             @Override

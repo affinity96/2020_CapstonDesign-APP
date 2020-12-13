@@ -121,7 +121,7 @@ public class WalkFragment extends Fragment {
         intent = new Intent(getActivity(), MapActivity.class);
 
 
-        userData =((MainActivity) MainActivity.context_main).getUserData();
+        userData = ((MainActivity) MainActivity.context_main).getUserData();
         groupData = ((MainActivity) MainActivity.context_main).getGroupData();
 
         if (groupData != null) {
@@ -148,7 +148,7 @@ public class WalkFragment extends Fragment {
         button_startWalk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!petEmptyCheck.equals("true")){
+                if (!petEmptyCheck.equals("true")) {
                     if (petImageUrl.equals("")) {
 
                         petId = petList.get(0).getId();
@@ -173,7 +173,7 @@ public class WalkFragment extends Fragment {
                     intent.putExtra("petImageUrl", petImageUrl);
                     startActivity(intent);
 
-                }else{
+                } else {
                     textView_petSelect.requestFocus();
                     textView_petSelect.setError("펫을 추가해주세요!");
                 }
@@ -207,16 +207,16 @@ public class WalkFragment extends Fragment {
         spinner_walkScope.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Log.d("spinner",parent.getItemAtPosition(position).toString());
+                Log.d("spinner", parent.getItemAtPosition(position).toString());
                 String checkedScope = parent.getItemAtPosition(position).toString();
 
-                if(checkedScope.equals("전체공개")){
-                    intent.putExtra("scope","wholeScope");
-                }else if(checkedScope.equals("팔로우공개")){
-                    intent.putExtra("scope","followScope");
-                    intent.putExtra("followingGroup",followingArray);
-                }else if(checkedScope.equals("비공개")){
-                    intent.putExtra("scope","closedScope");
+                if (checkedScope.equals("전체공개")) {
+                    intent.putExtra("scope", "wholeScope");
+                } else if (checkedScope.equals("팔로우공개")) {
+                    intent.putExtra("scope", "followScope");
+                    intent.putExtra("followingGroup", followingArray);
+                } else if (checkedScope.equals("비공개")) {
+                    intent.putExtra("scope", "closedScope");
                 }
             }
 
@@ -275,7 +275,7 @@ public class WalkFragment extends Fragment {
                         Log.d("반려동물 확인", "성공");
                         List<SingleItemPet> pets = response.body();
                         if (!pets.isEmpty()) {
-                            Log.d("walk","nothere");
+                            Log.d("walk", "nothere");
                             petList.addAll(pets);
                             //TODO:나중에 바꿔야 할 부분. 일단 가장 처음 강아지의 아이디만을 petId라 해놓음!
                             petId = pets.get(0).getId();
@@ -287,8 +287,8 @@ public class WalkFragment extends Fragment {
                             listView.setLayoutManager(pLayoutManager);
                             listView.setItemAnimator(new DefaultItemAnimator());
                             listView.setAdapter(petAdapter);
-                        }else{
-                            petEmptyCheck= String.valueOf(pets.isEmpty());
+                        } else {
+                            petEmptyCheck = String.valueOf(pets.isEmpty());
                         }
                     }
                 }
