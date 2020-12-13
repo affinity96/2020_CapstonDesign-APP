@@ -554,4 +554,5 @@ public class MainActivity extends AppCompatActivity {
     public void LoadingEnd() {
         loading.loadingEnd();
     }
+
 }

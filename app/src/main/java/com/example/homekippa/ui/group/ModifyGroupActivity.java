@@ -87,8 +87,17 @@ public class ModifyGroupActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+
+        Log.d("BBACK", "들어오는건가?");
+        getGroupData(groupData.getId());
+    }
+
+    @Override
     public void onStart() {
         super.onStart();
+        Log.d("SSTART", "시작한건가?");
         textView_groupName.setText(groupData.getName());
         textView_groupIntro.setText(groupData.getIntroduction());
         textView_groupAddress.setText(groupData.getAddress());
@@ -273,6 +282,10 @@ public class ModifyGroupActivity extends AppCompatActivity {
             public void onResponse(Call<GroupData> call, Response<GroupData> response) {
                 if (response.isSuccessful()) {
                     groupData = response.body();
+                    Log.d("GGROUP", "받아온건가?");
+                    textView_groupName.setText(groupData.getName());
+                    textView_groupIntro.setText(groupData.getIntroduction());
+                    textView_groupAddress.setText(groupData.getAddress());
                 }
             }
 
@@ -292,12 +305,15 @@ public class ModifyGroupActivity extends AppCompatActivity {
             if (requestCode == 1) {
 
                 setImage();
-            } else if (requestCode == 2) {
-                getGroupData(groupData.getId());
-                textView_groupName.setText(groupData.getName());
-                textView_groupIntro.setText(groupData.getIntroduction());
-                textView_groupAddress.setText(groupData.getAddress());
             }
         }
+    }
+
+    @Override
+    public void finish() {
+        Intent intent = new Intent();
+        intent.putExtra("groupData", groupData);
+        setResult(RESULT_OK, intent);
+        super.finish();
     }
 }
