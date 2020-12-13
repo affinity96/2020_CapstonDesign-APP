@@ -491,7 +491,6 @@ public class WalkFragment extends Fragment {
             drawable = getResources().getDrawable(R.drawable.rain);
             imageView_weather.setImageDrawable(drawable);
             textView_weather.setText("비");
-
         } else if (weather.equals("snow")) {
             drawable = getResources().getDrawable(R.drawable.snow);
             imageView_weather.setImageDrawable(drawable);
