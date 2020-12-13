@@ -19,7 +19,8 @@ import com.example.homekippa.data.UserData;
 import com.example.homekippa.function.Loading;
 import com.example.homekippa.network.RetrofitClient;
 import com.example.homekippa.network.ServiceApi;
-import com.example.homekippa.ui.group.FollowViewModel;
+import com.example.homekippa.ui.group.CreateGroupActivity;
+import com.example.homekippa.ui.group.GroupFollowViewModel;
 import com.example.homekippa.ui.group.GroupViewModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -42,16 +43,18 @@ public class LoginActivity extends AppCompatActivity {
     private TextView gotoSignTextview;
     private ServiceApi service;
     final Loading loading = new Loading();
-    private FollowViewModel followViewModel;
+    private GroupFollowViewModel followViewModel;
     private GroupViewModel groupViewModel;
 
     Intent intent;
+    Intent requestToMakeGroup;
     private GroupData groupData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         intent = new Intent(getApplicationContext(), MainActivity.class);
+        requestToMakeGroup = new Intent(getApplicationContext(), CreateGroupActivity.class);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
@@ -59,7 +62,7 @@ public class LoginActivity extends AppCompatActivity {
         curUser = mAuth.getCurrentUser();
         service = RetrofitClient.getClient().create(ServiceApi.class);
 
-        followViewModel = new ViewModelProvider(this).get(FollowViewModel.class);
+        followViewModel = new ViewModelProvider(this).get(GroupFollowViewModel.class);
         groupViewModel = new ViewModelProvider(this).get(GroupViewModel.class);
         if (curUser != null && curUser.isEmailVerified()) {
             loading.loading(LoginActivity.this);
@@ -117,7 +120,6 @@ public class LoginActivity extends AppCompatActivity {
                             Log.w("로그인", "createUserWithEmail:failure", e);
                             Toast.makeText(getApplicationContext(), "로그인 실패", Toast.LENGTH_SHORT).show();
                         }
-
                     }
                 });
     }
@@ -141,7 +143,8 @@ public class LoginActivity extends AppCompatActivity {
                         getGroupData(userData.getGroupId());
                     } else {
                         loading.loadingEnd();
-                        startActivity(intent);
+                        Toast.makeText(getApplicationContext(), "서비스를 이용하기 위해 그룹을 만들어주세요!", Toast.LENGTH_SHORT).show();
+                        startActivity(requestToMakeGroup);
                     }
                 }
             }
