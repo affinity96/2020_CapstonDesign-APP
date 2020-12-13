@@ -336,7 +336,7 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = getIntent();
         userData = (UserData) intent.getExtras().get("user");
 
-        Log.d("main create", userData.getUserName());
+       //Log.d("main create", userData.getUserName());
 //
         Toast.makeText(getApplicationContext(), userData.getUserName() + "님 로그인", Toast.LENGTH_LONG).show();
         groupData = (GroupData) intent.getExtras().get("group");
