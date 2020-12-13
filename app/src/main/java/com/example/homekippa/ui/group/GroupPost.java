@@ -4,6 +4,13 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -28,6 +35,8 @@ import com.example.homekippa.AddPostActivity;
 import com.example.homekippa.ListPostAdapter;
 import com.example.homekippa.MainActivity;
 import com.example.homekippa.R;
+import com.example.homekippa.SingleItemPost;
+import com.example.homekippa.SingleItemPostImage;
 import com.example.homekippa.data.GroupData;
 import com.example.homekippa.data.GroupPostResponse;
 import com.example.homekippa.data.LikeData;
@@ -91,13 +100,14 @@ public class GroupPost extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-
+        Log.d("group", "onresume");
+        setPostListView(listView_posts);
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        setPostListView(listView_posts);
+
     }
 
     @Override
@@ -140,14 +150,14 @@ public class GroupPost extends Fragment {
 
         return root;
     }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-
-        groupViewModel.getPostList().getValue().clear();
-        groupViewModel.getPostList().removeObservers((LifecycleOwner) getContext());
-    }
+//
+//    @Override
+//    public void onStop() {
+//        super.onStop();
+//
+//        groupViewModel.getPostList().getValue().clear();
+//        groupViewModel.getPostList().removeObservers((LifecycleOwner) getContext());
+//    }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -216,7 +226,7 @@ public class GroupPost extends Fragment {
                     postList = groupPostResponse.getPostData();
                     likeList = groupPostResponse.getLikeData();
                     setImageData();
-                    Log.d("like", likeList.toString());
+                    Log.d("group", likeList.toString());
                     ArrayList<Boolean> checkLikeList = setLikeData(likeList);
                     groupViewModel.getPostList().setValue(postList);
                     groupViewModel.getLikeCheck().setValue(checkLikeList);
@@ -245,10 +255,13 @@ public class GroupPost extends Fragment {
     private void setPostAdapter(RecyclerView listView, ArrayList<Boolean> checkLikeList) {
 
         if (checkLikeList.isEmpty()) {
+            Log.d("group", "checklist empty");
             listView.setVisibility(View.GONE);
             empty_post.setVisibility(View.VISIBLE);
         } else {
-            ListPostAdapter postAdapter = new ListPostAdapter(getActivity(), postList, groupData, checkLikeList, true, "");
+            listView.setVisibility(View.VISIBLE);
+            empty_post.setVisibility(View.GONE);
+            ListPostAdapter postAdapter = new ListPostAdapter(getActivity(), postList, groupData, checkLikeList, true, "", myGroup);
             postAdapter.setOnItemClickListener(new ListPostAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick() {

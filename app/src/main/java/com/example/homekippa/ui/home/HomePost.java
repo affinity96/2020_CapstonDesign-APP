@@ -1,6 +1,5 @@
 package com.example.homekippa.ui.home;
 
-import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,18 +14,17 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.homekippa.ListPostAdapter;
 import com.example.homekippa.MainActivity;
 import com.example.homekippa.R;
+import com.example.homekippa.SingleItemPost;
+import com.example.homekippa.SingleItemPostImage;
 import com.example.homekippa.data.GroupData;
 import com.example.homekippa.data.LikeData;
 import com.example.homekippa.data.PostResponse;
 import com.example.homekippa.data.UserData;
 import com.example.homekippa.network.RetrofitClient;
 import com.example.homekippa.network.ServiceApi;
-import com.example.homekippa.ListPostAdapter;
-import com.example.homekippa.SingleItemPost;
-import com.example.homekippa.SingleItemPostImage;
-import com.example.homekippa.ui.group.YesGroup;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -168,7 +166,7 @@ public class HomePost extends Fragment {
         } else {
             listView.setVisibility(View.VISIBLE);
             empty_Img.setVisibility(View.GONE);
-            postAdapter = new ListPostAdapter(getActivity(), list, groupList, checkLikeList, false, tab_);
+            postAdapter = new ListPostAdapter(getActivity(), list, groupList, checkLikeList, false, tab_, false);
             listView.setAdapter(postAdapter);
 
             LinearLayoutManager pLayoutManager = new LinearLayoutManager(getActivity());

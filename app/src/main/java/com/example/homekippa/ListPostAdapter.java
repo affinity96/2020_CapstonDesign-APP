@@ -27,18 +27,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.homekippa.data.DeletePostResponse;
-import com.example.homekippa.ui.group.GroupFragment;
-import com.example.homekippa.ui.group.GroupViewModel;
-import com.example.homekippa.ui.home.FollowViewModel;
-import com.example.homekippa.ui.home.LocationViewModel;
-import com.example.homekippa.ui.home.PostDetailActivity;
 import com.example.homekippa.data.GroupData;
 import com.example.homekippa.data.LikeData;
 import com.example.homekippa.data.LikeResponse;
 import com.example.homekippa.data.UserData;
 import com.example.homekippa.network.RetrofitClient;
 import com.example.homekippa.network.ServiceApi;
-import com.example.homekippa.ui.notifications.ListNotiAdapter;
+import com.example.homekippa.ui.group.GroupFragment;
+import com.example.homekippa.ui.group.GroupViewModel;
+import com.example.homekippa.ui.home.FollowViewModel;
+import com.example.homekippa.ui.home.LocationViewModel;
+import com.example.homekippa.ui.home.PostDetailActivity;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -63,6 +62,7 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
 
     private boolean isgroup;
     private String tab_;
+    private boolean myGroup;
 
     private Cache cache;
     private Intent intent;
@@ -79,28 +79,31 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
         this.mListener = listener;
     }
 
-    public ListPostAdapter(Context context, ArrayList<SingleItemPost> postItems, ArrayList<GroupData> groupData, ArrayList<Boolean> likeCheck, boolean isgroup, String tab_) {
+    public ListPostAdapter(Context context, ArrayList<SingleItemPost> postItems, ArrayList<GroupData> groupData, ArrayList<Boolean> likeCheck, boolean isgroup, String tab_, boolean myGroup) {
         this.context = context;
         this.post_Items = postItems;
         this.groupData = groupData;
         this.likeCheck = likeCheck;
         this.isgroup = isgroup;
         this.tab_ = tab_;
+        this.myGroup = myGroup;
     }
 
-    public ListPostAdapter(Context context, ArrayList<SingleItemPost> postItems, GroupData groupData, ArrayList<Boolean> likeCheck, boolean isGroup, String tab_) {
+    public ListPostAdapter(Context context, ArrayList<SingleItemPost> postItems, GroupData groupData, ArrayList<Boolean> likeCheck, boolean isGroup, String tab_, boolean myGroup) {
         this.context = context;
         this.post_Items = postItems;
         this.isgroup = isGroup;
         this.likeCheck = likeCheck;
         this.groupData.add(groupData);
         this.tab_ = tab_;
+        this.myGroup = myGroup;
     }
 
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.listitem_post, parent, false);
+
 
         cache = new Cache(context);
         service = RetrofitClient.getClient().create(ServiceApi.class);
@@ -116,7 +119,9 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-
+        if(!myGroup){
+            holder.button_DeletePost.setVisibility(View.INVISIBLE);
+        }
         if (isgroup) {
             setGroupViewModel(holder, position);
             try {
@@ -126,7 +131,9 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
                 e.printStackTrace();
             }
         } else {
+
             holder.button_DeletePost.setVisibility(View.INVISIBLE);
+
             if (tab_.equals("F"))
                 setFollowViewModel(holder, position);
             else
@@ -137,6 +144,9 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
                 e.printStackTrace();
             }
         }
+
+
+
     }
 
 
@@ -423,12 +433,15 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
             @Override
             public void onChanged(List<SingleItemPost> singleItemPosts) {
                 int size = groupViewModel.getPostList().getValue().size();
+                int likesize = groupViewModel.getLikeCheck().getValue().size();
                 Log.d("group", String.valueOf(size));
                 Log.d("group", String.valueOf(position));
                 if (position < size) {
                     holder.postCommentNum.setText(String.valueOf(singleItemPosts.get(position).getCommentNum()));
                     holder.postLikedNum.setText(String.valueOf(singleItemPosts.get(position).getLikeNum()));
-                    boolean isliked = groupViewModel.getLikeCheck().getValue().get(position);
+                    boolean isliked = false;
+                    if (position < likesize)
+                        isliked = groupViewModel.getLikeCheck().getValue().get(position);
                     holder.postLikeImage.setActivated(isliked);
                 }
             }
@@ -438,9 +451,12 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
             public void onChanged(List<Boolean> likecheck) {
 
                 int size = groupViewModel.getLikeCheck().getValue().size();
+                int likesize = groupViewModel.getLikeCheck().getValue().size();
                 if (position < size) {
                     holder.postLikedNum.setText(String.valueOf(groupViewModel.getPostList().getValue().get(position).getLikeNum()));
-                    boolean isliked = groupViewModel.getLikeCheck().getValue().get(position);
+                    boolean isliked = false;
+                    if (position < likesize)
+                        isliked = groupViewModel.getLikeCheck().getValue().get(position);
                     holder.postLikeImage.setActivated(isliked);
                 }
             }
@@ -452,11 +468,15 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
         locationViewModel.getPostList().observe((LifecycleOwner) context, new Observer<List<SingleItemPost>>() {
             @Override
             public void onChanged(List<SingleItemPost> singleItemPosts) {
+                int likesize = locationViewModel.getLikeCheck().getValue().size();
                 holder.postCommentNum.setText(String.valueOf(singleItemPosts.get(position).getCommentNum()));
                 holder.postLikedNum.setText(String.valueOf(singleItemPosts.get(position).getLikeNum()));
 
-                boolean isliked = locationViewModel.getLikeCheck().getValue().get(position);
+                boolean isliked = false;
+                if (position < likesize)
+                    isliked = locationViewModel.getLikeCheck().getValue().get(position);
                 holder.postLikeImage.setActivated(isliked);
+
             }
         });
         locationViewModel.getLikeCheck().observe((LifecycleOwner) context, new Observer<List<Boolean>>() {

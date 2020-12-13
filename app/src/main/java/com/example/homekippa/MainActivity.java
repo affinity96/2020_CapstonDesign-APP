@@ -336,7 +336,7 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = getIntent();
         userData = (UserData) intent.getExtras().get("user");
 
-        Log.d("main create", userData.getUserName());
+//        Log.d("main create", userData.getUserName());
 //
         Toast.makeText(getApplicationContext(), userData.getUserName() + "님 로그인", Toast.LENGTH_LONG).show();
         groupData = (GroupData) intent.getExtras().get("group");
@@ -463,11 +463,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
-    @Override
-    public void onStart(){
-        super.onStart();
-    }
-
 
     public void setNavGroupData() {
         userName = (TextView) findViewById(R.id.nav_user_name);
@@ -498,8 +493,8 @@ public class MainActivity extends AppCompatActivity {
         return groupData;
     }
 
-    public void setGroupData(GroupData groupData) {
-        this.groupData = groupData;
+    public static void setGroupData(GroupData groupData) {
+        groupData = groupData;
     }
 
     public BottomNavigationView getNavView() {

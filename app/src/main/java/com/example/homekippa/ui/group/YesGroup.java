@@ -168,6 +168,7 @@ public class YesGroup extends Fragment {
 //        }
 //        getImage(groupData.getImage(), imageView_groupProfile, true);
 //        getImage(groupData.getCover(), imageView_groupCover, false);
+        groupData = (GroupData) getArguments().get("groupData");
         setPetListView(listView_pets);
 
     }
@@ -234,6 +235,7 @@ public class YesGroup extends Fragment {
             button_modify_pet.setVisibility(View.INVISIBLE);
             button_changeGroupCover.setVisibility(View.INVISIBLE);
             button_changeProfile.setVisibility(View.INVISIBLE);
+
             boolean isfollowed = followViewModel.checkFollow(groupData.getId());
 
             if (isfollowed) {
@@ -246,8 +248,13 @@ public class YesGroup extends Fragment {
         } else {
             ll_follower.setVisibility(View.VISIBLE);
             ll_following.setVisibility(View.VISIBLE);
-            textView_followerNum.setText(String.valueOf(followViewModel.getFollowerNum()));
-            textView_followingNum.setText(String.valueOf(followViewModel.getFollowingNum()));
+            if (followViewModel.getFollowerNum() != null) {
+                textView_followerNum.setText(String.valueOf(followViewModel.getFollowerNum()));
+            } else textView_followerNum.setText(String.valueOf(0));
+
+            if (followViewModel.getFollowerNum() != null)
+                textView_followingNum.setText(String.valueOf(followViewModel.getFollowingNum()));
+            else textView_followingNum.setText(String.valueOf(0));
         }
 
 
@@ -292,7 +299,7 @@ public class YesGroup extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), ModifyGroupActivity.class);
-                startActivityForResult(intent, 3);
+                startActivity(intent);
             }
         });
 
@@ -494,10 +501,10 @@ public class YesGroup extends Fragment {
         } else {
             if (requestCode == 1) {
                 setImage();
-            } else if(requestCode == 3) {
-                Log.d("yes", "받아온거니?");
-                groupData = (GroupData)intent.getSerializableExtra("groupData");
-                ((MainActivity)getActivity()).setGroupData(groupData);
+//            } else if(requestCode == 3) {
+//                Log.d("yes", "받아온거니?");
+//                groupData = (GroupData)intent.getSerializableExtra("groupData");
+//                ((MainActivity)getActivity()).setGroupData(groupData);
             }
         }
     }
