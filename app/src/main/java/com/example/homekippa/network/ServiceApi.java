@@ -161,9 +161,9 @@ public interface ServiceApi {
     @POST("/pet/reports/update")
     Call<EditDailyWorkResponse> editDailyWork(@Body EditDailyWorkData data);
 
-
 //    @POST("/pet/add")
 //    Call<AddPetResponse> addPetReg(@Body AddPetData data);
+
 
     @Multipart
     @POST("/pet/add/des/photo")

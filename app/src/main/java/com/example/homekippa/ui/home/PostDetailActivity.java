@@ -213,6 +213,7 @@ public class PostDetailActivity extends AppCompatActivity {
         }
 
         setPostComment(recyclerView_postComments);
+        Log.d("comment", "here");
 
         postLikedImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -325,6 +326,7 @@ public class PostDetailActivity extends AppCompatActivity {
                     user_List = commentGetResponse.getUsers();
                     group_List = commentGetResponse.getGroups();
                     ArrayList<SingleItemComment> comments = new ArrayList<>();
+                    Log.d("comment", "here");
 
                     //TODO: Change the image of GROUP
                     for (int i = 0; i < comment_List.size(); i++) {

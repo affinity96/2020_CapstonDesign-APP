@@ -154,7 +154,6 @@ public class YesGroup extends Fragment {
         }
     }
 
-
     @Override
     public void onResume() {
         super.onResume();
@@ -174,7 +173,7 @@ public class YesGroup extends Fragment {
         tv_groupName.setText(groupData.getName());
         tv_groupIntro.setText(groupData.getIntroduction());
 
-        if (!myGroup && groupData != null) {
+        if (!myGroup) {
             button_join_group.setVisibility(View.VISIBLE);
             button_follow_group.setVisibility(View.VISIBLE);
             button_addUser.setVisibility(View.INVISIBLE);
