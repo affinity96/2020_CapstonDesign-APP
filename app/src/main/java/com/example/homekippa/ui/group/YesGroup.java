@@ -247,8 +247,13 @@ public class YesGroup extends Fragment {
         } else {
             ll_follower.setVisibility(View.VISIBLE);
             ll_following.setVisibility(View.VISIBLE);
-            textView_followerNum.setText(String.valueOf(followViewModel.getFollowerNum()));
-            textView_followingNum.setText(String.valueOf(followViewModel.getFollowingNum()));
+            if (followViewModel.getFollowerNum() != null) {
+                textView_followerNum.setText(String.valueOf(followViewModel.getFollowerNum()));
+            } else textView_followerNum.setText(String.valueOf(0));
+
+            if (followViewModel.getFollowerNum() != null)
+                textView_followingNum.setText(String.valueOf(followViewModel.getFollowingNum()));
+            else textView_followingNum.setText(String.valueOf(0));
         }
 
 

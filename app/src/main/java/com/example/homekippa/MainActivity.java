@@ -463,11 +463,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
-    @Override
-    public void onStart(){
-        super.onStart();
-    }
-
 
     public void setNavGroupData() {
         userName = (TextView) findViewById(R.id.nav_user_name);
@@ -498,8 +493,8 @@ public class MainActivity extends AppCompatActivity {
         return groupData;
     }
 
-    public void setGroupData(GroupData groupData) {
-        this.groupData = groupData;
+    public static void setGroupData(GroupData groupData) {
+        groupData = groupData;
     }
 
     public BottomNavigationView getNavView() {

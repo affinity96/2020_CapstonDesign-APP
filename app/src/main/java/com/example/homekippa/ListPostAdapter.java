@@ -433,12 +433,15 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
             @Override
             public void onChanged(List<SingleItemPost> singleItemPosts) {
                 int size = groupViewModel.getPostList().getValue().size();
+                int likesize = groupViewModel.getLikeCheck().getValue().size();
                 Log.d("group", String.valueOf(size));
                 Log.d("group", String.valueOf(position));
                 if (position < size) {
                     holder.postCommentNum.setText(String.valueOf(singleItemPosts.get(position).getCommentNum()));
                     holder.postLikedNum.setText(String.valueOf(singleItemPosts.get(position).getLikeNum()));
-                    boolean isliked = groupViewModel.getLikeCheck().getValue().get(position);
+                    boolean isliked = false;
+                    if (position < likesize)
+                        isliked = groupViewModel.getLikeCheck().getValue().get(position);
                     holder.postLikeImage.setActivated(isliked);
                 }
             }
@@ -448,9 +451,12 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
             public void onChanged(List<Boolean> likecheck) {
 
                 int size = groupViewModel.getLikeCheck().getValue().size();
+                int likesize = groupViewModel.getLikeCheck().getValue().size();
                 if (position < size) {
                     holder.postLikedNum.setText(String.valueOf(groupViewModel.getPostList().getValue().get(position).getLikeNum()));
-                    boolean isliked = groupViewModel.getLikeCheck().getValue().get(position);
+                    boolean isliked = false;
+                    if (position < likesize)
+                        isliked = groupViewModel.getLikeCheck().getValue().get(position);
                     holder.postLikeImage.setActivated(isliked);
                 }
             }
@@ -462,11 +468,15 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
         locationViewModel.getPostList().observe((LifecycleOwner) context, new Observer<List<SingleItemPost>>() {
             @Override
             public void onChanged(List<SingleItemPost> singleItemPosts) {
+                int likesize = locationViewModel.getLikeCheck().getValue().size();
                 holder.postCommentNum.setText(String.valueOf(singleItemPosts.get(position).getCommentNum()));
                 holder.postLikedNum.setText(String.valueOf(singleItemPosts.get(position).getLikeNum()));
 
-                boolean isliked = locationViewModel.getLikeCheck().getValue().get(position);
+                boolean isliked = false;
+                if (position < likesize)
+                    isliked = locationViewModel.getLikeCheck().getValue().get(position);
                 holder.postLikeImage.setActivated(isliked);
+
             }
         });
         locationViewModel.getLikeCheck().observe((LifecycleOwner) context, new Observer<List<Boolean>>() {
