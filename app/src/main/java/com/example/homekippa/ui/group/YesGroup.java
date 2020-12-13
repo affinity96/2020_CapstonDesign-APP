@@ -218,8 +218,6 @@ public class YesGroup extends Fragment {
         }
 
 
-
-
         textView_members.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -298,6 +296,7 @@ public class YesGroup extends Fragment {
                                 button_follow_group.setText("팔로우");
                             }
                         }
+
                         @Override
                         public void onFailure(Call<FollowResponse> call, Throwable t) {
                             Log.d("follow", "fail");
@@ -370,11 +369,11 @@ public class YesGroup extends Fragment {
         button_Add_DW.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(petList.size() == 0){
-                    Log.d("여왔냐","여왔아");
+                if (petList.size() == 0) {
+                    Log.d("여왔냐", "여왔아");
                     Toast.makeText(getActivity(), "등록된 반려동물이 없습니다. 반려동물을 등록해보세요!", Toast.LENGTH_LONG).show();
 
-                }else{
+                } else {
                     Intent intent = new Intent(getActivity(), CreateDailyWorkActivity.class);
                     intent.putExtra("userData", userData);
                     intent.putExtra("groupData", groupData);
