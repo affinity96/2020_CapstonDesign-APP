@@ -148,7 +148,7 @@ public class YesGroup extends Fragment {
         followViewModel = new ViewModelProvider(requireActivity()).get(GroupFollowViewModel.class);
         groupViewModel = new ViewModelProvider(requireActivity()).get(GroupViewModel.class);
 
-        userData = ((MainActivity) getActivity()).getUserData();
+        userData = main.getUserData();
         groupData = (GroupData) getArguments().get("groupData");
         myGroup = (boolean) getArguments().get("myGroup");
 
@@ -168,8 +168,7 @@ public class YesGroup extends Fragment {
 //        }
 //        getImage(groupData.getImage(), imageView_groupProfile, true);
 //        getImage(groupData.getCover(), imageView_groupCover, false);
-        groupData = (GroupData) getArguments().get("groupData");
-        setPetListView(listView_pets);
+
 
     }
 
@@ -177,56 +176,18 @@ public class YesGroup extends Fragment {
     public void onStart() {
 
         super.onStart();
+        groupData = (GroupData) getArguments().get("groupData");
+        setPetListView(listView_pets);
         Log.d("yes", "onstart");
         if (myGroup) {
             groupData = ((MainActivity) getActivity()).getGroupData();
-//            Log.d("yes profile_createview", groupData.getImage());
+            Log.d("갱신", groupData.getName());
         }
-
-        getImage(groupData.getImage(), imageView_groupProfile, true);
-        getImage(groupData.getCover(), imageView_groupCover, false);
-        setPetListView(listView_pets);
-
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
-        root = (ViewGroup) inflater.inflate(R.layout.fragment_yes_group, container, false);
-        tv_groupName = root.findViewById(R.id.textView_groupName);
-        tv_groupIntro = root.findViewById(R.id.textView_groupIntro);
-        button_Add_DW = root.findViewById(R.id.button_Add_DW);
-        button_modify_pet = root.findViewById(R.id.button_modify_pet);
-        button_addPet = root.findViewById(R.id.button_AddPet);
-        button_addUser = root.findViewById(R.id.button_Add_User);
-        button_join_group = root.findViewById(R.id.button_join_group);
-        button_changeGroupCover = root.findViewById(R.id.button_changeGroupCover);
-        button_follow_group = root.findViewById(R.id.button_follow_group);
-        button_changeProfile = root.findViewById(R.id.button_changeProfile);
-        listView_pets = root.findViewById(R.id.listview_pets);
-        listView_dailyWorks = root.findViewById(R.id.listview_dailywork);
-        imageView_groupCover = root.findViewById(R.id.ImageView_groupCover);
-        imageView_groupProfile = root.findViewById(R.id.ImageView_groupProfile);
-        imageView_groupCover = root.findViewById(R.id.ImageView_groupCover);
-        textView_followerNum = root.findViewById(R.id.textView__followerNum);
-        textView_followingNum = root.findViewById(R.id.textView__followingNum);
-        ll_follower = root.findViewById(R.id.linearLayout_follower);
-        ll_following = root.findViewById(R.id.linearLayout_following);
-        textView_members = root.findViewById(R.id.textView_groupMembers);
 
         tv_groupName.setText(groupData.getName());
         tv_groupIntro.setText(groupData.getIntroduction());
-//        if (myGroup) {
-//            groupData = ((MainActivity) getActivity()).getGroupData();
-//            Log.d("yes profile_createview", groupData.getImage());
-//        }
-//
-//        getImage(groupData.getImage(), imageView_groupProfile, true);
-//        getImage(groupData.getCover(), imageView_groupCover, false);
-//        setPetListView(listView_pets);
 
-        if (!myGroup) {
+        if (!myGroup && groupData != null) {
             button_join_group.setVisibility(View.VISIBLE);
             button_follow_group.setVisibility(View.VISIBLE);
             button_addUser.setVisibility(View.INVISIBLE);
@@ -440,6 +401,47 @@ public class YesGroup extends Fragment {
             }
         });
 
+        getImage(groupData.getImage(), imageView_groupProfile, true);
+        getImage(groupData.getCover(), imageView_groupCover, false);
+        setPetListView(listView_pets);
+
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+
+        root = (ViewGroup) inflater.inflate(R.layout.fragment_yes_group, container, false);
+        tv_groupName = root.findViewById(R.id.textView_groupName);
+        tv_groupIntro = root.findViewById(R.id.textView_groupIntro);
+        button_Add_DW = root.findViewById(R.id.button_Add_DW);
+        button_modify_pet = root.findViewById(R.id.button_modify_pet);
+        button_addPet = root.findViewById(R.id.button_AddPet);
+        button_addUser = root.findViewById(R.id.button_Add_User);
+        button_join_group = root.findViewById(R.id.button_join_group);
+        button_changeGroupCover = root.findViewById(R.id.button_changeGroupCover);
+        button_follow_group = root.findViewById(R.id.button_follow_group);
+        button_changeProfile = root.findViewById(R.id.button_changeProfile);
+        listView_pets = root.findViewById(R.id.listview_pets);
+        listView_dailyWorks = root.findViewById(R.id.listview_dailywork);
+        imageView_groupCover = root.findViewById(R.id.ImageView_groupCover);
+        imageView_groupProfile = root.findViewById(R.id.ImageView_groupProfile);
+        imageView_groupCover = root.findViewById(R.id.ImageView_groupCover);
+        textView_followerNum = root.findViewById(R.id.textView__followerNum);
+        textView_followingNum = root.findViewById(R.id.textView__followingNum);
+        ll_follower = root.findViewById(R.id.linearLayout_follower);
+        ll_following = root.findViewById(R.id.linearLayout_following);
+        textView_members = root.findViewById(R.id.textView_groupMembers);
+
+//        if (myGroup) {
+//            groupData = ((MainActivity) getActivity()).getGroupData();
+//            Log.d("yes profile_createview", groupData.getImage());
+//        }
+//
+//        getImage(groupData.getImage(), imageView_groupProfile, true);
+//        getImage(groupData.getCover(), imageView_groupCover, false);
+//        setPetListView(listView_pets);
+
 
         return root;
     }
@@ -528,7 +530,7 @@ public class YesGroup extends Fragment {
 
                     Toast.makeText(getContext(), result.getMessage(), Toast.LENGTH_SHORT).show();
                     if (result.getCode() == 200) {
-                        service.getGroupData(MainActivity.getGroupData().getId()).enqueue(new Callback<GroupData>() {
+                        service.getGroupData(((MainActivity) MainActivity.context_main).getGroupData().getId()).enqueue(new Callback<GroupData>() {
                             @Override
                             public void onResponse(Call<GroupData> call, Response<GroupData> response) {
                                 GroupData group = response.body();
@@ -562,7 +564,7 @@ public class YesGroup extends Fragment {
 
                     Toast.makeText(getContext(), result.getMessage(), Toast.LENGTH_SHORT).show();
                     if (result.getCode() == 200) {
-                        service.getGroupData(MainActivity.getGroupData().getId()).enqueue(new Callback<GroupData>() {
+                        service.getGroupData(((MainActivity) MainActivity.context_main).getGroupData().getId()).enqueue(new Callback<GroupData>() {
                             @Override
                             public void onResponse(Call<GroupData> call, Response<GroupData> response) {
                                 GroupData group = response.body();

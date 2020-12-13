@@ -65,7 +65,6 @@ public class ModifyGroupActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modify_group);
-        main = new MainActivity();
         service = RetrofitClient.getClient().create(ServiceApi.class);
 
         cache = new Cache(getApplicationContext());
@@ -79,7 +78,7 @@ public class ModifyGroupActivity extends AppCompatActivity {
         textView_groupIntro = findViewById(R.id.textView_groupIntro);
         textView_groupAddress = findViewById(R.id.textView_groupAddress);
 
-        groupData = main.getGroupData();
+        groupData = ((MainActivity) MainActivity.context_main).getGroupData();
         Log.d("yes modify onstart", groupData.getImage());
         getGroupProfileImage(groupData.getImage(), imageView_modify_profile_Image);
 
@@ -204,11 +203,11 @@ public class ModifyGroupActivity extends AppCompatActivity {
                     Toast.makeText(ModifyGroupActivity.this, result.getMessage(), Toast.LENGTH_SHORT).show();
                     if (result.getCode() == 200) {
                         Log.d("yes modify", "?");
-                        service.getGroupData(main.getGroupData().getId()).enqueue(new Callback<GroupData>() {
+                        service.getGroupData(((MainActivity) MainActivity.context_main).getGroupData().getId()).enqueue(new Callback<GroupData>() {
                             @Override
                             public void onResponse(Call<GroupData> call, Response<GroupData> response) {
                                 GroupData group = response.body();
-                                main.setGroupData(group);
+                                ((MainActivity) MainActivity.context_main).setGroupData(group);
                                 Log.d("yes modify", group.getImage());
                                 cache.saveBitmapToJpeg(originalBm, group.getImage());
                                 imageView_modify_profile_Image.setImageBitmap(originalBm);
@@ -241,11 +240,11 @@ public class ModifyGroupActivity extends AppCompatActivity {
 
                     Toast.makeText(ModifyGroupActivity.this, result.getMessage(), Toast.LENGTH_SHORT).show();
                     if (result.getCode() == 200) {
-                        service.getGroupData(main.getGroupData().getId()).enqueue(new Callback<GroupData>() {
+                        service.getGroupData(((MainActivity) MainActivity.context_main).getGroupData().getId()).enqueue(new Callback<GroupData>() {
                             @Override
                             public void onResponse(Call<GroupData> call, Response<GroupData> response) {
                                 GroupData group = response.body();
-                                main.setGroupData(group);
+                                ((MainActivity) MainActivity.context_main).setGroupData(group);
                                 Log.d("yes modify", group.getImage());
 
                                 imageView_modify_profile_Image.setImageResource(R.drawable.group_profile_default);
@@ -285,8 +284,8 @@ public class ModifyGroupActivity extends AppCompatActivity {
                     textView_groupIntro.setText(groupData.getIntroduction());
                     textView_groupAddress.setText(groupData.getAddress());
                     Log.d("갱신전?", groupData.getName());
-                    main.setGroupData(groupData);
-                    groupData = main.getGroupData();
+                    ((MainActivity) MainActivity.context_main).setGroupData(groupData);
+                    groupData = ((MainActivity) MainActivity.context_main).getGroupData();
                     Log.d("갱신후?", groupData.getName());
                 }
             }
