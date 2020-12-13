@@ -16,8 +16,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.example.homekippa.Cache;
+import com.example.homekippa.LoginActivity;
 import com.example.homekippa.MainActivity;
 import com.example.homekippa.R;
+import com.example.homekippa.data.GetFollowData;
 import com.example.homekippa.data.GroupData;
 import com.example.homekippa.data.ModifyGroupResponse;
 import com.example.homekippa.network.RetrofitClient;
@@ -54,6 +56,7 @@ public class ModifyGroupActivity extends AppCompatActivity {
     private TextView textView_groupIntro;
     private TextView textView_groupAddress;
     public File tempFile;
+    private int groupId;
     private Boolean isPermission = true;
     private ServiceApi service;
 
@@ -77,7 +80,6 @@ public class ModifyGroupActivity extends AppCompatActivity {
         textView_groupName = findViewById(R.id.textView_groupName);
         textView_groupIntro = findViewById(R.id.textView_groupIntro);
         textView_groupAddress = findViewById(R.id.textView_groupAddress);
-
         groupData = MainActivity.getGroupData();
         Log.d("yes modify onstart", groupData.getImage());
         getGroupProfileImage(groupData.getImage(), imageView_modify_profile_Image);
@@ -87,7 +89,6 @@ public class ModifyGroupActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-
         textView_groupName.setText(groupData.getName());
         textView_groupIntro.setText(groupData.getIntroduction());
         textView_groupAddress.setText(groupData.getAddress());
@@ -120,7 +121,7 @@ public class ModifyGroupActivity extends AppCompatActivity {
                 Intent intent = new Intent(view.getContext(), ModifyGroupNameActivity.class);
                 intent.putExtra("id", groupData.getId());
                 intent.putExtra("name", groupData.getName());
-                startActivity(intent);
+                startActivityForResult(intent, 2);
             }
         });
 
@@ -130,7 +131,7 @@ public class ModifyGroupActivity extends AppCompatActivity {
                 Intent intent = new Intent(view.getContext(), ModifyGroupIntroActivity.class);
                 intent.putExtra("id", groupData.getId());
                 intent.putExtra("introduction", groupData.getIntroduction());
-                startActivity(intent);
+                startActivityForResult(intent, 2);
             }
         });
 
@@ -139,7 +140,7 @@ public class ModifyGroupActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), ModifyGroupAddressActivity.class);
                 intent.putExtra("id", groupData.getId());
-                startActivity(intent);
+                startActivityForResult(intent, 2);
             }
         });
     }
@@ -265,6 +266,23 @@ public class ModifyGroupActivity extends AppCompatActivity {
 
     }
 
+    public void getGroupData(int ID) {
+
+        service.getGroupData(ID).enqueue(new Callback<GroupData>() {
+            @Override
+            public void onResponse(Call<GroupData> call, Response<GroupData> response) {
+                if (response.isSuccessful()) {
+                    groupData = response.body();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GroupData> call, Throwable t) {
+                Log.e("그룹 확인", t.getMessage());
+            }
+        });
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
@@ -274,6 +292,11 @@ public class ModifyGroupActivity extends AppCompatActivity {
             if (requestCode == 1) {
 
                 setImage();
+            } else if (requestCode == 2) {
+                getGroupData(groupData.getId());
+                textView_groupName.setText(groupData.getName());
+                textView_groupIntro.setText(groupData.getIntroduction());
+                textView_groupAddress.setText(groupData.getAddress());
             }
         }
     }

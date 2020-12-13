@@ -296,7 +296,6 @@ public class YesGroup extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), ModifyGroupActivity.class);
-                intent.putExtra("groupData", groupData);
                 startActivity(intent);
             }
         });
