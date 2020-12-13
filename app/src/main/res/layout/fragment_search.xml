@@ -3,17 +3,35 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
-    <SearchView
-        android:id="@+id/searchView"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:iconifiedByDefault="false"
-        android:queryHint="사용자, 그룹을 검색하세요" />
+        android:layout_height="wrap_content"
+        android:weightSum="5"
+        android:orientation="horizontal">
+        <SearchView
+            android:id="@+id/searchView_Group"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_weight="4"
+            android:layout_margin="5dp"
+            android:iconifiedByDefault="false"
+            android:queryHint="그룹 이름을 검색하세요." />
+        <Button
+            android:id="@+id/button_SearchGroup"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/round_button2"
+            android:text="검색" />
+    </LinearLayout>
 
-    <ListView
-        android:id="@+id/search_listView"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/listView_Search_Groups"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
 
 </LinearLayout>
