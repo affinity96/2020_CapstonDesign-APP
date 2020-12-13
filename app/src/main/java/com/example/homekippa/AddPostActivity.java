@@ -13,12 +13,14 @@ import android.provider.MediaStore;
 import android.text.Editable;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -56,10 +58,9 @@ public class AddPostActivity extends AppCompatActivity {
     private ImageButton button_cancel_post_image;
     private ImageButton button_Add_Post_Img;
 
-    private CheckBox checkBox_closedScope;
-    private CheckBox checkBox_followScope;
-    private CheckBox checkBox_wholeScope;
+
     private TextView textView_postScope;
+    private Spinner spinner_scope;
     private String scope;
 
     private static final String TAG = "addPost";
@@ -82,10 +83,11 @@ public class AddPostActivity extends AppCompatActivity {
         button_cancel_post_image = (ImageButton) this.findViewById(R.id.button_cancel_post_image);
         button_Add_Post_Img = (ImageButton) this.findViewById(R.id.button_Add_Post_Img);
 
-        checkBox_closedScope = this.findViewById(R.id.checkBox_closedScope);
-        checkBox_followScope = this.findViewById(R.id.checkBox_followScope);
-        checkBox_wholeScope = this.findViewById(R.id.checkBox_wholeScope);
+//        checkBox_closedScope = this.findViewById(R.id.checkBox_closedScope);
+//        checkBox_followScope = this.findViewById(R.id.checkBox_followScope);
+//        checkBox_wholeScope = this.findViewById(R.id.checkBox_wholeScope);
         textView_postScope = this.findViewById(R.id.textView_postScope);
+        spinner_scope = this.findViewById(R.id.spinner_scope);
 
         Intent intent = getIntent();
 
@@ -115,11 +117,32 @@ public class AddPostActivity extends AppCompatActivity {
         button_CompletePost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(checkBox_wholeScope.isChecked() == false && checkBox_followScope.isChecked() == false && checkBox_closedScope.isChecked() == false){
-                    textView_postScope.setError("공개범위를 선택해주세요");
-                }else{
+//                if(checkBox_wholeScope.isChecked() == false && checkBox_followScope.isChecked() == false && checkBox_closedScope.isChecked() == false){
+//                    textView_postScope.setError("공개범위를 선택해주세요");
+//                }else{
                     addPost(groupData.getId(), userData.getUserId(), postContent.toString(), editText_postTitle.getText().toString(), groupData.getArea(), scope);
+//                }
+            }
+        });
+
+        spinner_scope.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Log.d("spinner",parent.getItemAtPosition(position).toString());
+                String checkedScope = parent.getItemAtPosition(position).toString();
+
+                if(checkedScope.equals("전체공개")){
+                    scope= "wholeScope";
+                }else if(checkedScope.equals("팔로우공개")){
+                    scope= "followScope";
+                }else if(checkedScope.equals("비공개")){
+                    scope = "closedScope";
                 }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
             }
         });
 
@@ -174,33 +197,7 @@ public class AddPostActivity extends AppCompatActivity {
         }
     }
 
-    public void onCheckboxClicked_scope(View v) {
-        switch (v.getId()){
-            case R.id.checkBox_wholeScope:
-                checkBox_wholeScope.setChecked(true);
-                checkBox_followScope.setChecked(false);
-                checkBox_closedScope.setChecked(false);
-                scope = "wholeScope";
-                break;
 
-
-            case R.id.checkBox_followScope:
-                checkBox_wholeScope.setChecked(false);
-                checkBox_followScope.setChecked(true);
-                checkBox_closedScope.setChecked(false);
-                scope = "followScope";
-                break;
-
-            case R.id.checkBox_closedScope:
-                checkBox_wholeScope.setChecked(true);
-                checkBox_followScope.setChecked(false);
-                checkBox_closedScope.setChecked(true);
-                scope = "closedScope";
-                break;
-
-        }
-
-    }
 
     private void setImage() {
         frameLayout_post.setVisibility(View.VISIBLE);

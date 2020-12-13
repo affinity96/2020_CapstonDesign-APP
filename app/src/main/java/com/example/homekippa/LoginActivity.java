@@ -140,7 +140,6 @@ public class LoginActivity extends AppCompatActivity {
                         getGroupData(userData.getGroupId());
                     } else {
                         loading.loadingEnd();
-                        Toast.makeText(getApplicationContext(), "로그인 성공", Toast.LENGTH_SHORT).show();
                         startActivity(intent);
                     }
                 }

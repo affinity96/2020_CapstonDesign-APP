@@ -13,8 +13,7 @@
         android:layout_height="60dp"
         android:layout_centerVertical="true"
         android:layout_margin="5dp"
-        android:clickable="true"
-        android:src="@drawable/dog_woong" />
+        android:clickable="true" />
 
     <LinearLayout
         android:id="@+id/layout_SearchContent"

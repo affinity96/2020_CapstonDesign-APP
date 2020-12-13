@@ -256,6 +256,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
@@ -268,6 +269,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -287,6 +289,15 @@ import com.example.homekippa.ui.home.HomeFragment;
 import com.example.homekippa.ui.notifications.NotificationsFragment;
 import com.example.homekippa.ui.search.SearchFragment;
 import com.example.homekippa.ui.walk.WalkFragment;
+import com.google.android.ads.nativetemplates.NativeTemplateStyle;
+import com.google.android.ads.nativetemplates.TemplateView;
+import com.google.android.gms.ads.AdLoader;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.formats.NativeAdOptions;
+import com.google.android.gms.ads.formats.UnifiedNativeAd;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -301,6 +312,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.google.android.gms.ads.formats.NativeAdOptions.ADCHOICES_BOTTOM_RIGHT;
+
 public class MainActivity extends AppCompatActivity {
     private FirebaseUser curUser;
     private FirebaseAuth mAuth;
@@ -309,6 +322,8 @@ public class MainActivity extends AppCompatActivity {
     private NavigationView navigationView;
     private BottomNavigationView navView;
     private ImageButton menuButton, chatButton;
+
+    final Loading loading = new Loading();
 
     private ArrayList<SingleItemPet> array_pets;
     private ListView listView_pets;
@@ -354,6 +369,30 @@ public class MainActivity extends AppCompatActivity {
         });
         //채팅 버튼 - To Do
         chatButton = findViewById(R.id.top_btn_chat);
+        chatButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
+                intent.putExtra("userData", userData);
+                startActivity(intent);
+            }
+        });
+
+        //Admob
+        MobileAds.initialize(this, "ca-app-pub-6437922356481702~4737777043");
+        AdLoader adLoader = new AdLoader.Builder(this, "ca-app-pub-3940256099942544/2247696110")
+                .forUnifiedNativeAd(new UnifiedNativeAd.OnUnifiedNativeAdLoadedListener() {
+                    @Override
+                    public void onUnifiedNativeAdLoaded(UnifiedNativeAd unifiedNativeAd) {
+                        TemplateView template = findViewById(R.id.main_ad_template);
+                        template.setNativeAd(unifiedNativeAd);
+
+                    }
+                }).withNativeAdOptions(new NativeAdOptions.Builder().setAdChoicesPlacement(ADCHOICES_BOTTOM_RIGHT).build())
+                .build();
+
+        adLoader.loadAd(new AdRequest.Builder().build());
+
 
         //좌측 메뉴
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -507,8 +546,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
-    final Loading loading = new Loading();
 
     public void LoadingStart() {
         loading.loading(MainActivity.this);
