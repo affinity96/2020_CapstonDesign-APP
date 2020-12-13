@@ -50,6 +50,7 @@
         </LinearLayout>
 
     </RelativeLayout>
+
     <Button
         android:id="@+id/button_Delete_Post"
         android:layout_width="25dp"
@@ -69,9 +70,6 @@
         android:gravity="center"
         android:orientation="vertical">
 
-
-
-
         <TextView
             android:id="@+id/textView_PostTitle"
             android:layout_width="303dp"
@@ -88,9 +86,9 @@
         <TextView
             android:id="@+id/textView_PostContent"
             android:layout_width="300dp"
-            android:layout_gravity="left"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textView_PostTitle"
+            android:layout_gravity="left"
             android:layout_margin="3dp"
             android:layout_weight="1"
             android:lines="1"
@@ -166,8 +164,6 @@
 
 
     </LinearLayout>
-
-
 
 
 </RelativeLayout>
