@@ -174,7 +174,7 @@ public class LoginActivity extends AppCompatActivity {
                         public void onResponse(Call<GetFollowData> call, Response<GetFollowData> response) {
                             if (response.isSuccessful()) {
                                 Log.d("follow", "successful");
-                                Log.d("follow", response.body().toString());
+                                Log.d("follow", response.body().getFollowerList().toString());
 
                                 followViewModel.getFollower().setValue(response.body().getFollowerList());
                                 followViewModel.getFollowing().setValue(response.body().getFollowingList());

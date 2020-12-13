@@ -141,14 +141,14 @@ public class GroupPost extends Fragment {
 
         return root;
     }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-
-        groupViewModel.getPostList().getValue().clear();
-        groupViewModel.getPostList().removeObservers((LifecycleOwner) getContext());
-    }
+//
+//    @Override
+//    public void onStop() {
+//        super.onStop();
+//
+//        groupViewModel.getPostList().getValue().clear();
+//        groupViewModel.getPostList().removeObservers((LifecycleOwner) getContext());
+//    }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {

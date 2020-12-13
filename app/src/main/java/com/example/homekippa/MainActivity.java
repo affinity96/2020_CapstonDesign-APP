@@ -463,11 +463,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
-    @Override
-    public void onStart(){
-        super.onStart();
-    }
-
 
     public void setNavGroupData() {
         userName = (TextView) findViewById(R.id.nav_user_name);
