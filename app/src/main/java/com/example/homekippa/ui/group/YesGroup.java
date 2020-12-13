@@ -31,10 +31,10 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.homekippa.AddPetActivity;
 import com.example.homekippa.Cache;
 import com.example.homekippa.CreateDailyWorkActivity;
+import com.example.homekippa.EditDailyWorkActivity;
 import com.example.homekippa.ImageTask;
 import com.example.homekippa.MainActivity;
 import com.example.homekippa.ModifyPetActivity;
-import com.example.homekippa.EditDailyWorkActivity;
 import com.example.homekippa.R;
 import com.example.homekippa.data.DoneReportsResponse;
 import com.example.homekippa.data.FollowData;
@@ -231,6 +231,8 @@ public class YesGroup extends Fragment {
         }
 
 
+
+
         textView_members.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -381,12 +383,19 @@ public class YesGroup extends Fragment {
         button_Add_DW.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), CreateDailyWorkActivity.class);
-                intent.putExtra("userData", userData);
-                intent.putExtra("groupData", groupData);
-                intent.putExtra("petId", petList.get(selectedPosition).getId());
-                Log.d("넘겨넘겨~", String.format("%d", petId));
-                startActivity(intent);
+                if(petList.size() == 0){
+                    Log.d("여왔냐","여왔아");
+                    Toast.makeText(getActivity(), "등록된 반려동물이 없습니다. 반려동물을 등록해보세요!", Toast.LENGTH_LONG).show();
+
+                }else{
+                    Intent intent = new Intent(getActivity(), CreateDailyWorkActivity.class);
+                    intent.putExtra("userData", userData);
+                    intent.putExtra("groupData", groupData);
+                    intent.putExtra("petId", petList.get(selectedPosition).getId());
+                    Log.d("넘겨넘겨~", String.format("%d", petId));
+                    startActivity(intent);
+                }
+
             }
         });
 
@@ -650,6 +659,7 @@ public class YesGroup extends Fragment {
                         listView.setAdapter(petAdapter);
 
                     }
+
                 }
             }
 
