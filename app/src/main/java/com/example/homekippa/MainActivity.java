@@ -277,6 +277,7 @@ import com.example.homekippa.data.UserData;
 import com.example.homekippa.function.Loading;
 import com.example.homekippa.network.RetrofitClient;
 import com.example.homekippa.network.ServiceApi;
+import com.example.homekippa.ui.group.CreateGroupActivity;
 import com.example.homekippa.ui.group.GroupFragment;
 import com.example.homekippa.ui.group.NoGroup;
 import com.example.homekippa.ui.group.SingleItemPet;
@@ -340,8 +341,7 @@ public class MainActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         userData = (UserData) intent.getExtras().get("user");
-
-//        Log.d("main create", userData.getUserName());
+        //        Log.d("main create", userData.getUserName());
 //
         Toast.makeText(getApplicationContext(), userData.getUserName() + "님 로그인", Toast.LENGTH_LONG).show();
         groupData = (GroupData) intent.getExtras().get("group");
@@ -363,7 +363,7 @@ public class MainActivity extends AppCompatActivity {
         menuButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //좌측메뉴 열기
+                //좌측메뉴 열기android.view.View#setOnClickListener
                 setNavGroupData();
                 Log.d("main click nav", userData.getUserName());
                 leftDrawerLayout.openDrawer(navigationView);
@@ -392,6 +392,16 @@ public class MainActivity extends AppCompatActivity {
                 }).withNativeAdOptions(new NativeAdOptions.Builder().setAdChoicesPlacement(ADCHOICES_BOTTOM_RIGHT).build())
                 .build();
         adLoader.loadAd(new AdRequest.Builder().build());
+
+        if(userData.getGroupId() == 0){
+            navigationView.getMenu().findItem(R.id.menu_item1).setVisible(false);
+            navigationView.getMenu().findItem(R.id.menu_item2).setVisible(false);
+            navigationView.getMenu().findItem(R.id.menu_item).setVisible(true);
+        }else{
+            navigationView.getMenu().findItem(R.id.menu_item1).setVisible(true);
+            navigationView.getMenu().findItem(R.id.menu_item2).setVisible(true);
+            navigationView.getMenu().findItem(R.id.menu_item).setVisible(false);
+        }
 
 
         //좌측 메뉴
@@ -424,6 +434,9 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "로그아웃", Toast.LENGTH_SHORT).show();
                     mAuth.signOut();
                     finish();
+                }else if(id == R.id.menu_item){
+                    Intent intent = new Intent(getApplicationContext(), CreateGroupActivity.class);
+                    startActivity(intent);
                 }
                 return true;
             }
@@ -444,7 +457,11 @@ public class MainActivity extends AppCompatActivity {
                         getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new SearchFragment()).commitAllowingStateLoss();
                         return true;
                     case R.id.navigation_walk:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new WalkFragment()).commitAllowingStateLoss();
+                        if(userData.getGroupId() != 0){
+                            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new WalkFragment()).commitAllowingStateLoss();
+                        }else{
+                            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new NoGroup()).commitAllowingStateLoss();
+                        }
                         return true;
                     case R.id.navigation_notifications:
                         getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new NotificationsFragment()).commitAllowingStateLoss();
