@@ -384,7 +384,7 @@ public class YesGroup extends Fragment {
                 Intent intent = new Intent(getActivity(), CreateDailyWorkActivity.class);
                 intent.putExtra("userData", userData);
                 intent.putExtra("groupData", groupData);
-                intent.putExtra("petId", petId);
+                intent.putExtra("petId", petList.get(selectedPosition).getId());
                 Log.d("넘겨넘겨~", String.format("%d", petId));
                 startActivity(intent);
             }
