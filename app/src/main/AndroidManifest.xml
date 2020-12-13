@@ -23,6 +23,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+        android:largeHeap="true"
         android:usesCleartextTraffic="true">
         <activity android:name=".ChattingRoomActivity"></activity>
         <activity android:name=".ChatActivity" />
