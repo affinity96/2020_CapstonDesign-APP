@@ -42,6 +42,7 @@ import com.example.homekippa.data.FollowResponse;
 import com.example.homekippa.data.GetFollowData;
 import com.example.homekippa.data.GroupData;
 import com.example.homekippa.data.GroupInviteData;
+import com.example.homekippa.data.GroupSelectResponse;
 import com.example.homekippa.data.ModifyGroupResponse;
 import com.example.homekippa.data.UserData;
 import com.example.homekippa.function.Loading;
@@ -117,6 +118,7 @@ public class YesGroup extends Fragment {
 
 
     private String mParam1;
+    private String checkInvite;
 
     public YesGroup() {
         // Required empty public constructor
@@ -184,15 +186,32 @@ public class YesGroup extends Fragment {
         tv_groupName.setText(groupData.getName());
         tv_groupIntro.setText(groupData.getIntroduction());
 
+
         //그룹이 없을 경우
-        if (userData.getGroupId() == 0) {
-            button_join_group.setVisibility(View.VISIBLE);
+        if (userData.getGroupId() == 0 ) {
+            service.checkInvite(new GroupInviteData(groupData, null, userData)).enqueue(new Callback<GroupSelectResponse>() {
+                @Override
+                public void onResponse(Call<GroupSelectResponse> call, Response<GroupSelectResponse> response) {
+                    checkInvite = response.body().getResult();
+                    Log.d("check",checkInvite);
+                    if(checkInvite.equals("true")){
+                        button_join_group.setVisibility(View.VISIBLE);
+                    }else{
+                        button_join_group.setVisibility(View.GONE);
+                    }
+                }
+                @Override
+                public void onFailure(Call<GroupSelectResponse> call, Throwable t) {
+
+                }
+            });
         } else {
             button_join_group.setVisibility(View.GONE);
             if (myGroup) {
                 groupData = ((MainActivity) getActivity()).getGroupData();
 
                 Log.d("갱신", groupData.getName());
+                button_follow_group.setVisibility(View.GONE);
                 button_addUser.setVisibility(View.VISIBLE);
                 button_addPet.setVisibility(View.VISIBLE);
                 button_Add_DW.setVisibility(View.VISIBLE);
@@ -373,19 +392,6 @@ public class YesGroup extends Fragment {
 
                                 }
                             });
-
-//                            MainActivity mainActivity = (MainActivity) getActivity();
-                           /* mainActivity.setUserData(userData);
-                            mainActivity.setGroupData(groupData);
-                            mainActivity.getNavView().getMenu().getItem(4).setChecked(true);
-
-                            GroupFragment groupFragment = new GroupFragment();
-                            Bundle bundle = new Bundle();
-                            bundle.putParcelable("groupData", groupData);
-                            groupFragment.setArguments(bundle);
-                            mainActivity.changeFragment(groupFragment);*/
-//                            mainActivity.finish();
-
                         }
                     }
 
