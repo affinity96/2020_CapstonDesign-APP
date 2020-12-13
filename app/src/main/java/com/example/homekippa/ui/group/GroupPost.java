@@ -91,13 +91,13 @@ public class GroupPost extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-//        setPostListView(listView_posts);
+
     }
 
     @Override
     public void onStart() {
         super.onStart();
-
+        setPostListView(listView_posts);
     }
 
     @Override

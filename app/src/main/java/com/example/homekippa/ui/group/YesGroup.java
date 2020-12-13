@@ -410,7 +410,7 @@ public class YesGroup extends Fragment {
                 Intent intent = new Intent(getActivity(), CreateDailyWorkActivity.class);
                 intent.putExtra("userData", userData);
                 intent.putExtra("groupData", groupData);
-                intent.putExtra("petId", petId);
+                intent.putExtra("petId", petList.get(selectedPosition).getId());
                 Log.d("넘겨넘겨~", String.format("%d", petId));
                 startActivity(intent);
             }
@@ -834,7 +834,7 @@ public class YesGroup extends Fragment {
                     notifyDataSetChanged();
                     setDailyWorkListView(listView_dailyWorks, selectedPet.getId());
                     petId = petList.get(position).getId();
-                    Log.d("pet", String.valueOf(petId));
+                    Log.d("pet click", String.valueOf(petId));
                 }
             });
 
