@@ -345,7 +345,6 @@ public class MainActivity extends AppCompatActivity {
 //
         Toast.makeText(getApplicationContext(), userData.getUserName() + "님 로그인", Toast.LENGTH_LONG).show();
         groupData = (GroupData) intent.getExtras().get("group");
-
         //tob navigation
         tb = findViewById(R.id.top_bar);
         setSupportActionBar(tb);
@@ -450,6 +449,7 @@ public class MainActivity extends AppCompatActivity {
                         getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new NotificationsFragment()).commitAllowingStateLoss();
                         return true;
                     case R.id.navigation_group:
+                        Log.d("여기야여기!!!!!!!!", String.valueOf(userData.getGroupId()));
                         if (userData.getGroupId() != 0) {
                             GroupFragment groupFragment = new GroupFragment();
                             Bundle bundle = new Bundle();

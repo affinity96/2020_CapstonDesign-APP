@@ -22,8 +22,8 @@ public class UserData implements Parcelable {
     private final String userEmail;
     @SerializedName("gender")
     private final int userGender;
-    @SerializedName("tokken")
-    private final String userTokken;
+    @SerializedName("token")
+    private final String userToken;
 
     public String getUserId() {
         return userId;
@@ -55,11 +55,11 @@ public class UserData implements Parcelable {
         return userEmail;
     }
 
-    public String getUserTokken() {
-        return userTokken;
+    public String getUserToken() {
+        return userToken;
     }
 
-    public UserData(String userId, String userName, int groupId, String userImage, String userBirth, String userPhone, String userEmail, int userGender, String userTokken) {
+    public UserData(String userId, String userName, int groupId, String userImage, String userBirth, String userPhone, String userEmail, int userGender, String userToken) {
         this.userId = userId;
         this.userName = userName;
         this.groupId = groupId;
@@ -68,7 +68,7 @@ public class UserData implements Parcelable {
         this.userPhone = userPhone;
         this.userEmail = userEmail;
         this.userGender =userGender;
-        this.userTokken = userTokken;
+        this.userToken = userToken;
     }
 
     @Override
@@ -85,7 +85,7 @@ public class UserData implements Parcelable {
         this.userPhone = parcel.readString();
         this.userEmail = parcel.readString();
         this.userGender = parcel.readInt();
-        this.userTokken = parcel.readString();
+        this.userToken = parcel.readString();
     }
 
     // create Parcelable
@@ -111,6 +111,6 @@ public class UserData implements Parcelable {
         parcel.writeString(this.userPhone);
         parcel.writeString(this.userEmail);
         parcel.writeInt(this.userGender);
-        parcel.writeString(this.userTokken);
+        parcel.writeString(this.userToken);
     }
 }
