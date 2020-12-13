@@ -47,14 +47,14 @@ public class LoginActivity extends AppCompatActivity {
     private GroupViewModel groupViewModel;
 
     Intent intent;
-    Intent requestToMakeGroup;
+    //    Intent requestToMakeGroup;
     private GroupData groupData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         intent = new Intent(getApplicationContext(), MainActivity.class);
-        requestToMakeGroup = new Intent(getApplicationContext(), CreateGroupActivity.class);
+//        requestToMakeGroup = new Intent(getApplicationContext(), CreateGroupActivity.class);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
@@ -143,8 +143,9 @@ public class LoginActivity extends AppCompatActivity {
                         getGroupData(userData.getGroupId());
                     } else {
                         loading.loadingEnd();
-                        Toast.makeText(getApplicationContext(), "서비스를 이용하기 위해 그룹을 만들어주세요!", Toast.LENGTH_SHORT).show();
-                        startActivity(requestToMakeGroup);
+//                        Toast.makeText(getApplicationContext(), "서비스를 이용하기 위해 그룹을 만들어주세요!", Toast.LENGTH_SHORT).show();
+//                        startActivity(requestToMakeGroup);
+                        startActivity(intent);
                     }
                 }
             }

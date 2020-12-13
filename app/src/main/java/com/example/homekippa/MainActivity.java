@@ -250,6 +250,7 @@
 
 package com.example.homekippa;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -315,10 +316,12 @@ public class MainActivity extends AppCompatActivity {
 
     final Loading loading = new Loading();
 
+    public static Context context_main;
+
     private ArrayList<SingleItemPet> array_pets;
     private ListView listView_pets;
-    private static UserData userData;
-    private static GroupData groupData;
+    private UserData userData;
+    private GroupData groupData;
     private ServiceApi service;
     private ConstraintLayout main_naviheader;
 
@@ -328,6 +331,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        context_main = this;
 
         mAuth = FirebaseAuth.getInstance();
         service = RetrofitClient.getClient().create(ServiceApi.class);
@@ -480,21 +485,20 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, fragment).commitAllowingStateLoss();
     }
 
-    public static UserData getUserData() {
-        return userData;
+    public UserData getUserData() {
+        return this.userData;
     }
 
     public void setUserData(UserData userData) {
-
         this.userData = userData;
     }
 
-    public static GroupData getGroupData() {
+    public GroupData getGroupData() {
         return groupData;
     }
 
-    public static void setGroupData(GroupData groupData) {
-        groupData = groupData;
+    public void setGroupData(GroupData groupData) {
+        this.groupData = groupData;
     }
 
     public BottomNavigationView getNavView() {
