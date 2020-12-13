@@ -90,13 +90,14 @@ public class WalkFragment extends Fragment {
 
     private TextView textView_temperature;
     private TextView textView_weather;
-    private TextView textView_scope;
+    private TextView textView_petSelect;
     private ImageView imageView_weather;
     private Button button_startWalk;
     private RecyclerView listView_walk_pets;
     private Spinner spinner_walkScope;
     private Intent intent;
     private String userGender;
+    private String petEmptyCheck;
 
     private DatabaseReference mDatabase;
 
@@ -115,9 +116,10 @@ public class WalkFragment extends Fragment {
         button_startWalk = root.findViewById(R.id.button_startWalk);
         listView_walk_pets = root.findViewById(R.id.listview_walk_pets);
         spinner_walkScope = root.findViewById(R.id.spinner_walkScope);
+        textView_petSelect = root.findViewById(R.id.textView_petSelect);
 
         intent = new Intent(getActivity(), MapActivity.class);
-        textView_scope = root.findViewById(R.id.textView_scope);
+
 
         groupData = ((MainActivity) getActivity()).getGroupData();
         userData = ((MainActivity) getActivity()).getUserData();
@@ -146,29 +148,36 @@ public class WalkFragment extends Fragment {
         button_startWalk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (petImageUrl.equals("")) {
+                if(!petEmptyCheck.equals("true")){
+                    if (petImageUrl.equals("")) {
 
-                    petId = petList.get(0).getId();
-                    petName = petList.get(0).getName();
-                    petSpecies = petList.get(0).getSpecies();
-                    petImageUrl = petList.get(0).getImage();
-                    int petgender = petList.get(0).getGender();
+                        petId = petList.get(0).getId();
+                        petName = petList.get(0).getName();
+                        petSpecies = petList.get(0).getSpecies();
+                        petImageUrl = petList.get(0).getImage();
+                        int petgender = petList.get(0).getGender();
 
-                    if (petgender == 0) {
-                        petGender = "암컷";
+                        if (petgender == 0) {
+                            petGender = "암컷";
 
-                    } else {
-                        petGender = "수컷";
+                        } else {
+                            petGender = "수컷";
 
+                        }
                     }
+                    intent.putExtra("groupData", groupData);
+                    intent.putExtra("userData", userData);
+                    intent.putExtra("petName", petName);
+                    intent.putExtra("petSpecies", petSpecies);
+                    intent.putExtra("petGender", petGender);
+                    intent.putExtra("petImageUrl", petImageUrl);
+                    startActivity(intent);
+
+                }else{
+                    textView_petSelect.requestFocus();
+                    textView_petSelect.setError("펫을 추가해주세요!");
                 }
-                intent.putExtra("groupData", groupData);
-                intent.putExtra("userData", userData);
-                intent.putExtra("petName", petName);
-                intent.putExtra("petSpecies", petSpecies);
-                intent.putExtra("petGender", petGender);
-                intent.putExtra("petImageUrl", petImageUrl);
-                startActivity(intent);
+
 
             }
         });
@@ -266,6 +275,7 @@ public class WalkFragment extends Fragment {
                         Log.d("반려동물 확인", "성공");
                         List<SingleItemPet> pets = response.body();
                         if (!pets.isEmpty()) {
+                            Log.d("walk","nothere");
                             petList.addAll(pets);
                             //TODO:나중에 바꿔야 할 부분. 일단 가장 처음 강아지의 아이디만을 petId라 해놓음!
                             petId = pets.get(0).getId();
@@ -277,6 +287,10 @@ public class WalkFragment extends Fragment {
                             listView.setLayoutManager(pLayoutManager);
                             listView.setItemAnimator(new DefaultItemAnimator());
                             listView.setAdapter(petAdapter);
+                        }else{
+                            petEmptyCheck= String.valueOf(pets.isEmpty());
+
+
                         }
                     }
                 }

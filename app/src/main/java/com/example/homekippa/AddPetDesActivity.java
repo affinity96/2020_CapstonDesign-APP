@@ -159,6 +159,8 @@ public class AddPetDesActivity extends AppCompatActivity {
                 }
                 else if(checkbox_female.isChecked()){
                     gender = "암컷";
+                }else{
+                    gender ="noCheck";
                 }
 
                 if(checkbox_netralizationYes.isChecked()){
@@ -166,16 +168,20 @@ public class AddPetDesActivity extends AppCompatActivity {
                 }
                 else if(checkbox_netralizationNo.isChecked()){
                     neutralization = "중성 안함";
+                }else{
+                    neutralization = "noCheck";
                 }
                 Log.d("groupId", String.valueOf(groupId));
                 if (name.isEmpty()) {
                     editText_petName.setError("반려동물 이름을 입력해주세요");
-                } else if (gender.isEmpty()) {
-                    textView_gender.setError("반려동물성별을 입력해주세요");
+                } else if (gender.equals("noCheck")) {
+                    textView_gender.requestFocus();
+                    textView_gender.setError("반려동물성별을 \n 입력해주세요");
                 } else if (species.isEmpty()) {
                     editText_petSpecies.setError("반려동물 종을 입력해주세요");
-                } else if (neutralization.isEmpty()) {
-                    textView_neutalization.setError("반려동물 중성화 여부를 입력해주세요.");
+                } else if (neutralization.equals("noCheck")) {
+                    textView_neutalization.requestFocus();
+                    textView_neutalization.setError("반려동물 중성화 여부를 \n 입력해주세요.");
                 }else if (birth.isEmpty()){
                     textView_birthDay.setError("생년월일을 입력하세요");
                 }else {
