@@ -201,7 +201,7 @@ public class WalkFragment extends Fragment {
         mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("userName").setValue(userData.getUserName());
         mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("userImage").setValue(userData.getUserImage());
         mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("userGender").setValue(userGender);
-        mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("userAge").setValue(userAge);
+        mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("userAge").setValue(String.valueOf(userAge));
 
 
         spinner_walkScope.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
