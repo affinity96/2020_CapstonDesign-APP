@@ -56,6 +56,7 @@
             android:textAlignment="viewStart"
             android:hint="그룹 프로필 수정"
             android:paddingLeft="20dp"
+            android:visibility="visible"
             android:textSize="6pt"
             android:background="@drawable/shape"
             android:layout_margin="5dp"

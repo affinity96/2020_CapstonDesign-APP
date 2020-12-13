@@ -119,11 +119,14 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/textView_petSelect"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:hint="산책할 반려동물을 선택하세요!🐶" />
 
         <androidx.recyclerview.widget.RecyclerView
