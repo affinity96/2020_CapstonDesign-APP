@@ -91,13 +91,14 @@ public class GroupPost extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-
+        Log.d("group", "onresume");
+        setPostListView(listView_posts);
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        setPostListView(listView_posts);
+
     }
 
     @Override
@@ -140,14 +141,14 @@ public class GroupPost extends Fragment {
 
         return root;
     }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-
-        groupViewModel.getPostList().getValue().clear();
-        groupViewModel.getPostList().removeObservers((LifecycleOwner) getContext());
-    }
+//
+//    @Override
+//    public void onStop() {
+//        super.onStop();
+//
+//        groupViewModel.getPostList().getValue().clear();
+//        groupViewModel.getPostList().removeObservers((LifecycleOwner) getContext());
+//    }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -206,7 +207,6 @@ public class GroupPost extends Fragment {
 
     private void setPostListView(RecyclerView listView) {
         service.getGroupPost(groupData.getId()).enqueue(new Callback<GroupPostResponse>() {
-
             @Override
             public void onResponse(Call<GroupPostResponse> call, Response<GroupPostResponse> response) {
                 if (response.isSuccessful()) {
@@ -216,7 +216,7 @@ public class GroupPost extends Fragment {
                     postList = groupPostResponse.getPostData();
                     likeList = groupPostResponse.getLikeData();
                     setImageData();
-                    Log.d("like", likeList.toString());
+                    Log.d("group", likeList.toString());
                     ArrayList<Boolean> checkLikeList = setLikeData(likeList);
                     groupViewModel.getPostList().setValue(postList);
                     groupViewModel.getLikeCheck().setValue(checkLikeList);
@@ -245,9 +245,12 @@ public class GroupPost extends Fragment {
     private void setPostAdapter(RecyclerView listView, ArrayList<Boolean> checkLikeList) {
 
         if (checkLikeList.isEmpty()) {
+            Log.d("group", "checklist empty");
             listView.setVisibility(View.GONE);
             empty_post.setVisibility(View.VISIBLE);
         } else {
+            listView.setVisibility(View.VISIBLE);
+            empty_post.setVisibility(View.GONE);
             ListPostAdapter postAdapter = new ListPostAdapter(getActivity(), postList, groupData, checkLikeList, true, "");
             postAdapter.setOnItemClickListener(new ListPostAdapter.OnItemClickListener() {
                 @Override
