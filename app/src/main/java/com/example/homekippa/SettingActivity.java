@@ -36,6 +36,12 @@ public class SettingActivity extends AppCompatActivity {
         Intent intent = getIntent();
         UserData userData = (UserData) intent.getExtras().get("userData");
 
+        if(userData.getGroupId() != 0){
+            button_EditGroup.setVisibility(View.VISIBLE);
+        }else{
+            button_EditGroup.setVisibility(View.GONE);
+        }
+
         button_ExitKippa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

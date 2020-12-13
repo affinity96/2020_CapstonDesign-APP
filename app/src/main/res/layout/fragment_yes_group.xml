@@ -41,7 +41,7 @@
                     android:background="@drawable/round_button2"
                     android:text="그룹에 들어가기"
                     android:textSize="11dp"
-                    android:visibility="invisible" />
+                    android:visibility="gone" />
 
                 <Button
                     android:id="@+id/button_follow_group"
@@ -53,7 +53,7 @@
                     android:background="@drawable/follow_selector"
                     android:text="팔로우"
                     android:textSize="11dp"
-                    android:visibility="invisible" />
+                    android:visibility="gone" />
 
                 <Button
                     android:id="@+id/button_Add_User"
