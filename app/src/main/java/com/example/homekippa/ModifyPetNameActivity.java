@@ -55,8 +55,7 @@ public class ModifyPetNameActivity extends AppCompatActivity {
                 ModifyPetResponse result = response.body();
 
                 if (result.getCode() == 200) {
-
-                        finish();
+                    finish();
                 }
             }
 

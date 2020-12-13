@@ -17,18 +17,16 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RadioGroup;
 import android.widget.Spinner;
+
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -44,12 +42,9 @@ import com.example.homekippa.data.UserData;
 import com.example.homekippa.data.WeatheLocationResponse;
 import com.example.homekippa.data.WeatherLocationData;
 import com.example.homekippa.MapActivity;
-import com.example.homekippa.function.Loading;
 import com.example.homekippa.network.RetrofitClient;
 import com.example.homekippa.network.ServiceApi;
-import com.example.homekippa.ui.group.FollowViewModel;
 import com.example.homekippa.ui.group.SingleItemPet;
-import com.google.android.material.button.MaterialButton;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -127,7 +122,10 @@ public class WalkFragment extends Fragment {
         groupData = ((MainActivity) getActivity()).getGroupData();
         userData = ((MainActivity) getActivity()).getUserData();
 
-        getGroupData(userData.getGroupId());
+        if (groupData != null) {
+            getGroupData(userData.getGroupId());
+        }
+
 
         userLocation = getMyLocation();
         setPetListView(listView_walk_pets);
@@ -224,6 +222,7 @@ public class WalkFragment extends Fragment {
 
     public void getGroupData(int ID) {
 
+
         service.getGroupData(ID).enqueue(new Callback<GroupData>() {
             @Override
             public void onResponse(Call<GroupData> call, Response<GroupData> response) {
@@ -259,35 +258,37 @@ public class WalkFragment extends Fragment {
     }
 
     private void setPetListView(RecyclerView listView) {
+        if (groupData != null) {
+            service.getPetsData(groupData.getId()).enqueue(new Callback<List<SingleItemPet>>() {
+                @Override
+                public void onResponse(Call<List<SingleItemPet>> call, Response<List<SingleItemPet>> response) {
+                    if (response.isSuccessful()) {
+                        Log.d("반려동물 확인", "성공");
+                        List<SingleItemPet> pets = response.body();
+                        if (!pets.isEmpty()) {
+                            petList.addAll(pets);
+                            //TODO:나중에 바꿔야 할 부분. 일단 가장 처음 강아지의 아이디만을 petId라 해놓음!
+                            petId = pets.get(0).getId();
 
-        service.getPetsData(groupData.getId()).enqueue(new Callback<List<SingleItemPet>>() {
-            @Override
-            public void onResponse(Call<List<SingleItemPet>> call, Response<List<SingleItemPet>> response) {
-                if (response.isSuccessful()) {
-                    Log.d("반려동물 확인", "성공");
-                    List<SingleItemPet> pets = response.body();
-                    if (!pets.isEmpty()) {
-                        petList.addAll(pets);
-                        //TODO:나중에 바꿔야 할 부분. 일단 가장 처음 강아지의 아이디만을 petId라 해놓음!
-                        petId = pets.get(0).getId();
+                            ListPetAdapter petAdapter = new ListPetAdapter(petList);
 
-                        ListPetAdapter petAdapter = new ListPetAdapter(petList);
-
-                        LinearLayoutManager pLayoutManager = new LinearLayoutManager(getActivity());
-                        pLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-                        listView.setLayoutManager(pLayoutManager);
-                        listView.setItemAnimator(new DefaultItemAnimator());
-                        listView.setAdapter(petAdapter);
+                            LinearLayoutManager pLayoutManager = new LinearLayoutManager(getActivity());
+                            pLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+                            listView.setLayoutManager(pLayoutManager);
+                            listView.setItemAnimator(new DefaultItemAnimator());
+                            listView.setAdapter(petAdapter);
+                        }
                     }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<List<SingleItemPet>> call, Throwable t) {
-                Log.d("반려동물 확인", "에러");
-                Log.e("반려동물 확인", t.getMessage());
-            }
-        });
+                @Override
+                public void onFailure(Call<List<SingleItemPet>> call, Throwable t) {
+                    Log.d("반려동물 확인", "에러");
+                    Log.e("반려동물 확인", t.getMessage());
+                }
+            });
+        }
+
     }
 
 

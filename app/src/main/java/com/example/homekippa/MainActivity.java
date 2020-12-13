@@ -332,15 +332,15 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         service = RetrofitClient.getClient().create(ServiceApi.class);
         curUser = mAuth.getCurrentUser();
-//
+
         Intent intent = getIntent();
         userData = (UserData) intent.getExtras().get("user");
+
         Log.d("main create", userData.getUserName());
 //
         Toast.makeText(getApplicationContext(), userData.getUserName() + "님 로그인", Toast.LENGTH_LONG).show();
         groupData = (GroupData) intent.getExtras().get("group");
-//
-//
+
         //tob navigation
         tb = findViewById(R.id.top_bar);
         setSupportActionBar(tb);
@@ -383,11 +383,9 @@ public class MainActivity extends AppCompatActivity {
                     public void onUnifiedNativeAdLoaded(UnifiedNativeAd unifiedNativeAd) {
                         TemplateView template = findViewById(R.id.main_ad_template);
                         template.setNativeAd(unifiedNativeAd);
-
                     }
                 }).withNativeAdOptions(new NativeAdOptions.Builder().setAdChoicesPlacement(ADCHOICES_BOTTOM_RIGHT).build())
                 .build();
-
         adLoader.loadAd(new AdRequest.Builder().build());
 
 
@@ -397,8 +395,6 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(MenuItem menuItem) {
                 menuItem.setChecked(true);
                 leftDrawerLayout.closeDrawers();
-
-                Log.d("menuItem", String.valueOf(menuItem));
 
                 int id = menuItem.getItemId();
                 String title = menuItem.getTitle().toString();
