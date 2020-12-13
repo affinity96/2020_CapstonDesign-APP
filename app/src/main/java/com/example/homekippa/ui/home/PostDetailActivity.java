@@ -126,7 +126,6 @@ public class PostDetailActivity extends AppCompatActivity {
                                 } else {
                                     LocationViewModel.increaseComment(postPosition);
                                 }
-
                             }
                             setPostDetail();
                         }
@@ -200,7 +199,7 @@ public class PostDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                LikeData likeData = new LikeData(post.getPostId(), user.getUserId(), v.isActivated());
+                LikeData likeData = new LikeData(post.getPostId(), user.getUserId(), !v.isActivated());
                 service.setLike(likeData).enqueue(new Callback<LikeResponse>() {
                     @Override
                     public void onResponse(Call<LikeResponse> call, Response<LikeResponse> response) {
@@ -223,6 +222,7 @@ public class PostDetailActivity extends AppCompatActivity {
                                 }
                             } else {
                                 if (!v.isActivated()) {
+                                    Log.d("group location yes like", "hey");
                                     LocationViewModel.setLiveLikeNum(postPosition, 1);
                                     LocationViewModel.setLiveLikeCheck(postPosition, true);
                                 } else {

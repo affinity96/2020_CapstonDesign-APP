@@ -498,8 +498,8 @@ public class MainActivity extends AppCompatActivity {
         return groupData;
     }
 
-    public void setGroupData(GroupData groupData) {
-        this.groupData = groupData;
+    public static void setGroupData(GroupData groupData) {
+        groupData = groupData;
     }
 
     public BottomNavigationView getNavView() {

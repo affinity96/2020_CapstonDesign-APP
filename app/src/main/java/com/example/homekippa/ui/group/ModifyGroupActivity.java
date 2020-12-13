@@ -64,7 +64,7 @@ public class ModifyGroupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modify_group);
 //
-        main = (MainActivity) getApplicationContext();
+        main = new MainActivity();
         service = RetrofitClient.getClient().create(ServiceApi.class);
 
         cache = new Cache(getApplicationContext());
