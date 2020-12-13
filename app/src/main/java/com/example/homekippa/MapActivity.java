@@ -226,6 +226,8 @@ public class MapActivity extends AppCompatActivity implements MapView.MapViewEve
             @Override
             public void onClick(View v) {
 
+                mDatabase.child("walking_group").child(String.valueOf(groupData.getId()));
+
                 finish();
             }
         });
