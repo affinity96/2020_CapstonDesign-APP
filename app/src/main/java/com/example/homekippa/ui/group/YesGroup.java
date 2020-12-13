@@ -168,6 +168,7 @@ public class YesGroup extends Fragment {
 //        }
 //        getImage(groupData.getImage(), imageView_groupProfile, true);
 //        getImage(groupData.getCover(), imageView_groupCover, false);
+        groupData = (GroupData) getArguments().get("groupData");
         setPetListView(listView_pets);
 
     }
@@ -179,7 +180,7 @@ public class YesGroup extends Fragment {
         Log.d("yes", "onstart");
         if (myGroup) {
             groupData = ((MainActivity) getActivity()).getGroupData();
-            Log.d("yes profile_createview", groupData.getImage());
+//            Log.d("yes profile_createview", groupData.getImage());
         }
 
         getImage(groupData.getImage(), imageView_groupProfile, true);
@@ -298,7 +299,6 @@ public class YesGroup extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), ModifyGroupActivity.class);
-                intent.putExtra("groupData", groupData);
                 startActivity(intent);
             }
         });
@@ -501,6 +501,10 @@ public class YesGroup extends Fragment {
         } else {
             if (requestCode == 1) {
                 setImage();
+//            } else if(requestCode == 3) {
+//                Log.d("yes", "받아온거니?");
+//                groupData = (GroupData)intent.getSerializableExtra("groupData");
+//                ((MainActivity)getActivity()).setGroupData(groupData);
             }
         }
     }

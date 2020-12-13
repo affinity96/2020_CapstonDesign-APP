@@ -16,8 +16,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.example.homekippa.Cache;
+import com.example.homekippa.LoginActivity;
 import com.example.homekippa.MainActivity;
 import com.example.homekippa.R;
+import com.example.homekippa.data.GetFollowData;
 import com.example.homekippa.data.GroupData;
 import com.example.homekippa.data.ModifyGroupResponse;
 import com.example.homekippa.network.RetrofitClient;
@@ -63,7 +65,6 @@ public class ModifyGroupActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modify_group);
-//
         main = new MainActivity();
         service = RetrofitClient.getClient().create(ServiceApi.class);
 
@@ -78,16 +79,24 @@ public class ModifyGroupActivity extends AppCompatActivity {
         textView_groupIntro = findViewById(R.id.textView_groupIntro);
         textView_groupAddress = findViewById(R.id.textView_groupAddress);
 
-        groupData = MainActivity.getGroupData();
+        groupData = main.getGroupData();
         Log.d("yes modify onstart", groupData.getImage());
         getGroupProfileImage(groupData.getImage(), imageView_modify_profile_Image);
 
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+
+        Log.d("BBACK", "들어오는건가?");
+        getGroupData(groupData.getId());
+    }
+
+    @Override
     public void onStart() {
         super.onStart();
-
+        Log.d("SSTART", "시작한건가?");
         textView_groupName.setText(groupData.getName());
         textView_groupIntro.setText(groupData.getIntroduction());
         textView_groupAddress.setText(groupData.getAddress());
@@ -120,7 +129,7 @@ public class ModifyGroupActivity extends AppCompatActivity {
                 Intent intent = new Intent(view.getContext(), ModifyGroupNameActivity.class);
                 intent.putExtra("id", groupData.getId());
                 intent.putExtra("name", groupData.getName());
-                startActivity(intent);
+                startActivityForResult(intent, 2);
             }
         });
 
@@ -130,7 +139,7 @@ public class ModifyGroupActivity extends AppCompatActivity {
                 Intent intent = new Intent(view.getContext(), ModifyGroupIntroActivity.class);
                 intent.putExtra("id", groupData.getId());
                 intent.putExtra("introduction", groupData.getIntroduction());
-                startActivity(intent);
+                startActivityForResult(intent, 2);
             }
         });
 
@@ -139,7 +148,7 @@ public class ModifyGroupActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), ModifyGroupAddressActivity.class);
                 intent.putExtra("id", groupData.getId());
-                startActivity(intent);
+                startActivityForResult(intent, 2);
             }
         });
     }
@@ -195,7 +204,7 @@ public class ModifyGroupActivity extends AppCompatActivity {
                     Toast.makeText(ModifyGroupActivity.this, result.getMessage(), Toast.LENGTH_SHORT).show();
                     if (result.getCode() == 200) {
                         Log.d("yes modify", "?");
-                        service.getGroupData(MainActivity.getGroupData().getId()).enqueue(new Callback<GroupData>() {
+                        service.getGroupData(main.getGroupData().getId()).enqueue(new Callback<GroupData>() {
                             @Override
                             public void onResponse(Call<GroupData> call, Response<GroupData> response) {
                                 GroupData group = response.body();
@@ -232,7 +241,7 @@ public class ModifyGroupActivity extends AppCompatActivity {
 
                     Toast.makeText(ModifyGroupActivity.this, result.getMessage(), Toast.LENGTH_SHORT).show();
                     if (result.getCode() == 200) {
-                        service.getGroupData(MainActivity.getGroupData().getId()).enqueue(new Callback<GroupData>() {
+                        service.getGroupData(main.getGroupData().getId()).enqueue(new Callback<GroupData>() {
                             @Override
                             public void onResponse(Call<GroupData> call, Response<GroupData> response) {
                                 GroupData group = response.body();
@@ -264,6 +273,31 @@ public class ModifyGroupActivity extends AppCompatActivity {
 
     }
 
+    public void getGroupData(int ID) {
+
+        service.getGroupData(ID).enqueue(new Callback<GroupData>() {
+            @Override
+            public void onResponse(Call<GroupData> call, Response<GroupData> response) {
+                if (response.isSuccessful()) {
+                    groupData = response.body();
+                    Log.d("GGROUP", "받아온건가?");
+                    textView_groupName.setText(groupData.getName());
+                    textView_groupIntro.setText(groupData.getIntroduction());
+                    textView_groupAddress.setText(groupData.getAddress());
+                    Log.d("갱신전?", groupData.getName());
+                    main.setGroupData(groupData);
+                    groupData = main.getGroupData();
+                    Log.d("갱신후?", groupData.getName());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GroupData> call, Throwable t) {
+                Log.e("그룹 확인", t.getMessage());
+            }
+        });
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
@@ -275,4 +309,12 @@ public class ModifyGroupActivity extends AppCompatActivity {
             }
         }
     }
+
+//    @Override
+//    public void finish() {
+//        Intent intent = new Intent();
+//        intent.putExtra("groupData", groupData);
+//        setResult(RESULT_OK, intent);
+//        super.finish();
+//    }
 }
