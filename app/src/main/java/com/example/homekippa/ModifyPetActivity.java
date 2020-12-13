@@ -40,6 +40,7 @@ public class ModifyPetActivity extends AppCompatActivity {
     public static Context context_ModifyPetActivity;
     private static final String TAG = " ModifyPet";
 
+    private Cache cache;
     private int petId;
     private String petName;
     private String petSpecies;
@@ -89,12 +90,12 @@ public class ModifyPetActivity extends AppCompatActivity {
         textView_petNeu = findViewById(R.id.textView_petNeu);
         textView_petBirth = findViewById(R.id.textView_petBirth);
         service = RetrofitClient.getClient().create(ServiceApi.class);
+        getPetProfileImage(petImage, imageView_modifypet_Image);
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        getPetProfileImage(petImage, imageView_modifypet_Image);
         textView_petName.setText(petName);
         textView_petSpecies.setText(petSpecies);
         if(petGender == 1) {
