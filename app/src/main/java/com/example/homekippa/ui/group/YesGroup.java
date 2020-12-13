@@ -39,6 +39,7 @@ import com.example.homekippa.R;
 import com.example.homekippa.data.DoneReportsResponse;
 import com.example.homekippa.data.FollowData;
 import com.example.homekippa.data.FollowResponse;
+import com.example.homekippa.data.GetFollowData;
 import com.example.homekippa.data.GroupData;
 import com.example.homekippa.data.GroupInviteData;
 import com.example.homekippa.data.ModifyGroupResponse;
@@ -200,11 +201,12 @@ public class YesGroup extends Fragment {
                 button_changeProfile.setVisibility(View.VISIBLE);
                 ll_follower.setVisibility(View.VISIBLE);
                 ll_following.setVisibility(View.VISIBLE);
-                if (followViewModel.getFollowerNum() != null) {
+
+                if (followViewModel.getFollowerNum() != 0) {
                     textView_followerNum.setText(String.valueOf(followViewModel.getFollowerNum()));
                 } else textView_followerNum.setText(String.valueOf(0));
 
-                if (followViewModel.getFollowerNum() != null)
+                if (followViewModel.getFollowerNum() != 0)
                     textView_followingNum.setText(String.valueOf(followViewModel.getFollowingNum()));
                 else textView_followingNum.setText(String.valueOf(0));
 
@@ -327,9 +329,51 @@ public class YesGroup extends Fragment {
                     @Override
                     public void onResponse(Call<UserData> call, Response<UserData> response) {
 
-                        Log.d("noGroup", String.valueOf(userData.getGroupId()));
                         if (response.isSuccessful()) {
                             userData = response.body();
+                            Log.d("noGroup", String.valueOf(userData.getGroupId()));
+                            ((MainActivity) MainActivity.context_main).setUserData(userData);
+
+                            service.getGroupData(userData.getGroupId()).enqueue(new Callback<GroupData>() {
+                                @Override
+                                public void onResponse(Call<GroupData> call, Response<GroupData> response) {
+                                    if(response.isSuccessful()){
+                                        groupData=response.body();
+                                        ((MainActivity) MainActivity.context_main).setGroupData(groupData);
+                                        service.getFollow(groupData.getId()).enqueue(new Callback<GetFollowData>() {
+                                            @Override
+                                            public void onResponse(Call<GetFollowData> call, Response<GetFollowData> response) {
+                                                if (response.isSuccessful()) {
+                                                    Log.d("follow", "successful");
+                                                    Log.d("follow", response.body().getFollowerList().toString());
+
+                                                    followViewModel.getFollower().setValue(response.body().getFollowerList());
+                                                    followViewModel.getFollowing().setValue(response.body().getFollowingList());
+
+                                                    Toast.makeText(getContext(), "새로운 그룹에 들어가셨네요<_< ", Toast.LENGTH_SHORT).show();
+                                                    Intent intent = new Intent(getContext(), MainActivity.class);
+                                                    intent.putExtra("user", userData);
+                                                    intent.putExtra("group", groupData);
+                                                    startActivity(intent);
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onFailure(Call<GetFollowData> call, Throwable t) {
+                                                Log.d("그룹", "에러");
+                                                Log.e("그룹", t.getMessage());
+                                                Toast.makeText(getContext(), "새로운 그룹에 못 들어갔지롱", Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<GroupData> call, Throwable t) {
+
+                                }
+                            });
+
 //                            MainActivity mainActivity = (MainActivity) getActivity();
                            /* mainActivity.setUserData(userData);
                             mainActivity.setGroupData(groupData);
@@ -341,10 +385,7 @@ public class YesGroup extends Fragment {
                             groupFragment.setArguments(bundle);
                             mainActivity.changeFragment(groupFragment);*/
 //                            mainActivity.finish();
-                            Intent intent = new Intent(getContext(), MainActivity.class);
-                            intent.putExtra("user", userData);
-                            intent.putExtra("group", groupData);
-                            startActivity(intent);
+
                         }
                     }
 
