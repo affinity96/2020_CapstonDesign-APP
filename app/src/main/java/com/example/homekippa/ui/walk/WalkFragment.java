@@ -14,19 +14,19 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RadioGroup;
+import android.widget.Spinner;
+
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -42,12 +42,9 @@ import com.example.homekippa.data.UserData;
 import com.example.homekippa.data.WeatheLocationResponse;
 import com.example.homekippa.data.WeatherLocationData;
 import com.example.homekippa.MapActivity;
-import com.example.homekippa.function.Loading;
 import com.example.homekippa.network.RetrofitClient;
 import com.example.homekippa.network.ServiceApi;
-import com.example.homekippa.ui.group.FollowViewModel;
 import com.example.homekippa.ui.group.SingleItemPet;
-import com.google.android.material.button.MaterialButton;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -97,9 +94,7 @@ public class WalkFragment extends Fragment {
     private ImageView imageView_weather;
     private Button button_startWalk;
     private RecyclerView listView_walk_pets;
-    private CheckBox checkbox_wholeScope;
-    private CheckBox checkbox_followScope;
-    private CheckBox checkbox_closedScope;
+    private Spinner spinner_walkScope;
     private Intent intent;
     private String userGender;
 
@@ -119,16 +114,18 @@ public class WalkFragment extends Fragment {
         imageView_weather = root.findViewById(R.id.imageView_weather);
         button_startWalk = root.findViewById(R.id.button_startWalk);
         listView_walk_pets = root.findViewById(R.id.listview_walk_pets);
-        checkbox_closedScope = root.findViewById(R.id.checkbox_closedScope);
-        checkbox_followScope = root.findViewById(R.id.checkbox_followScope);
-        checkbox_wholeScope = root.findViewById(R.id.checkbox_wholeScope);
+        spinner_walkScope = root.findViewById(R.id.spinner_walkScope);
+
         intent = new Intent(getActivity(), MapActivity.class);
         textView_scope = root.findViewById(R.id.textView_scope);
 
         groupData = ((MainActivity) getActivity()).getGroupData();
         userData = ((MainActivity) getActivity()).getUserData();
 
-        getGroupData(userData.getGroupId());
+        if (groupData != null) {
+            getGroupData(userData.getGroupId());
+        }
+
 
         userLocation = getMyLocation();
         setPetListView(listView_walk_pets);
@@ -165,19 +162,14 @@ public class WalkFragment extends Fragment {
 
                     }
                 }
+                intent.putExtra("groupData", groupData);
+                intent.putExtra("userData", userData);
+                intent.putExtra("petName", petName);
+                intent.putExtra("petSpecies", petSpecies);
+                intent.putExtra("petGender", petGender);
+                intent.putExtra("petImageUrl", petImageUrl);
+                startActivity(intent);
 
-
-                if (checkbox_wholeScope.isChecked() == false && checkbox_followScope.isChecked() == false && checkbox_closedScope.isChecked() == false) {
-                    textView_scope.setError("공개범위 선택해주세요");
-                } else {
-                    intent.putExtra("groupData", groupData);
-                    intent.putExtra("userData", userData);
-                    intent.putExtra("petName", petName);
-                    intent.putExtra("petSpecies", petSpecies);
-                    intent.putExtra("petGender", petGender);
-                    intent.putExtra("petImageUrl", petImageUrl);
-                    startActivity(intent);
-                }
             }
         });
         if (userData.getUserGender() == 1) {
@@ -203,51 +195,33 @@ public class WalkFragment extends Fragment {
         mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("userAge").setValue(userAge);
 
 
-        checkbox_wholeScope.setOnClickListener(new View.OnClickListener() {
+        spinner_walkScope.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onClick(View v) {
-                Log.d("scope1","scope1");
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Log.d("spinner",parent.getItemAtPosition(position).toString());
+                String checkedScope = parent.getItemAtPosition(position).toString();
 
-                mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("scope").setValue("wholeScope");
-                checkbox_wholeScope.setChecked(true);
-                checkbox_followScope.setChecked(false);
-                checkbox_closedScope.setChecked(false);
-                intent.putExtra("scope", "wholeScpe");
+                if(checkedScope.equals("전체공개")){
+                    intent.putExtra("scope","wholeScope");
+                }else if(checkedScope.equals("팔로우공개")){
+                    intent.putExtra("scope","followScope");
+                    intent.putExtra("followingGroup",followingArray);
+                }else if(checkedScope.equals("비공개")){
+                    intent.putExtra("scope","closedScope");
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
             }
         });
 
-        checkbox_followScope.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Log.d("scope2","scope2");
-
-                mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("scope").setValue("followScope");
-                checkbox_wholeScope.setChecked(false);
-                checkbox_followScope.setChecked(true);
-                checkbox_closedScope.setChecked(false);
-                intent.putExtra("scope", "followScope");
-                intent.putExtra("followingGroup", followingArray);
-            }
-        });
-
-        checkbox_closedScope.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("scope3","scope3");
-
-                mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("scope").setValue("closedScope");
-                checkbox_wholeScope.setChecked(false);
-                checkbox_followScope.setChecked(false);
-                checkbox_closedScope.setChecked(true);
-                intent.putExtra("scope","closedScope");
-
-            }
-        });
         return root;
     }
 
     public void getGroupData(int ID) {
+
 
         service.getGroupData(ID).enqueue(new Callback<GroupData>() {
             @Override
@@ -284,35 +258,37 @@ public class WalkFragment extends Fragment {
     }
 
     private void setPetListView(RecyclerView listView) {
+        if (groupData != null) {
+            service.getPetsData(groupData.getId()).enqueue(new Callback<List<SingleItemPet>>() {
+                @Override
+                public void onResponse(Call<List<SingleItemPet>> call, Response<List<SingleItemPet>> response) {
+                    if (response.isSuccessful()) {
+                        Log.d("반려동물 확인", "성공");
+                        List<SingleItemPet> pets = response.body();
+                        if (!pets.isEmpty()) {
+                            petList.addAll(pets);
+                            //TODO:나중에 바꿔야 할 부분. 일단 가장 처음 강아지의 아이디만을 petId라 해놓음!
+                            petId = pets.get(0).getId();
 
-        service.getPetsData(groupData.getId()).enqueue(new Callback<List<SingleItemPet>>() {
-            @Override
-            public void onResponse(Call<List<SingleItemPet>> call, Response<List<SingleItemPet>> response) {
-                if (response.isSuccessful()) {
-                    Log.d("반려동물 확인", "성공");
-                    List<SingleItemPet> pets = response.body();
-                    if (!pets.isEmpty()) {
-                        petList.addAll(pets);
-                        //TODO:나중에 바꿔야 할 부분. 일단 가장 처음 강아지의 아이디만을 petId라 해놓음!
-                        petId = pets.get(0).getId();
+                            ListPetAdapter petAdapter = new ListPetAdapter(petList);
 
-                        ListPetAdapter petAdapter = new ListPetAdapter(petList);
-
-                        LinearLayoutManager pLayoutManager = new LinearLayoutManager(getActivity());
-                        pLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-                        listView.setLayoutManager(pLayoutManager);
-                        listView.setItemAnimator(new DefaultItemAnimator());
-                        listView.setAdapter(petAdapter);
+                            LinearLayoutManager pLayoutManager = new LinearLayoutManager(getActivity());
+                            pLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+                            listView.setLayoutManager(pLayoutManager);
+                            listView.setItemAnimator(new DefaultItemAnimator());
+                            listView.setAdapter(petAdapter);
+                        }
                     }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<List<SingleItemPet>> call, Throwable t) {
-                Log.d("반려동물 확인", "에러");
-                Log.e("반려동물 확인", t.getMessage());
-            }
-        });
+                @Override
+                public void onFailure(Call<List<SingleItemPet>> call, Throwable t) {
+                    Log.d("반려동물 확인", "에러");
+                    Log.e("반려동물 확인", t.getMessage());
+                }
+            });
+        }
+
     }
 
 

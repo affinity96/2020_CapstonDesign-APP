@@ -103,7 +103,7 @@ public class HomePost extends Fragment {
 
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_home_post, container, false);
         listView_posts = root.findViewById(R.id.listView_HomePost);
-        empty_Img=root.findViewById(R.id.empty_post);
+        empty_Img = root.findViewById(R.id.empty_post);
 
         if (!isGroupCreated()) {
             setPostListView(listView_posts);
@@ -113,39 +113,47 @@ public class HomePost extends Fragment {
 
 
     public void setPostListView(RecyclerView listView) {
+        if (groupData != null) {
+            service.getHomePost(groupData.getId(), tab_, groupData.getArea()).enqueue(new Callback<PostResponse>() {
+                @Override
+                public void onResponse(Call<PostResponse> call, Response<PostResponse> response) {
+                    if (response.isSuccessful()) {
+                        PostResponse wholePosts = response.body();
 
-        service.getHomePost(groupData.getId(), tab_, groupData.getArea()).enqueue(new Callback<PostResponse>() {
-            @Override
-            public void onResponse(Call<PostResponse> call, Response<PostResponse> response) {
-                if (response.isSuccessful()) {
-                    PostResponse wholePosts = response.body();
+                        postList = wholePosts.getPostData();
+                        groupList = wholePosts.getGroupData();
+                        likeList = wholePosts.getLikeData();
 
-                    postList = wholePosts.getPostData();
-                    groupList = wholePosts.getGroupData();
-                    likeList = wholePosts.getLikeData();
+                        ArrayList<Boolean> checkLikeList = setLikeData(likeList);
+                        setImageData();
 
-                    ArrayList<Boolean> checkLikeList = setLikeData(likeList);
-                    setImageData();
-
-                    if (tab_ == "F") {
-                        followViewModel.getPostList().setValue(postList);
-                        followViewModel.getLikeCheck().setValue(checkLikeList);
-                        setPostAdapter(listView, checkLikeList, (ArrayList<SingleItemPost>) followViewModel.getPostList().getValue());
-                    } else {
-                        locationViewModel.getPostList().setValue(postList);
-                        locationViewModel.getLikeCheck().setValue(checkLikeList);
-                        setPostAdapter(listView, checkLikeList, (ArrayList<SingleItemPost>) locationViewModel.getPostList().getValue());
+                        if (tab_ == "F") {
+                            followViewModel.setPostList(postList);
+                            followViewModel.getLikeCheck().setValue(checkLikeList);
+                            setPostAdapter(listView, checkLikeList, (ArrayList<SingleItemPost>) followViewModel.getPostList().getValue());
+                        } else {
+                            locationViewModel.getPostList().setValue(postList);
+                            locationViewModel.getLikeCheck().setValue(checkLikeList);
+                            setPostAdapter(listView, checkLikeList, (ArrayList<SingleItemPost>) locationViewModel.getPostList().getValue());
+                        }
                     }
-
                 }
-            }
 
-            @Override
-            public void onFailure(Call<PostResponse> call, Throwable t) {
-                Log.d("homepost", "에러");
-                Log.e("homepost", t.getMessage());
+                @Override
+                public void onFailure(Call<PostResponse> call, Throwable t) {
+                    Log.d("homepost", "에러");
+                    Log.e("homepost", t.getMessage());
+                }
+            });
+        } else {
+            ArrayList<Boolean> checkLikeList = new ArrayList<>();
+            if (tab_ == "F") {
+                setPostAdapter(listView, checkLikeList, (ArrayList<SingleItemPost>) followViewModel.getPostList().getValue());
+            } else {
+                setPostAdapter(listView, checkLikeList, (ArrayList<SingleItemPost>) locationViewModel.getPostList().getValue());
             }
-        });
+        }
+
 
     }
 
@@ -153,10 +161,9 @@ public class HomePost extends Fragment {
     private void setPostAdapter(RecyclerView listView, ArrayList<Boolean> checkLikeList, ArrayList<SingleItemPost> list) {
         //Setting Sample Image Data
         if (checkLikeList.isEmpty()) {
-            Log.d("home","noposts");
+            Log.d("homePost", "noposts");
             listView.setVisibility(View.GONE);
             empty_Img.setVisibility(View.VISIBLE);
-
 
         } else {
             listView.setVisibility(View.VISIBLE);

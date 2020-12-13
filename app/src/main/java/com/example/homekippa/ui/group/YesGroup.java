@@ -32,16 +32,13 @@ import com.example.homekippa.AddPetActivity;
 import com.example.homekippa.Cache;
 import com.example.homekippa.CreateDailyWorkActivity;
 import com.example.homekippa.ImageTask;
-import com.example.homekippa.LoginActivity;
 import com.example.homekippa.MainActivity;
 import com.example.homekippa.ModifyPetActivity;
 import com.example.homekippa.EditDailyWorkActivity;
-import com.example.homekippa.ImageLoadTask;
 import com.example.homekippa.R;
 import com.example.homekippa.data.DoneReportsResponse;
 import com.example.homekippa.data.FollowData;
 import com.example.homekippa.data.FollowResponse;
-import com.example.homekippa.data.GetFollowData;
 import com.example.homekippa.data.GroupData;
 import com.example.homekippa.data.GroupInviteData;
 import com.example.homekippa.data.ModifyGroupResponse;
@@ -56,7 +53,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -88,7 +84,7 @@ public class YesGroup extends Fragment {
     final Loading loading = new Loading();
 
     private PetViewModel petViewModel;
-    private FollowViewModel followViewModel;
+    private GroupFollowViewModel followViewModel;
     private GroupViewModel groupViewModel;
 
     private TextView tv_groupName;
@@ -149,7 +145,7 @@ public class YesGroup extends Fragment {
         cache = new Cache(getContext());
         service = RetrofitClient.getClient().create(ServiceApi.class);
 
-        followViewModel = new ViewModelProvider(requireActivity()).get(FollowViewModel.class);
+        followViewModel = new ViewModelProvider(requireActivity()).get(GroupFollowViewModel.class);
         groupViewModel = new ViewModelProvider(requireActivity()).get(GroupViewModel.class);
 
         userData = ((MainActivity) getActivity()).getUserData();
@@ -314,6 +310,8 @@ public class YesGroup extends Fragment {
                                 followViewModel.addFollowing(groupData.getId());
                                 button_follow_group.setActivated(false);
                                 button_follow_group.setText("팔로잉");
+
+
                             }
                         }
 
@@ -409,7 +407,7 @@ public class YesGroup extends Fragment {
                 Intent intent = new Intent(getActivity(), CreateDailyWorkActivity.class);
                 intent.putExtra("userData", userData);
                 intent.putExtra("groupData", groupData);
-                intent.putExtra("petId", petId);
+                intent.putExtra("petId", petList.get(selectedPosition).getId());
                 Log.d("넘겨넘겨~", String.format("%d", petId));
                 startActivity(intent);
             }
@@ -837,7 +835,7 @@ public class YesGroup extends Fragment {
                     notifyDataSetChanged();
                     setDailyWorkListView(listView_dailyWorks, selectedPet.getId());
                     petId = petList.get(position).getId();
-                    Log.d("pet", String.valueOf(petId));
+                    Log.d("pet click", String.valueOf(petId));
                 }
             });
 

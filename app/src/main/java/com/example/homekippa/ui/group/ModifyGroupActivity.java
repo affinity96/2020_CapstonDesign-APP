@@ -66,8 +66,8 @@ public class ModifyGroupActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modify_group);
-
-        main = new MainActivity();
+//
+//        main = new MainActivity();
         service = RetrofitClient.getClient().create(ServiceApi.class);
 
         cache = new Cache(getApplicationContext());
@@ -80,7 +80,8 @@ public class ModifyGroupActivity extends AppCompatActivity {
         textView_groupName = findViewById(R.id.textView_groupName);
         textView_groupIntro = findViewById(R.id.textView_groupIntro);
         textView_groupAddress = findViewById(R.id.textView_groupAddress);
-        groupData = MainActivity.getGroupData();
+
+//        groupData = MainActivity.getGroupData();\
         Log.d("yes modify onstart", groupData.getImage());
         getGroupProfileImage(groupData.getImage(), imageView_modify_profile_Image);
 
@@ -205,22 +206,21 @@ public class ModifyGroupActivity extends AppCompatActivity {
                     Toast.makeText(ModifyGroupActivity.this, result.getMessage(), Toast.LENGTH_SHORT).show();
                     if (result.getCode() == 200) {
                         Log.d("yes modify", "?");
-                        service.getGroupData(MainActivity.getGroupData().getId()).enqueue(new Callback<GroupData>() {
-                            @Override
-                            public void onResponse(Call<GroupData> call, Response<GroupData> response) {
-                                GroupData group = response.body();
-                                main.setGroupData(group);
-                                Log.d("yes modify", group.getImage());
-                                cache.saveBitmapToJpeg(originalBm, group.getImage());
-                                imageView_modify_profile_Image.setImageBitmap(originalBm);
-                            }
-
-                            @Override
-                            public void onFailure(Call<GroupData> call, Throwable t) {
-
-                            }
-                        });
-
+//                        service.getGroupData(MainActivity.getGroupData().getId()).enqueue(new Callback<GroupData>() {
+//                            @Override
+//                            public void onResponse(Call<GroupData> call, Response<GroupData> response) {
+//                                GroupData group = response.body();
+//                                main.setGroupData(group);
+//                                Log.d("yes modify", group.getImage());
+//                                cache.saveBitmapToJpeg(originalBm, group.getImage());
+//                                imageView_modify_profile_Image.setImageBitmap(originalBm);
+//                            }
+//
+//                            @Override
+//                            public void onFailure(Call<GroupData> call, Throwable t) {
+//
+//                            }
+//                        });
 
                     } else {
 
@@ -243,22 +243,22 @@ public class ModifyGroupActivity extends AppCompatActivity {
 
                     Toast.makeText(ModifyGroupActivity.this, result.getMessage(), Toast.LENGTH_SHORT).show();
                     if (result.getCode() == 200) {
-                        service.getGroupData(MainActivity.getGroupData().getId()).enqueue(new Callback<GroupData>() {
-                            @Override
-                            public void onResponse(Call<GroupData> call, Response<GroupData> response) {
-                                GroupData group = response.body();
-                                main.setGroupData(group);
-                                Log.d("yes modify", group.getImage());
-
-                                imageView_modify_profile_Image.setImageResource(R.drawable.group_profile_default);
-
-                            }
-
-                            @Override
-                            public void onFailure(Call<GroupData> call, Throwable t) {
-
-                            }
-                        });
+//                        service.getGroupData(MainActivity.getGroupData().getId()).enqueue(new Callback<GroupData>() {
+//                            @Override
+//                            public void onResponse(Call<GroupData> call, Response<GroupData> response) {
+//                                GroupData group = response.body();
+//                                main.setGroupData(group);
+//                                Log.d("yes modify", group.getImage());
+//
+//                                imageView_modify_profile_Image.setImageResource(R.drawable.group_profile_default);
+//
+//                            }
+//
+//                            @Override
+//                            public void onFailure(Call<GroupData> call, Throwable t) {
+//
+//                            }
+//                        });
                     } else {
 
                     }

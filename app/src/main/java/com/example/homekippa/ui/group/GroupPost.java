@@ -91,13 +91,13 @@ public class GroupPost extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-//        setPostListView(listView_posts);
+
     }
 
     @Override
     public void onStart() {
         super.onStart();
-
+        setPostListView(listView_posts);
     }
 
     @Override
@@ -134,8 +134,9 @@ public class GroupPost extends Fragment {
         textView_groupName = root.findViewById(R.id.textView_GroupPostName);
         textView_address = root.findViewById(R.id.textView_GroupPostAddress);
         imageView_PostProfile = root.findViewById(R.id.imageView_GroupPostProfile);
-        getGroupProfileImage(groupData.getImage(), imageView_PostProfile);
+        empty_post = root.findViewById(R.id.empty_post);
 
+        getGroupProfileImage(groupData.getImage(), imageView_PostProfile);
 
         return root;
     }
