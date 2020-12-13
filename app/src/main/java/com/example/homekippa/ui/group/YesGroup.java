@@ -234,6 +234,7 @@ public class YesGroup extends Fragment {
             button_modify_pet.setVisibility(View.INVISIBLE);
             button_changeGroupCover.setVisibility(View.INVISIBLE);
             button_changeProfile.setVisibility(View.INVISIBLE);
+
             boolean isfollowed = followViewModel.checkFollow(groupData.getId());
 
             if (isfollowed) {

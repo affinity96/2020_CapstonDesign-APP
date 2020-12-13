@@ -4,6 +4,13 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -28,6 +35,8 @@ import com.example.homekippa.AddPostActivity;
 import com.example.homekippa.ListPostAdapter;
 import com.example.homekippa.MainActivity;
 import com.example.homekippa.R;
+import com.example.homekippa.SingleItemPost;
+import com.example.homekippa.SingleItemPostImage;
 import com.example.homekippa.data.GroupData;
 import com.example.homekippa.data.GroupPostResponse;
 import com.example.homekippa.data.LikeData;
@@ -207,6 +216,7 @@ public class GroupPost extends Fragment {
 
     private void setPostListView(RecyclerView listView) {
         service.getGroupPost(groupData.getId()).enqueue(new Callback<GroupPostResponse>() {
+
             @Override
             public void onResponse(Call<GroupPostResponse> call, Response<GroupPostResponse> response) {
                 if (response.isSuccessful()) {
@@ -251,7 +261,7 @@ public class GroupPost extends Fragment {
         } else {
             listView.setVisibility(View.VISIBLE);
             empty_post.setVisibility(View.GONE);
-            ListPostAdapter postAdapter = new ListPostAdapter(getActivity(), postList, groupData, checkLikeList, true, "");
+            ListPostAdapter postAdapter = new ListPostAdapter(getActivity(), postList, groupData, checkLikeList, true, "", myGroup);
             postAdapter.setOnItemClickListener(new ListPostAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick() {
