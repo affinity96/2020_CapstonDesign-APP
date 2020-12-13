@@ -2,14 +2,22 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single">
         <item
+            android:id="@+id/menu_item"
+            android:title="그룹 생성하기"
+            android:visible="false"
+            />
+
+        <item
             android:id="@+id/menu_item1"
             style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
             android:icon="@drawable/ic_dog"
+            android:visible="true"
             android:title="펫 추가" />
         <item
             android:id="@+id/menu_item2"
             style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
             android:icon="@drawable/ic_chat"
+            android:visible="true"
             android:title="게시물 작성" />
 
         <item

@@ -41,7 +41,7 @@
                     android:background="@drawable/round_button2"
                     android:text="그룹에 들어가기"
                     android:textSize="11dp"
-                    android:visibility="invisible" />
+                    android:visibility="gone" />
 
                 <Button
                     android:id="@+id/button_follow_group"
@@ -53,7 +53,7 @@
                     android:background="@drawable/follow_selector"
                     android:text="팔로우"
                     android:textSize="11dp"
-                    android:visibility="invisible" />
+                    android:visibility="gone" />
 
                 <Button
                     android:id="@+id/button_Add_User"
@@ -63,6 +63,7 @@
                     android:layout_marginRight="150dp"
                     android:layout_marginBottom="10dp"
                     android:background="@drawable/round_button2"
+                    android:visibility="gone"
                     android:text="구성원 추가"
                     android:textSize="11dp" />
 
@@ -74,6 +75,7 @@
                     android:layout_marginRight="80dp"
                     android:layout_marginBottom="10dp"
                     android:background="@drawable/round_button2"
+                    android:visibility="gone"
                     android:text="커버 변경"
                     android:textSize="11dp" />
 
@@ -84,6 +86,7 @@
                     android:layout_gravity="bottom|right"
                     android:layout_margin="10dp"
                     android:background="@drawable/round_button2"
+                    android:visibility="gone"
                     android:text="프로필 수정"
                     android:textSize="11dp" />
 

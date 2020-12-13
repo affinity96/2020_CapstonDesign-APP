@@ -31,10 +31,10 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.homekippa.AddPetActivity;
 import com.example.homekippa.Cache;
 import com.example.homekippa.CreateDailyWorkActivity;
+import com.example.homekippa.EditDailyWorkActivity;
 import com.example.homekippa.ImageTask;
 import com.example.homekippa.MainActivity;
 import com.example.homekippa.ModifyPetActivity;
-import com.example.homekippa.EditDailyWorkActivity;
 import com.example.homekippa.R;
 import com.example.homekippa.data.DoneReportsResponse;
 import com.example.homekippa.data.FollowData;
@@ -165,44 +165,59 @@ public class YesGroup extends Fragment {
         super.onStart();
         groupData = (GroupData) getArguments().get("groupData");
         setPetListView(listView_pets);
-
-        if (myGroup) {
-            groupData = main.getGroupData();
-        }
+        Log.d("yes", "onstart");
 
         tv_groupName.setText(groupData.getName());
         tv_groupIntro.setText(groupData.getIntroduction());
 
-        if (!myGroup) {
+        //그룹이 없을 경우
+        if (userData.getGroupId() == 0) {
             button_join_group.setVisibility(View.VISIBLE);
-            button_follow_group.setVisibility(View.VISIBLE);
-            button_addUser.setVisibility(View.INVISIBLE);
-            button_addPet.setVisibility(View.INVISIBLE);
-            button_Add_DW.setVisibility(View.INVISIBLE);
-            button_modify_pet.setVisibility(View.INVISIBLE);
-            button_changeGroupCover.setVisibility(View.INVISIBLE);
-            button_changeProfile.setVisibility(View.INVISIBLE);
-
-            boolean isfollowed = followViewModel.checkFollow(groupData.getId());
-
-            if (isfollowed) {
-                button_follow_group.setActivated(false);
-                button_follow_group.setText("팔로잉");
-            } else {
-                button_follow_group.setActivated(true);
-                button_follow_group.setText("팔로우");
-            }
         } else {
-            ll_follower.setVisibility(View.VISIBLE);
-            ll_following.setVisibility(View.VISIBLE);
-            if (followViewModel.getFollowerNum() != null) {
-                textView_followerNum.setText(String.valueOf(followViewModel.getFollowerNum()));
-            } else textView_followerNum.setText(String.valueOf(0));
+            button_join_group.setVisibility(View.GONE);
+            if (myGroup) {
+                groupData = ((MainActivity) getActivity()).getGroupData();
 
-            if (followViewModel.getFollowerNum() != null)
-                textView_followingNum.setText(String.valueOf(followViewModel.getFollowingNum()));
-            else textView_followingNum.setText(String.valueOf(0));
+                Log.d("갱신", groupData.getName());
+                button_addUser.setVisibility(View.VISIBLE);
+                button_addPet.setVisibility(View.VISIBLE);
+                button_Add_DW.setVisibility(View.VISIBLE);
+                button_modify_pet.setVisibility(View.VISIBLE);
+                button_changeGroupCover.setVisibility(View.VISIBLE);
+                button_changeProfile.setVisibility(View.VISIBLE);
+                ll_follower.setVisibility(View.VISIBLE);
+                ll_following.setVisibility(View.VISIBLE);
+                if (followViewModel.getFollowerNum() != null) {
+                    textView_followerNum.setText(String.valueOf(followViewModel.getFollowerNum()));
+                } else textView_followerNum.setText(String.valueOf(0));
+
+                if (followViewModel.getFollowerNum() != null)
+                    textView_followingNum.setText(String.valueOf(followViewModel.getFollowingNum()));
+                else textView_followingNum.setText(String.valueOf(0));
+
+            } else if (!myGroup) {
+                button_follow_group.setVisibility(View.VISIBLE);
+
+                button_addUser.setVisibility(View.GONE);
+                button_addPet.setVisibility(View.GONE);
+                button_Add_DW.setVisibility(View.GONE);
+                button_modify_pet.setVisibility(View.GONE);
+                button_changeGroupCover.setVisibility(View.GONE);
+                button_changeProfile.setVisibility(View.GONE);
+
+                boolean isfollowed = followViewModel.checkFollow(groupData.getId());
+
+                if (isfollowed) {
+                    button_follow_group.setActivated(false);
+                    button_follow_group.setText("팔로잉");
+                } else {
+                    button_follow_group.setActivated(true);
+                    button_follow_group.setText("팔로우");
+                }
+            }
         }
+
+
 
 
         textView_members.setOnClickListener(new View.OnClickListener() {
@@ -283,7 +298,6 @@ public class YesGroup extends Fragment {
                                 button_follow_group.setText("팔로우");
                             }
                         }
-
                         @Override
                         public void onFailure(Call<FollowResponse> call, Throwable t) {
                             Log.d("follow", "fail");
@@ -299,11 +313,21 @@ public class YesGroup extends Fragment {
                 service.acceptInvite(new GroupInviteData(groupData, null, userData)).enqueue(new Callback<UserData>() {
                     @Override
                     public void onResponse(Call<UserData> call, Response<UserData> response) {
+
+                        Log.d("noGroup", String.valueOf(userData.getGroupId()));
                         if (response.isSuccessful()) {
                             userData = response.body();
-                            MainActivity mainActivity = (MainActivity) getActivity();
+//                            MainActivity mainActivity = (MainActivity) getActivity();
+                           /* mainActivity.setUserData(userData);
+                            mainActivity.setGroupData(groupData);
+                            mainActivity.getNavView().getMenu().getItem(4).setChecked(true);
 
-                            mainActivity.finish();
+                            GroupFragment groupFragment = new GroupFragment();
+                            Bundle bundle = new Bundle();
+                            bundle.putParcelable("groupData", groupData);
+                            groupFragment.setArguments(bundle);
+                            mainActivity.changeFragment(groupFragment);*/
+//                            mainActivity.finish();
                             Intent intent = new Intent(getContext(), MainActivity.class);
                             intent.putExtra("user", userData);
                             intent.putExtra("group", groupData);
@@ -346,12 +370,19 @@ public class YesGroup extends Fragment {
         button_Add_DW.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), CreateDailyWorkActivity.class);
-                intent.putExtra("userData", userData);
-                intent.putExtra("groupData", groupData);
-                intent.putExtra("petId", petList.get(selectedPosition).getId());
-                Log.d("넘겨넘겨~", String.format("%d", petId));
-                startActivity(intent);
+                if(petList.size() == 0){
+                    Log.d("여왔냐","여왔아");
+                    Toast.makeText(getActivity(), "등록된 반려동물이 없습니다. 반려동물을 등록해보세요!", Toast.LENGTH_LONG).show();
+
+                }else{
+                    Intent intent = new Intent(getActivity(), CreateDailyWorkActivity.class);
+                    intent.putExtra("userData", userData);
+                    intent.putExtra("groupData", groupData);
+                    intent.putExtra("petId", petList.get(selectedPosition).getId());
+                    Log.d("넘겨넘겨~", String.format("%d", petId));
+                    startActivity(intent);
+                }
+
             }
         });
 
@@ -406,6 +437,16 @@ public class YesGroup extends Fragment {
         ll_follower = root.findViewById(R.id.linearLayout_follower);
         ll_following = root.findViewById(R.id.linearLayout_following);
         textView_members = root.findViewById(R.id.textView_groupMembers);
+
+//        if (myGroup) {
+//            groupData = ((MainActivity) getActivity()).getGroupData();
+//            Log.d("yes profile_createview", groupData.getImage());
+//        }
+//
+//        getImage(groupData.getImage(), imageView_groupProfile, true);
+//        getImage(groupData.getCover(), imageView_groupCover, false);
+//        setPetListView(listView_pets);
+
 
         return root;
     }
@@ -467,6 +508,10 @@ public class YesGroup extends Fragment {
         } else {
             if (requestCode == 1) {
                 setImage();
+//            } else if(requestCode == 3) {
+//                Log.d("yes", "받아온거니?");
+//                groupData = (GroupData)intent.getSerializableExtra("groupData");
+//                ((MainActivity)getActivity()).setGroupData(groupData);
             }
         }
     }
@@ -745,10 +790,13 @@ public class YesGroup extends Fragment {
 
                     @Override
                     public void onClick(View v) {
+                        Log.d("여기왔어", "꺄륵");
                     }
                 });
             }
         }
+
+
     }
 
     class ListPetAdapter extends RecyclerView.Adapter<ListPetAdapter.MyViewHolder> {
@@ -769,12 +817,15 @@ public class YesGroup extends Fragment {
         @Override
         public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
+
             if (selectedPosition == position) {
                 holder.pet.setBackgroundResource(R.drawable.round_button2);
             } else {
                 holder.pet.setBackgroundResource(R.drawable.round_button);
             }
+
             setPetData(holder, position);
+
         }
 
         private void setPetData(MyViewHolder holder, int position) {

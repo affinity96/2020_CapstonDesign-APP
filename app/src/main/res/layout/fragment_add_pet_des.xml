@@ -34,6 +34,7 @@
 
         </androidx.appcompat.widget.Toolbar>
 
+
         <LinearLayout
             android:id="@+id/linearlayout_group_modify_info"
             android:layout_width="match_parent"
@@ -157,6 +158,8 @@
                     android:layout_width="72dp"
                     android:layout_height="wrap_content"
                     android:text="성별"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
                     android:textSize="15sp"
                     android:layout_gravity="center"
                     android:gravity="left"
@@ -208,6 +211,8 @@
                     android:layout_weight="1"
                     android:gravity="left"
                     android:text="중성화 여부"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
                     android:textSize="15dp" />
                 <View
                     android:layout_width="0dp"
