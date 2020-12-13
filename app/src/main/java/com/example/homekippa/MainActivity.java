@@ -251,14 +251,9 @@
 package com.example.homekippa;
 
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.Signature;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Build;
 import android.os.Bundle;
-import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -269,7 +264,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -289,22 +283,18 @@ import com.example.homekippa.ui.home.HomeFragment;
 import com.example.homekippa.ui.notifications.NotificationsFragment;
 import com.example.homekippa.ui.search.SearchFragment;
 import com.example.homekippa.ui.walk.WalkFragment;
-import com.google.android.ads.nativetemplates.NativeTemplateStyle;
 import com.google.android.ads.nativetemplates.TemplateView;
 import com.google.android.gms.ads.AdLoader;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.formats.NativeAdOptions;
 import com.google.android.gms.ads.formats.UnifiedNativeAd;
-import com.google.android.gms.ads.initialization.InitializationStatus;
-import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.io.InputStream;
-import java.security.MessageDigest;
 import java.util.ArrayList;
 
 import okhttp3.ResponseBody;
@@ -327,11 +317,12 @@ public class MainActivity extends AppCompatActivity {
 
     private ArrayList<SingleItemPet> array_pets;
     private ListView listView_pets;
-    private UserData userData;
+    private static UserData userData;
     private static GroupData groupData;
     private ServiceApi service;
     private ConstraintLayout main_naviheader;
 
+    private static TextView userName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -345,6 +336,8 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = getIntent();
         userData = (UserData) intent.getExtras().get("user");
 
+        Log.d("main create", userData.getUserName());
+//
         Toast.makeText(getApplicationContext(), userData.getUserName() + "님 로그인", Toast.LENGTH_LONG).show();
         groupData = (GroupData) intent.getExtras().get("group");
 
@@ -353,9 +346,13 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(tb);
         //좌측메뉴 버튼
         menuButton = findViewById(R.id.top_btn_menu);
+
         leftDrawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.top_nav_view);
         navView = findViewById(R.id.nav_view);
+
+        userName = (TextView) findViewById(R.id.nav_user_name);
+//        userName.setText(userData.getUserName());
 
 
         menuButton.setOnClickListener(new View.OnClickListener() {
@@ -363,6 +360,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //좌측메뉴 열기
                 setNavGroupData();
+                Log.d("main click nav", userData.getUserName());
                 leftDrawerLayout.openDrawer(navigationView);
             }
         });
@@ -465,18 +463,21 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+    @Override
+    public void onStart(){
+        super.onStart();
+    }
 
 
     public void setNavGroupData() {
-        TextView username = (TextView) findViewById(R.id.nav_user_name);
+        userName = (TextView) findViewById(R.id.nav_user_name);
         ImageView userProfile = (ImageView) findViewById(R.id.nav_user_image);
         getUserProfileImage(userProfile);
         TextView usergroup = (TextView) findViewById(R.id.nav_user_group);
-
-        username.setText(userData.getUserName() + "님");
+        Log.d("main create222222", userData.getUserName());
+        userName.setText(userData.getUserName() + "님");
         if (userData.getGroupId() != 0) {
             usergroup.setText(groupData.getName());
-
         }
     }
 
@@ -484,11 +485,12 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, fragment).commitAllowingStateLoss();
     }
 
-    public UserData getUserData() {
-        return this.userData;
+    public static UserData getUserData() {
+        return userData;
     }
 
     public void setUserData(UserData userData) {
+
         this.userData = userData;
     }
 
