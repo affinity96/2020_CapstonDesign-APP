@@ -83,9 +83,7 @@ public class AddPostActivity extends AppCompatActivity {
         button_cancel_post_image = (ImageButton) this.findViewById(R.id.button_cancel_post_image);
         button_Add_Post_Img = (ImageButton) this.findViewById(R.id.button_Add_Post_Img);
 
-//        checkBox_closedScope = this.findViewById(R.id.checkBox_closedScope);
-//        checkBox_followScope = this.findViewById(R.id.checkBox_followScope);
-//        checkBox_wholeScope = this.findViewById(R.id.checkBox_wholeScope);
+
         textView_postScope = this.findViewById(R.id.textView_postScope);
         spinner_scope = this.findViewById(R.id.spinner_scope);
 
@@ -117,11 +115,7 @@ public class AddPostActivity extends AppCompatActivity {
         button_CompletePost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if(checkBox_wholeScope.isChecked() == false && checkBox_followScope.isChecked() == false && checkBox_closedScope.isChecked() == false){
-//                    textView_postScope.setError("공개범위를 선택해주세요");
-//                }else{
-                    addPost(groupData.getId(), userData.getUserId(), postContent.toString(), editText_postTitle.getText().toString(), groupData.getArea(), scope);
-//                }
+                addPost(groupData.getId(), userData.getUserId(), postContent.toString(), editText_postTitle.getText().toString(), groupData.getArea(), scope);
             }
         });
 
