@@ -63,6 +63,7 @@ public class ChatActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        Log.d("chat","here");
 
         setChatListView(listView_chat_users);
         // FirebaseDB 예시  https://mailmail.tistory.com/44
