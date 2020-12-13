@@ -44,6 +44,7 @@ public class FollowViewModel extends ViewModel {
     public static void increaseComment(int pos) {
         List<SingleItemPost> posts = new ArrayList<>();
         posts.addAll(post.getValue());
+
         posts.get(pos).setCommentNum(posts.get(pos).getCommentNum() + 1);
         post.setValue(posts);
     }

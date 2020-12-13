@@ -120,7 +120,14 @@ public class PostDetailActivity extends AppCompatActivity {
                             setPostComment(recyclerView_postComments);
 
                             if (isgroup) GroupViewModel.increaseComment(postPosition);
-                            else FollowViewModel.increaseComment(postPosition);
+                            else {
+                                if (tab.equals("F")) {
+                                    FollowViewModel.increaseComment(postPosition);
+                                } else {
+                                    LocationViewModel.increaseComment(postPosition);
+                                }
+
+                            }
                             setPostDetail();
                         }
                     }
@@ -132,8 +139,6 @@ public class PostDetailActivity extends AppCompatActivity {
                 });
             }
         });
-
-
     }
 
     private void setPostDetail() {
