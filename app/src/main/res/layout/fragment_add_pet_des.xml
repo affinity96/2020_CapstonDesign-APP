@@ -35,7 +35,6 @@
         </androidx.appcompat.widget.Toolbar>
 
 
-=======
         <LinearLayout
             android:id="@+id/linearlayout_group_modify_info"
             android:layout_width="match_parent"
