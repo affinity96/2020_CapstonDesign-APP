@@ -32,15 +32,19 @@
             android:id="@+id/editText_email"
             android:layout_width="370dp"
             android:layout_height="37.3dp"
-            android:ems="10"
+
             android:layout_gravity="center"
+            android:layout_margin="5dp"
+
+            android:ems="10"
+            android:focusable="false"
             android:hint="이메일"
             android:paddingLeft="20dp"
             android:textSize="6pt"
             android:background="@android:color/darker_gray"
-            android:layout_margin="5dp"
+
             android:inputType="textEmailAddress"
-            android:focusable="false"
+
             />
 
 

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <string-array name="scopeCheck">
+        <item>전체공개</item>
+        <item>팔로우공개</item>
+        <item>비공개</item>
+
+    </string-array>
+</resources>

@@ -199,6 +199,9 @@ public interface ServiceApi {
     @GET("/user/list/filter")
     Call<List<UserData>> getUserSearchResult(@Query("searchFilter") String filter);
 
+    @GET("/group/list/filter")
+    Call<List<GroupData>> getGroupSearchResult(@Query("searchFilter") String filter);
+
     @POST("/group/invite")
     Call<UidRespense> sendGroupInvite(@Body GroupInviteData data);
 
