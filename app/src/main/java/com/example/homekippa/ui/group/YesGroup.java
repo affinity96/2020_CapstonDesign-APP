@@ -39,8 +39,10 @@ import com.example.homekippa.R;
 import com.example.homekippa.data.DoneReportsResponse;
 import com.example.homekippa.data.FollowData;
 import com.example.homekippa.data.FollowResponse;
+import com.example.homekippa.data.GetFollowData;
 import com.example.homekippa.data.GroupData;
 import com.example.homekippa.data.GroupInviteData;
+import com.example.homekippa.data.GroupSelectResponse;
 import com.example.homekippa.data.ModifyGroupResponse;
 import com.example.homekippa.data.UserData;
 import com.example.homekippa.function.Loading;
@@ -114,6 +116,7 @@ public class YesGroup extends Fragment {
     public File tempFile;
     private Boolean isPermission = true;
     private String mParam1;
+    private String checkInvite;
 
     public YesGroup() {
         // Required empty public constructor
@@ -170,15 +173,32 @@ public class YesGroup extends Fragment {
         tv_groupName.setText(groupData.getName());
         tv_groupIntro.setText(groupData.getIntroduction());
 
+
         //그룹이 없을 경우
-        if (userData.getGroupId() == 0) {
-            button_join_group.setVisibility(View.VISIBLE);
+        if (userData.getGroupId() == 0 ) {
+            service.checkInvite(new GroupInviteData(groupData, null, userData)).enqueue(new Callback<GroupSelectResponse>() {
+                @Override
+                public void onResponse(Call<GroupSelectResponse> call, Response<GroupSelectResponse> response) {
+                    checkInvite = response.body().getResult();
+                    Log.d("check",checkInvite);
+                    if(checkInvite.equals("true")){
+                        button_join_group.setVisibility(View.VISIBLE);
+                    }else{
+                        button_join_group.setVisibility(View.GONE);
+                    }
+                }
+                @Override
+                public void onFailure(Call<GroupSelectResponse> call, Throwable t) {
+
+                }
+            });
         } else {
             button_join_group.setVisibility(View.GONE);
             if (myGroup) {
                 groupData = ((MainActivity) getActivity()).getGroupData();
 
                 Log.d("갱신", groupData.getName());
+                button_follow_group.setVisibility(View.GONE);
                 button_addUser.setVisibility(View.VISIBLE);
                 button_addPet.setVisibility(View.VISIBLE);
                 button_Add_DW.setVisibility(View.VISIBLE);
@@ -187,11 +207,12 @@ public class YesGroup extends Fragment {
                 button_changeProfile.setVisibility(View.VISIBLE);
                 ll_follower.setVisibility(View.VISIBLE);
                 ll_following.setVisibility(View.VISIBLE);
-                if (followViewModel.getFollowerNum() != null) {
+
+                if (followViewModel.getFollowerNum() != 0) {
                     textView_followerNum.setText(String.valueOf(followViewModel.getFollowerNum()));
                 } else textView_followerNum.setText(String.valueOf(0));
 
-                if (followViewModel.getFollowerNum() != null)
+                if (followViewModel.getFollowerNum() != 0)
                     textView_followingNum.setText(String.valueOf(followViewModel.getFollowingNum()));
                 else textView_followingNum.setText(String.valueOf(0));
 
@@ -313,24 +334,50 @@ public class YesGroup extends Fragment {
                     @Override
                     public void onResponse(Call<UserData> call, Response<UserData> response) {
 
-                        Log.d("noGroup", String.valueOf(userData.getGroupId()));
                         if (response.isSuccessful()) {
                             userData = response.body();
-//                            MainActivity mainActivity = (MainActivity) getActivity();
-                           /* mainActivity.setUserData(userData);
-                            mainActivity.setGroupData(groupData);
-                            mainActivity.getNavView().getMenu().getItem(4).setChecked(true);
+                            Log.d("noGroup", String.valueOf(userData.getGroupId()));
+                            ((MainActivity) MainActivity.context_main).setUserData(userData);
 
-                            GroupFragment groupFragment = new GroupFragment();
-                            Bundle bundle = new Bundle();
-                            bundle.putParcelable("groupData", groupData);
-                            groupFragment.setArguments(bundle);
-                            mainActivity.changeFragment(groupFragment);*/
-//                            mainActivity.finish();
-                            Intent intent = new Intent(getContext(), MainActivity.class);
-                            intent.putExtra("user", userData);
-                            intent.putExtra("group", groupData);
-                            startActivity(intent);
+                            service.getGroupData(userData.getGroupId()).enqueue(new Callback<GroupData>() {
+                                @Override
+                                public void onResponse(Call<GroupData> call, Response<GroupData> response) {
+                                    if(response.isSuccessful()){
+                                        groupData=response.body();
+                                        ((MainActivity) MainActivity.context_main).setGroupData(groupData);
+                                        service.getFollow(groupData.getId()).enqueue(new Callback<GetFollowData>() {
+                                            @Override
+                                            public void onResponse(Call<GetFollowData> call, Response<GetFollowData> response) {
+                                                if (response.isSuccessful()) {
+                                                    Log.d("follow", "successful");
+                                                    Log.d("follow", response.body().getFollowerList().toString());
+
+                                                    followViewModel.getFollower().setValue(response.body().getFollowerList());
+                                                    followViewModel.getFollowing().setValue(response.body().getFollowingList());
+
+                                                    Toast.makeText(getContext(), "새로운 그룹에 들어가셨네요<_< ", Toast.LENGTH_SHORT).show();
+                                                    Intent intent = new Intent(getContext(), MainActivity.class);
+                                                    intent.putExtra("user", userData);
+                                                    intent.putExtra("group", groupData);
+                                                    startActivity(intent);
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onFailure(Call<GetFollowData> call, Throwable t) {
+                                                Log.d("그룹", "에러");
+                                                Log.e("그룹", t.getMessage());
+                                                Toast.makeText(getContext(), "새로운 그룹에 못 들어갔지롱", Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<GroupData> call, Throwable t) {
+
+                                }
+                            });
                         }
                     }
 
