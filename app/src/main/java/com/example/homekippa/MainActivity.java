@@ -294,6 +294,7 @@ import com.google.android.ads.nativetemplates.TemplateView;
 import com.google.android.gms.ads.AdLoader;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.formats.NativeAdOptions;
 import com.google.android.gms.ads.formats.UnifiedNativeAd;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
@@ -310,6 +311,8 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.google.android.gms.ads.formats.NativeAdOptions.ADCHOICES_BOTTOM_RIGHT;
 
 public class MainActivity extends AppCompatActivity {
     private FirebaseUser curUser;
@@ -385,7 +388,7 @@ public class MainActivity extends AppCompatActivity {
                         template.setNativeAd(unifiedNativeAd);
 
                     }
-                })
+                }).withNativeAdOptions(new NativeAdOptions.Builder().setAdChoicesPlacement(ADCHOICES_BOTTOM_RIGHT).build())
                 .build();
 
         adLoader.loadAd(new AdRequest.Builder().build());

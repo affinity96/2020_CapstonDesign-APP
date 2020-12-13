@@ -57,8 +57,9 @@
         <com.google.android.ads.nativetemplates.TemplateView
             android:id="@+id/main_ad_template"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="350dp"
             android:layout_gravity="bottom"
+            android:layout_marginBottom="5dp"
             app:gnt_template_type="@layout/gnt_medium_template_view"/>
 
     </com.google.android.material.navigation.NavigationView>
