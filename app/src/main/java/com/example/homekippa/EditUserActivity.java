@@ -56,8 +56,6 @@ public class EditUserActivity extends AppCompatActivity {
         name_login = (EditText) this.findViewById(R.id.editText_Name);
         button_gotoEditUser = (Button) this.findViewById(R.id.button_gotoEditUser);
 
-        main = new MainActivity();
-
 
         String id = userData.getUserId();
         String name = userData.getUserName();
@@ -78,10 +76,7 @@ public class EditUserActivity extends AppCompatActivity {
         button_gotoEditUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("아", "머냐ㅐ");
-
                 editUser(new EditUserData(id, userName.toString(), userPhone.toString()));
-
             }
         });
 
@@ -103,7 +98,7 @@ public class EditUserActivity extends AppCompatActivity {
                         public void onResponse(Call<UserData> call, Response<UserData> response) {
                             if (response.isSuccessful()) {
                                 UserData userData = response.body();
-                                main.setUserData(userData);
+                                ((MainActivity) MainActivity.context_main).setUserData(userData);
                             }
                         }
 
