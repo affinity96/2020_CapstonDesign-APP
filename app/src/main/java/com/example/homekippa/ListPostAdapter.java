@@ -287,7 +287,7 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
                                         if (response.code() == 200) {
                                             Log.d("포스트삭제", "success");
 //                                            groupViewModel.deletePost(position);
-                                            if(mListener!=null){
+                                            if (mListener != null) {
                                                 mListener.onItemClick();
                                             }
 //                                            if (isgroup) {
@@ -388,18 +388,30 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
             followViewModel.getPostList().observe((LifecycleOwner) context, new Observer<List<SingleItemPost>>() {
                 @Override
                 public void onChanged(List<SingleItemPost> singleItemPosts) {
-                    holder.postCommentNum.setText(String.valueOf(singleItemPosts.get(position).getCommentNum()));
-                    holder.postLikedNum.setText(String.valueOf(singleItemPosts.get(position).getLikeNum()));
-                    boolean isliked = followViewModel.getLikeCheck().getValue().get(position);
-                    holder.postLikeImage.setActivated(isliked);
+
+                    int size = followViewModel.getPostList().getValue().size();
+                    int changesize = singleItemPosts.size();
+                    Log.d("size follow", String.valueOf(size));
+                    Log.d("size change", String.valueOf(changesize));
+
+                    if (position < size) {
+                        holder.postCommentNum.setText(String.valueOf(singleItemPosts.get(position).getCommentNum()));
+                        holder.postLikedNum.setText(String.valueOf(singleItemPosts.get(position).getLikeNum()));
+                        boolean isliked = followViewModel.getLikeCheck().getValue().get(position);
+                        holder.postLikeImage.setActivated(isliked);
+                    }
                 }
             });
             followViewModel.getLikeCheck().observe((LifecycleOwner) context, new Observer<List<Boolean>>() {
                 @Override
                 public void onChanged(List<Boolean> likecheck) {
-                    holder.postLikedNum.setText(String.valueOf(followViewModel.getPostList().getValue().get(position).getLikeNum()));
-                    boolean isliked = followViewModel.getLikeCheck().getValue().get(position);
-                    holder.postLikeImage.setActivated(isliked);
+                    int size = followViewModel.getPostList().getValue().size();
+
+                    if (position < size) {
+                        holder.postLikedNum.setText(String.valueOf(followViewModel.getPostList().getValue().get(position).getLikeNum()));
+                        boolean isliked = followViewModel.getLikeCheck().getValue().get(position);
+                        holder.postLikeImage.setActivated(isliked);
+                    }
                 }
             });
         }

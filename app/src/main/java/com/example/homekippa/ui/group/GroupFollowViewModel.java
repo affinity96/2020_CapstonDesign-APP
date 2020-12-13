@@ -11,13 +11,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class FollowViewModel extends ViewModel {
+public class GroupFollowViewModel extends ViewModel {
 
     public static MutableLiveData<List<Integer>> follower = new MutableLiveData<>();
     public static MutableLiveData<List<Integer>> following = new MutableLiveData<>();
 
-    public FollowViewModel() {
-
+    public GroupFollowViewModel() {
     }
 
     public MutableLiveData<List<Integer>> getFollower() {
@@ -44,7 +43,7 @@ public class FollowViewModel extends ViewModel {
 
     public Integer getFollowerNum() {
 
-            return follower.getValue().size();
+        return follower.getValue().size();
 
 
     }
@@ -52,14 +51,17 @@ public class FollowViewModel extends ViewModel {
     public void cancelFollowing(int id) {
         List<Integer> fo = new ArrayList<>();
         fo.addAll(following.getValue());
-        fo.remove((Integer)id);
+        fo.remove((Integer) id);
         following.setValue(fo);
     }
 
     public void addFollowing(int id) {
+        MutableLiveData<List<Integer>> liveFollow = new MutableLiveData<>();
         List<Integer> fo = new ArrayList<>();
         fo.addAll(following.getValue());
         fo.add(id);
-        following.setValue(fo);
+        liveFollow.setValue(fo);
+        following = liveFollow;
+//        following.setValue(fo);
     }
 }

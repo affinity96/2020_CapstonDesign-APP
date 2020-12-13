@@ -148,7 +148,6 @@ public class CreateGroupActivity extends AppCompatActivity {
                 } else if (editText_detailAddress.getText().toString().isEmpty()){
                     editText_detailAddress.setHint("상세주소 입력해주세요!");
                 } else {
-
                     createGroup(userId, groupName, groupAddress, groupIntroduction, groupArea);
                 }
             }
@@ -259,9 +258,7 @@ public class CreateGroupActivity extends AppCompatActivity {
                     CreateGroupResponse result = response.body();
 
                     if (result.getCode() == 200) {
-
 //                        finish();
-
                         Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);

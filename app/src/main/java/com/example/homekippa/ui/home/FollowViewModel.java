@@ -27,6 +27,13 @@ public class FollowViewModel extends ViewModel {
         return post;
     }
 
+    public void setPostList(List<SingleItemPost> postlist) {
+        MutableLiveData<List<SingleItemPost>> livepost = new MutableLiveData<>();
+        livepost.setValue(postlist);
+        post = livepost;
+    }
+
+
     public MutableLiveData<List<Boolean>> getLikeCheck() {
         if (likeCheck == null) {
             likeCheck = new MutableLiveData<>();
