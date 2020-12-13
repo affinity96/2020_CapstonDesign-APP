@@ -1,15 +1,10 @@
 package com.example.homekippa.ui.group;
 
-import android.util.Log;
-
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.homekippa.SingleItemPost;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class FollowViewModel extends ViewModel {
 
