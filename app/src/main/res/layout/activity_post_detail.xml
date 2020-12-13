@@ -155,6 +155,7 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:id="@+id/textView_postDetailDate"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="2020년 11월 21일 "

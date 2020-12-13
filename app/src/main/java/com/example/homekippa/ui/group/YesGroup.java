@@ -115,8 +115,6 @@ public class YesGroup extends Fragment {
 
     public File tempFile;
     private Boolean isPermission = true;
-
-
     private String mParam1;
     private String checkInvite;
 
@@ -144,7 +142,6 @@ public class YesGroup extends Fragment {
         context_YesGroup = this;
         main = (MainActivity) getActivity();
 
-        Log.d("yes", "oncreage");
         cache = new Cache(getContext());
         service = RetrofitClient.getClient().create(ServiceApi.class);
 
@@ -160,19 +157,9 @@ public class YesGroup extends Fragment {
         }
     }
 
-
     @Override
     public void onResume() {
-
         super.onResume();
-        Log.d("yes", "onresume");
-//        if (myGroup) {
-//            groupData = ((MainActivity) getActivity()).getGroupData();
-//        }
-//        getImage(groupData.getImage(), imageView_groupProfile, true);
-//        getImage(groupData.getCover(), imageView_groupCover, false);
-
-
     }
 
     @Override
@@ -250,8 +237,6 @@ public class YesGroup extends Fragment {
                 }
             }
         }
-
-
 
 
         textView_members.setOnClickListener(new View.OnClickListener() {
@@ -332,6 +317,7 @@ public class YesGroup extends Fragment {
                                 button_follow_group.setText("팔로우");
                             }
                         }
+
                         @Override
                         public void onFailure(Call<FollowResponse> call, Throwable t) {
                             Log.d("follow", "fail");
@@ -430,11 +416,11 @@ public class YesGroup extends Fragment {
         button_Add_DW.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(petList.size() == 0){
-                    Log.d("여왔냐","여왔아");
+                if (petList.size() == 0) {
+                    Log.d("여왔냐", "여왔아");
                     Toast.makeText(getActivity(), "등록된 반려동물이 없습니다. 반려동물을 등록해보세요!", Toast.LENGTH_LONG).show();
 
-                }else{
+                } else {
                     Intent intent = new Intent(getActivity(), CreateDailyWorkActivity.class);
                     intent.putExtra("userData", userData);
                     intent.putExtra("groupData", groupData);
@@ -706,7 +692,6 @@ public class YesGroup extends Fragment {
                         listView.setAdapter(petAdapter);
 
                     }
-
                 }
             }
 
@@ -840,8 +825,6 @@ public class YesGroup extends Fragment {
 
             MyViewHolder2(View view) {
                 super(view);
-                //workNameTitle =
-
                 workName = (TextView) view.findViewById(R.id.textView_workName);
                 workPersonImage = (ImageView) view.findViewById(R.id.personImage);
                 workTime = (TextView) view.findViewById(R.id.textView_workTime);
@@ -874,12 +857,6 @@ public class YesGroup extends Fragment {
         public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
             View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.listitem_pet, parent, false);
-//            List<View> itemViewList = new ArrayList<>();
-
-
-//            itemViewList.add(itemView);
-//            MyViewHolder myViewHolder = new MyViewHolder(itemView);
-
             return new MyViewHolder(itemView);
         }
 
@@ -940,7 +917,7 @@ public class YesGroup extends Fragment {
         service.getProfileImage(img).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                String TAG = "MainActivity";
+                String TAG = "YesGroup";
                 if (response.isSuccessful()) {
 
                     Log.d(TAG, "server contacted and has file");
