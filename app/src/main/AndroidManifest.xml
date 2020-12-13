@@ -25,9 +25,11 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:largeHeap="true"
         android:usesCleartextTraffic="true">
+        <activity android:name=".ChattingRoomActivity"></activity>
+        <activity android:name=".ChatActivity" />
+        <activity android:name=".ui.group.GroupInviteActivity" />
         <activity android:name=".EditUserActivity"></activity>
         <activity android:name=".EditDailyWorkActivity" />
-        <activity android:name=".ui.group.GroupInviteActivity" />
 
         <service
             android:name=".pushAlarm.PushAlarmService"
@@ -119,6 +121,10 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
         </provider>
+
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-6437922356481702~4737777043"/>
     </application>
 
 </manifest>
