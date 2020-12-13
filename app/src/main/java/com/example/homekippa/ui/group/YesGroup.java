@@ -113,8 +113,6 @@ public class YesGroup extends Fragment {
 
     public File tempFile;
     private Boolean isPermission = true;
-
-
     private String mParam1;
 
     public YesGroup() {
@@ -141,7 +139,6 @@ public class YesGroup extends Fragment {
         context_YesGroup = this;
         main = (MainActivity) getActivity();
 
-        Log.d("yes", "oncreage");
         cache = new Cache(getContext());
         service = RetrofitClient.getClient().create(ServiceApi.class);
 
@@ -160,16 +157,7 @@ public class YesGroup extends Fragment {
 
     @Override
     public void onResume() {
-
         super.onResume();
-        Log.d("yes", "onresume");
-//        if (myGroup) {
-//            groupData = ((MainActivity) getActivity()).getGroupData();
-//        }
-//        getImage(groupData.getImage(), imageView_groupProfile, true);
-//        getImage(groupData.getCover(), imageView_groupCover, false);
-
-
     }
 
     @Override
@@ -178,10 +166,9 @@ public class YesGroup extends Fragment {
         super.onStart();
         groupData = (GroupData) getArguments().get("groupData");
         setPetListView(listView_pets);
-        Log.d("yes", "onstart");
+
         if (myGroup) {
-            groupData = ((MainActivity) getActivity()).getGroupData();
-            Log.d("갱신", groupData.getName());
+            groupData = main.getGroupData();
         }
 
         tv_groupName.setText(groupData.getName());
@@ -278,8 +265,6 @@ public class YesGroup extends Fragment {
                                 followViewModel.addFollowing(groupData.getId());
                                 button_follow_group.setActivated(false);
                                 button_follow_group.setText("팔로잉");
-
-
                             }
                         }
 
@@ -318,15 +303,6 @@ public class YesGroup extends Fragment {
                         if (response.isSuccessful()) {
                             userData = response.body();
                             MainActivity mainActivity = (MainActivity) getActivity();
-/*                            mainActivity.setUserData(userData);
-                            mainActivity.setGroupData(groupData);
-                            mainActivity.getNavView().getMenu().getItem(4).setChecked(true);
-
-                            GroupFragment groupFragment = new GroupFragment();
-                            Bundle bundle = new Bundle();
-                            bundle.putParcelable("groupData", groupData);
-                            groupFragment.setArguments(bundle);
-                            mainActivity.changeFragment(groupFragment);*/
 
                             mainActivity.finish();
                             Intent intent = new Intent(getContext(), MainActivity.class);
@@ -334,7 +310,6 @@ public class YesGroup extends Fragment {
                             intent.putExtra("group", groupData);
                             startActivity(intent);
                         }
-
                     }
 
                     @Override
@@ -433,16 +408,6 @@ public class YesGroup extends Fragment {
         ll_following = root.findViewById(R.id.linearLayout_following);
         textView_members = root.findViewById(R.id.textView_groupMembers);
 
-//        if (myGroup) {
-//            groupData = ((MainActivity) getActivity()).getGroupData();
-//            Log.d("yes profile_createview", groupData.getImage());
-//        }
-//
-//        getImage(groupData.getImage(), imageView_groupProfile, true);
-//        getImage(groupData.getCover(), imageView_groupCover, false);
-//        setPetListView(listView_pets);
-
-
         return root;
     }
 
@@ -503,10 +468,6 @@ public class YesGroup extends Fragment {
         } else {
             if (requestCode == 1) {
                 setImage();
-//            } else if(requestCode == 3) {
-//                Log.d("yes", "받아온거니?");
-//                groupData = (GroupData)intent.getSerializableExtra("groupData");
-//                ((MainActivity)getActivity()).setGroupData(groupData);
             }
         }
     }
@@ -774,8 +735,6 @@ public class YesGroup extends Fragment {
 
             MyViewHolder2(View view) {
                 super(view);
-                //workNameTitle =
-
                 workName = (TextView) view.findViewById(R.id.textView_workName);
                 workPersonImage = (ImageView) view.findViewById(R.id.personImage);
                 workTime = (TextView) view.findViewById(R.id.textView_workTime);
@@ -787,13 +746,10 @@ public class YesGroup extends Fragment {
 
                     @Override
                     public void onClick(View v) {
-                        Log.d("여기왔어", "꺄륵");
                     }
                 });
             }
         }
-
-
     }
 
     class ListPetAdapter extends RecyclerView.Adapter<ListPetAdapter.MyViewHolder> {
@@ -808,27 +764,18 @@ public class YesGroup extends Fragment {
         public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
             View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.listitem_pet, parent, false);
-//            List<View> itemViewList = new ArrayList<>();
-
-
-//            itemViewList.add(itemView);
-//            MyViewHolder myViewHolder = new MyViewHolder(itemView);
-
             return new MyViewHolder(itemView);
         }
 
         @Override
         public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
-
             if (selectedPosition == position) {
                 holder.pet.setBackgroundResource(R.drawable.round_button2);
             } else {
                 holder.pet.setBackgroundResource(R.drawable.round_button);
             }
-
             setPetData(holder, position);
-
         }
 
         private void setPetData(MyViewHolder holder, int position) {
@@ -874,7 +821,7 @@ public class YesGroup extends Fragment {
         service.getProfileImage(img).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                String TAG = "MainActivity";
+                String TAG = "YesGroup";
                 if (response.isSuccessful()) {
 
                     Log.d(TAG, "server contacted and has file");

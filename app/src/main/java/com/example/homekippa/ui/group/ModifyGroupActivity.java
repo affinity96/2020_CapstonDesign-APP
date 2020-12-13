@@ -279,7 +279,6 @@ public class ModifyGroupActivity extends AppCompatActivity {
             public void onResponse(Call<GroupData> call, Response<GroupData> response) {
                 if (response.isSuccessful()) {
                     groupData = response.body();
-                    Log.d("GGROUP", "받아온건가?");
                     textView_groupName.setText(groupData.getName());
                     textView_groupIntro.setText(groupData.getIntroduction());
                     textView_groupAddress.setText(groupData.getAddress());
