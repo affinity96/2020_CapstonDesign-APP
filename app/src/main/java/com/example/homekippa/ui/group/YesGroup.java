@@ -225,7 +225,7 @@ public class YesGroup extends Fragment {
 //        getImage(groupData.getCover(), imageView_groupCover, false);
 //        setPetListView(listView_pets);
 
-        if (!myGroup) {
+        if (!myGroup && groupData != null) {
             button_join_group.setVisibility(View.VISIBLE);
             button_follow_group.setVisibility(View.VISIBLE);
             button_addUser.setVisibility(View.INVISIBLE);
