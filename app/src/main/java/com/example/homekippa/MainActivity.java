@@ -490,6 +490,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setUserData(UserData userData) {
+
         this.userData = userData;
     }
 
@@ -550,5 +551,4 @@ public class MainActivity extends AppCompatActivity {
     public void LoadingEnd() {
         loading.loadingEnd();
     }
-
 }
