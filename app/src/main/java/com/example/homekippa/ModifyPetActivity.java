@@ -111,7 +111,7 @@ public class ModifyPetActivity extends AppCompatActivity {
             textView_petNeu.setText("무");
         }
 
-        textView_petBirth.setText(petBirth);
+        textView_petBirth.setText(petBirth.substring(0, 10));
 
         imageView_modifypet_Image.setOnClickListener(new View.OnClickListener() {
 
@@ -141,7 +141,7 @@ public class ModifyPetActivity extends AppCompatActivity {
                 Intent intent = new Intent(view.getContext(), ModifyPetNameActivity.class);
                 intent.putExtra("id", petId);
                 intent.putExtra("name", petName);
-                startActivity(intent);
+                startActivityForResult(intent, 2);
             }
         });
 
@@ -151,7 +151,7 @@ public class ModifyPetActivity extends AppCompatActivity {
                 Intent intent = new Intent(view.getContext(), ModifyPetSpeciesActivity.class);
                 intent.putExtra("id", petId);
                 intent.putExtra("species", petSpecies);
-                startActivity(intent);
+                startActivityForResult(intent, 3);
             }
         });
 
@@ -161,7 +161,7 @@ public class ModifyPetActivity extends AppCompatActivity {
                 Intent intent = new Intent(view.getContext(), ModifyPetGenderActivity.class);
                 intent.putExtra("id", petId);
                 intent.putExtra("gender", petGender);
-                startActivity(intent);
+                startActivityForResult(intent, 4);
             }
         });
 
@@ -171,7 +171,7 @@ public class ModifyPetActivity extends AppCompatActivity {
                 Intent intent = new Intent(view.getContext(), ModifyPetNeuteringActivity.class);
                 intent.putExtra("id", petId);
                 intent.putExtra("neutrality", petNeutrality);
-                startActivity(intent);
+                startActivityForResult(intent, 5);
             }
         });
 
@@ -181,7 +181,7 @@ public class ModifyPetActivity extends AppCompatActivity {
                 Intent intent = new Intent(view.getContext(), ModifyPetBirthActivity.class);
                 intent.putExtra("id", petId);
                 intent.putExtra("birth", petBirth);
-                startActivity(intent);
+                startActivityForResult(intent, 6);
             }
         });
     }
@@ -285,8 +285,36 @@ public class ModifyPetActivity extends AppCompatActivity {
         } else {
             if (requestCode == 1) {
                     setImage();
-            } else {
-
+            } else if (requestCode == 2) {
+                petName = intent.getStringExtra("petName");
+                Log.d("2", petName);
+                textView_petName.setText(petName);
+            } else if (requestCode == 3) {
+                petSpecies = intent.getStringExtra("petSpecies");
+                Log.d("3", petSpecies);
+                textView_petSpecies.setText(petSpecies);
+            } else if (requestCode == 4) {
+                petGender = intent.getIntExtra("petGender",0);
+                Log.d("4", String.valueOf(petGender));
+                if(petGender == 1) {
+                    textView_petGender.setText("수컷");
+                }
+                else {
+                    textView_petGender.setText("암컷");
+                }
+            } else if (requestCode == 5) {
+                petNeutrality = intent.getIntExtra("petNeutrality",0);
+                Log.d("5", String.valueOf(petNeutrality));
+                if(petNeutrality == 1) {
+                    textView_petNeu.setText("유");
+                }
+                else {
+                    textView_petNeu.setText("무");
+                }
+            } else if (requestCode == 6) {
+                petBirth = intent.getStringExtra("petBirth");
+                Log.d("6", petBirth);
+                textView_petBirth.setText(petBirth.substring(0, 10));
             }
         }
     }

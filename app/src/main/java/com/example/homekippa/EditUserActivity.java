@@ -1,7 +1,6 @@
 package com.example.homekippa;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,17 +9,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.homekippa.data.EditDailyWorkData;
-import com.example.homekippa.data.EditDailyWorkResponse;
 import com.example.homekippa.data.EditUserData;
 import com.example.homekippa.data.EditUserResponse;
 import com.example.homekippa.data.UserData;
 import com.example.homekippa.network.RetrofitClient;
 import com.example.homekippa.network.ServiceApi;
-import com.example.homekippa.ui.datepicker.DatePickerFragment;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -93,7 +88,7 @@ public class EditUserActivity extends AppCompatActivity {
                 EditUserResponse result = response.body();
                 if (result.getCode() == 200) {
                     Toast.makeText(EditUserActivity.this, "사용자 정보가 성공적으로 수정되었습니다!", Toast.LENGTH_LONG).show();
-                    service.getUserData(userData.getUserId(), userData.getUserTokken()).enqueue(new Callback<UserData>() {
+                    service.getUserData(userData.getUserId(), userData.getUserToken()).enqueue(new Callback<UserData>() {
                         @Override
                         public void onResponse(Call<UserData> call, Response<UserData> response) {
                             if (response.isSuccessful()) {

@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.homekippa.R;
+import com.example.homekippa.data.UserData;
 
 /**
  * A simple {@link Fragment} subclass.
