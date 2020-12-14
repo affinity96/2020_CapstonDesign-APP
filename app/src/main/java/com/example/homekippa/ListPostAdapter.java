@@ -26,6 +26,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.homekippa.data.DeletePostResponse;
 import com.example.homekippa.data.GroupData;
 import com.example.homekippa.data.LikeData;
@@ -119,7 +120,7 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        if(!myGroup){
+        if (!myGroup) {
             holder.button_DeletePost.setVisibility(View.INVISIBLE);
         }
         if (isgroup) {
@@ -144,7 +145,6 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
                 e.printStackTrace();
             }
         }
-
 
 
     }
@@ -207,7 +207,7 @@ public class ListPostAdapter extends RecyclerView.Adapter<ListPostAdapter.MyView
 
         Bitmap bit = cache.getBitmapFromCacheDir(key);
         if (bit != null) {
-            Glide.with(context).load(bit).circleCrop().into(holder.postGroupProfile);
+            Glide.with(context).load(bit).diskCacheStrategy(DiskCacheStrategy.NONE).circleCrop().into(holder.postGroupProfile);
         } else {
             ImageTask task = new ImageTask(url, holder.postGroupProfile, context, false);
             task.getImage();

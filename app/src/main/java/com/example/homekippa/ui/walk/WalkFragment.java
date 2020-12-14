@@ -34,6 +34,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.example.homekippa.Cache;
+import com.example.homekippa.ImageTask;
 import com.example.homekippa.MainActivity;
 import com.example.homekippa.R;
 import com.example.homekippa.data.GetFollowData;
@@ -87,6 +89,7 @@ public class WalkFragment extends Fragment {
     private int selectedPosition = 0;
 
     private Drawable drawable;
+    private Cache cache;
 
     private TextView textView_temperature;
     private TextView textView_weather;
@@ -119,28 +122,24 @@ public class WalkFragment extends Fragment {
         textView_petSelect = root.findViewById(R.id.textView_petSelect);
 
         intent = new Intent(getActivity(), MapActivity.class);
+        cache = new Cache(getContext());
 
-
-        userData =((MainActivity) MainActivity.context_main).getUserData();
+        userData = ((MainActivity) MainActivity.context_main).getUserData();
         groupData = ((MainActivity) MainActivity.context_main).getGroupData();
 
         if (groupData != null) {
             getGroupData(userData.getGroupId());
         }
 
-
         userLocation = getMyLocation();
         setPetListView(listView_walk_pets);
         if (userLocation != null) {
             lat = userLocation.getLatitude();
             lon = userLocation.getLongitude();
-            Log.d("weather_lat", String.valueOf(lat));
-            Log.d("weather_lon", String.valueOf(lon));
         } else {
-            Log.d("weather_error", "날씨 에러");
+            Log.e("weather_error", "날씨 에러");
         }
         // lat하고 lon의 값을 받아와서 weatherLocation을 통해 서버로 값을 보낸다.
-
 
         weatherLocation(new WeatherLocationData(lat, lon));
 
@@ -148,7 +147,7 @@ public class WalkFragment extends Fragment {
         button_startWalk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!petEmptyCheck.equals("true")){
+                if (!petEmptyCheck.equals("true")) {
                     if (petImageUrl.equals("")) {
 
                         petId = petList.get(0).getId();
@@ -172,13 +171,10 @@ public class WalkFragment extends Fragment {
                     intent.putExtra("petGender", petGender);
                     intent.putExtra("petImageUrl", petImageUrl);
                     startActivity(intent);
-
-                }else{
+                } else {
                     textView_petSelect.requestFocus();
                     textView_petSelect.setError("펫을 추가해주세요!");
                 }
-
-
             }
         });
         if (userData.getUserGender() == 1) {
@@ -203,20 +199,19 @@ public class WalkFragment extends Fragment {
         mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("userGender").setValue(userGender);
         mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("userAge").setValue(String.valueOf(userAge));
 
-
         spinner_walkScope.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Log.d("spinner",parent.getItemAtPosition(position).toString());
+                Log.d("spinner", parent.getItemAtPosition(position).toString());
                 String checkedScope = parent.getItemAtPosition(position).toString();
 
-                if(checkedScope.equals("전체공개")){
-                    intent.putExtra("scope","wholeScope");
-                }else if(checkedScope.equals("팔로우공개")){
-                    intent.putExtra("scope","followScope");
-                    intent.putExtra("followingGroup",followingArray);
-                }else if(checkedScope.equals("비공개")){
-                    intent.putExtra("scope","closedScope");
+                if (checkedScope.equals("전체공개")) {
+                    intent.putExtra("scope", "wholeScope");
+                } else if (checkedScope.equals("팔로우공개")) {
+                    intent.putExtra("scope", "followScope");
+                    intent.putExtra("followingGroup", followingArray);
+                } else if (checkedScope.equals("비공개")) {
+                    intent.putExtra("scope", "closedScope");
                 }
             }
 
@@ -230,8 +225,6 @@ public class WalkFragment extends Fragment {
     }
 
     public void getGroupData(int ID) {
-
-
         service.getGroupData(ID).enqueue(new Callback<GroupData>() {
             @Override
             public void onResponse(Call<GroupData> call, Response<GroupData> response) {
@@ -242,7 +235,7 @@ public class WalkFragment extends Fragment {
                         @Override
                         public void onResponse(Call<GetFollowData> call, Response<GetFollowData> response) {
                             if (response.isSuccessful()) {
-                                Log.d("follow", "successful");
+
                                 followingArray = (ArrayList) response.body().getFollowingList();
                             }
                         }
@@ -262,8 +255,6 @@ public class WalkFragment extends Fragment {
                 Log.e("그룹 확인", t.getMessage());
             }
         });
-
-
     }
 
     private void setPetListView(RecyclerView listView) {
@@ -275,7 +266,7 @@ public class WalkFragment extends Fragment {
                         Log.d("반려동물 확인", "성공");
                         List<SingleItemPet> pets = response.body();
                         if (!pets.isEmpty()) {
-                            Log.d("walk","nothere");
+                            Log.d("walk", "nothere");
                             petList.addAll(pets);
                             //TODO:나중에 바꿔야 할 부분. 일단 가장 처음 강아지의 아이디만을 petId라 해놓음!
                             petId = pets.get(0).getId();
@@ -288,9 +279,9 @@ public class WalkFragment extends Fragment {
                             listView.setItemAnimator(new DefaultItemAnimator());
                             listView.setAdapter(petAdapter);
                             petEmptyCheck = "false";
-                        }else{
-                            petEmptyCheck= String.valueOf(pets.isEmpty());
-                            Log.d("here",petEmptyCheck);
+                        } else {
+                            petEmptyCheck = String.valueOf(pets.isEmpty());
+                            Log.d("here", petEmptyCheck);
                         }
                     }
                 }
@@ -306,58 +297,19 @@ public class WalkFragment extends Fragment {
     }
 
 
-    private void getPetProfileImage(ListPetAdapter.MyViewHolder holder, String url) {
+    private void getPetProfileImage(ImageView holder, String url) {
         String[] w = url.split("/");
         String key = w[w.length - 1];
 
-        Bitmap bit = getBitmapFromCacheDir(key);
+        Bitmap bit = cache.getBitmapFromCacheDir(key);
         if (bit != null) {
-            Glide.with(WalkFragment.this).load(bit).diskCacheStrategy(DiskCacheStrategy.NONE).circleCrop().into(holder.petImage);
+            Glide.with(WalkFragment.this).load(bit).diskCacheStrategy(DiskCacheStrategy.NONE).circleCrop().into(holder);
         } else {
-            service.getProfileImage(url).enqueue(new Callback<ResponseBody>() {
-                @Override
-                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                    String TAG = "YesGroup";
-                    if (response.isSuccessful()) {
-                        InputStream is = response.body().byteStream();
-                        Bitmap bitmap = BitmapFactory.decodeStream(is);
-                        Glide.with(WalkFragment.this).load(bitmap).diskCacheStrategy(DiskCacheStrategy.NONE).circleCrop().into(holder.petImage);
-                        saveBitmapToJpeg(bitmap, key);
-                    } else {
-                        Log.d(TAG, "server contact failed");
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<ResponseBody> call, Throwable t) {
-                    Toast.makeText(getContext(), "펫 사진 에러", Toast.LENGTH_SHORT).show();
-                    Log.e("createGroup error", t.getMessage());
-                    t.printStackTrace();
-                }
-            });
+            ImageTask task = new ImageTask(url, holder, getContext(), false);
+            task.getImage();
         }
     }
 
-    private void saveBitmapToJpeg(Bitmap bitmap, String name) {
-        //내부저장소 캐시 경로를 받아옵니다.
-        File storage = (getContext()).getCacheDir();
-        //저장할 파일 이름
-        String fileName = name;
-
-        try {
-            File tempFile = new File(storage, fileName);
-            tempFile.createNewFile();
-
-            FileOutputStream out = new FileOutputStream(tempFile);
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
-            // 스트림 사용후 닫아줍니다.
-            out.close();
-        } catch (FileNotFoundException e) {
-            Log.e("Yes", "FileNotFoundException : " + e.getMessage());
-        } catch (IOException e) {
-            Log.e("Yes", "IOException : " + e.getMessage());
-        }
-    }
 
     class ListPetAdapter extends RecyclerView.Adapter<ListPetAdapter.MyViewHolder> {
         private ArrayList<SingleItemPet> pet_Items;
@@ -390,9 +342,8 @@ public class WalkFragment extends Fragment {
         private void setPetData(ListPetAdapter.MyViewHolder holder, int position) {
             SingleItemPet selectedPet = pet_Items.get(position);
             holder.petName.setText(selectedPet.getName());
-            getPetProfileImage(holder, selectedPet.getImage());
-//            Glide.with(getActivity()).load(R.drawable.simplelogo).circleCrop().into(holder.petImage);
-//            holder.petImage.setImageResource(R.drawable.simplelogo);
+            getPetProfileImage(holder.petImage, selectedPet.getImage());
+
             holder.pet.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -435,26 +386,6 @@ public class WalkFragment extends Fragment {
             }
         }
     }
-
-    private Bitmap getBitmapFromCacheDir(String key) {
-        String found = null;
-        Bitmap bitmap = null;
-        File file = new File(getContext().getCacheDir().toString());
-        File[] files = file.listFiles();
-
-        for (File tempFile : files) {
-            //blackJin 이 들어가 있는 파일명을 찾습니다.
-            if (tempFile.getName().contains(key)) {
-                found = (tempFile.getName());
-                String path = getContext().getCacheDir() + "/" + found;
-                //파일경로로부터 비트맵을 생성합니다.
-                bitmap = BitmapFactory.decodeFile(path);
-            }
-        }
-        //blackJins 배열에 있는 파일 경로 중 하나를 랜덤으로 불러옵니다.
-        return bitmap;
-    }
-
 
     private Location getMyLocation() {
         if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {

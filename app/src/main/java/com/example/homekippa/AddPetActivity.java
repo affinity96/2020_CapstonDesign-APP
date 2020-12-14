@@ -1,7 +1,6 @@
 package com.example.homekippa;
 
 
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.homekippa.data.AddPetData;
 import com.example.homekippa.data.AddPetResponse;
 import com.example.homekippa.data.GroupData;
+import com.example.homekippa.function.Loading;
 import com.example.homekippa.network.RetrofitClient;
 import com.example.homekippa.network.ServiceApi;
 
@@ -35,12 +35,14 @@ public class AddPetActivity extends AppCompatActivity {
     private String petReg;
     private GroupData groupData;
 
+    private Loading loading;
 
     @Override
-    protected  void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate((savedInstanceState));
         setContentView(R.layout.activity_add_pet);
 
+        loading=new Loading();
         editText_petReg_num = findViewById(R.id.editText_petReg_num);
         button_petReg = findViewById(R.id.button_petReg);
         button_petDes = findViewById(R.id.button_petDes);
@@ -52,7 +54,7 @@ public class AddPetActivity extends AppCompatActivity {
         petReg = "";
         petSpecies = "";
 
-        groupData =(GroupData) getIntent().getExtras().get("groupData");
+        groupData = (GroupData) getIntent().getExtras().get("groupData");
 
         editText_petReg_num.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,12 +69,14 @@ public class AddPetActivity extends AppCompatActivity {
 
                 petReg = editText_petReg_num.getText().toString().trim();
 
-                if(petReg.isEmpty()){
+                if (petReg.isEmpty()) {
                     editText_petReg_num.setText("숫자를 입력하세요.");
 
-                }
-                else{
+                } else {
+                    loading.loading(AddPetActivity.this);
+                    Log.d("pet", "start");
                     addPet(new AddPetData(petReg));
+
 
                 }
             }
@@ -80,16 +84,15 @@ public class AddPetActivity extends AppCompatActivity {
         button_petDes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("here","here");
-                Log.d("petReg", petReg);
+
                 Intent intent = new Intent(getApplicationContext(), AddPetDesActivity.class);
                 intent.putExtra("petRegNum", petReg);
                 intent.putExtra("petName", petName);
                 intent.putExtra("petGender", petGender);
                 intent.putExtra("petSpecies", petSpecies);
                 intent.putExtra("petNeutralization", petNeutralization);
-                intent.putExtra("groupData",groupData);
-                startActivityForResult(intent, 0 );
+                intent.putExtra("groupData", groupData);
+                startActivityForResult(intent, 0);
 
             }
         });
@@ -97,33 +100,32 @@ public class AddPetActivity extends AppCompatActivity {
     }
 
     private void addPet(AddPetData data) {
-        Log.i("create2","create");
+
         service.addPetReg(data).enqueue(new Callback<AddPetResponse>() {
             @Override
             public void onResponse(Call<AddPetResponse> call, Response<AddPetResponse> response) {
+
                 AddPetResponse result = response.body();
                 petName = result.getPetName();
                 petGender = result.getPetGender();
                 petSpecies = result.getPetSpecies();
                 petNeutralization = result.getPetNeutralization();
 
-                Toast.makeText(AddPetActivity.this, result.getMessage(),Toast.LENGTH_SHORT).show();
+
+                Toast.makeText(AddPetActivity.this, result.getMessage(), Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getApplicationContext(), AddPetDesActivity.class);
                 intent.putExtra("petRegNum", petReg);
                 intent.putExtra("petName", petName);
                 intent.putExtra("petGender", petGender);
                 intent.putExtra("petSpecies", petSpecies);
                 intent.putExtra("petNeutralization", petNeutralization);
-                intent.putExtra("groupData",groupData);
-                startActivityForResult(intent,0);
-
-
-
-
-
-                if(result.getCode() == 200){
+                intent.putExtra("groupData", groupData);
+                startActivityForResult(intent, 0);
+                Log.d("pet", "end");
+                loading.loadingEnd();
+                if (result.getCode() == 200) {
                     finish();
-                }else{
+                } else {
                     finish();
                 }
             }
@@ -139,17 +141,18 @@ public class AddPetActivity extends AppCompatActivity {
 
         });
     }
+
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode==0){
-            if (resultCode==RESULT_OK) {
-                Log.d("nameTest", "test");
+        if (requestCode == 0) {
+            if (resultCode == RESULT_OK) {
+
                 finish();
 
                 Toast.makeText(AddPetActivity.this, "result ok!", Toast.LENGTH_SHORT).show();
-            }else{
+            } else {
                 finish();
                 Toast.makeText(AddPetActivity.this, "result cancle!", Toast.LENGTH_SHORT).show();
             }
