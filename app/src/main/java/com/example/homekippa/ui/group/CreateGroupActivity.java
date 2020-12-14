@@ -1,6 +1,8 @@
 package com.example.homekippa.ui.group;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
 
 import android.Manifest;
 import android.content.Context;
@@ -21,6 +23,7 @@ import com.example.homekippa.MainActivity;
 import com.example.homekippa.R;
 import com.example.homekippa.data.CreateGroupData;
 import com.example.homekippa.data.CreateGroupResponse;
+import com.example.homekippa.data.GetFollowData;
 import com.example.homekippa.data.GroupData;
 import com.example.homekippa.data.UserData;
 import com.example.homekippa.network.RetrofitClient;
@@ -61,6 +64,7 @@ public class CreateGroupActivity extends AppCompatActivity {
     private ServiceApi service;
     private GroupData groupData;
     private UserData userData;
+    private GroupFollowViewModel followViewModel;
 
     public File tempFile;
 
@@ -81,6 +85,7 @@ public class CreateGroupActivity extends AppCompatActivity {
         editText_detailAddress = findViewById(R.id.editText_detailAddress);
         imageView_profileImage = findViewById(R.id.imageView_profileImage);
         userData = ((MainActivity) MainActivity.context_main).getUserData();
+        followViewModel = new ViewModelProvider((ViewModelStoreOwner) CreateGroupActivity.this).get(GroupFollowViewModel.class);
 
         service = RetrofitClient.getClient().create(ServiceApi.class);
 
@@ -136,7 +141,7 @@ public class CreateGroupActivity extends AppCompatActivity {
                 String groupIntroduction = editText_introduce.getText().toString();
 
                 final String tempAddress = moveToSearchAddress.getText().toString();
-                final String groupArea = tempAddress.substring(tempAddress.lastIndexOf("/")+1);
+                final String groupArea = tempAddress.substring(tempAddress.lastIndexOf("/") + 1);
                 final String groupAddress = tempAddress.substring(0, tempAddress.lastIndexOf("/")) + editText_detailAddress.getText().toString();
 
                 if (groupName.isEmpty()) {
@@ -147,7 +152,7 @@ public class CreateGroupActivity extends AppCompatActivity {
                     editText_introduce.setHint("그룹 소개글을 써주세요!");
                     editText_introduce.setText("소개글");
 
-                } else if (editText_detailAddress.getText().toString().isEmpty()){
+                } else if (editText_detailAddress.getText().toString().isEmpty()) {
                     editText_detailAddress.setHint("상세주소 입력해주세요!");
                 } else {
                     createGroup(userId, groupName, groupAddress, groupIntroduction, groupArea);
@@ -166,27 +171,27 @@ public class CreateGroupActivity extends AppCompatActivity {
 
     }
 
-        @Override
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
-            super.onActivityResult(requestCode, resultCode, intent);
-            if (resultCode != RESULT_OK) {
+        super.onActivityResult(requestCode, resultCode, intent);
+        if (resultCode != RESULT_OK) {
 
-                return;
-            } else {
-                if (requestCode == 0) {
-                    String result = intent.getStringExtra("address");
-                    moveToSearchAddress.setText(result);
-                } else if (requestCode == 1) {
+            return;
+        } else {
+            if (requestCode == 0) {
+                String result = intent.getStringExtra("address");
+                moveToSearchAddress.setText(result);
+            } else if (requestCode == 1) {
 
-                    if (tempFile != null) {
-                        setImage();
-                    } else {
-                        imageView_profileImage.setImageResource(R.drawable.group_profile_default);
-                    }
-
+                if (tempFile != null) {
+                    setImage();
+                } else {
+                    imageView_profileImage.setImageResource(R.drawable.group_profile_default);
                 }
+
             }
         }
+    }
 
     private void createGroup(String userId, String groupName, String groupAddress, String groupIntroduction, String area) {
         Log.i("create", "create");
@@ -275,11 +280,26 @@ public class CreateGroupActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     groupData = response.body();
                     ((MainActivity) MainActivity.context_main).setGroupData(groupData);
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                    intent.putExtra("user", userData);
-                    intent.putExtra("group", groupData);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
+
+                    service.getFollow(groupData.getId()).enqueue(new Callback<GetFollowData>() {
+                        @Override
+                        public void onResponse(Call<GetFollowData> call, Response<GetFollowData> response) {
+                            followViewModel.getFollower().setValue(response.body().getFollowerList());
+                            followViewModel.getFollowing().setValue(response.body().getFollowingList());
+
+                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            intent.putExtra("user", userData);
+                            intent.putExtra("group", groupData);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
+                        }
+
+                        @Override
+                        public void onFailure(Call<GetFollowData> call, Throwable t) {
+
+                        }
+                    });
+
                 }
             }
 
@@ -289,8 +309,6 @@ public class CreateGroupActivity extends AppCompatActivity {
             }
         });
     }
-
-
 
 
 }
