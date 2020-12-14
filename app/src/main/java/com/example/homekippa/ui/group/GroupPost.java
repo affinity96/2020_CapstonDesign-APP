@@ -255,7 +255,7 @@ public class GroupPost extends Fragment {
     private void setPostAdapter(RecyclerView listView, ArrayList<Boolean> checkLikeList) {
 
         if (checkLikeList.isEmpty()) {
-            Log.d("group", "checklist empty");
+
             listView.setVisibility(View.GONE);
             empty_post.setVisibility(View.VISIBLE);
         } else {
