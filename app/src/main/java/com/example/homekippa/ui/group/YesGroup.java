@@ -407,15 +407,23 @@ public class YesGroup extends Fragment {
         button_modify_pet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), ModifyPetActivity.class);
-                intent.putExtra("petId", petList.get(selectedPosition).getId());
-                intent.putExtra("petName", petList.get(selectedPosition).getName());
-                intent.putExtra("petSpecies", petList.get(selectedPosition).getSpecies());
-                intent.putExtra("petGender", petList.get(selectedPosition).getGender());
-                intent.putExtra("petImage", petList.get(selectedPosition).getImage());
-                intent.putExtra("petNeutrality", petList.get(selectedPosition).getNeutrality());
-                intent.putExtra("petBirth", petList.get(selectedPosition).getBirth());
-                startActivity(intent);
+
+                if (petList.size() == 0) {
+
+                    Toast.makeText(getActivity(), "등록된 반려동물이 없습니다. 반려동물을 등록해보세요!", Toast.LENGTH_LONG).show();
+
+                }else{
+                    Intent intent = new Intent(getActivity(), ModifyPetActivity.class);
+                    intent.putExtra("petId", petList.get(selectedPosition).getId());
+                    intent.putExtra("petName", petList.get(selectedPosition).getName());
+                    intent.putExtra("petSpecies", petList.get(selectedPosition).getSpecies());
+                    intent.putExtra("petGender", petList.get(selectedPosition).getGender());
+                    intent.putExtra("petImage", petList.get(selectedPosition).getImage());
+                    intent.putExtra("petNeutrality", petList.get(selectedPosition).getNeutrality());
+                    intent.putExtra("petBirth", petList.get(selectedPosition).getBirth());
+                    startActivity(intent);
+                }
+
             }
         });
 
@@ -524,11 +532,12 @@ public class YesGroup extends Fragment {
                         listView.setBackgroundColor(Color.parseColor("#ffffff"));
                         listView.setAdapter(dailyWorkAdapter);
                     } else {
-                        listView.setItemAnimator(new DefaultItemAnimator());
-                        listView.setBackgroundResource(R.drawable.no_dailywork);
 
+                        listView.setItemAnimator(new DefaultItemAnimator());
+                        Toast.makeText(getContext(), "아직 등록된일과가 없습니다. 일과를 등록해보세요!.", Toast.LENGTH_LONG).show();
+
+                        listView.setBackgroundResource(R.drawable.no_dailywork);
                         ListDailyWorkAdapter dailyWorkAdapter = new ListDailyWorkAdapter(dailyWorkList);
-                        
                         listView.setAdapter(dailyWorkAdapter);
 
                     }
