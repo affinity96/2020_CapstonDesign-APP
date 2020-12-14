@@ -1,5 +1,7 @@
 package com.example.homekippa.ui.group;
 
+import android.util.Log;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -33,21 +35,20 @@ public class GroupFollowViewModel extends ViewModel {
     }
 
     public Integer getFollowingNum() {
-        if(following.getValue() != null){
+        Log.d("follow view ", String.valueOf(following.getValue().size()));
+        if (following.getValue() != null) {
             return following.getValue().size();
-        }else{
+        } else {
             return 0;
         }
-
     }
 
     public Integer getFollowerNum() {
-        if(follower.getValue()!=null)
+        if (follower.getValue() != null)
             return follower.getValue().size();
-        else{
+        else {
             return 0;
         }
-
     }
 
     public void cancelFollowing(int id) {

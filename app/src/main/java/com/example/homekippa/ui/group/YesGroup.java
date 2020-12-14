@@ -174,18 +174,19 @@ public class YesGroup extends Fragment {
 
 
         //그룹이 없을 경우
-        if (userData.getGroupId() == 0 ) {
+        if (userData.getGroupId() == 0) {
             service.checkInvite(new GroupInviteData(groupData, null, userData)).enqueue(new Callback<GroupSelectResponse>() {
                 @Override
                 public void onResponse(Call<GroupSelectResponse> call, Response<GroupSelectResponse> response) {
                     checkInvite = response.body().getResult();
-                    Log.d("check",checkInvite);
-                    if(checkInvite.equals("true")){
+                    Log.d("check", checkInvite);
+                    if (checkInvite.equals("true")) {
                         button_join_group.setVisibility(View.VISIBLE);
-                    }else{
+                    } else {
                         button_join_group.setVisibility(View.GONE);
                     }
                 }
+
                 @Override
                 public void onFailure(Call<GroupSelectResponse> call, Throwable t) {
 
@@ -194,7 +195,7 @@ public class YesGroup extends Fragment {
         } else {
             button_join_group.setVisibility(View.GONE);
             if (myGroup) {
-                groupData = ((MainActivity)MainActivity.context_main).getGroupData();
+                groupData = ((MainActivity) MainActivity.context_main).getGroupData();
                 tv_groupName.setText(groupData.getName());
                 tv_groupIntro.setText(groupData.getIntroduction());
 
@@ -210,10 +211,14 @@ public class YesGroup extends Fragment {
                 ll_following.setVisibility(View.VISIBLE);
 
                 if (followViewModel.getFollowerNum() != 0) {
-                    textView_followerNum.setText(String.valueOf(followViewModel.getFollowerNum()));
-                } else textView_followerNum.setText(String.valueOf(0));
 
-                if (followViewModel.getFollowerNum() != 0)
+                    textView_followerNum.setText(String.valueOf(followViewModel.getFollowerNum()));
+                } else {
+
+                    textView_followerNum.setText(String.valueOf(0));
+                }
+                Log.d("follow", String.valueOf(followViewModel.getFollowingNum()));
+                if (followViewModel.getFollowingNum() != 0)
                     textView_followingNum.setText(String.valueOf(followViewModel.getFollowingNum()));
                 else textView_followingNum.setText(String.valueOf(0));
 
@@ -343,8 +348,8 @@ public class YesGroup extends Fragment {
                             service.getGroupData(userData.getGroupId()).enqueue(new Callback<GroupData>() {
                                 @Override
                                 public void onResponse(Call<GroupData> call, Response<GroupData> response) {
-                                    if(response.isSuccessful()){
-                                        groupData=response.body();
+                                    if (response.isSuccessful()) {
+                                        groupData = response.body();
                                         ((MainActivity) MainActivity.context_main).setGroupData(groupData);
                                         service.getFollow(groupData.getId()).enqueue(new Callback<GetFollowData>() {
                                             @Override
