@@ -1,5 +1,6 @@
 package com.example.homekippa;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -28,6 +29,7 @@ public class ModifyPetGenderActivity extends AppCompatActivity {
     private CheckBox checkbox_modify_female;
     private CheckBox checkbox_modify_male;
     private ServiceApi service;
+    private String petGender;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +42,10 @@ public class ModifyPetGenderActivity extends AppCompatActivity {
 
         if(gender == 1){
             checkbox_modify_male.setChecked(true);
+            petGender = "수컷";
         } else {
             checkbox_modify_female.setChecked(true);
+            petGender = "암컷";
         }
 
         service = RetrofitClient.getClient().create(ServiceApi.class);
@@ -49,17 +53,15 @@ public class ModifyPetGenderActivity extends AppCompatActivity {
         button_petgender_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String gender = null;
-
                 if(checkbox_modify_male.isChecked()){
-                    gender = "수컷";
+                    petGender = "수컷";
                 }
                 else if(checkbox_modify_female.isChecked()){
-                    gender = "암컷";
+                    petGender = "암컷";
                 }
 
                 int id = getIntent().getIntExtra("id", 0);
-                Next(id, gender);
+                Next(id, petGender);
             }
         });
     }
@@ -99,5 +101,17 @@ public class ModifyPetGenderActivity extends AppCompatActivity {
                 t.printStackTrace();
             }
         });
+    }
+
+    @Override
+    public void finish() {
+        Intent intent = new Intent();
+        if (petGender == "수컷") {
+            intent.putExtra("petGender", 1);
+        } else {
+            intent.putExtra("petGender", 0);
+        }
+        setResult(RESULT_OK, intent);
+        super.finish();
     }
 }

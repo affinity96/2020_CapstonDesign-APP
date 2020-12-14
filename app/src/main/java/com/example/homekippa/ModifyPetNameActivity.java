@@ -1,6 +1,8 @@
 package com.example.homekippa;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,6 +29,7 @@ public class ModifyPetNameActivity extends AppCompatActivity {
     private EditText editText_petmodify_Name;
     private Button button_petname_next;
     private ServiceApi service;
+    private String petName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,14 +37,14 @@ public class ModifyPetNameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_modify_pet_name);
         editText_petmodify_Name = findViewById(R.id.editText_petmodify_Name);
         button_petname_next = findViewById(R.id.button_petname_next);
-        String name = getIntent().getStringExtra("name");
-        editText_petmodify_Name.setText(name);
+        petName = getIntent().getStringExtra("name");
+        editText_petmodify_Name.setText(petName);
         service = RetrofitClient.getClient().create(ServiceApi.class);
 
         button_petname_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String petName = editText_petmodify_Name.getText().toString();
+                petName = editText_petmodify_Name.getText().toString();
                 int id = getIntent().getIntExtra("id", 0);
                 Next(id, petName);
             }
@@ -55,6 +58,7 @@ public class ModifyPetNameActivity extends AppCompatActivity {
                 ModifyPetResponse result = response.body();
 
                 if (result.getCode() == 200) {
+                    Log.d("??", petName);
                     finish();
                 }
             }
@@ -66,5 +70,14 @@ public class ModifyPetNameActivity extends AppCompatActivity {
                 t.printStackTrace();
             }
         });
+    }
+
+    @Override
+    public void finish() {
+        Intent intent = new Intent();
+        Log.d("????", petName);
+        intent.putExtra("petName", petName);
+        setResult(RESULT_OK, intent);
+        super.finish();
     }
 }

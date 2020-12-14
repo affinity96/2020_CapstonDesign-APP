@@ -167,11 +167,10 @@ public class YesGroup extends Fragment {
 
         super.onStart();
         groupData = (GroupData) getArguments().get("groupData");
-        setPetListView(listView_pets);
-        Log.d("yes", "onstart");
-
         tv_groupName.setText(groupData.getName());
         tv_groupIntro.setText(groupData.getIntroduction());
+        setPetListView(listView_pets);
+        Log.d("yes", "onstart");
 
 
         //그룹이 없을 경우
@@ -195,7 +194,9 @@ public class YesGroup extends Fragment {
         } else {
             button_join_group.setVisibility(View.GONE);
             if (myGroup) {
-                groupData = ((MainActivity) getActivity()).getGroupData();
+                groupData = ((MainActivity)MainActivity.context_main).getGroupData();
+                tv_groupName.setText(groupData.getName());
+                tv_groupIntro.setText(groupData.getIntroduction());
 
                 Log.d("갱신", groupData.getName());
                 button_follow_group.setVisibility(View.GONE);
