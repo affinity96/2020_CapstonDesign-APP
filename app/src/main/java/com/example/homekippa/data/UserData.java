@@ -41,7 +41,9 @@ public class UserData implements Parcelable {
         return userImage;
     }
 
-    public int getUserGender(){ return userGender;}
+    public int getUserGender() {
+        return userGender;
+    }
 
     public String getUserBirth() {
         return userBirth;
@@ -67,7 +69,7 @@ public class UserData implements Parcelable {
         this.userBirth = userBirth;
         this.userPhone = userPhone;
         this.userEmail = userEmail;
-        this.userGender =userGender;
+        this.userGender = userGender;
         this.userToken = userToken;
     }
 

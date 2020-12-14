@@ -60,16 +60,15 @@ public class ImageTask {
                         Bitmap b = BitmapFactory.decodeStream(is);
                         bitmap = b;
                         if (bitmap != null && context != null) {
-                            Log.d("bitmap", bitmap.toString());
-                            if (ispost) {
-                                imageView.setImageBitmap(bitmap);
-                            } else {
-                                Glide.with(context).load(bitmap).diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true).placeholder(R.drawable.simplelogo).circleCrop().into(imageView);
-                            }
                             cache.saveBitmapToJpeg(bitmap, key);
+                            Bitmap bit = cache.getBitmapFromCacheDir(key);
+                            if (ispost) {
+                                imageView.setImageBitmap(bit);
+                            } else {
+                                Glide.with(context).load(bit).diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true).placeholder(R.drawable.ic_bubble_chart_24px).circleCrop().into(imageView);
+                            }
                             imageView.invalidate();
                         }
-
                     } else {
                         Log.d("Yes", "server contact failed");
                     }

@@ -101,6 +101,9 @@ public class GroupPost extends Fragment {
     public void onResume() {
         super.onResume();
         Log.d("group", "onresume");
+        groupData = ((MainActivity)MainActivity.context_main).getGroupData();
+        setGroupView();
+        getGroupProfileImage(groupData.getImage(), imageView_PostProfile);
         setPostListView(listView_posts);
     }
 
@@ -255,7 +258,7 @@ public class GroupPost extends Fragment {
     private void setPostAdapter(RecyclerView listView, ArrayList<Boolean> checkLikeList) {
 
         if (checkLikeList.isEmpty()) {
-            Log.d("group", "checklist empty");
+
             listView.setVisibility(View.GONE);
             empty_post.setVisibility(View.VISIBLE);
         } else {

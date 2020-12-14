@@ -179,6 +179,7 @@ public class LoginActivity extends AppCompatActivity {
 
                                 followViewModel.getFollower().setValue(response.body().getFollowerList());
                                 followViewModel.getFollowing().setValue(response.body().getFollowingList());
+
                                 loading.loadingEnd();
                                 Toast.makeText(getApplicationContext(), "로그인 성공", Toast.LENGTH_SHORT).show();
                                 startActivity(intent);

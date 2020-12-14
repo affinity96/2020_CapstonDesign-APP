@@ -66,11 +66,19 @@ public interface ServiceApi {
     @POST("/user/add")
     Call<SignUpResponse> userSignUp(@Body SignUpData data);
 
+    @Multipart
+    @POST("/user/add/photo")
+    Call<SignUpResponse> userSignUpWithPhoto(@PartMap HashMap<String, RequestBody> data, @Part MultipartBody.Part image);
+
     @PUT("/user/delete")
     Call<ExitResponse> userExit(@Query("userId") String userId);
 
     @POST("/user/update")
     Call<EditUserResponse> userEdit(@Body EditUserData data);
+
+    @Multipart
+    @POST("/user/update/photo")
+    Call<EditUserResponse> userEditWithPhoto(@PartMap HashMap<String, RequestBody> data, @Part MultipartBody.Part image);
 
     @POST("/group/add")
     Call<CreateGroupResponse> groupCreate(@Body CreateGroupData data);

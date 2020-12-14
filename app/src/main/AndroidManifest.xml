@@ -80,6 +80,12 @@
         <activity
             android:name=".PopupSelectPetImageModify"
             android:theme="@android:style/Theme.Dialog" />
+        <activity
+            android:name=".PopupSelectUserImage"
+            android:theme="@android:style/Theme.Dialog" />
+        <activity
+            android:name=".PopupSelectEditUserImage"
+            android:theme="@android:style/Theme.Dialog" />
         <activity android:name=".VerifyActivity" />
         <activity android:name=".SignUpActivity" />
         <activity android:name=".AddPetActivity" />
