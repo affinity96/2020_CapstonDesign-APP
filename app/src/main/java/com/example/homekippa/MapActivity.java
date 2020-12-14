@@ -150,6 +150,7 @@ public class MapActivity extends AppCompatActivity implements MapView.MapViewEve
         mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("petGender").setValue(petGender);
         mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("petSpecies").setValue(petSpecies);
         mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("petImage").setValue(petImageUrl);
+        mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("scope").setValue(groupLockScope);
 
 
 

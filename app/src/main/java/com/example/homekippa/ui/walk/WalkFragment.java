@@ -121,8 +121,8 @@ public class WalkFragment extends Fragment {
         intent = new Intent(getActivity(), MapActivity.class);
 
 
-        groupData = ((MainActivity) getActivity()).getGroupData();
-        userData = ((MainActivity) getActivity()).getUserData();
+        userData =((MainActivity) MainActivity.context_main).getUserData();
+        groupData = ((MainActivity) MainActivity.context_main).getGroupData();
 
         if (groupData != null) {
             getGroupData(userData.getGroupId());
@@ -201,7 +201,7 @@ public class WalkFragment extends Fragment {
         mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("userName").setValue(userData.getUserName());
         mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("userImage").setValue(userData.getUserImage());
         mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("userGender").setValue(userGender);
-        mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("userAge").setValue(userAge);
+        mDatabase.child("walking_group").child(String.valueOf(groupData.getId())).child("userAge").setValue(String.valueOf(userAge));
 
 
         spinner_walkScope.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -287,10 +287,10 @@ public class WalkFragment extends Fragment {
                             listView.setLayoutManager(pLayoutManager);
                             listView.setItemAnimator(new DefaultItemAnimator());
                             listView.setAdapter(petAdapter);
+                            petEmptyCheck = "false";
                         }else{
                             petEmptyCheck= String.valueOf(pets.isEmpty());
-
-
+                            Log.d("here",petEmptyCheck);
                         }
                     }
                 }

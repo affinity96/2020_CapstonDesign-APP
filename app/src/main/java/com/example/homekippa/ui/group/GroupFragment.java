@@ -43,9 +43,8 @@ public class GroupFragment extends Fragment {
     @Override
     public void onViewCreated(@Nullable View view, @Nullable Bundle savedInstanceState) {
         userData = ((MainActivity) getActivity()).getUserData();
-        groupData = (GroupData)getArguments().get("groupData");
+        groupData = (GroupData) getArguments().get("groupData");
         connectViewPagerToTab(view);
-
     }
 
     private void connectViewPagerToTab(@Nullable View view) {
@@ -73,10 +72,9 @@ class GroupCollectionAdapter extends FragmentStateAdapter {
         int groupId = userData.getGroupId();
         Bundle args = new Bundle();
         args.putParcelable("groupData", groupData);
-        if(groupId == groupData.getId()){
+        if (groupId == groupData.getId()) {
             args.putBoolean("myGroup", true);
-        }
-        else {
+        } else {
             args.putBoolean("myGroup", false);
         }
         switch (position) {

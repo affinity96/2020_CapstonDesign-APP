@@ -26,6 +26,7 @@ import com.example.homekippa.data.GetFollowData;
 import com.example.homekippa.data.GroupData;
 import com.example.homekippa.data.GroupInviteData;
 import com.example.homekippa.data.GroupPostResponse;
+import com.example.homekippa.data.GroupSelectResponse;
 import com.example.homekippa.data.LikeData;
 import com.example.homekippa.data.LikeResponse;
 import com.example.homekippa.data.ModifyGroupResponse;
@@ -161,9 +162,9 @@ public interface ServiceApi {
     @POST("/pet/reports/update")
     Call<EditDailyWorkResponse> editDailyWork(@Body EditDailyWorkData data);
 
-
 //    @POST("/pet/add")
 //    Call<AddPetResponse> addPetReg(@Body AddPetData data);
+
 
     @Multipart
     @POST("/pet/add/des/photo")
@@ -213,6 +214,9 @@ public interface ServiceApi {
 
     @POST("/group/invite/accept")
     Call<UserData> acceptInvite(@Body GroupInviteData data);
+
+    @POST("/group/selectInvite")
+    Call<GroupSelectResponse> checkInvite(@Body GroupInviteData data);
 
     @POST("/follow/follow")
     Call<FollowResponse> followGroup(@Body FollowData data);
