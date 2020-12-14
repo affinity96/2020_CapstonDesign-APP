@@ -1,6 +1,7 @@
 package com.example.homekippa.ui.group;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,7 +53,7 @@ public class GroupInviteActivity extends AppCompatActivity {
         userData = (UserData)getIntent().getExtras().get("userData");
 
         searchView_user = findViewById(R.id.searchView_user);
-        //listView_users = findViewById(R.id.listView_Users);
+        listView_users = findViewById(R.id.listView_Users);
         listView_Search_Users = findViewById(R.id.listView_Search_Users);
         button_SearchUser = findViewById(R.id.button_SearchUser);
         service = RetrofitClient.getClient().create(ServiceApi.class);
@@ -113,32 +114,32 @@ public class GroupInviteActivity extends AppCompatActivity {
         });
     }
 
-//    private void setUserListView(RecyclerView listView) {
-//        Log.d("사용자 확인", "들어옴");
-//        service.getUsersInGroup(groupData.getId()).enqueue(new Callback<List<UserData>>() {
-//            @Override
-//            public void onResponse(Call<List<UserData>> call, Response<List<UserData>> response) {
-//                if (response.isSuccessful()) {
-//                    List<UserData> users = response.body();
-//                    userList.addAll(users);
-//                    Log.d("사용자 확인", response.body().toString());
-//
-//                    ListUserAdapter userAdapter = new ListUserAdapter(userList);
-//                    LinearLayoutManager pLayoutManager = new LinearLayoutManager(getApplicationContext());
-//                    pLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-//                    listView.setLayoutManager(pLayoutManager);
-//                    listView.setItemAnimator(new DefaultItemAnimator());
-//                    listView.setAdapter(userAdapter);
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<List<UserData>> call, Throwable t) {
-//                Log.d("반려동물 확인", "에러");
-//                Log.e("반려동물 확인", t.getMessage());
-//            }
-//        });
-//    }
+    private void setUserListView(RecyclerView listView) {
+        Log.d("사용자 확인", "들어옴");
+        service.getUsersInGroup(groupData.getId()).enqueue(new Callback<List<UserData>>() {
+            @Override
+            public void onResponse(Call<List<UserData>> call, Response<List<UserData>> response) {
+                if (response.isSuccessful()) {
+                    List<UserData> users = response.body();
+                    userList.addAll(users);
+                    Log.d("사용자 확인", response.body().toString());
+
+                    ListUserAdapter userAdapter = new ListUserAdapter(userList);
+                    LinearLayoutManager pLayoutManager = new LinearLayoutManager(getApplicationContext());
+                    pLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+                    listView.setLayoutManager(pLayoutManager);
+                    listView.setItemAnimator(new DefaultItemAnimator());
+                    listView.setAdapter(userAdapter);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<UserData>> call, Throwable t) {
+                Log.d("반려동물 확인", "에러");
+                Log.e("반려동물 확인", t.getMessage());
+            }
+        });
+    }
 
     class ListSearchUserAdapter extends RecyclerView.Adapter<ListSearchUserAdapter.MyViewHolder> {
         private ArrayList<UserData> user_Items;

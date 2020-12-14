@@ -519,10 +519,13 @@ public class YesGroup extends Fragment {
                         listView.setBackgroundColor(Color.parseColor("#ffffff"));
                         listView.setAdapter(dailyWorkAdapter);
                     } else {
-                        listView.setBackgroundResource(R.drawable.no_dailywork);
                         listView.setItemAnimator(new DefaultItemAnimator());
+                        listView.setBackgroundResource(R.drawable.no_dailywork);
+
                         ListDailyWorkAdapter dailyWorkAdapter = new ListDailyWorkAdapter(dailyWorkList);
+                        
                         listView.setAdapter(dailyWorkAdapter);
+
                     }
 
                 }
