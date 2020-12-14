@@ -76,6 +76,10 @@ public interface ServiceApi {
     @POST("/user/update")
     Call<EditUserResponse> userEdit(@Body EditUserData data);
 
+    @Multipart
+    @POST("/user/update/photo")
+    Call<EditUserResponse> userEditWithPhoto(@PartMap HashMap<String, RequestBody> data, @Part MultipartBody.Part image);
+
     @POST("/group/add")
     Call<CreateGroupResponse> groupCreate(@Body CreateGroupData data);
 
