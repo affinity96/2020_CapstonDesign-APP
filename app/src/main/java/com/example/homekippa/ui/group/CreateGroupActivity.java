@@ -17,10 +17,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.homekippa.LoginActivity;
+import com.example.homekippa.MainActivity;
 import com.example.homekippa.R;
 import com.example.homekippa.data.CreateGroupData;
 import com.example.homekippa.data.CreateGroupResponse;
+import com.example.homekippa.data.GroupData;
+import com.example.homekippa.data.UserData;
 import com.example.homekippa.network.RetrofitClient;
 import com.example.homekippa.network.ServiceApi;
 import com.example.homekippa.ui.searchAddress.searchAddress;
@@ -57,6 +59,8 @@ public class CreateGroupActivity extends AppCompatActivity {
     private EditText editText_detailAddress;
     private FirebaseAuth mAuth;
     private ServiceApi service;
+    private GroupData groupData;
+    private UserData userData;
 
     public File tempFile;
 
@@ -76,10 +80,10 @@ public class CreateGroupActivity extends AppCompatActivity {
         service = RetrofitClient.getClient().create(ServiceApi.class);
         editText_detailAddress = findViewById(R.id.editText_detailAddress);
         imageView_profileImage = findViewById(R.id.imageView_profileImage);
+        userData = ((MainActivity) MainActivity.context_main).getUserData();
 
         service = RetrofitClient.getClient().create(ServiceApi.class);
 
-        // 권한 요청
         tedPermission();
         imageView_profileImage.setOnClickListener(new View.OnClickListener() {
 
@@ -129,7 +133,6 @@ public class CreateGroupActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String groupName = editText_groupName.getText().toString();
-//                Log.d("creategroup", "here");
                 String userId = mAuth.getCurrentUser().getUid();
                 String groupIntroduction = editText_introduce.getText().toString();
 
@@ -168,13 +171,10 @@ public class CreateGroupActivity extends AppCompatActivity {
         PermissionListener permissionListener = new PermissionListener() {
             @Override
             public void onPermissionGranted() {
-                // 권한 요청 성공
-
             }
 
             @Override
             public void onPermissionDenied(ArrayList<String> deniedPermissions) {
-                // 권한 요청 실패
             }
         };
 
@@ -194,7 +194,6 @@ public class CreateGroupActivity extends AppCompatActivity {
                 return;
             } else {
                 if (requestCode == 0) {
-                    //수신성공 출력
                     String result = intent.getStringExtra("address");
                     moveToSearchAddress.setText(result);
                 } else if (requestCode == 1) {
@@ -234,10 +233,7 @@ public class CreateGroupActivity extends AppCompatActivity {
                 public void onResponse(Call<CreateGroupResponse> call, Response<CreateGroupResponse> response) {
                     CreateGroupResponse result = response.body();
                     if (result.getCode() == 200) {
-//                        finish();
-                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(intent);
+                        requestUserData(userData.getUserId(), userData.getUserToken());
                     }
                 }
 
@@ -258,10 +254,7 @@ public class CreateGroupActivity extends AppCompatActivity {
                     CreateGroupResponse result = response.body();
 
                     if (result.getCode() == 200) {
-//                        finish();
-                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(intent);
+                        requestUserData(userData.getUserId(), userData.getUserToken());
                     }
                 }
 
@@ -273,6 +266,48 @@ public class CreateGroupActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    public void requestUserData(String ID, String token) {
+        service.getUserData(ID, token).enqueue(new Callback<UserData>() {
+            @Override
+            public void onResponse(Call<UserData> call, Response<UserData> response) {
+                if (response.isSuccessful()) {
+                    userData = response.body();
+                    ((MainActivity) MainActivity.context_main).setUserData(userData);
+                    getGroupData(userData.getGroupId());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserData> call, Throwable t) {
+                Log.e("로그인", t.getMessage());
+                Toast.makeText(getApplicationContext(), "유저 정보 로드 실패", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void getGroupData(int ID) {
+
+        service.getGroupData(ID).enqueue(new Callback<GroupData>() {
+            @Override
+            public void onResponse(Call<GroupData> call, Response<GroupData> response) {
+                if (response.isSuccessful()) {
+                    groupData = response.body();
+                    ((MainActivity) MainActivity.context_main).setGroupData(groupData);
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    intent.putExtra("user", userData);
+                    intent.putExtra("group", groupData);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GroupData> call, Throwable t) {
+                Log.e("그룹 확인", t.getMessage());
+            }
+        });
     }
 
 

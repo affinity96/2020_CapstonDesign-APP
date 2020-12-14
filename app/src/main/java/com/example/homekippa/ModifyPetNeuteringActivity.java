@@ -1,5 +1,6 @@
 package com.example.homekippa;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -27,6 +28,7 @@ public class ModifyPetNeuteringActivity extends AppCompatActivity {
     private CheckBox checkbox_modify_no;
     private CheckBox checkbox_modify_yes;
     private ServiceApi service;
+    private String petNeutrality;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +41,10 @@ public class ModifyPetNeuteringActivity extends AppCompatActivity {
 
         if(neutrality == 1){
             checkbox_modify_yes.setChecked(true);
+            petNeutrality = "중성";
         } else {
             checkbox_modify_no.setChecked(true);
+            petNeutrality = "중성화 안함";
         }
 
         service = RetrofitClient.getClient().create(ServiceApi.class);
@@ -48,17 +52,16 @@ public class ModifyPetNeuteringActivity extends AppCompatActivity {
         button_petneutering_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String neutrality = null;
 
                 if(checkbox_modify_yes.isChecked()){
-                    neutrality = "중성";
+                    petNeutrality = "중성";
                 }
                 else if(checkbox_modify_no.isChecked()){
-                    neutrality = "중성화 안함";
+                    petNeutrality = "중성화 안함";
                 }
 
                 int id = getIntent().getIntExtra("id", 0);
-                Next(id, neutrality);
+                Next(id, petNeutrality);
             }
         });
     }
@@ -98,5 +101,17 @@ public class ModifyPetNeuteringActivity extends AppCompatActivity {
                 t.printStackTrace();
             }
         });
+    }
+
+    @Override
+    public void finish() {
+        Intent intent = new Intent();
+        if (petNeutrality == "중성") {
+            intent.putExtra("petNeutrality", 1);
+        } else {
+            intent.putExtra("petNeutrality", 0);
+        }
+        setResult(RESULT_OK, intent);
+        super.finish();
     }
 }
