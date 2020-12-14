@@ -84,7 +84,6 @@ public class CreateGroupActivity extends AppCompatActivity {
 
         service = RetrofitClient.getClient().create(ServiceApi.class);
 
-        tedPermission();
         imageView_profileImage.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -165,25 +164,6 @@ public class CreateGroupActivity extends AppCompatActivity {
 
         imageView_profileImage.setImageBitmap(originalBm);
 
-    }
-
-    public void tedPermission() {
-        PermissionListener permissionListener = new PermissionListener() {
-            @Override
-            public void onPermissionGranted() {
-            }
-
-            @Override
-            public void onPermissionDenied(ArrayList<String> deniedPermissions) {
-            }
-        };
-
-        TedPermission.with(this)
-                .setPermissionListener(permissionListener)
-                .setRationaleMessage(getResources().getString(R.string.permission_2))
-                .setDeniedMessage(getResources().getString(R.string.permission_1))
-                .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA)
-                .check();
     }
 
         @Override

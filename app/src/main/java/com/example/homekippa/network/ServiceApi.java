@@ -66,6 +66,10 @@ public interface ServiceApi {
     @POST("/user/add")
     Call<SignUpResponse> userSignUp(@Body SignUpData data);
 
+    @Multipart
+    @POST("/user/add/photo")
+    Call<SignUpResponse> userSignUpWithPhoto(@PartMap HashMap<String, RequestBody> data, @Part MultipartBody.Part image);
+
     @PUT("/user/delete")
     Call<ExitResponse> userExit(@Query("userId") String userId);
 

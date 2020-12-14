@@ -101,6 +101,9 @@ public class GroupPost extends Fragment {
     public void onResume() {
         super.onResume();
         Log.d("group", "onresume");
+        groupData = ((MainActivity)MainActivity.context_main).getGroupData();
+        setGroupView();
+        getGroupProfileImage(groupData.getImage(), imageView_PostProfile);
         setPostListView(listView_posts);
     }
 
