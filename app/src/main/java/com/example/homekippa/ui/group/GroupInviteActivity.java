@@ -53,7 +53,7 @@ public class GroupInviteActivity extends AppCompatActivity {
         userData = (UserData)getIntent().getExtras().get("userData");
 
         searchView_user = findViewById(R.id.searchView_user);
-        //listView_users = findViewById(R.id.listView_Users);
+        listView_users = findViewById(R.id.listView_Users);
         listView_Search_Users = findViewById(R.id.listView_Search_Users);
         button_SearchUser = findViewById(R.id.button_SearchUser);
         service = RetrofitClient.getClient().create(ServiceApi.class);
