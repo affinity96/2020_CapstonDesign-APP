@@ -1,5 +1,6 @@
 package com.example.homekippa;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -26,6 +27,7 @@ public class ModifyPetSpeciesActivity extends AppCompatActivity {
     private EditText editText_petmodify_Species;
     private Button button_petspecies_next;
     private ServiceApi service;
+    private String petSpecies;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,14 +35,14 @@ public class ModifyPetSpeciesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_modify_pet_species);
         editText_petmodify_Species = findViewById(R.id.editText_petmodify_Species);
         button_petspecies_next = findViewById(R.id.button_petspecies_next);
-        String species = getIntent().getStringExtra("species");
-        editText_petmodify_Species.setText(species);
+        petSpecies = getIntent().getStringExtra("species");
+        editText_petmodify_Species.setText(petSpecies);
         service = RetrofitClient.getClient().create(ServiceApi.class);
 
         button_petspecies_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String petSpecies = editText_petmodify_Species.getText().toString();
+                petSpecies = editText_petmodify_Species.getText().toString();
                 int id = getIntent().getIntExtra("id", 0);
                 Next(id, petSpecies);
             }
@@ -66,5 +68,13 @@ public class ModifyPetSpeciesActivity extends AppCompatActivity {
                 t.printStackTrace();
             }
         });
+    }
+
+    @Override
+    public void finish() {
+        Intent intent = new Intent();
+        intent.putExtra("petSpecies", petSpecies);
+        setResult(RESULT_OK, intent);
+        super.finish();
     }
 }

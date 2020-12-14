@@ -1,6 +1,7 @@
 package com.example.homekippa;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -31,6 +32,7 @@ public class ModifyPetBirthActivity extends AppCompatActivity {
     private TextView textView_modify_birthday;
     private Button button_petbirth_next;
     private ServiceApi service;
+    private String petBirth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +40,8 @@ public class ModifyPetBirthActivity extends AppCompatActivity {
         setContentView(R.layout.activity_modify_pet_birth);
         textView_modify_birthday = findViewById(R.id.textView_modify_birthday);
         button_petbirth_next = findViewById(R.id.button_petbirth_next);
-        String birth = getIntent().getStringExtra("birth");
-        textView_modify_birthday.setText(birth);
+        petBirth = getIntent().getStringExtra("birth");
+        textView_modify_birthday.setText(petBirth.substring(0, 10));
         service = RetrofitClient.getClient().create(ServiceApi.class);
 
         textView_modify_birthday.setOnClickListener(new View.OnClickListener() {
@@ -52,7 +54,7 @@ public class ModifyPetBirthActivity extends AppCompatActivity {
         button_petbirth_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String petBirth = textView_modify_birthday.getText().toString();
+                petBirth = textView_modify_birthday.getText().toString();
                 int id = getIntent().getIntExtra("id", 0);
                 Next(id, petBirth);
             }
@@ -64,11 +66,18 @@ public class ModifyPetBirthActivity extends AppCompatActivity {
         newFragment.show(getSupportFragmentManager(),"datePicker");
     }
 
-    public void processDatePickerResult(int year, int month, int day){
-        String month_string = Integer.toString(month+1);
-        String day_string = Integer.toString(day);
+    public void processDatePickerResult(int year, int month, int day) {
+        String month_string = Integer.toString(month + 1);
         String year_string = Integer.toString(year);
-        String dateMessage = (year_string + "-" + month_string + "-" + day_string);
+        String day_string = null;
+        String dateMessage = null;
+        if (day < 10){
+            day_string = Integer.toString(day);
+            dateMessage = (year_string + "-" + month_string + "-0" + day_string);
+        } else {
+            day_string = Integer.toString(day);
+            dateMessage = (year_string + "-" + month_string + "-" + day_string);
+        }
 
         textView_modify_birthday.setText(dateMessage);
     }
@@ -92,5 +101,13 @@ public class ModifyPetBirthActivity extends AppCompatActivity {
                 t.printStackTrace();
             }
         });
+    }
+
+        @Override
+    public void finish() {
+        Intent intent = new Intent();
+        intent.putExtra("petBirth", petBirth);
+        setResult(RESULT_OK, intent);
+        super.finish();
     }
 }

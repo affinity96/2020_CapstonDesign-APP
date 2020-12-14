@@ -177,9 +177,16 @@ public class SignUpActivity extends AppCompatActivity {
 
     public void processDatePickerResult(int year, int month, int day) {
         String month_string = Integer.toString(month + 1);
-        String day_string = Integer.toString(day);
         String year_string = Integer.toString(year);
-        String dateMessage = (year_string + "-" + month_string + "-" + day_string);
+        String day_string = null;
+        String dateMessage = null;
+        if (day < 10){
+            day_string = Integer.toString(day);
+            dateMessage = (year_string + "-" + month_string + "-0" + day_string);
+        } else {
+            day_string = Integer.toString(day);
+            dateMessage = (year_string + "-" + month_string + "-" + day_string);
+        }
 
         birth_login.setText(dateMessage);
     }
