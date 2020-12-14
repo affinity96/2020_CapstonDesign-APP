@@ -195,7 +195,7 @@ public class YesGroup extends Fragment {
         } else {
             button_join_group.setVisibility(View.GONE);
             if (myGroup) {
-                groupData = ((MainActivity)MainActivity.context_main).getGroupData();
+                groupData = ((MainActivity) MainActivity.context_main).getGroupData();
                 tv_groupName.setText(groupData.getName());
                 tv_groupIntro.setText(groupData.getIntroduction());
 
@@ -211,10 +211,14 @@ public class YesGroup extends Fragment {
                 ll_following.setVisibility(View.VISIBLE);
 
                 if (followViewModel.getFollowerNum() != 0) {
-                    textView_followerNum.setText(String.valueOf(followViewModel.getFollowerNum()));
-                } else textView_followerNum.setText(String.valueOf(0));
 
-                if (followViewModel.getFollowerNum() != 0)
+                    textView_followerNum.setText(String.valueOf(followViewModel.getFollowerNum()));
+                } else {
+
+                    textView_followerNum.setText(String.valueOf(0));
+                }
+                Log.d("follow", String.valueOf(followViewModel.getFollowingNum()));
+                if (followViewModel.getFollowingNum() != 0)
                     textView_followingNum.setText(String.valueOf(followViewModel.getFollowingNum()));
                 else textView_followingNum.setText(String.valueOf(0));
 

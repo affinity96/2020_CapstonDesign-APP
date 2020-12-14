@@ -255,8 +255,6 @@ public class WalkFragment extends Fragment {
                 Log.e("그룹 확인", t.getMessage());
             }
         });
-
-
     }
 
     private void setPetListView(RecyclerView listView) {
@@ -345,8 +343,7 @@ public class WalkFragment extends Fragment {
             SingleItemPet selectedPet = pet_Items.get(position);
             holder.petName.setText(selectedPet.getName());
             getPetProfileImage(holder.petImage, selectedPet.getImage());
-//            Glide.with(getActivity()).load(R.drawable.simplelogo).circleCrop().into(holder.petImage);
-//            holder.petImage.setImageResource(R.drawable.simplelogo);
+
             holder.pet.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
