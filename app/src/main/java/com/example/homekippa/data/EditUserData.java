@@ -12,13 +12,17 @@ public class EditUserData {
     @SerializedName("phone")
     private String phone;
 
+    @SerializedName("checkDefault")
+    private int checkDefault;
 
 
 
-    public  EditUserData(String id, String name, String phone){
+
+    public  EditUserData(String id, String name, String phone, int checkDefault){
         this.id = id;
         this.name = name;
         this.phone = phone;
+        this.checkDefault = checkDefault;
 
     }
 
