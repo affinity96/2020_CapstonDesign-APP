@@ -54,7 +54,7 @@
             android:layout_gravity="center"
             android:background="@drawable/round_button2"
             android:layout_margin="10dp"
-            android:text="신책 종료"
+            android:text="산책 종료"
             android:visibility="visible" />
 
         <LinearLayout
