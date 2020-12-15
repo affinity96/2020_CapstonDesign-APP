@@ -1,7 +1,5 @@
 package com.example.homekippa;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,19 +11,15 @@ import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.homekippa.data.CreateDailyWorkData;
 import com.example.homekippa.data.CreateDailyWorkResponse;
-import com.example.homekippa.data.SignUpData;
-import com.example.homekippa.data.SignUpResponse;
-
-import com.example.homekippa.MainActivity;
 import com.example.homekippa.data.GroupData;
 import com.example.homekippa.data.UserData;
 import com.example.homekippa.network.RetrofitClient;
 import com.example.homekippa.network.ServiceApi;
 
-
-import java.time.LocalTime;
 import java.util.Calendar;
 
 import retrofit2.Call;
@@ -39,17 +33,18 @@ public class CreateDailyWorkActivity extends AppCompatActivity {
     private EditText editText_dailyWorkTime;
     private EditText editText_dailyWorkAlarm;
 
-    private Editable dailyWorkName;
-    private Editable dailyWorkDesc;
-    private Editable dailyWorkTime;
-    private Editable dailyWorkAlarm;
+   public Editable dailyWorkName;
+    public Editable dailyWorkDesc;
+    public Editable dailyWorkTime;
+    public Editable dailyWorkAlarm;
 
     private Button button_gotocreateDailyWork;
     private GroupData groupData;
-    private UserData userData;
+    public UserData userData;
     private ServiceApi service;
-    private int petId;
+    public int petId;
 
+    public  int isCreatedTest = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -123,7 +118,8 @@ public class CreateDailyWorkActivity extends AppCompatActivity {
 
     }
 
-    private void createDailyWork(CreateDailyWorkData data) {
+    public void createDailyWork(CreateDailyWorkData data) {
+
         service.createDailyWork(data).enqueue(new Callback<CreateDailyWorkResponse>() {
 
             @Override
@@ -131,8 +127,9 @@ public class CreateDailyWorkActivity extends AppCompatActivity {
                 CreateDailyWorkResponse result = response.body();
                 if (result.getCode() == 200) {
                     Toast.makeText(CreateDailyWorkActivity.this, "일과가 성공적으로 등록되었습니다!", Toast.LENGTH_LONG).show();
-
+                    isCreatedTest = 1;
                     finish();
+
                 }
             }
 
@@ -140,6 +137,7 @@ public class CreateDailyWorkActivity extends AppCompatActivity {
             public void onFailure(Call<CreateDailyWorkResponse> call, Throwable t) {
                 Toast.makeText(CreateDailyWorkActivity.this, "일과추가 에러 발생", Toast.LENGTH_LONG).show();
                 Log.e("일과추가 에러 발생", t.getMessage());
+                isCreatedTest = 0;
                 t.printStackTrace(); // 에러 발생시 에러 발생 원인 단계별로 출력해줌
 
             }
