@@ -223,6 +223,7 @@ public class YesGroup extends Fragment {
                 else textView_followingNum.setText(String.valueOf(0));
 
             } else if (!myGroup) {
+                Log.d("name","hi");
                 button_follow_group.setVisibility(View.VISIBLE);
 
                 button_addUser.setVisibility(View.GONE);

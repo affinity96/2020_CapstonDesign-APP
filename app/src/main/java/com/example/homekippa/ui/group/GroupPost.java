@@ -218,6 +218,7 @@ public class GroupPost extends Fragment {
     }
 
     private void setPostListView(RecyclerView listView) {
+        Log.d("helloError", String.valueOf(groupData.getId()));
         service.getGroupPost(groupData.getId()).enqueue(new Callback<GroupPostResponse>() {
 
             @Override
