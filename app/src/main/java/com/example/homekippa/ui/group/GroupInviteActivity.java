@@ -1,5 +1,6 @@
 package com.example.homekippa.ui.group;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.homekippa.ChattingRoomActivity;
 import com.example.homekippa.R;
 import com.example.homekippa.data.GroupData;
 import com.example.homekippa.data.GroupInviteData;
@@ -43,6 +45,7 @@ public class GroupInviteActivity extends AppCompatActivity {
     private Button button_SearchUser;
     private ArrayList<UserData> userList = new ArrayList<>();
     private ArrayList<UserData> searchUserList = new ArrayList<>();
+    private Boolean fromChat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +54,7 @@ public class GroupInviteActivity extends AppCompatActivity {
 
         groupData = (GroupData)getIntent().getExtras().get("groupData");
         userData = (UserData)getIntent().getExtras().get("userData");
+        fromChat = (Boolean)getIntent().getExtras().get("fromChat");
 
         searchView_user = findViewById(R.id.searchView_user);
         listView_users = findViewById(R.id.listView_Users);
@@ -165,23 +169,34 @@ public class GroupInviteActivity extends AppCompatActivity {
             holder.searchUserName.setText(user.getUserName());
             Glide.with(getApplicationContext()).load(R.drawable.simplelogo).circleCrop().into(holder.searchUserImage);
             holder.searchUserImage.setImageResource(R.drawable.simplelogo);
+            holder.searchUserDesc.setText(user.getUserEmail());
             holder.button_InviteUser.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    service.sendGroupInvite(new GroupInviteData(groupData, userData, user)).enqueue(new Callback<UidRespense>() {
-                        @Override
-                        public void onResponse(Call<UidRespense> call, Response<UidRespense> response) {
-                            if(response.isSuccessful() && response.body().getResult()){
-                                holder.button_InviteUser.setEnabled(false);
-                                Toast.makeText(getApplicationContext(), "그룹 초대를 보냈습니다", Toast.LENGTH_LONG).show();
+                    if(fromChat == null) {
+                        service.sendGroupInvite(new GroupInviteData(groupData, userData, user)).enqueue(new Callback<UidRespense>() {
+                            @Override
+                            public void onResponse(Call<UidRespense> call, Response<UidRespense> response) {
+                                if (response.isSuccessful() && response.body().getResult()) {
+                                    holder.button_InviteUser.setEnabled(false);
+                                    Toast.makeText(getApplicationContext(), "그룹 초대를 보냈습니다", Toast.LENGTH_LONG).show();
+                                }
                             }
-                        }
 
-                        @Override
-                        public void onFailure(Call<UidRespense> call, Throwable t) {
-                            Toast.makeText(getApplicationContext(), "그룹 초대 전송 실패", Toast.LENGTH_LONG).show();
-                        }
-                    });
+                            @Override
+                            public void onFailure(Call<UidRespense> call, Throwable t) {
+                                Toast.makeText(getApplicationContext(), "그룹 초대 전송 실패", Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    }
+                    else {
+                        Intent intent = new Intent(getApplicationContext(), ChattingRoomActivity.class);
+                        intent.putExtra("chatUserId", user.getUserId());
+                        intent.putExtra("chatUserName", user.getUserName());
+                        intent.putExtra("chatUserImage", user.getUserImage());
+                        intent.putExtra("userData", userData);
+                        startActivity(intent);
+                    }
                 }
             });
         }

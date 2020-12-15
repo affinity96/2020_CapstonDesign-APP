@@ -6,13 +6,6 @@
     android:orientation="vertical"
     android:weightSum="1">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/button_newchat"
-        android:text="새 채팅"
-        android:layout_gravity="center"/>
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/listView_chat_users"
         android:layout_width="match_parent"
@@ -20,4 +13,11 @@
         android:layout_weight="1"
         android:scrollbars="vertical"/>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/button_newchat"
+        android:text="새 채팅"
+        android:layout_marginBottom="10dp"
+        android:layout_gravity="center"/>
 </LinearLayout>
