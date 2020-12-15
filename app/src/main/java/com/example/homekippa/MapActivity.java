@@ -423,13 +423,6 @@ public class MapActivity extends AppCompatActivity implements MapView.MapViewEve
                 Log.d("dialog", "here");
             }
         });
-        builder.setNegativeButton("채팅", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Log.d("dialog", "채팅채팅");
-            }
-        });
-
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
