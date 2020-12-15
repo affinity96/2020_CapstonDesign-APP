@@ -412,7 +412,10 @@ public class WalkFragment extends Fragment {
                 WeatheLocationResponse result = response.body();
 
                 textView_temperature.setText(result.getCurrent_temperature() + "º");
-                weather(result.getCurrent_weather());
+//                weather(result.getCurrent_weather());
+                drawable = getResources().getDrawable(R.drawable.clear);
+                imageView_weather.setImageDrawable(drawable);
+                textView_weather.setText("맑음");
                 if (result.getCode() == 200) {
                     Log.d("weather", "server connect");
                 } else {
@@ -432,35 +435,35 @@ public class WalkFragment extends Fragment {
     private void weather(String weather) {
         weather = weather.toLowerCase();
 
-        if (weather.equals("rain")) {
-            drawable = getResources().getDrawable(R.drawable.rain);
-            imageView_weather.setImageDrawable(drawable);
-            textView_weather.setText("비");
-        } else if (weather.equals("snow")) {
-            drawable = getResources().getDrawable(R.drawable.snow);
-            imageView_weather.setImageDrawable(drawable);
-            textView_weather.setText("눈");
-        } else if (weather.equals("thunderstorm")) {
-            drawable = getResources().getDrawable(R.drawable.thunderstorm);
-            imageView_weather.setImageDrawable(drawable);
-            textView_weather.setText("천둥번개");
-        } else if (weather.equals("drizzle")) {
-            drawable = getResources().getDrawable(R.drawable.drizzle);
-            imageView_weather.setImageDrawable(drawable);
-            textView_weather.setText("보슬보슬비");
-        } else if (weather.equals("clouds")) {
-            drawable = getResources().getDrawable(R.drawable.cloud);
-            imageView_weather.setImageDrawable(drawable);
-            textView_weather.setText("구름");
-        } else if (weather.equals("clear")) {
-            drawable = getResources().getDrawable(R.drawable.clear);
-            imageView_weather.setImageDrawable(drawable);
-            textView_weather.setText("맑음");
-        } else if (weather.equals("haze")) {
-            drawable = getResources().getDrawable(R.drawable.haze);
-            imageView_weather.setImageDrawable(drawable);
-            textView_weather.setText("안개");
-        }
+//        if (weather.equals("rain")) {
+//            drawable = getResources().getDrawable(R.drawable.rain);
+//            imageView_weather.setImageDrawable(drawable);
+//            textView_weather.setText("비");
+//        } else if (weather.equals("snow")) {
+//            drawable = getResources().getDrawable(R.drawable.snow);
+//            imageView_weather.setImageDrawable(drawable);
+//            textView_weather.setText("눈");
+//        } else if (weather.equals("thunderstorm")) {
+//            drawable = getResources().getDrawable(R.drawable.thunderstorm);
+//            imageView_weather.setImageDrawable(drawable);
+//            textView_weather.setText("천둥번개");
+//        } else if (weather.equals("drizzle")) {
+//            drawable = getResources().getDrawable(R.drawable.drizzle);
+//            imageView_weather.setImageDrawable(drawable);
+//            textView_weather.setText("보슬보슬비");
+//        } else if (weather.equals("clouds")) {
+//            drawable = getResources().getDrawable(R.drawable.cloud);
+//            imageView_weather.setImageDrawable(drawable);
+//            textView_weather.setText("구름");
+//        } else if (weather.equals("clear")) {
+//            drawable = getResources().getDrawable(R.drawable.clear);
+//            imageView_weather.setImageDrawable(drawable);
+//            textView_weather.setText("맑음");
+//        } else if (weather.equals("haze")) {
+//            drawable = getResources().getDrawable(R.drawable.haze);
+//            imageView_weather.setImageDrawable(drawable);
+//            textView_weather.setText("안개");
+//        }
     }
 }
 

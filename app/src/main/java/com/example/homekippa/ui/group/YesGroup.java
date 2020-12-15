@@ -152,6 +152,9 @@ public class YesGroup extends Fragment {
         groupData = (GroupData) getArguments().get("groupData");
         myGroup = (boolean) getArguments().get("myGroup");
 
+        Log.d("mygroup",String.valueOf(myGroup));
+
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
         }
@@ -199,6 +202,10 @@ public class YesGroup extends Fragment {
                 tv_groupName.setText(groupData.getName());
                 tv_groupIntro.setText(groupData.getIntroduction());
 
+                getImage(groupData.getImage(), imageView_groupProfile, true);
+                getImage(groupData.getCover(), imageView_groupCover, false);
+                setPetListView(listView_pets);
+
                 Log.d("갱신", groupData.getName());
                 button_follow_group.setVisibility(View.GONE);
                 button_addUser.setVisibility(View.VISIBLE);
@@ -223,8 +230,12 @@ public class YesGroup extends Fragment {
                 else textView_followingNum.setText(String.valueOf(0));
 
             } else if (!myGroup) {
-                Log.d("name","hi");
+                groupData = (GroupData) getArguments().get("groupData");
                 button_follow_group.setVisibility(View.VISIBLE);
+                Log.d("mygroup", groupData.getName());
+                getImage(groupData.getImage(), imageView_groupProfile, true);
+                getImage(groupData.getCover(), imageView_groupCover, false);
+                setPetListView(listView_pets);
 
                 button_addUser.setVisibility(View.GONE);
                 button_addPet.setVisibility(View.GONE);
@@ -504,9 +515,9 @@ public class YesGroup extends Fragment {
 //            Log.d("yes profile_createview", groupData.getImage());
 //        }
 //
-//        getImage(groupData.getImage(), imageView_groupProfile, true);
-//        getImage(groupData.getCover(), imageView_groupCover, false);
-//        setPetListView(listView_pets);
+        getImage(groupData.getImage(), imageView_groupProfile, true);
+        getImage(groupData.getCover(), imageView_groupCover, false);
+        setPetListView(listView_pets);
 
 
         return root;

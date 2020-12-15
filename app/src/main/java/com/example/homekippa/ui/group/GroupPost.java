@@ -101,7 +101,9 @@ public class GroupPost extends Fragment {
     public void onResume() {
         super.onResume();
         Log.d("group", "onresume");
-        groupData = ((MainActivity)MainActivity.context_main).getGroupData();
+//        groupData = ((MainActivity)MainActivity.context_main).getGroupData();
+        groupData = (GroupData) getArguments().get("groupData");
+
         setGroupView();
         getGroupProfileImage(groupData.getImage(), imageView_PostProfile);
         setPostListView(listView_posts);
@@ -121,9 +123,9 @@ public class GroupPost extends Fragment {
         userData = ((MainActivity) getActivity()).getUserData();
         groupData = (GroupData) getArguments().get("groupData");
 
-
         myGroup = (boolean) getArguments().get("myGroup");
         Log.d("group", String.valueOf(myGroup));
+
 
         groupViewModel = new ViewModelProvider(requireActivity()).get(GroupViewModel.class);
 
@@ -169,9 +171,12 @@ public class GroupPost extends Fragment {
         setPostListView(listView_posts);
         button_Add_Post = root.findViewById(R.id.button_Add_Post);
         if (!myGroup) {
+            groupData = (GroupData) getArguments().get("groupData");
             Log.d("group", "not my group");
             button_Add_Post.setVisibility(View.INVISIBLE);
         } else {
+            groupData = ((MainActivity) MainActivity.context_main).getGroupData();
+            Log.d("group", "not my group");
             button_Add_Post.setVisibility(View.VISIBLE);
             button_Add_Post.setOnClickListener(new View.OnClickListener() {
                 @Override
