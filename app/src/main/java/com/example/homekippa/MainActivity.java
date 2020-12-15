@@ -375,6 +375,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
                 intent.putExtra("userData", userData);
+                intent.putExtra("groupData", groupData);
                 startActivity(intent);
             }
         });
