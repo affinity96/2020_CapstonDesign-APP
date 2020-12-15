@@ -3,28 +3,20 @@ package com.example.homekippa;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-
-import com.example.homekippa.data.DoneReportsResponse;
-import com.example.homekippa.data.ExitResponse;
-import com.example.homekippa.data.GroupData;
-import com.example.homekippa.data.UserData;
-import com.example.homekippa.network.RetrofitClient;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-import com.example.homekippa.network.ServiceApi;
-import com.google.firebase.auth.FirebaseAuth;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import java.util.Calendar;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.homekippa.data.ExitResponse;
+import com.example.homekippa.data.GroupData;
+import com.example.homekippa.data.UserData;
+import com.example.homekippa.network.RetrofitClient;
+import com.example.homekippa.network.ServiceApi;
+import com.google.firebase.auth.FirebaseAuth;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -67,6 +59,8 @@ public class ExitKippaActivity extends AppCompatActivity {
                                         Log.d("회원 퇄퇴 성공?", response.toString());
                                         Toast.makeText(view.getContext(), "그동안 해피투게독을 사용해 주셔서 감사합니다. ", Toast.LENGTH_LONG).show();
                                         mAuth.signOut();
+                                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                                        startActivity(intent);
                                         finish();
                                     }
 
