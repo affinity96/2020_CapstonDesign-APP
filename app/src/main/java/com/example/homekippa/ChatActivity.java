@@ -1,5 +1,11 @@
 package com.example.homekippa;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -7,25 +13,16 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-
 import com.example.homekippa.chat.ChatProfile;
 import com.example.homekippa.chat.ListChatAdapter;
 import com.example.homekippa.data.GroupData;
 import com.example.homekippa.data.UserData;
-import com.example.homekippa.network.RetrofitClient;
-import com.example.homekippa.network.ServiceApi;
 import com.example.homekippa.ui.group.GroupInviteActivity;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -82,9 +79,6 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 Log.d("chat", snapshot.getKey());
-                Log.d("chat name", snapshot.child("userName").getValue(String.class));
-                Log.d("chat message", snapshot.child("message").getValue(String.class));
-                Log.d("chat image", snapshot.child("image").getValue(String.class));
                 ChatProfile chat = new ChatProfile(snapshot.getKey(), snapshot.child("userName").getValue(String.class), snapshot.child("message").getValue(String.class), snapshot.child("image").getValue(String.class));
                 mAdapter.addChat(chat);
             }
