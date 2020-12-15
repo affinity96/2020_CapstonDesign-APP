@@ -30,6 +30,7 @@ import com.example.homekippa.data.GroupData;
 import com.example.homekippa.data.UserData;
 import com.example.homekippa.network.RetrofitClient;
 import com.example.homekippa.network.ServiceApi;
+import com.example.homekippa.ui.group.GroupPost;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 
@@ -92,7 +93,7 @@ public class AddPostActivity extends AppCompatActivity {
         UserData userData = (UserData) intent.getExtras().get("userData");
         GroupData groupData = (GroupData) intent.getExtras().get("groupData");
 
-        Log.d("ted","tedPermission()");
+        Log.d("ted", "tedPermission()");
 
         button_Add_Post_Img.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,14 +123,14 @@ public class AddPostActivity extends AppCompatActivity {
         spinner_scope.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Log.d("spinner",parent.getItemAtPosition(position).toString());
+                Log.d("spinner", parent.getItemAtPosition(position).toString());
                 String checkedScope = parent.getItemAtPosition(position).toString();
 
-                if(checkedScope.equals("전체공개")){
-                    scope= "wholeScope";
-                }else if(checkedScope.equals("팔로우공개")){
-                    scope= "followScope";
-                }else if(checkedScope.equals("비공개")){
+                if (checkedScope.equals("전체공개")) {
+                    scope = "wholeScope";
+                } else if (checkedScope.equals("팔로우공개")) {
+                    scope = "followScope";
+                } else if (checkedScope.equals("비공개")) {
                     scope = "closedScope";
                 }
             }
@@ -192,14 +193,17 @@ public class AddPostActivity extends AppCompatActivity {
     }
 
 
-
     private void setImage() {
         frameLayout_post.setVisibility(View.VISIBLE);
         BitmapFactory.Options options = new BitmapFactory.Options();
         Bitmap originalBm = BitmapFactory.decodeFile(tempFile.getAbsolutePath(), options);
         Log.d(TAG, "setImage : " + tempFile.getAbsolutePath());
 
-        post_image.setImageBitmap(originalBm);
+        if (originalBm != null) {
+            ImageTask task = new ImageTask(tempFile.getAbsolutePath(), post_image, this, true);
+            task.getImage();
+            post_image.setImageBitmap(originalBm);
+        }
 
     }
 
