@@ -113,7 +113,6 @@ public class GroupPost extends Fragment {
         myGroup = (boolean) getArguments().get("myGroup");
         Log.d("group", String.valueOf(myGroup));
 
-
         groupViewModel = new ViewModelProvider(requireActivity()).get(GroupViewModel.class);
 
         if (getArguments() != null) {
@@ -162,7 +161,7 @@ public class GroupPost extends Fragment {
             Log.d("group", "not my group");
             button_Add_Post.setVisibility(View.INVISIBLE);
         } else {
-            groupData =((MainActivity)MainActivity.context_main).getGroupData();
+            groupData = ((MainActivity) MainActivity.context_main).getGroupData();
             Log.d("group", "not my group");
             button_Add_Post.setVisibility(View.VISIBLE);
             button_Add_Post.setOnClickListener(new View.OnClickListener() {
