@@ -13,8 +13,8 @@
 3. 산책기능   
 산책 기능을 통해 팔로우하거나, 공개 처리를 해놓은 주변 반려가족을 지도상에서 확인할 수 있다. 이를 통해 사용자는 다른 반려가족과 만날 수 있고, 반려동물끼리의 사회성 증진을 기대할 수 있다. 
 
-*시스템 구조도등의 개발관련 설명은 https://github.com/affinity96/2020_CapstonDesign-Backend 에 업로드 되어있습니다*
 <hr/>
+*시스템 구조도등의 개발관련 설명은 https://github.com/affinity96/2020_CapstonDesign-Backend 에 업로드 되어있습니다*
 
 ## 서비스 화면
 
@@ -71,4 +71,5 @@
 
 
 ## 수상 내역
-
+### 2021 LINC+ 캡스톤 다지안대회 장려상
+[LINC+ 캡스톤디자인 경진대회 상장_장려상(홈키파).pdf](https://github.com/affinity96/2020_CapstonDesign-APP/files/6146475/LINC%2B._.pdf)
