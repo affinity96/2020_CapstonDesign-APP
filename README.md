@@ -18,7 +18,53 @@
 ## 서비스 화면
 
 ### 1. 회원가입
+![그림1](https://user-images.githubusercontent.com/53653160/111260288-e3671500-8663-11eb-8675-ba1ebe2541de.png)
 
+### 2. 그룹(커뮤니티)생성
+![그림2](https://user-images.githubusercontent.com/53653160/111260333-f679e500-8663-11eb-9f9a-7696eb4a1835.png)
 
+### 3. 그룹원(반려가족) 초대
+![그림3](https://user-images.githubusercontent.com/53653160/111260334-f7127b80-8663-11eb-90a9-f85a601156c3.png)
 
+### 4. 그룹 내 반려동물 추가
+![그림4](https://user-images.githubusercontent.com/53653160/111260338-f7127b80-8663-11eb-8240-d03b51f03c68.png)
+
+### 5. 일과 추가
+![그림5](https://user-images.githubusercontent.com/53653160/111260341-f7ab1200-8663-11eb-82c8-7a5c3b30e24b.png)
+
+### 6. 일과 수행 완료
+![그림6](https://user-images.githubusercontent.com/53653160/111260343-f7ab1200-8663-11eb-96da-246c1b11484d.png)
+
+### 7. 일과 수정
+![그립7](https://user-images.githubusercontent.com/53653160/111260328-f548b800-8663-11eb-9a8b-724c1ba3fd7f.png)
+
+### 8. 게시글 등록
+![그림8](https://user-images.githubusercontent.com/53653160/111260346-f843a880-8663-11eb-8695-fd301e84ac7e.png)
+
+### 9. 게시글 삭제
+![그림7](https://user-images.githubusercontent.com/53653160/111260345-f843a880-8663-11eb-9d0f-56cdde13f101.png)
+
+### 10. 산책 경로 기록
+![그림15](https://user-images.githubusercontent.com/53653160/111260354-fb3e9900-8663-11eb-8b68-6f70f6cdf256.png)
+
+### 11. 산책 시 주변 사용자 확인(주변 사용자의 공개 여부에 따라 처리)
+![그림16](https://user-images.githubusercontent.com/53653160/111260355-fbd72f80-8663-11eb-856c-991309960303.png)
+
+### 12. 게시글 확인
+![그림9](https://user-images.githubusercontent.com/53653160/111260347-f8dc3f00-8663-11eb-8d7e-9a22339366ab.png)
+
+### 13. 게시글 상세보기 및 좋아요/댓글
+![그림10](https://user-images.githubusercontent.com/53653160/111260348-f974d580-8663-11eb-860d-b4c768ba43bd.png)
+
+### 14. 타 그룹 팔로우 및 팔로우 취소
+![그림12](https://user-images.githubusercontent.com/53653160/111260351-fa0d6c00-8663-11eb-98b8-bdd8cbf76bfa.png)
+
+### 15. 좌측 메뉴 바
+![그림13](https://user-images.githubusercontent.com/53653160/111260352-faa60280-8663-11eb-9c9b-717648cebfd9.png)
+
+### 16. 회원 정보 및 그룹 프로필 수정
+![그림14](https://user-images.githubusercontent.com/53653160/111260353-faa60280-8663-11eb-8162-3d2ec6850174.png)
+
+### 17. 회원 탈퇴
+![그림17](https://user-images.githubusercontent.com/53653160/111260356-fbd72f80-8663-11eb-853c-5fba354a155c.png)
 
